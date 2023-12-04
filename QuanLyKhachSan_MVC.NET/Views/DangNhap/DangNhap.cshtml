@@ -1,0 +1,31 @@
+﻿@model QuanLyKhachSan_MVC.NET.Models.Modeldata
+<link href="/static/dangnhap.css" rel="stylesheet" />
+<title>Đăng nhập</title>
+<section>
+    <div class="form-box">
+        <div class="form-value">
+            <form action="/DangNhap/DangNhapVaoHeThong" method="post">
+                <h2>Đăng nhập</h2>
+                <div class="inputbox">
+                    <ion-icon name="person-outline"></ion-icon>
+                    <input type="text" id="taikhoan" name="taikhoan" required>
+                    <label for="taikhoan">Tên đăng nhập</label>
+                </div>
+                <div class="inputbox">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input type="password" id="matkhau" name="matkhau" required>
+                    <label for="matkhau">Mật kẩu</label>
+                </div>
+                <div class="forget">
+                    <label for=""><input type="checkbox">Ghi nhớ tôi  <a href="#">Quên mật khẩu</a></label>
+                </div>
+                <button type="submit">Đăng nhập</button>
+                <div class="register">
+                    <p>Bạn chưa có tài khoản <a href="#">Đăng ký</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

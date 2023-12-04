@@ -1,0 +1,54 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using QuanLyKhachSan_MVC.NET.Models;
+using QuanLyKhachSan_MVC.NET.Service;
+
+namespace QuanLyKhachSan_MVC.NET.Controllers
+{
+    public class ChucVuController : Controller
+    {
+        private readonly ChucVuService chucVuService;
+
+        public ChucVuController(ChucVuService chucVuServices)
+        {
+            chucVuService = chucVuServices;
+        }
+        public IActionResult Index()
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int id = HttpContext.Session.GetInt32("id").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                List<ChucVu> chucVus = chucVuService.GetAllChucVu();
+                List<Modeldata> modellisst = new List<Modeldata>();
+                foreach (var chucVu in chucVus)
+                {
+                    Modeldata modeldata = new Modeldata
+                    {
+                        chucVu = chucVu,
+                    };
+                    modellisst.Add(modeldata);
+                }
+                return View(modellisst);
+            }
+            else
+            {
+                return RedirectToAction("DangNhap", "DangNhap");
+            }
+        }
+        public IActionResult XoaChucVu(int id)
+        {
+            chucVuService.XoaChucVu(id);
+            TempData["xoathanhcong"] = "";
+            return RedirectToAction("Index", "ChucVu");
+        }
+
+        public IActionResult ThemChucVu(ChucVu chucVu)
+        {
+            chucVuService.ThemChucVu(chucVu);
+            TempData["themthanhcong"] = "";
+            return RedirectToAction("Index", "ChucVu");
+        }
+    }
+}
