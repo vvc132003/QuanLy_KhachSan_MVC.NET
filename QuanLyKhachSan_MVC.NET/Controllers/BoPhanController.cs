@@ -14,7 +14,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             boPhanService = boPhanServiceS;
             nhanVienService = nhanVienServices;
-            //ládv
         }
         public IActionResult Index()
         {
