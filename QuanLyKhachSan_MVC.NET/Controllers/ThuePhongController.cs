@@ -11,15 +11,17 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly PhongService phongService;
         private readonly NhanPhongService nhanPhongService;
         private readonly SanPhamService sanPhamService;
+        private readonly ThueSanPhamService thueSanPhamService;
 
 
-        public ThuePhongController(DatPhongService datPhongServices, KhachHangService khachHangServices, PhongService phongServices, NhanPhongService nhanPhongServices, SanPhamService sanPhamServices)
+        public ThuePhongController(DatPhongService datPhongServices, KhachHangService khachHangServices, PhongService phongServices, NhanPhongService nhanPhongServices, SanPhamService sanPhamServices, ThueSanPhamService thueSanPhamServices)
         {
             datPhongService = datPhongServices;
             khachHangService = khachHangServices;
             phongService = phongServices;
             nhanPhongService = nhanPhongServices;
             sanPhamService = sanPhamServices;
+            thueSanPhamService = thueSanPhamServices;
         }
         public IActionResult Index(int id)
         {
@@ -165,14 +167,22 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 List<DatPhong> listdatPhongs = datPhongService.GetAllDatPhongByID(id);
                 List<SanPham> listsanpham = sanPhamService.GetAllSanPham();
                 List<Modeldata> listmodeldatas = new List<Modeldata>();
-                foreach (var datphong in listdatPhongs)
+                if (listdatPhongs != null && listdatPhongs.Any())
                 {
-                    Modeldata yourModel = new Modeldata
+                    foreach (var datphong in listdatPhongs)
                     {
-                        listsanPham = listsanpham,
-                        datPhong = datphong,
-                    };
-                    listmodeldatas.Add(yourModel);
+                        List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datphong.id);
+                        Modeldata yourModel = new Modeldata
+                        {
+                            listsanPham = listsanpham,
+                            datPhong = datphong,
+                            listthueSanPham = listthueSanPham,
+                        };
+                        listmodeldatas.Add(yourModel);
+                    }
+                }
+                else
+                {
                 }
                 return View(listmodeldatas);
             }

@@ -24,6 +24,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                             DatPhong datPhong = new DatPhong()
                             {
                                 id = (int)reader["id"],
+                                idphong = (int)reader["idphong"],
                                 hovaten = reader["hovaten"].ToString(),
                                 trangthai = reader["trangthai"].ToString(),
                                 hinhthucthue = reader["hinhthucthue"].ToString(),

@@ -22,6 +22,9 @@
         public List<KhachHang> listkhachHangs { get; set; }
         public SanPham sanPham { get; set; }
         public List<SanPham> listsanPham { get; set; }
+        public ThueSanPham thueSanPham { get; set; }
+        public List<ThueSanPham> listthueSanPham { get; set; }
+
 
     }
 }

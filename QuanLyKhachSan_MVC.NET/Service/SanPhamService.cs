@@ -48,7 +48,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 mota = reader["mota"].ToString(),
                                 soluongcon = (int)reader["soluongcon"],
                                 image = reader["image"].ToString(),
-                                trangthai = reader["trangthai"].ToString()
+                                trangthai = reader["trangthai"].ToString(),
+                                giaban = Convert.ToSingle(reader["giaban"]),
                             };
                             sanPhams.Add(sanPham);
                         }
@@ -78,7 +79,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 mota = reader["mota"].ToString(),
                                 soluongcon = (int)reader["soluongcon"],
                                 image = reader["image"].ToString(),
-                                trangthai = reader["trangthai"].ToString()
+                                trangthai = reader["trangthai"].ToString(),
+                                giaban = Convert.ToSingle(reader["giaban"]),
                             };
                             return sanPham;
                         }
@@ -96,12 +98,13 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string sql = "INSERT INTO SanPham (tensanpham, mota, soluongcon, image, trangthai) " +
-                                     "VALUES (@tensanpham, @mota, @soluongcon, @image, @trangthai)";
+                string sql = "INSERT INTO SanPham (tensanpham, mota,giaban , soluongcon, image, trangthai) " +
+                                     "VALUES (@tensanpham, @mota,@giaban  @soluongcon, @image, @trangthai)";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@tensanpham", sanPham.tensanpham);
                     command.Parameters.AddWithValue("@mota", sanPham.mota);
+                    command.Parameters.AddWithValue("@giaban", sanPham.giaban);
                     command.Parameters.AddWithValue("@soluongcon", sanPham.soluongcon);
                     command.Parameters.AddWithValue("@image", sanPham.image);
                     command.Parameters.AddWithValue("@trangthai", sanPham.trangthai);

@@ -50,6 +50,39 @@
                                             }
                                         </tbody>
                                     </table>
+                                    <hr />
+                                    <div class="text-bg-success p-2">Thông sản phâm</div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Số lượng thuê</th>
+                                                <th>Thành tiền</th>
+                                                <th>ID Sản phẩm</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var thueSanPham in Model[0].listthueSanPham)
+                                            {
+                                                <tr>
+                                                    <td>@thueSanPham.id</td>
+                                                    <td>@thueSanPham.soluong</td>
+                                                    <td>@string.Format("{0:N0} VNĐ", @thueSanPham.thanhtien)</td>
+                                                    <td>@thueSanPham.idsanpham</td>
+                                                    <td>
+                                                        <a href="/ThueSanPham/XoasoluongThueSanPham?id=@thueSanPham.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-danger">
+                                                            <i class="fas fa-minus"></i>
+                                                        </a>
+                                                        <a href="/ThueSanPham/UpdatesoluongThueSanPham?id=@thueSanPham.id&amp;idphong=@Model[0].datPhong.idphong"
+                                                           class="btn btn-warning">
+                                                            <i style="color: white;" class="fas fa-plus"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <div class="col-6">
                                     <div class="text-bg-success p-2">Thông sản phẩm</div>
@@ -57,7 +90,10 @@
                                         <thead>
                                             <tr>
                                                 <th>Tên sản phẩm</th>
+                                                <th>Số lượng còn</th>
+                                                <th>Gía bán</th>
                                                 <th>Ảnh</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -65,7 +101,14 @@
                                             {
                                                 <tr>
                                                     <td>@sanpham.tensanpham</td>
+                                                    <td>@sanpham.soluongcon</td>
+                                                    <td>@string.Format("{0:N0} VNĐ", @sanpham.giaban)</td>
                                                     <td><img src="@sanpham.image" width="50px" height="50px" alt=""></td>
+                                                    <td>
+                                                        <a href="/ThueSanPham/ThueSanPham?id=@sanpham.id&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
+                                                            <i class="fas fa-plus"></i>
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                             }
                                         </tbody>

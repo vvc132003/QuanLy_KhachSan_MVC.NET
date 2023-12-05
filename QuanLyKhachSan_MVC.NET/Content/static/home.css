@@ -88,23 +88,23 @@
 }
 
 .cokhach {
-    background-color: #00CC99;
+    background-color: #009900;
 }
 
 .controng {
-    background-color: #00CCFF;
+    background-color: #0066CC;
 }
 
 .dangsua {
-    background-color: #00CCCC;
+    background-color: #666633;
 }
 
 .dadat {
-    background-color: #cfb890;
+    background-color: #996600;
 }
 
 .chuadon {
-    background-color: #C0C0C0;
+    background-color: #666666;
 }
 
 
@@ -185,7 +185,7 @@ h3 {
     height: 190px;
     padding: 80px 10px;
     border-radius: 0px;
-    background: #00CCCC;
+    background: #0099CC;
     float: left;
     margin-right: 20px;
     clear: both;

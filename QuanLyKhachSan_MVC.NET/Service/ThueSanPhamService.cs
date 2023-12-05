@@ -1,0 +1,165 @@
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using ketnoicsdllan1;
+using QuanLyKhachSan_MVC.NET.Models;
+using QuanLyKhachSan_MVC.NET.Repository;
+using System.Data.SqlClient;
+
+namespace QuanLyKhachSan_MVC.NET.Service
+{
+    public class ThueSanPhamService : ThueSanPhamRepository
+    {
+        public ThueSanPham GetThueSanPhamByDatPhongAndSanPham(int iddatphong, int idsanpham)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string sql = "SELECT * FROM ThueSanPham WHERE iddatphong = @iddatphong AND idsanpham = @idsanpham";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@iddatphong", iddatphong);
+                    command.Parameters.AddWithValue("@idsanpham", idsanpham);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            ThueSanPham thueSanPham = new ThueSanPham()
+                            {
+                                id = (int)reader["id"],
+                                soluong = (int)reader["soluong"],
+                                idsanpham = (int)reader["idsanpham"],
+                                idnhanvien = (int)reader["idnhanvien"],
+                                thanhtien = Convert.ToSingle(reader["thanhtien"]),
+                                iddatphong = (int)reader["iddatphong"],
+
+                            };
+                            return thueSanPham;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void CapNhatThueSanPham(ThueSanPham thueSanPham)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string sql = "UPDATE ThueSanPham SET soluong = @soluong, thanhtien = @thanhtien, idsanpham = @idsanpham, idnhanvien = @idnhanvien, iddatphong = @iddatphong " +
+                             "WHERE id = @id";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@soluong", thueSanPham.soluong);
+                    command.Parameters.AddWithValue("@thanhtien", thueSanPham.thanhtien);
+                    command.Parameters.AddWithValue("@idsanpham", thueSanPham.idsanpham);
+                    command.Parameters.AddWithValue("@idnhanvien", thueSanPham.idnhanvien);
+                    command.Parameters.AddWithValue("@iddatphong", thueSanPham.iddatphong);
+                    command.Parameters.AddWithValue("@id", thueSanPham.id);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<ThueSanPham> GetAllThueSanPhamID(int iddatphong)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<ThueSanPham> thueSanPhams = new List<ThueSanPham>();
+                connection.Open();
+                string sql = "SELECT * FROM ThueSanPham where iddatphong = @iddatphong ";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@iddatphong", iddatphong);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ThueSanPham thueSanPham = new ThueSanPham()
+                            {
+                                id = (int)reader["id"],
+                                soluong = (int)reader["soluong"],
+                                idsanpham = (int)reader["idsanpham"],
+                                idnhanvien = (int)reader["idnhanvien"],
+                                iddatphong = (int)reader["iddatphong"],
+                                thanhtien = Convert.ToSingle(reader["thanhtien"]),
+                            };
+                            thueSanPhams.Add(thueSanPham);
+                        }
+                    }
+                }
+                return thueSanPhams;
+            }
+        }
+
+        public ThueSanPham GetThueSanPhamBYID(int id)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string sql = "SELECT * FROM ThueSanPham where id = @id ";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            ThueSanPham thueSanPham = new ThueSanPham()
+                            {
+                                id = (int)reader["id"],
+                                soluong = (int)reader["soluong"],
+                                idsanpham = (int)reader["idsanpham"],
+                                idnhanvien = (int)reader["idnhanvien"],
+                                thanhtien = Convert.ToSingle(reader["thanhtien"]),
+                                iddatphong = (int)reader["iddatphong"],
+
+                            };
+                            return thueSanPham;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void ThueSanPham(ThueSanPham thueSanPham)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string sql = "INSERT INTO ThueSanPham (soluong, thanhtien, idsanpham, idnhanvien, iddatphong) " +
+                                     "VALUES (@soluong, @thanhtien, @idsanpham, @idnhanvien, @iddatphong)";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@soluong", thueSanPham.soluong);
+                    command.Parameters.AddWithValue("@thanhtien", thueSanPham.thanhtien);
+                    command.Parameters.AddWithValue("@idsanpham", thueSanPham.idsanpham);
+                    command.Parameters.AddWithValue("@idnhanvien", thueSanPham.idnhanvien);
+                    command.Parameters.AddWithValue("@iddatphong", thueSanPham.iddatphong);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void XoaThueSanPham(int id)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string sql = "DELETE FROM ThueSanPham WHERE id = @id";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+    }
+}

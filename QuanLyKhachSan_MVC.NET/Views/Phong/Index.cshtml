@@ -18,16 +18,19 @@
         <div class="page-wrapper">
             <div class="container-fluid">
                 <div class="text-center" style="padding: 0px 23px;">
-                    <div class="square" style="background-color: #2387e0">
-                        <a>Phòng trống</a>
+                    <div class="square" style="background-color: #0066CC">
+                        <a>Sẵn sàng đón khách</a>
                     </div>
-                    <div class="square" style="background-color: #489d41">
+                    <div class="square" style="background-color: #996600">
+                        <a>Phòng được đặt</a>
+                    </div>
+                    <div class="square" style="background-color: #009900">
                         <a>Phòng đã có người ở</a>
                     </div>
-                    <div class="square" style="background-color: #e7574d">
+                    <div class="square" style="background-color: #666633">
                         <a>Phòng đang sửa chữa</a>
                     </div>
-                    <div class="square" style="background-color: #C0C0C0">
+                    <div class="square" style="background-color: #666666">
                         <a>Phòng đang dọn dẹp</a>
                     </div>
                 </div>
@@ -91,21 +94,21 @@
                                         }
                                         else if (phong.tinhtrangphong == "đã đặt")
                                         {
-                                            <a href="@Url.Action("nhan_phong", "ControllerName", new { id = phong.id })">
+                                            <a href="">
                                                 <i style="font-size: 20px; margin-right: 14px" class="fas fa-check-circle"></i>
                                                 Check nhận phòng
                                             </a>
                                         }
                                         else if (phong.tinhtrangphong == "đang sửa chữa")
                                         {
-                                            <a href="#">
+                                            <a href="">
                                                 <i style="font-size: 20px; margin-right: 2px; color: blue;" class="fas fa-check"></i>
                                                 Hoàn tất sửa chữa
                                             </a>
                                         }
                                         else if (phong.tinhtrangphong == "chưa dọn")
                                         {
-                                            <a href="@Url.Action("don_phong", "ControllerName", new { id = phong.id })">
+                                            <a href="">
                                                 <i style="font-size: 20px; margin-right: 10px; color: blue;" class="fas fa-check"></i>
                                                 Dọn xong
                                             </a>
@@ -126,7 +129,6 @@
     </div>
 </div>
 @functions {
-    // Hàm lấy class CSS dựa trên trạng thái của phòng
     public string GetTinhTrangPhong(string trangthai)
     {
         switch (trangthai)
