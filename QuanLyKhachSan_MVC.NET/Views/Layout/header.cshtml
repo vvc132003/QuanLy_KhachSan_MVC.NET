@@ -4,7 +4,7 @@
 <aside class="left-sidebar">
     <div class="d-flex no-block nav-text-box align-items-center">
         <span><img src="/static/logo-icon.png" alt="elegant admin template"></span>
-        <a class="waves-effect waves-dark ml-auto hidden-sm-down" >
+        <a class="waves-effect waves-dark ml-auto hidden-sm-down">
             @ViewData["hovaten"]
         </a>
         <a class="waves-effect waves-dark ml-auto hidden-sm-down" href="javascript:void(0)">
@@ -19,37 +19,17 @@
             <ul id="sidebarnav">
                 <li>
                     <a class="waves-effect waves-dark" href="/Tang/Index" aria-expanded="false">
-                        <i class="fas fa-bed orange_color"></i><span class="hide-menu">Tầng</span>
+                        <i class="ion-md-bed orange_color"></i><span class="hide-menu">Tầng</span>
                     </a>
                 </li>
                 <li>
-                    <a class="waves-effect waves-dark" href="/Phong/Index" aria-expanded="false"  >
-                        <i class="fas fa-user orange_color"></i><span class="hide-menu">Phòng</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="waves-effect waves-dark" href="/ChucVu/Index" aria-expanded="false">
-                        <i class="fas fa-user-tie red_color"></i><span class="hide-menu">Chức vụ</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="waves-effect waves-dark" href="/BoPhan/Index" aria-expanded="false">
-                        <i class="fas fa-concierge-bell purple_color2"></i><span class="hide-menu">Bộ phận</span>
+                    <a class="waves-effect waves-dark" href="/Phong/Index" aria-expanded="false">
+                        <i class="fas fa-home orange_color"></i><span class="hide-menu">Phòng</span>
                     </a>
                 </li>
                 <li>
                     <a class="waves-effect waves-dark" href="/SanPham/Index" aria-expanded="false">
-                        <i class="fas fa-concierge-bell purple_color2"></i><span class="hide-menu">Sản phẩm</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="waves-effect waves-dark" href="/ViTriBoPhan/Index" aria-expanded="false">
-                        <i class="fas fa-exclamation-circle" style="color: red !important;"></i><span class="hide-menu">Vị trí bộ phận</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="waves-effect waves-dark" href="/NhanVien/Index" aria-expanded="false">
-                        <i class="fas fa-trophy" style="color: yellow !important;"></i><span class="hide-menu">Nhân viên</span>
+                        <i class="fas fa-shopping-bag purple_color2"></i><span class="hide-menu">Sản phẩm</span>
                     </a>
                 </li>
                 <li>
@@ -57,6 +37,35 @@
                         <i class="fas fa-trophy" style="color: yellow !important;"></i><span class="hide-menu">Loại đặt phòng</span>
                     </a>
                 </li>
+                @* nhân sự *@
+                <li>
+                    <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users blue2_color"></i> <span>Nhân sự</span>
+                    </a>
+                    <ul class="collapse list-unstyled" id="apps">
+                        <li>
+                            <a class="waves-effect waves-dark" href="/ChucVu/Index" aria-expanded="false">
+                                <i class="fas fa-briefcase red_color"></i><span class="hide-menu">Chức vụ</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark" href="/NhanVien/Index" aria-expanded="false">
+                                <i class="fas fa-users" style="color: yellow !important;"></i><span class="hide-menu">Nhân viên</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark" href="/BoPhan/Index" aria-expanded="false">
+                                <i class="fas fa-suitcase purple_color2"></i><span class="hide-menu">Bộ phận</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark" href="/ViTriBoPhan/Index" aria-expanded="false">
+                                <i class="fas fa-exclamation-triangle" style="color: red !important;"></i><span class="hide-menu">Vị trí bộ phận</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @* loai jđon  *@
                 <li>
                     <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fa fa-object-group blue2_color"></i> <span>Các loại đơn</span>
