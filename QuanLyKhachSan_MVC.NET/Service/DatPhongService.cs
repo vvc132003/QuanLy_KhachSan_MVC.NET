@@ -31,7 +31,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 trangthai = reader["trangthai"].ToString(),
                                 hinhthucthue = reader["hinhthucthue"].ToString(),
                                 ngaydat = (DateTime)reader["ngaydat"],
-                                ngaydukientra = (DateTime)reader["ngaydukientra"]
+                                ngaydukientra = (DateTime)reader["ngaydukientra"],
+                                tiendatcoc = Convert.ToSingle(reader["tiendatcoc"]),
                             };
                             datPhongs.Add(datPhong);
                         }

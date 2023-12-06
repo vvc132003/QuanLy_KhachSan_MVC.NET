@@ -176,17 +176,25 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 List<DatPhong> listdatPhongs = datPhongService.GetAllDatPhongByID(id);
                 List<SanPham> listsanpham = sanPhamService.GetAllSanPham();
+                Phong phongs = phongService.GetPhongID(id);
                 List<Modeldata> listmodeldatas = new List<Modeldata>();
                 if (listdatPhongs != null && listdatPhongs.Any())
                 {
                     foreach (var datphong in listdatPhongs)
                     {
                         List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datphong.id);
+                        float tongtien = 0;
+                        foreach (var thueSanPham in listthueSanPham)
+                        {
+                            tongtien += thueSanPham.thanhtien;
+                        }
                         Modeldata yourModel = new Modeldata
                         {
                             listsanPham = listsanpham,
                             datPhong = datphong,
                             listthueSanPham = listthueSanPham,
+                            tongtienhueSanPham = tongtien,
+                            phong = phongs,
                         };
                         listmodeldatas.Add(yourModel);
                     }

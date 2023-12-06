@@ -125,6 +125,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 id = Convert.ToInt32(reader["id"]),
                                 loaiphong = reader["loaiphong"].ToString(),
                                 tinhtrangphong = reader["tinhtrangphong"].ToString(),
+                                giatien = Convert.ToSingle(reader["giatien"]),
                             };
                             return phong;
                         }

@@ -25,7 +25,6 @@
         public List<SanPham> listsanPham { get; set; }
         public ThueSanPham thueSanPham { get; set; }
         public List<ThueSanPham> listthueSanPham { get; set; }
-
-
+        public float tongtienhueSanPham { get; set; }
     }
 }

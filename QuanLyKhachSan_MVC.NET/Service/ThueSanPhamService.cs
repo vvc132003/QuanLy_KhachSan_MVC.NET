@@ -1,8 +1,10 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
 using ketnoicsdllan1;
+using NPOI.SS.Formula.Functions;
 using QuanLyKhachSan_MVC.NET.Models;
 using QuanLyKhachSan_MVC.NET.Repository;
 using System.Data.SqlClient;
+using System.IO.Pipelines;
 
 namespace QuanLyKhachSan_MVC.NET.Service
 {
@@ -70,12 +72,13 @@ namespace QuanLyKhachSan_MVC.NET.Service
             {
                 List<ThueSanPham> thueSanPhams = new List<ThueSanPham>();
                 connection.Open();
-                string sql = "SELECT * FROM ThueSanPham where iddatphong = @iddatphong ";
+                string sql = "SELECT * FROM ThueSanPham left join SanPham on ThueSanPham.idsanpham = SanPham.id where iddatphong = @iddatphong ";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@iddatphong", iddatphong);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        float tongtien = 0;
                         while (reader.Read())
                         {
                             ThueSanPham thueSanPham = new ThueSanPham()
@@ -83,11 +86,14 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 id = (int)reader["id"],
                                 soluong = (int)reader["soluong"],
                                 idsanpham = (int)reader["idsanpham"],
+                                tensanpham = reader["tensanpham"].ToString(),
+                                image = reader["image"].ToString(),
                                 idnhanvien = (int)reader["idnhanvien"],
                                 iddatphong = (int)reader["iddatphong"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
                             };
                             thueSanPhams.Add(thueSanPham);
+                            tongtien += thueSanPham.thanhtien;
                         }
                     }
                 }
@@ -116,7 +122,6 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
                                 iddatphong = (int)reader["iddatphong"],
-
                             };
                             return thueSanPham;
                         }
@@ -161,5 +166,6 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 }
             }
         }
+
     }
 }

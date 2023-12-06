@@ -31,14 +31,32 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ThueSanPham thueSanPhamididdatphong = thueSanPhamService.GetThueSanPhamByDatPhongAndSanPham(iddatphong, id);
                 if (thueSanPhamididdatphong != null)
                 {
-                    thueSanPhamididdatphong.soluong += 1;
-                    thueSanPhamididdatphong.thanhtien += 1 * sanpham.giaban;
-                    thueSanPhamService.CapNhatThueSanPham(thueSanPhamididdatphong);
+                    if (sanpham.soluongcon > 1)
+                    {
+                        sanpham.soluongcon = sanpham.soluongcon - 1;
+                        sanPhamService.CapNhatSanPham(sanpham);
+                        thueSanPhamididdatphong.soluong += 1;
+                        thueSanPhamididdatphong.thanhtien += 1 * sanpham.giaban;
+                        thueSanPhamService.CapNhatThueSanPham(thueSanPhamididdatphong);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sản phẩm này đã hết");
+                    }
                 }
                 else
                 {
-                    thueSanPham.thanhtien = 1 * sanpham.giaban;
-                    thueSanPhamService.ThueSanPham(thueSanPham);
+                    if (sanpham.soluongcon > 1)
+                    {
+                        sanpham.soluongcon = sanpham.soluongcon - 1;
+                        sanPhamService.CapNhatSanPham(sanpham);
+                        thueSanPham.thanhtien = 1 * sanpham.giaban;
+                        thueSanPhamService.ThueSanPham(thueSanPham);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sản phẩm này đã hết");
+                    }
                 }
                 return RedirectToAction("ChiTietThuePhong", "ThuePhong", new { id = idphong });
             }
@@ -56,16 +74,20 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = idnd;
                 ViewData["hovaten"] = hovaten;
                 ThueSanPham thueSanPham = thueSanPhamService.GetThueSanPhamBYID(id);
+                SanPham sanpham = sanPhamService.GetSanPhamByID(thueSanPham.idsanpham);
                 if (thueSanPham.soluong >= 1)
                 {
                     if (thueSanPham.soluong == 1)
                     {
+                        sanpham.soluongcon = sanpham.soluongcon + 1;
+                        sanPhamService.CapNhatSanPham(sanpham);
                         thueSanPhamService.XoaThueSanPham(id);
                         return RedirectToAction("ChiTietThuePhong", "ThuePhong", new { id = idphong });
                     }
                     else if (thueSanPham.soluong > 1)
                     {
-                        SanPham sanpham = sanPhamService.GetSanPhamByID(thueSanPham.idsanpham);
+                        sanpham.soluongcon = sanpham.soluongcon + 1;
+                        sanPhamService.CapNhatSanPham(sanpham);
                         thueSanPham.soluong = thueSanPham.soluong - 1;
                         thueSanPham.thanhtien = thueSanPham.soluong * sanpham.giaban;
                         thueSanPhamService.CapNhatThueSanPham(thueSanPham);
@@ -89,9 +111,18 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ThueSanPham thueSanPham = thueSanPhamService.GetThueSanPhamBYID(id);
                 SanPham sanpham = sanPhamService.GetSanPhamByID(thueSanPham.idsanpham);
-                thueSanPham.soluong = thueSanPham.soluong + 1;
-                thueSanPham.thanhtien = thueSanPham.soluong * sanpham.giaban;
-                thueSanPhamService.CapNhatThueSanPham(thueSanPham);
+                if (sanpham.soluongcon > 1)
+                {
+                    sanpham.soluongcon = sanpham.soluongcon - 1;
+                    sanPhamService.CapNhatSanPham(sanpham);
+                    thueSanPham.soluong = thueSanPham.soluong + 1;
+                    thueSanPham.thanhtien = thueSanPham.soluong * sanpham.giaban;
+                    thueSanPhamService.CapNhatThueSanPham(thueSanPham);
+                }
+                else
+                {
+                    Console.WriteLine("Sản phẩm này đã hết");
+                }
                 return RedirectToAction("ChiTietThuePhong", "ThuePhong", new { id = idphong });
             }
             else

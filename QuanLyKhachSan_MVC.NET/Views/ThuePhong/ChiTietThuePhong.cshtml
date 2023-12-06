@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <link href="/static/morris.css" rel="stylesheet" />
 <link href="/static/c3.min.css" rel="stylesheet" />
-<link href="/static/home.css" rel="stylesheet" />
 <link href="/static/dashboard1.css" rel="stylesheet" />
 <link href="/static/style.css" rel="stylesheet" />
 <div class="skin-default-dark fixed-layout">
@@ -58,7 +57,8 @@
                                                 <th>ID</th>
                                                 <th>Số lượng thuê</th>
                                                 <th>Thành tiền</th>
-                                                <th>ID Sản phẩm</th>
+                                                <th>Tên Sản phẩm</th>
+                                                <th>Ảnh</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -69,7 +69,8 @@
                                                     <td>@thueSanPham.id</td>
                                                     <td>@thueSanPham.soluong</td>
                                                     <td>@string.Format("{0:N0} VNĐ", @thueSanPham.thanhtien)</td>
-                                                    <td>@thueSanPham.idsanpham</td>
+                                                    <td>@thueSanPham.tensanpham</td>
+                                                    <td><img src="@thueSanPham.image" width="50px" height="50px" alt=""></td>
                                                     <td>
                                                         <a href="/ThueSanPham/XoasoluongThueSanPham?id=@thueSanPham.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-danger">
                                                             <i class="fas fa-minus"></i>
@@ -83,6 +84,13 @@
                                             }
                                         </tbody>
                                     </table>
+                                    <hr />
+                                    <div class="border border-dark-subtle" style="padding:10px 20px">
+                                        <h4>Tổng tiền thuê sản phẩm: @string.Format("{0:N0} VNĐ", @Model[0].tongtienhueSanPham)</h4>
+                                        <h4>Tiền phòng: @string.Format("{0:N0} VNĐ", @Model[0].phong.giatien)</h4>
+                                        <h4>Tiền khách hàng đặt cọc: @string.Format("{0:N0} VNĐ", @Model[0].datPhong.tiendatcoc)</h4>
+                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", @Model[0].phong.giatien + @Model[0].tongtienhueSanPham -@Model[0].datPhong.tiendatcoc)</h4>
+                                    </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="text-bg-success p-2">Thông sản phẩm</div>
