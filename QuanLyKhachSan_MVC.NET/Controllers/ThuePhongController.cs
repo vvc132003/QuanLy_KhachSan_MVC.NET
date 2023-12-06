@@ -47,6 +47,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
+                /// kiểm tra xem khách hàng đã tồn tại hay chưa
                 KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                 if (khachHangTonTai != null)
                 {
@@ -55,29 +56,38 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     datPhong.trangthai = "đã đặt";
                     datPhong.ngaydat = DateTime.Now;
                     datPhong.idphong = datPhong.idphong;
+                    /// thực hiện thêm đặt phòng và lấy ra id đặt phòng mới tạo đó
                     int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
+                    /// thực hiện thêm đặt phòng và lấy ra id đặt phòng mới tạo đó
                     nhanPhong.iddatphong = idDatPhongThemVao;
                     nhanPhong.ngaynhanphong = DateTime.Now;
                     nhanPhongService.ThemNhanPhong(nhanPhong);
+                    /// lấy thoong tin phòng ra từ id phòng của id đặt phòng mới tạo để thực hiện việc cập nhật trạng thái phòng đó
                     Phong phong = phongService.GetPhongID(datPhong.idphong);
                     phong.tinhtrangphong = "có khách";
                     phongService.CapNhatPhong(phong);
                     return RedirectToAction("Index", "Phong");
                 }
+                /// nếu khách hàng không tồn tại
                 else
                 {
+                    /// khách hnagf không tông tại thì thực hiện thêm khách hàng mới
                     khachHang.trangthai = "còn hoạt động";
                     khachHangService.ThemKhachHang(khachHang);
+                    /// lấy id khách hnagf mới tạo từ cccd để thực hiện việc đặt phòng
                     KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                     datPhong.idkhachhang = khachhangmoi.id;
                     datPhong.idloaidatphong = 2;
                     datPhong.trangthai = "đã đặt";
                     datPhong.ngaydat = DateTime.Now;
                     datPhong.idphong = datPhong.idphong;
+                    /// thực hiện thêm đặt phòng và lấy ra id đặt phòng mới tạo đó
                     int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
+                    /// thêm nhận phòng với id đặt phòng vừa đc lấy ra
                     nhanPhong.iddatphong = idDatPhongThemVao;
                     nhanPhong.ngaynhanphong = DateTime.Now;
                     nhanPhongService.ThemNhanPhong(nhanPhong);
+                    /// lấy thoong tin phòng ra từ id phòng của id đặt phòng mới tạo để thực hiện việc cập nhật trạng thái phòng đó
                     Phong phong = phongService.GetPhongID(datPhong.idphong);
                     phong.tinhtrangphong = "có khách";
                     phongService.CapNhatPhong(phong);

@@ -58,6 +58,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                             {
                                 id = (int)reader["id"],
                                 idphong = (int)reader["idphong"],
+                                idloaidatphong = (int)reader["idloaidatphong"],
                                 idkhachhang = (int)reader["idkhachhang"],
                                 trangthai = reader["trangthai"].ToString(),
                                 hinhthucthue = reader["hinhthucthue"].ToString(),
@@ -104,7 +105,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
             {
                 connection.Open();
                 string updateQuery = "UPDATE DatPhong SET ngaydat = @ngaydat, ngaydukientra = @ngaydukientra, " +
-                                   "tiendatcoc = @tiendatcoc, trangthai = @trangthai, hinhthucthue = @hinhthucthue," +
+                                   "tiendatcoc = @tiendatcoc, trangthai = @trangthai, hinhthucthue = @hinhthucthue, idloaidatphong=@idloaidatphong," +
                                    " idkhachhang=@idkhachhang, idphong=@idphong " +
                                    "WHERE id = @id";
                 SqlCommand command = new SqlCommand(updateQuery, connection);
@@ -113,6 +114,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 command.Parameters.AddWithValue("@tiendatcoc", datPhong.tiendatcoc);
                 command.Parameters.AddWithValue("@trangthai", datPhong.trangthai);
                 command.Parameters.AddWithValue("@hinhthucthue", datPhong.hinhthucthue);
+                command.Parameters.AddWithValue("@idloaidatphong", datPhong.idloaidatphong);
                 command.Parameters.AddWithValue("@idkhachhang", datPhong.idkhachhang);
                 command.Parameters.AddWithValue("@idphong", datPhong.idphong);
                 command.Parameters.AddWithValue("@id", datPhong.id);
