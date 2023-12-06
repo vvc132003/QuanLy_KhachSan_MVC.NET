@@ -1,4 +1,5 @@
-﻿using ketnoicsdllan1;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using ketnoicsdllan1;
 using QuanLyKhachSan_MVC.NET.Models;
 using QuanLyKhachSan_MVC.NET.Repository;
 using System.Data.SqlClient;
@@ -25,6 +26,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                             {
                                 id = (int)reader["id"],
                                 idphong = (int)reader["idphong"],
+                                idkhachhang = (int)reader["idkhachhang"],
                                 hovaten = reader["hovaten"].ToString(),
                                 trangthai = reader["trangthai"].ToString(),
                                 hinhthucthue = reader["hinhthucthue"].ToString(),
@@ -36,6 +38,40 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     }
                 }
                 return datPhongs;
+            }
+        }
+
+        public DatPhong GetDatPhongByIDTrangThai(int idphong)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "select * from DatPhong where idphong = @idphong and trangthai= N'đã đặt' ";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idphong", idphong);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            DatPhong datPhong = new DatPhong
+                            {
+                                id = (int)reader["id"],
+                                idphong = (int)reader["idphong"],
+                                idkhachhang = (int)reader["idkhachhang"],
+                                trangthai = reader["trangthai"].ToString(),
+                                hinhthucthue = reader["hinhthucthue"].ToString(),
+                                ngaydat = (DateTime)reader["ngaydat"],
+                                ngaydukientra = (DateTime)reader["ngaydukientra"]
+                            };
+                            return datPhong;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
             }
         }
 
@@ -62,5 +98,26 @@ namespace QuanLyKhachSan_MVC.NET.Service
             return idDatPhongThemVao;
         }
 
+        public void UpdateDatPhong(DatPhong datPhong)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string updateQuery = "UPDATE DatPhong SET ngaydat = @ngaydat, ngaydukientra = @ngaydukientra, " +
+                                   "tiendatcoc = @tiendatcoc, trangthai = @trangthai, hinhthucthue = @hinhthucthue," +
+                                   " idkhachhang=@idkhachhang, idphong=@idphong " +
+                                   "WHERE id = @id";
+                SqlCommand command = new SqlCommand(updateQuery, connection);
+                command.Parameters.AddWithValue("@ngaydat", datPhong.ngaydat);
+                command.Parameters.AddWithValue("@ngaydukientra", datPhong.ngaydukientra);
+                command.Parameters.AddWithValue("@tiendatcoc", datPhong.tiendatcoc);
+                command.Parameters.AddWithValue("@trangthai", datPhong.trangthai);
+                command.Parameters.AddWithValue("@hinhthucthue", datPhong.hinhthucthue);
+                command.Parameters.AddWithValue("@idkhachhang", datPhong.idkhachhang);
+                command.Parameters.AddWithValue("@idphong", datPhong.idphong);
+                command.Parameters.AddWithValue("@id", datPhong.id);
+                command.ExecuteNonQuery();
+            }
+        }
     }
 }

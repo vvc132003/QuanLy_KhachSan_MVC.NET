@@ -72,9 +72,13 @@
                                     <div class="context-menu">
                                         @if (phong.tinhtrangphong == "có khách")
                                         {
-                                            <a href="/ThuePhong/ChiTietThuePhong/@phong.id">
+                                            <a href="/ThuePhong/ChiTietThuePhong/?id=@phong.id">
                                                 <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
                                                 Thông tin thuê phòng
+                                            </a>
+                                            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal@(phong.id)">
+                                                <i class="fas fa-exchange-alt" style="color: blue; font-size: 20px; margin-right: 5px;"></i>
+                                                Chuyển phòng
                                             </a>
                                         }
                                         else if (phong.tinhtrangphong == "còn trống")
@@ -128,6 +132,61 @@
         </div>
     </div>
 </div>
+@foreach (var phong in Model[0].listphong)
+{
+    <div class="modal fade" id="exampleModal@(phong.id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         data-bs-backdrop="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body text-left">
+                    <div class="text-bg-success p-2">Chuyển phòng</div>
+                    <div class="border border-secondary-subtle" style="padding:10px 20px">
+                        <form method="post" action="/ChuyenPhong/ChuyenPhong">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="idphongcu" class="form-label">Phòng cũ:</label>
+                                        <input type="text" class="form-control" value="@phong.id" id="idphongcu" name="idphongcu" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="idphongmoi" class="form-label">Phòng mới:</label>
+                                        <select id="idphongmoi" name="idphongmoi" class="form-control">
+                                            @foreach (var phongs in Model[0].listphongtrangthai)
+                                            {
+                                                <option value="">Chọn phòng mới</option>
+                                                <option value="@phongs.id">@phongs.id</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="lydo" class="form-label">Lý do:</label>
+                                    <input type="text" class="form-control" id="lydo" name="lydo">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">
+                                    Huỷ
+                                </button>
+                                <input type="submit" value="Chuyển phòng" class="btn btn-primary custom-button" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<style>
+    .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+</style>
 @functions {
     public string GetTinhTrangPhong(string trangthai)
     {

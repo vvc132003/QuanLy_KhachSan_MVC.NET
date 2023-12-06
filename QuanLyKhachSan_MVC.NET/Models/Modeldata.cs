@@ -6,6 +6,7 @@
         public List<Tang> listtang { get; set; }
         public Phong phong { get; set; }
         public List<Phong> listphong { get; set; }
+        public List<Phong> listphongtrangthai { get; set; }
         public BoPhan boPhan { get; set; }
         public List<BoPhan> listbophan { get; set; }
         public ChucVu chucVu { get; set; }

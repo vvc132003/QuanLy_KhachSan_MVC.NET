@@ -28,10 +28,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 foreach (var tang in tanglist)
                 {
                     List<Phong> phongs = phongService.GetAllPhongIDTang(tang.id);
+                    List<Phong> phongtrangthai = phongService.GetAllPhongTrangThai();
                     Modeldata modeldata = new Modeldata
                     {
                         tang = tang,
-                        listphong = phongs
+                        listphong = phongs,
+                        listphongtrangthai = phongtrangthai,
                     };
                     modeldataList.Add(modeldata);
                 }
