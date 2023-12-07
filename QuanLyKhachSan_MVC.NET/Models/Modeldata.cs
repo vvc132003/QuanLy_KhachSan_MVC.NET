@@ -31,5 +31,8 @@
         public LichSuThanhToan lichSuThanhToan { get; set; }
         public List<LichSuThanhToan> listlichSuThanhToan { get; set; }
 
+        public ThietBi thietBi { get; set; }
+        public List<ThietBi> listThietBi { get; set; }
+
     }
 }

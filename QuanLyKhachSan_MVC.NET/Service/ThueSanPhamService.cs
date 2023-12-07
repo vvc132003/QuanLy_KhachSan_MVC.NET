@@ -78,8 +78,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     command.Parameters.AddWithValue("@iddatphong", iddatphong);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        float tongtien = 0;
-                        while (reader.Read())
+/*                        float tongtien = 0;
+*/                        while (reader.Read())
                         {
                             ThueSanPham thueSanPham = new ThueSanPham()
                             {
@@ -93,8 +93,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
                             };
                             thueSanPhams.Add(thueSanPham);
-                            tongtien += thueSanPham.thanhtien;
-                        }
+/*                            tongtien += thueSanPham.thanhtien;
+*/                        }
                     }
                 }
                 return thueSanPhams;
