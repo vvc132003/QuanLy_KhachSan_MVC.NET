@@ -10,8 +10,8 @@
         public BoPhan boPhan { get; set; }
         public List<BoPhan> listbophan { get; set; }
         public ChucVu chucVu { get; set; }
-        public List<ChucVu> listchucVu { get; set;}
-        public ViTriBoPhan viTriBoPhan { get; set;}
+        public List<ChucVu> listchucVu { get; set; }
+        public ViTriBoPhan viTriBoPhan { get; set; }
         public List<ViTriBoPhan> listviTriBoPhan { get; set; }
         public NhanVien nhanVien { get; set; }
         public List<NhanVien> listnhanVien { get; set; }
@@ -26,5 +26,10 @@
         public ThueSanPham thueSanPham { get; set; }
         public List<ThueSanPham> listthueSanPham { get; set; }
         public float tongtienhueSanPham { get; set; }
+        public TraPhong traphong { get; set; }
+        public List<TraPhong> listtraphong { get; set; }
+        public LichSuThanhToan lichSuThanhToan { get; set; }
+        public List<LichSuThanhToan> listlichSuThanhToan { get; set; }
+
     }
 }

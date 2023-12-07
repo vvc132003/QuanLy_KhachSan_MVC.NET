@@ -33,7 +33,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     if (sanpham.soluongcon > 1)
                     {
-                        sanpham.soluongcon = sanpham.soluongcon - 1;
+                        sanpham.soluongcon -= 1;
                         sanPhamService.CapNhatSanPham(sanpham);
                         thueSanPhamididdatphong.soluong += 1;
                         thueSanPhamididdatphong.thanhtien += 1 * sanpham.giaban;
@@ -48,7 +48,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     if (sanpham.soluongcon > 1)
                     {
-                        sanpham.soluongcon = sanpham.soluongcon - 1;
+                        sanpham.soluongcon -= 1;
                         sanPhamService.CapNhatSanPham(sanpham);
                         thueSanPham.thanhtien = 1 * sanpham.giaban;
                         thueSanPhamService.ThueSanPham(thueSanPham);
@@ -79,16 +79,16 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     if (thueSanPham.soluong == 1)
                     {
-                        sanpham.soluongcon = sanpham.soluongcon + 1;
+                        sanpham.soluongcon += 1;
                         sanPhamService.CapNhatSanPham(sanpham);
                         thueSanPhamService.XoaThueSanPham(id);
                         return RedirectToAction("ChiTietThuePhong", "ThuePhong", new { id = idphong });
                     }
                     else if (thueSanPham.soluong > 1)
                     {
-                        sanpham.soluongcon = sanpham.soluongcon + 1;
+                        sanpham.soluongcon += 1;
                         sanPhamService.CapNhatSanPham(sanpham);
-                        thueSanPham.soluong = thueSanPham.soluong - 1;
+                        thueSanPham.soluong -= 1;
                         thueSanPham.thanhtien = thueSanPham.soluong * sanpham.giaban;
                         thueSanPhamService.CapNhatThueSanPham(thueSanPham);
                         return RedirectToAction("ChiTietThuePhong", "ThuePhong", new { id = idphong });
@@ -113,9 +113,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 SanPham sanpham = sanPhamService.GetSanPhamByID(thueSanPham.idsanpham);
                 if (sanpham.soluongcon > 1)
                 {
-                    sanpham.soluongcon = sanpham.soluongcon - 1;
+                    sanpham.soluongcon -= 1;
                     sanPhamService.CapNhatSanPham(sanpham);
-                    thueSanPham.soluong = thueSanPham.soluong + 1;
+                    thueSanPham.soluong += 1;
                     thueSanPham.thanhtien = thueSanPham.soluong * sanpham.giaban;
                     thueSanPhamService.CapNhatThueSanPham(thueSanPham);
                 }
