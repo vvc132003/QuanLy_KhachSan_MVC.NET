@@ -33,7 +33,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 chuyenPhongService.ThemChuyenPhong(chuyenPhong);
                 /// cap nhật tình trạng phòng cũ
                 Phong phongcu = phongService.GetPhongID(idphongcu);
-                phongcu.tinhtrangphong = "còn trống";
+                phongcu.tinhtrangphong = "chưa dọn";
                 phongService.CapNhatPhong(phongcu);
                 /// cap nhật tình trạng phòng mới
                 Phong phongmoi = phongService.GetPhongID(idphongmoi);

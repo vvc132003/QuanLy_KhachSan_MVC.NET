@@ -84,10 +84,10 @@
                                             }
                                         </tbody>
                                     </table>
-                                    <hr />
+                                    <hr/>
                                     <div class="border border-dark-subtle" style="padding:10px 20px">
                                         <form method="post" action="/TraPhong/TraPhongandLSThanhToan">
-                                            <input type="text" name="idphong" id="idphong" value="@Model[0].phong.id" class="form-control" />
+                                            <input type="hidden" name="idphong" id="idphong" value="@Model[0].phong.id" class="form-control" />
                                             <h4>Tổng tiền thuê sản phẩm: @string.Format("{0:N0} VNĐ", @Model[0].tongtienhueSanPham)</h4>
                                             <h4>Tiền phòng: @string.Format("{0:N0} VNĐ", @Model[0].phong.giatien)</h4>
                                             <h4>Tiền khách hàng đặt cọc: @string.Format("{0:N0} VNĐ", @Model[0].datPhong.tiendatcoc)</h4>

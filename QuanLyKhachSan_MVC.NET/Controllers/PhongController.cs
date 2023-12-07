@@ -44,5 +44,32 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("DangNhap", "DangNhap");
             }
         }
+        public IActionResult CapNhatTrangThaiPhong(int idphong)
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                Phong phong = phongService.GetPhongID(idphong);
+                if (phong.tinhtrangphong == "chưa dọn")
+                {
+                    phong.tinhtrangphong = "còn trống";
+                    phongService.CapNhatPhong(phong);
+                }
+                else if (phong.tinhtrangphong == "còn trống")
+                {
+                    phong.tinhtrangphong = "đang sửa chữa";
+                    phongService.CapNhatPhong(phong);
+                }
+                else if (phong.tinhtrangphong == "đang sửa chữa")
+                {
+                    phong.tinhtrangphong = "chưa dọn";
+                    phongService.CapNhatPhong(phong);
+                }
+                return RedirectToAction("Index", "Phong");
+            }
+            else
+            {
+                return RedirectToAction("DangNhap", "DangNhap");
+            }
+        }
     }
 }

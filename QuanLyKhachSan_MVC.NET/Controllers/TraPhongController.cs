@@ -54,7 +54,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 traPhongService.ThemTraPhong(traPhong);
                 /// cập nhật trạng thái của phòng 
                 Phong phong = phongService.GetPhongID(idphong);
-                phong.tinhtrangphong = "còn trống";
+                phong.tinhtrangphong = "chưa dọn";
                 phongService.CapNhatPhong(phong);
                 /// cập nhật trạng thái id đặt phòng
                 datphong.trangthai = "đã trả";
