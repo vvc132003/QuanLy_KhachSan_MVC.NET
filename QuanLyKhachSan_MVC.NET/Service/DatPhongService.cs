@@ -14,7 +14,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
             {
                 List<DatPhong> datPhongs = new List<DatPhong>();
                 connection.Open();
-                string sql = "SELECT * FROM DatPhong left join KhachHang on datphong.idkhachhang = khachhang.id where idphong = @idphong ";
+                string sql = "SELECT * FROM DatPhong left join KhachHang on datphong.idkhachhang = khachhang.id where idphong = @idphong and DatPhong.trangthai = N'đã đặt' ";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@idphong", id);
@@ -33,6 +33,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 ngaydat = (DateTime)reader["ngaydat"],
                                 ngaydukientra = (DateTime)reader["ngaydukientra"],
                                 tiendatcoc = Convert.ToSingle(reader["tiendatcoc"]),
+                                idloaidatphong = (int)reader["idloaidatphong"],
                             };
                             datPhongs.Add(datPhong);
                         }

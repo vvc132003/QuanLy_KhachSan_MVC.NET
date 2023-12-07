@@ -66,6 +66,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     Phong phong = phongService.GetPhongID(datPhong.idphong);
                     phong.tinhtrangphong = "có khách";
                     phongService.CapNhatPhong(phong);
+                    TempData["thuephongthanhcong"] = "";
                     return RedirectToAction("Index", "Phong");
                 }
                 /// nếu khách hàng không tồn tại
@@ -91,6 +92,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     Phong phong = phongService.GetPhongID(datPhong.idphong);
                     phong.tinhtrangphong = "có khách";
                     phongService.CapNhatPhong(phong);
+                    TempData["thuephongthanhcong"] = "";
                     return RedirectToAction("Index", "Phong");
                 }
             }
@@ -159,6 +161,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         phongService.CapNhatPhong(phong);
                     }
                 }
+                TempData["thuephongthanhcong"] = "";
                 return RedirectToAction("Index", "Phong");
             }
             else
