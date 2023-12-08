@@ -155,9 +155,9 @@
                                     <div class="mb-3">
                                         <label for="idphongmoi" class="form-label">Phòng mới:</label>
                                         <select id="idphongmoi" name="idphongmoi" class="form-control">
+                                            <option value="">Chọn phòng mới</option>
                                             @foreach (var phongs in Model[0].listphongtrangthai)
                                             {
-                                                <option value="">Chọn phòng mới</option>
                                                 <option value="@phongs.id">@phongs.id</option>
                                             }
                                         </select>
