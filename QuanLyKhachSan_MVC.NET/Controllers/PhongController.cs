@@ -64,6 +64,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     phong.tinhtrangphong = "chưa dọn";
                     phongService.CapNhatPhong(phong);
                 }
+                else
+                {
+                    phong.tinhtrangphong = "đang sửa chữa";
+                    phongService.CapNhatPhong(phong);
+                }
                 return RedirectToAction("Index", "Phong");
             }
             else
