@@ -43,7 +43,6 @@ namespace QuanLyKhachSan_MVC.NET.Service
             {
                 connection.Open();
                 string query = "UPDATE BoPhan SET tenbophan = @tenbophan, mota = @mota, image = @image WHERE id = @id";
-
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@tenbophan", boPhan.tenbophan);

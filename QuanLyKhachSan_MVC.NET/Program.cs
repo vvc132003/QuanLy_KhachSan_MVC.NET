@@ -19,6 +19,7 @@ builder.Services.AddScoped<ChuyenPhongService>();
 builder.Services.AddScoped<TraPhongService>();
 builder.Services.AddScoped<LichSuThanhToanService>();
 builder.Services.AddScoped<ThietBiService>();
+builder.Services.AddScoped<ThietBiPhongService>();
 
 
 // Add services to the container.

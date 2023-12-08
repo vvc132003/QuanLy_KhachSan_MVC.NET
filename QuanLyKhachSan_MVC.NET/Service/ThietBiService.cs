@@ -78,7 +78,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                             {
                                 id = (int)reader["id"],
                                 tenthietbi = reader["tenthietbi"].ToString(),
-                                giathietbi = (float)reader["giathietbi"],
+                                giathietbi = Convert.ToSingle(reader["giathietbi"]),
                                 ngaymua = (DateTime)reader["ngaymua"],
                                 soluongcon = (int)reader["soluongcon"],
                                 image = reader["image"].ToString(),

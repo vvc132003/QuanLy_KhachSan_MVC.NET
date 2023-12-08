@@ -33,6 +33,8 @@
 
         public ThietBi thietBi { get; set; }
         public List<ThietBi> listThietBi { get; set; }
+        public ThietBiPhong thietBiphong { get; set; }
+        public List<ThietBiPhong> listThietBiphong { get; set; }
 
     }
 }

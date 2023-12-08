@@ -11,7 +11,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             thietBiService = thietBiServices;
         }
-
         public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
