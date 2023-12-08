@@ -20,6 +20,7 @@ builder.Services.AddScoped<TraPhongService>();
 builder.Services.AddScoped<LichSuThanhToanService>();
 builder.Services.AddScoped<ThietBiService>();
 builder.Services.AddScoped<ThietBiPhongService>();
+builder.Services.AddScoped<ThoiGianService>();
 
 
 // Add services to the container.

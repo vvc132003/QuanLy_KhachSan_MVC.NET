@@ -250,3 +250,14 @@
         });
     </script>
 }
+@if (TempData["thoigianthanhcong"] != null)
+{
+    <script>
+        Swal.fire({
+            position: "top-right",
+            title: 'Tạo thời gian thành công!',
+            icon: 'success',
+            showConfirmButton: false,
+        });
+    </script>
+}

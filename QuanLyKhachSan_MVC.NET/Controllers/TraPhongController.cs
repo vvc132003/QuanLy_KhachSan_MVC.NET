@@ -30,6 +30,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 int idnv = HttpContext.Session.GetInt32("id").Value;
                 // lấy id đặt phòng từ id phòng
                 DatPhong datphong = datPhongService.GetDatPhongByIDTrangThai(idphong);
+                Phong phong = phongService.GetPhongID(idphong);
                 /// thực hiện lấy ds thuê sản phẩm và tổng tiền theo id đặt phòng
                 List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datphong.id);
                 float tongtien = 0;
@@ -37,10 +38,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     tongtien += thueSanPham.thanhtien;
                 }
+                float sotienthanhtoan = (phong.giatien + tongtien) - datphong.tiendatcoc;
                 /// thêm lịch sử thanh toán
                 LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
                 lichSuThanhToan.ngaythanhtoan = DateTime.Now;
-                lichSuThanhToan.sotienthanhtoan = tongtien;
+                lichSuThanhToan.sotienthanhtoan = sotienthanhtoan;
                 lichSuThanhToan.hinhthucthanhtoan = "chuyển khoản";
                 lichSuThanhToan.trangthai = "đã thanh toán";
                 lichSuThanhToan.iddatphong = datphong.id;
@@ -53,7 +55,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 traPhong.iddatphong = datphong.id;
                 traPhongService.ThemTraPhong(traPhong);
                 /// cập nhật trạng thái của phòng 
-                Phong phong = phongService.GetPhongID(idphong);
                 phong.tinhtrangphong = "chưa dọn";
                 phongService.CapNhatPhong(phong);
                 /// cập nhật trạng thái id đặt phòng

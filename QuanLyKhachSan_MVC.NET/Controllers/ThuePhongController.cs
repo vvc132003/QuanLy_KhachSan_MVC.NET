@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuanLyKhachSan_MVC.NET.Models;
 using QuanLyKhachSan_MVC.NET.Service;
+using System.Globalization;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
@@ -12,9 +13,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly NhanPhongService nhanPhongService;
         private readonly SanPhamService sanPhamService;
         private readonly ThueSanPhamService thueSanPhamService;
+        private readonly ThoiGianService thoiGianService;
 
 
-        public ThuePhongController(DatPhongService datPhongServices, KhachHangService khachHangServices, PhongService phongServices, NhanPhongService nhanPhongServices, SanPhamService sanPhamServices, ThueSanPhamService thueSanPhamServices)
+        public ThuePhongController(DatPhongService datPhongServices, KhachHangService khachHangServices, PhongService phongServices, NhanPhongService nhanPhongServices,
+            SanPhamService sanPhamServices, ThueSanPhamService thueSanPhamServices, ThoiGianService thoiGianServices)
         {
             datPhongService = datPhongServices;
             khachHangService = khachHangServices;
@@ -22,6 +25,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             nhanPhongService = nhanPhongServices;
             sanPhamService = sanPhamServices;
             thueSanPhamService = thueSanPhamServices;
+            thoiGianService = thoiGianServices;
         }
         public IActionResult Index(int id)
         {
@@ -51,7 +55,13 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                 if (khachHangTonTai != null)
                 {
+                    ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
+                    datPhong.idthoigian = thoiGian.id;
+                    /// id khách hàng
                     datPhong.idkhachhang = khachHangTonTai.id;
+                    string ngayDuKienText = Request.Form["ngaydukientra"];
+                    DateTime ngayDuKien = DateTime.ParseExact(ngayDuKienText, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture);
+                    datPhong.ngaydukientra = ngayDuKien;
                     datPhong.idloaidatphong = 2;
                     datPhong.trangthai = "đã đặt";
                     datPhong.ngaydat = DateTime.Now;
@@ -77,7 +87,13 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     khachHangService.ThemKhachHang(khachHang);
                     /// lấy id khách hnagf mới tạo từ cccd để thực hiện việc đặt phòng
                     KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
+                    // id khách hàng
                     datPhong.idkhachhang = khachhangmoi.id;
+                    ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
+                    datPhong.idthoigian = thoiGian.id;
+                    string ngayDuKienText = Request.Form["ngaydukientra"];
+                    DateTime ngayDuKien = DateTime.ParseExact(ngayDuKienText, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture);
+                    datPhong.ngaydukientra = ngayDuKien;
                     datPhong.idloaidatphong = 2;
                     datPhong.trangthai = "đã đặt";
                     datPhong.ngaydat = DateTime.Now;
@@ -130,6 +146,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                     if (khachHangTonTai != null)
                     {
+                        string ngayDuKienText = Request.Form["ngaydukientra"];
+                        DateTime ngayDuKien = DateTime.ParseExact(ngayDuKienText, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture);
+                        ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
+                        datPhong.idthoigian = thoiGian.id;
+                        datPhong.ngaydukientra = ngayDuKien;
                         datPhong.idkhachhang = khachHangTonTai.id;
                         datPhong.idloaidatphong = 2;
                         datPhong.trangthai = "đã đặt";
@@ -147,6 +168,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         khachHang.trangthai = "còn hoạt động";
                         khachHangService.ThemKhachHang(khachHang);
                         KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
+                        string ngayDuKienText = Request.Form["ngaydukientra"];
+                        DateTime ngayDuKien = DateTime.ParseExact(ngayDuKienText, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture);
+                        ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
+                        datPhong.idthoigian = thoiGian.id;
+                        datPhong.ngaydukientra = ngayDuKien;
                         datPhong.idkhachhang = khachhangmoi.id;
                         datPhong.idloaidatphong = 2;
                         datPhong.trangthai = "đã đặt";
@@ -191,6 +217,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         {
                             tongtien += thueSanPham.thanhtien;
                         }
+                        /*TimeSpan timeSpan = datphong.ngaydukientra - datphong.ngaydat;
+                        if (timeSpan.TotalHours >= 24)
+                        {
+                            datphong.hinhthucthue = "Theo ngày";
+                            datPhongService.UpdateDatPhong(datphong);
+                        }*/
                         Modeldata yourModel = new Modeldata
                         {
                             listsanPham = listsanpham,

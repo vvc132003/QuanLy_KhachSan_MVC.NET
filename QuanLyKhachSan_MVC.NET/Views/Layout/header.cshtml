@@ -99,6 +99,11 @@
                     </ul>
                 </li>
                 <li>
+                    <a class="waves-effect waves-dark" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="fa fa-calendar green_color"></i><span class="hide-menu">Thời gian</span>
+                    </a>
+                </li>
+                <li>
                     <a class="waves-effect waves-dark" href="pages-blank.html" aria-expanded="false">
                         <i class="fa fa-bar-chart-o green_color"></i><span class="hide-menu">Thống kê</span>
                     </a>
@@ -107,6 +112,42 @@
         </nav>
     </div>
 </aside>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     data-bs-backdrop="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-left">
+                <div class="text-bg-success p-2">Thời gian vào - thời gian ra</div>
+                <div class="border border-secondary-subtle" style="padding:10px 20px">
+                    <form method="post" action="/ThoiGian/ThemThoiGian">
+                        <div class="mb-3">
+                            <label for="thoigianvao" class="form-label">Thời gian vào:</label>
+                            <input type="datetime-local" name="thoigianvao" id="thoigianvao" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="thoigianra" class="form-label">Thời gian ra:</label>
+                            <input type="datetime-local" name="thoigianra" id="thoigianra" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="mota" class="form-label">Mô tả:</label>
+                            <input type="text" name="mota" id="mota" class="form-control" />
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" value="Tạo thời gian" class="btn btn-primary custom-button" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {

@@ -65,7 +65,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 trangthai = reader["trangthai"].ToString(),
                                 hinhthucthue = reader["hinhthucthue"].ToString(),
                                 ngaydat = (DateTime)reader["ngaydat"],
-                                ngaydukientra = (DateTime)reader["ngaydukientra"]
+                                ngaydukientra = (DateTime)reader["ngaydukientra"],
+                                tiendatcoc = Convert.ToSingle(reader["tiendatcoc"])
                             };
                             return datPhong;
                         }
@@ -84,8 +85,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "INSERT INTO DatPhong (ngaydat, ngaydukientra, tiendatcoc, trangthai,hinhthucthue, idloaidatphong, idkhachhang, idphong) " +
-                               "VALUES (@ngaydat, @ngaydukientra, @tiendatcoc, @trangthai,@hinhthucthue, @idloaidatphong, @idkhachhang, @idphong)" +
+                string query = "INSERT INTO DatPhong (ngaydat, ngaydukientra, tiendatcoc, trangthai,hinhthucthue, idloaidatphong, idkhachhang, idphong,idthoigian) " +
+                               "VALUES (@ngaydat, @ngaydukientra, @tiendatcoc, @trangthai,@hinhthucthue, @idloaidatphong, @idkhachhang, @idphong,@idthoigian)" +
                                "SELECT SCOPE_IDENTITY();";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@ngaydat", datPhong.ngaydat);
@@ -96,6 +97,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 command.Parameters.AddWithValue("@idloaidatphong", datPhong.idloaidatphong);
                 command.Parameters.AddWithValue("@idkhachhang", datPhong.idkhachhang);
                 command.Parameters.AddWithValue("@idphong", datPhong.idphong);
+                command.Parameters.AddWithValue("@idthoigian", datPhong.idthoigian);
                 idDatPhongThemVao = Convert.ToInt32(command.ExecuteScalar());
             }
             return idDatPhongThemVao;
@@ -108,7 +110,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 connection.Open();
                 string updateQuery = "UPDATE DatPhong SET ngaydat = @ngaydat, ngaydukientra = @ngaydukientra, " +
                                    "tiendatcoc = @tiendatcoc, trangthai = @trangthai, hinhthucthue = @hinhthucthue, idloaidatphong=@idloaidatphong," +
-                                   " idkhachhang=@idkhachhang, idphong=@idphong " +
+                                   " idkhachhang=@idkhachhang, idphong=@idphong ,idthoigian=@idthoigian" +
                                    "WHERE id = @id";
                 SqlCommand command = new SqlCommand(updateQuery, connection);
                 command.Parameters.AddWithValue("@ngaydat", datPhong.ngaydat);
@@ -119,6 +121,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 command.Parameters.AddWithValue("@idloaidatphong", datPhong.idloaidatphong);
                 command.Parameters.AddWithValue("@idkhachhang", datPhong.idkhachhang);
                 command.Parameters.AddWithValue("@idphong", datPhong.idphong);
+                command.Parameters.AddWithValue("@idthoigian", datPhong.idthoigian);
                 command.Parameters.AddWithValue("@id", datPhong.id);
                 command.ExecuteNonQuery();
             }
