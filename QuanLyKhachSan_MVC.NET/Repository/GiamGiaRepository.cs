@@ -5,6 +5,6 @@ namespace QuanLyKhachSan_MVC.NET.Repository
     public interface GiamGiaRepository
     {
         void ThemGiamGia(GiamGia giamGia);
-        GiamGia GetGiamGiaBYIDKhachHang(int idkhachhang, int solandatphong);
+        GiamGia GetGiamGiaBYIDKhachHang(int iddatphong);
     }
 }

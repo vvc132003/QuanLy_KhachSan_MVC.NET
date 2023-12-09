@@ -37,15 +37,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 Phong phong = phongService.GetPhongID(idphong);
                 /// thực hiện lấy ds thuê sản phẩm và tổng tiền theo id đặt phòng
                 List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datphong.id);
-                int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(datphong.idkhachhang);
-                GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.idkhachhang, solandatphong);
+                GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
                 float tongtien = 0;
                 foreach (var thueSanPham in listthueSanPham)
                 {
                     tongtien += thueSanPham.thanhtien;
                 }
                 float sotienthanhtoan = 0;
-                if (giamGia != null && solandatphong > 0)
+                if (giamGia != null && giamGia.solandatphong > 0)
                 {
                     sotienthanhtoan = (((phong.giatien + tongtien) - datphong.tiendatcoc) * giamGia.phantramgiamgia) / 100;
                 }

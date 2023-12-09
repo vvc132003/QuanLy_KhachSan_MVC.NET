@@ -7,18 +7,16 @@ namespace QuanLyKhachSan_MVC.NET.Service
 {
     public class GiamGiaService : GiamGiaRepository
     {
-        public GiamGia GetGiamGiaBYIDKhachHang(int idkhachhang, int solandatphong)
+        public GiamGia GetGiamGiaBYIDKhachHang(int iddatphong)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
 
-                string query = "SELECT id, solandatphong, phantramgiamgia, ngaythemgiamgia, idkhachhang, idquydinh FROM GiamGia WHERE idkhachhang = @idkhachhang AND solandatphong = @solandatphong";
+                string query = "SELECT * FROM GiamGia WHERE iddatphong = @iddatphong ";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@idkhachhang", idkhachhang);
-                    command.Parameters.AddWithValue("@solandatphong", solandatphong);
-
+                    command.Parameters.AddWithValue("@iddatphong", iddatphong);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
@@ -48,13 +46,14 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "INSERT INTO GiamGia (solandatphong, phantramgiamgia, ngaythemgiamgia, idkhachhang, idquydinh) VALUES (@solandatphong, @phantramgiamgia, @ngaythemgiamgia, @idkhachhang, @idquydinh)";
+                string query = "INSERT INTO GiamGia (solandatphong, phantramgiamgia, ngaythemgiamgia, idkhachhang, idquydinh, iddatphong) VALUES (@solandatphong, @phantramgiamgia, @ngaythemgiamgia, @idkhachhang, @idquydinh, @iddatphong)";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@solandatphong", giamGia.solandatphong);
                 command.Parameters.AddWithValue("@phantramgiamgia", giamGia.phantramgiamgia);
                 command.Parameters.AddWithValue("@ngaythemgiamgia", giamGia.ngaythemgiamgia);
                 command.Parameters.AddWithValue("@idkhachhang", giamGia.idkhachhang);
                 command.Parameters.AddWithValue("@idquydinh", giamGia.idquydinh);
+                command.Parameters.AddWithValue("@iddatphong", giamGia.iddatphong);
                 command.ExecuteNonQuery();
             }
         }

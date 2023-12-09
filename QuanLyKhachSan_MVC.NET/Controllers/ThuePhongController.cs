@@ -87,6 +87,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     if (quyDinhGiamGia != null && solandatphong == quyDinhGiamGia.solandatphong)
                     {
                         GiamGia giamGia = new GiamGia();
+                        giamGia.iddatphong = idDatPhongThemVao;
                         giamGia.ngaythemgiamgia = DateTime.Now;
                         giamGia.solandatphong = solandatphong;
                         giamGia.phantramgiamgia = quyDinhGiamGia.phantramgiamgia;
@@ -187,6 +188,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         if (quyDinhGiamGia != null && solandatphong == quyDinhGiamGia.solandatphong)
                         {
                             GiamGia giamGia = new GiamGia();
+                            giamGia.iddatphong = idDatPhongThemVao;
                             giamGia.ngaythemgiamgia = DateTime.Now;
                             giamGia.solandatphong = solandatphong;
                             giamGia.phantramgiamgia = quyDinhGiamGia.phantramgiamgia;
@@ -249,8 +251,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         {
                             tongtien += thueSanPham.thanhtien;
                         }
-                        int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(datphong.idkhachhang);
-                        GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.idkhachhang, solandatphong);
+                        GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
                         Modeldata yourModel = new Modeldata
                         {
                             listsanPham = listsanpham,

@@ -8,5 +8,6 @@
         public DateTime ngaythemgiamgia { get; set; }
         public int idkhachhang { get; set; }
         public int idquydinh { get; set; }
+        public int iddatphong { get; set; }
     }
 }
