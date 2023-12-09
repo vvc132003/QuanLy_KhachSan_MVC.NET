@@ -38,7 +38,9 @@
                 {
                     foreach (var tang in Model)
                     {
-                        <p class="tang">@tang.tang.tentang</p>
+                        <p class="tang">
+                            <a data-bs-toggle="modal" style="text-decoration:none; color:white;" data-bs-target="#exampleModaltang@(tang.tang.id)" href="@tang.tang.id">@tang.tang.tentang</a>
+                        </p>
                         <div class="room-container">
                             @foreach (var phong in tang.listphong)
                             {
@@ -69,60 +71,72 @@
                                     {
                                         <i class="fas fa-question-circle"></i>
                                     }
-                                    <div class="context-menu">
-                                        @if (phong.tinhtrangphong == "có khách")
+                                    @foreach (var thoigian in Model)
+                                    {
+                                        if (thoigian != null && thoigian.thoigian != null && thoigian.thoigian.thoigianvao != null)
                                         {
-                                            <a href="/ThuePhong/ChiTietThuePhong/?id=@phong.id">
-                                                <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
-                                                Thông tin thuê phòng
-                                            </a>
-                                            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal@(phong.id)">
-                                                <i class="fas fa-exchange-alt" style="color: blue; font-size: 20px; margin-right: 5px;"></i>
-                                                Chuyển phòng
-                                            </a>
-                                        }
-                                        else if (phong.tinhtrangphong == "còn trống")
-                                        {
-                                            <a href="/ThuePhong/Index/@phong.id">
-                                                <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-bed"></i>
-                                                Thuê bình thường
-                                            </a>
-                                            <a href="/ThuePhong/Index1">
-                                                <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-bed"></i>
-                                                Thuê theo đoàn
-                                            </a>
-                                            <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
-                                                <i style="font-size: 20px; margin-right: 14px;color: #8B4513;" class="fas fa-wrench"></i>
-                                                Sửa phòng
-                                            </a>
-                                        }
-                                        else if (phong.tinhtrangphong == "đã đặt")
-                                        {
-                                            <a href="">
-                                                <i style="font-size: 20px; margin-right: 14px" class="fas fa-check-circle"></i>
-                                                Check nhận phòng
-                                            </a>
-                                        }
-                                        else if (phong.tinhtrangphong == "đang sửa chữa")
-                                        {
-                                            <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
-                                                <i style="font-size: 20px; margin-right: 2px; color: blue;" class="fas fa-check"></i>
-                                                Hoàn tất sửa chữa
-                                            </a>
-                                        }
-                                        else if (phong.tinhtrangphong == "chưa dọn")
-                                        {
-                                            <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
-                                                <i style="font-size: 20px; margin-right: 10px; color: blue;" class="fas fa-check"></i>
-                                                Dọn xong
-                                            </a>
-                                            <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
-                                                <i style="font-size: 20px; margin-right: 10px" class="fas fa-wrench"></i>
-                                                Sửa phòng
-                                            </a>
-                                        }
-                                    </div>
+                                            if (thoigian.thoigian.thoigianvao.Date == DateTime.Today)
+                                            {
+                                                <div class="context-menu">
+                                                    @if (phong.tinhtrangphong == "có khách")
+                                                    {
+                                                        <a href="/ThuePhong/ChiTietThuePhong/?id=@phong.id">
+                                                            <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
+                                                            Thông tin thuê phòng
+                                                        </a>
+                                                        <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal@(phong.id)">
+                                                            <i class="fas fa-exchange-alt" style="color: blue; font-size: 20px; margin-right: 5px;"></i>
+                                                            Chuyển phòng
+                                                        </a>
+                                                    }
+                                                    else if (phong.tinhtrangphong == "còn trống")
+                                                    {
+                                                        <a href="/ThuePhong/Index/@phong.id">
+                                                            <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-bed"></i>
+                                                            Thuê bình thường
+                                                        </a>
+                                                        <a href="/ThuePhong/Index1">
+                                                            <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-users"></i>
+                                                            Thuê theo đoàn
+                                                        </a>
+                                                        <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
+                                                            <i style="font-size: 20px; margin-right: 14px;color: #8B4513;" class="fas fa-wrench"></i>
+                                                            Sửa phòng
+                                                        </a>
+                                                    }
+                                                    else if (phong.tinhtrangphong == "đã đặt")
+                                                    {
+                                                        <a href="">
+                                                            <i style="font-size: 20px; margin-right: 14px" class="fas fa-check-circle"></i>
+                                                            Check nhận phòng
+                                                        </a>
+                                                    }
+                                                    else if (phong.tinhtrangphong == "đang sửa chữa")
+                                                    {
+                                                        <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
+                                                            <i style="font-size: 20px; margin-right: 2px; color: blue;" class="fas fa-check"></i>
+                                                            Hoàn tất sửa chữa
+                                                        </a>
+                                                    }
+                                                    else if (phong.tinhtrangphong == "chưa dọn")
+                                                    {
+                                                        <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
+                                                            <i style="font-size: 20px; margin-right: 10px; color: blue;" class="fas fa-check"></i>
+                                                            Dọn xong
+                                                        </a>
+                                                        <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
+                                                            <i style="font-size: 20px; margin-right: 10px" class="fas fa-wrench"></i>
+                                                            Sửa phòng
+                                                        </a>
+                                                    }
+                                                </div>
+                                            }
+                                            else
+                                            {
 
+                                            }
+                                        }
+                                    }
                                 </div>
                             }
                         </div>
@@ -181,6 +195,40 @@
         </div>
     </div>
 }
+@foreach (var tang in Model)
+{
+    <div class="modal fade" id="exampleModaltang@(tang.tang.id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         data-bs-backdrop="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body text-left">
+                    <div class="text-bg-success p-2">Thêm phòng</div>
+                    <div class="border border-secondary-subtle" style="padding:10px 20px">
+                        <form method="post" action="/ChuyenPhong/ChuyenPhong">
+                            <div class="row">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" value="@tang.tang.id" id="idtang" name="idtang" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="lydo" class="form-label">Lý do:</label>
+                                    <input type="text" class="form-control" id="lydo" name="lydo">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">
+                                    Huỷ
+                                </button>
+                                <input type="submit" value="Thêm phòng" class="btn btn-primary custom-button" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 <style>
     .modal-backdrop {
         background-color: rgba(0, 0, 0, 0.5);
@@ -216,7 +264,7 @@
 <script src="/static/jquery-3.2.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
-@if (TempData["thuephongthanhcong"] != null)
+                        @if (TempData["thuephongthanhcong"] != null)
 {
     <script>
         Swal.fire({

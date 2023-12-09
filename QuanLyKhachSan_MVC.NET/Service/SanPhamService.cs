@@ -99,7 +99,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
             {
                 connection.Open();
                 string sql = "INSERT INTO SanPham (tensanpham, mota,giaban , soluongcon, image, trangthai) " +
-                                     "VALUES (@tensanpham, @mota,@giaban  @soluongcon, @image, @trangthai)";
+                                     " VALUES (@tensanpham, @mota,@giaban,  @soluongcon, @image, @trangthai)";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@tensanpham", sanPham.tensanpham);

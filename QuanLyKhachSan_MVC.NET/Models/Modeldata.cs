@@ -36,5 +36,11 @@
         public ThietBiPhong thietBiphong { get; set; }
         public List<ThietBiPhong> listThietBiphong { get; set; }
 
+        public ThoiGian thoigian { get; set; }
+        public List<ThoiGian> listThoiGian { get; set; }
+
+        public QuyDinhGiamGia quyDinhGiamGia { get; set; }
+        public List<QuyDinhGiamGia> listquyDinhGiamGia { get; set; }
+
     }
 }

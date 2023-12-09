@@ -9,11 +9,13 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
     {
         private readonly PhongService phongService;
         private readonly TangService tangService;
+        private readonly ThoiGianService thoiGianService;
 
-        public PhongController(PhongService phongServices, TangService tangServices)
+        public PhongController(PhongService phongServices, TangService tangServices, ThoiGianService thoiGianServices)
         {
             phongService = phongServices;
             tangService = tangServices;
+            thoiGianService = thoiGianServices;
         }
         public IActionResult Index()
         {
@@ -24,6 +26,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 List<Tang> tanglist = tangService.GetAllTang();
+                ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
                 List<Modeldata> modeldataList = new List<Modeldata>();
                 foreach (var tang in tanglist)
                 {
@@ -34,6 +37,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         tang = tang,
                         listphong = phongs,
                         listphongtrangthai = phongtrangthai,
+                        thoigian = thoiGian,
                     };
                     modeldataList.Add(modeldata);
                 }
