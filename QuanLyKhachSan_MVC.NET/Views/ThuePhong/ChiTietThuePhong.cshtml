@@ -84,14 +84,23 @@
                                             }
                                         </tbody>
                                     </table>
-                                    <hr/>
+                                    <hr />
                                     <div class="border border-dark-subtle" style="padding:10px 20px">
                                         <form method="post" action="/TraPhong/TraPhongandLSThanhToan">
                                             <input type="hidden" name="idphong" id="idphong" value="@Model[0].phong.id" class="form-control" />
                                             <h4>Tổng tiền thuê sản phẩm: @string.Format("{0:N0} VNĐ", @Model[0].tongtienhueSanPham)</h4>
                                             <h4>Tiền phòng: @string.Format("{0:N0} VNĐ", @Model[0].phong.giatien)</h4>
                                             <h4>Tiền khách hàng đặt cọc: @string.Format("{0:N0} VNĐ", @Model[0].datPhong.tiendatcoc)</h4>
-                                            <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", @Model[0].phong.giatien + @Model[0].tongtienhueSanPham -@Model[0].datPhong.tiendatcoc)</h4>
+                                            @if (Model != null && Model.Count > 0 && Model[0].giamGia != null)
+                                            {
+                                                <h4>Giảm giá: @Model[0].giamGia.phantramgiamgia %</h4>
+                                                <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", ((@Model[0].phong.giatien + @Model[0].tongtienhueSanPham -@Model[0].datPhong.tiendatcoc) * @Model[0].giamGia.phantramgiamgia)/100)</h4>
+                                            }
+                                            else
+                                            {
+                                                <h4>Giảm giá: 0 %</h4>
+                                                <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", @Model[0].phong.giatien + @Model[0].tongtienhueSanPham -@Model[0].datPhong.tiendatcoc)</h4>
+                                            }
                                             <input type="submit" value="Thanh toán" class="btn btn-primary custom-button" />
                                         </form>
                                     </div>

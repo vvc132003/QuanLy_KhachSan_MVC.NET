@@ -249,12 +249,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         {
                             tongtien += thueSanPham.thanhtien;
                         }
-                        /*TimeSpan timeSpan = datphong.ngaydukientra - datphong.ngaydat;
-                        if (timeSpan.TotalHours >= 24)
-                        {
-                            datphong.hinhthucthue = "Theo ngày";
-                            datPhongService.UpdateDatPhong(datphong);
-                        }*/
+                        int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(datphong.idkhachhang);
+                        GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.idkhachhang, solandatphong);
                         Modeldata yourModel = new Modeldata
                         {
                             listsanPham = listsanpham,
@@ -262,6 +258,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             listthueSanPham = listthueSanPham,
                             tongtienhueSanPham = tongtien,
                             phong = phongs,
+                            giamGia = giamGia,
                         };
                         listmodeldatas.Add(yourModel);
                     }
@@ -271,6 +268,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 }
                 return View(listmodeldatas);
             }
+            /*TimeSpan timeSpan = datphong.ngaydukientra - datphong.ngaydat;
+                       if (timeSpan.TotalHours >= 24)
+                       {
+                           datphong.hinhthucthue = "Theo ngày";
+                           datPhongService.UpdateDatPhong(datphong);
+                       }*/
             else
             {
                 return RedirectToAction("DangNhap", "DangNhap");

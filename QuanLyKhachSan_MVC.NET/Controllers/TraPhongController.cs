@@ -11,19 +11,23 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly TraPhongService traPhongService;
         private readonly LichSuThanhToanService lichSuThanhToanService;
         private readonly PhongService phongService;
+        private readonly GiamGiaService giamGiaService;
+        private readonly QuyDinhGiamGiaService quyDinhGiamGiaservice;
 
         public TraPhongController(DatPhongService datPhongServices,
                                   ThueSanPhamService thueSanPhamServices,
                                   TraPhongService traPhongServices,
-                                  LichSuThanhToanService lichSuThanhToanServices, PhongService phongServices)
+                                  LichSuThanhToanService lichSuThanhToanServices, PhongService phongServices, GiamGiaService giamGiaServices, QuyDinhGiamGiaService quydinhGiamGiaServices)
         {
             datPhongService = datPhongServices;
             thueSanPhamService = thueSanPhamServices;
             traPhongService = traPhongServices;
             lichSuThanhToanService = lichSuThanhToanServices;
             phongService = phongServices;
+            giamGiaService = giamGiaServices;
+            quyDinhGiamGiaservice = quydinhGiamGiaServices;
         }
-        public IActionResult TraPhongandLSThanhToan( int idphong)
+        public IActionResult TraPhongandLSThanhToan(int idphong)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -33,12 +37,22 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 Phong phong = phongService.GetPhongID(idphong);
                 /// thực hiện lấy ds thuê sản phẩm và tổng tiền theo id đặt phòng
                 List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datphong.id);
+                int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(datphong.idkhachhang);
+                GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.idkhachhang, solandatphong);
                 float tongtien = 0;
                 foreach (var thueSanPham in listthueSanPham)
                 {
                     tongtien += thueSanPham.thanhtien;
                 }
-                float sotienthanhtoan = (phong.giatien + tongtien) - datphong.tiendatcoc;
+                float sotienthanhtoan = 0;
+                if (giamGia != null && solandatphong > 0)
+                {
+                    sotienthanhtoan = (((phong.giatien + tongtien) - datphong.tiendatcoc) * giamGia.phantramgiamgia) / 100;
+                }
+                else
+                {
+                    sotienthanhtoan = (phong.giatien + tongtien) - datphong.tiendatcoc;
+                }
                 /// thêm lịch sử thanh toán
                 LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
                 lichSuThanhToan.ngaythanhtoan = DateTime.Now;

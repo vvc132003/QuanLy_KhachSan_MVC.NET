@@ -7,6 +7,42 @@ namespace QuanLyKhachSan_MVC.NET.Service
 {
     public class GiamGiaService : GiamGiaRepository
     {
+        public GiamGia GetGiamGiaBYIDKhachHang(int idkhachhang, int solandatphong)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+
+                string query = "SELECT id, solandatphong, phantramgiamgia, ngaythemgiamgia, idkhachhang, idquydinh FROM GiamGia WHERE idkhachhang = @idkhachhang AND solandatphong = @solandatphong";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idkhachhang", idkhachhang);
+                    command.Parameters.AddWithValue("@solandatphong", solandatphong);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            GiamGia giamGia = new GiamGia()
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                solandatphong = Convert.ToInt32(reader["solandatphong"]),
+                                phantramgiamgia = Convert.ToSingle(reader["phantramgiamgia"]),
+                                ngaythemgiamgia = Convert.ToDateTime(reader["ngaythemgiamgia"]),
+                                idkhachhang = Convert.ToInt32(reader["idkhachhang"]),
+                                idquydinh = Convert.ToInt32(reader["idquydinh"])
+                            };
+                            return giamGia;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
         public void ThemGiamGia(GiamGia giamGia)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
