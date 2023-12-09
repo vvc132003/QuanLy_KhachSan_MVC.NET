@@ -80,6 +80,23 @@ namespace QuanLyKhachSan_MVC.NET.Service
             }
         }
 
+        public int GetDatPhongCountByKhachHangId(int idkhachhang)
+        {
+            int count = 0;
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "SELECT COUNT(*) FROM DatPhong WHERE idkhachhang = @idkhachhang";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idkhachhang", idkhachhang);
+                    count = (int)command.ExecuteScalar();
+                }
+            }
+            return count;
+        }
+
+
         public int ThemDatPhong(DatPhong datPhong)
         {
             int idDatPhongThemVao = 0;

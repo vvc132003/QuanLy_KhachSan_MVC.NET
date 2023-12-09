@@ -6,7 +6,7 @@ namespace QuanLyKhachSan_MVC.NET.Repository
     {
         int ThemDatPhong(DatPhong datPhong);
         void UpdateDatPhong(DatPhong datPhong);
-
+        int GetDatPhongCountByKhachHangId(int idkhachhang);
         List<DatPhong> GetAllDatPhongByID(int id);
         DatPhong GetDatPhongByIDTrangThai(int idphong);
     }

@@ -14,10 +14,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly SanPhamService sanPhamService;
         private readonly ThueSanPhamService thueSanPhamService;
         private readonly ThoiGianService thoiGianService;
+        private readonly GiamGiaService giamGiaService;
+        private readonly QuyDinhGiamGiaService quyDinhGiamGiaservice;
 
 
         public ThuePhongController(DatPhongService datPhongServices, KhachHangService khachHangServices, PhongService phongServices, NhanPhongService nhanPhongServices,
-            SanPhamService sanPhamServices, ThueSanPhamService thueSanPhamServices, ThoiGianService thoiGianServices)
+            SanPhamService sanPhamServices, ThueSanPhamService thueSanPhamServices, ThoiGianService thoiGianServices, GiamGiaService giamGiaServices, QuyDinhGiamGiaService quydinhGiamGiaServices)
         {
             datPhongService = datPhongServices;
             khachHangService = khachHangServices;
@@ -26,6 +28,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             sanPhamService = sanPhamServices;
             thueSanPhamService = thueSanPhamServices;
             thoiGianService = thoiGianServices;
+            giamGiaService = giamGiaServices;
+            quyDinhGiamGiaservice = quydinhGiamGiaServices;
         }
         public IActionResult Index(int id)
         {
@@ -76,6 +80,20 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     Phong phong = phongService.GetPhongID(datPhong.idphong);
                     phong.tinhtrangphong = "có khách";
                     phongService.CapNhatPhong(phong);
+                    /// thêm giảm giá
+                    /// lấy tổng số lần đặt phòng của khách hàng
+                    int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
+                    QuyDinhGiamGia quyDinhGiamGia = quyDinhGiamGiaservice.GetQuyDinhGia(solandatphong);
+                    if (quyDinhGiamGia != null && solandatphong == quyDinhGiamGia.solandatphong)
+                    {
+                        GiamGia giamGia = new GiamGia();
+                        giamGia.ngaythemgiamgia = DateTime.Now;
+                        giamGia.solandatphong = solandatphong;
+                        giamGia.phantramgiamgia = quyDinhGiamGia.phantramgiamgia;
+                        giamGia.idkhachhang = khachHangTonTai.id;
+                        giamGia.idquydinh = quyDinhGiamGia.id;
+                        giamGiaService.ThemGiamGia(giamGia);
+                    }
                     TempData["thuephongthanhcong"] = "";
                     return RedirectToAction("Index", "Phong");
                 }
@@ -162,6 +180,20 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         nhanPhongService.ThemNhanPhong(nhanPhong); Phong phong = phongService.GetPhongID(phongId);
                         phong.tinhtrangphong = "có khách";
                         phongService.CapNhatPhong(phong);
+                        /// thêm giảm giá
+                        /// lấy tổng số lần đặt phòng của khách hàng
+                        int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
+                        QuyDinhGiamGia quyDinhGiamGia = quyDinhGiamGiaservice.GetQuyDinhGia(solandatphong);
+                        if (quyDinhGiamGia != null && solandatphong == quyDinhGiamGia.solandatphong)
+                        {
+                            GiamGia giamGia = new GiamGia();
+                            giamGia.ngaythemgiamgia = DateTime.Now;
+                            giamGia.solandatphong = solandatphong;
+                            giamGia.phantramgiamgia = quyDinhGiamGia.phantramgiamgia;
+                            giamGia.idkhachhang = khachHangTonTai.id;
+                            giamGia.idquydinh = quyDinhGiamGia.id;
+                            giamGiaService.ThemGiamGia(giamGia);
+                        }
                     }
                     else
                     {

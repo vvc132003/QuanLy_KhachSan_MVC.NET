@@ -41,6 +41,7 @@
 
         public QuyDinhGiamGia quyDinhGiamGia { get; set; }
         public List<QuyDinhGiamGia> listquyDinhGiamGia { get; set; }
-
+        public GiamGia giamGia { get; set; }
+        public List<GiamGia> listGiamGia { get; set; }
     }
 }
