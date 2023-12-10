@@ -290,15 +290,16 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         /// thời gian trễ khi trả phòng
                         ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
                         DateTime ngaydukientra = datphong.ngaydukientra;
-                        DateTime ngaytraphong = thoiGian.thoigianra;
-                        if (ngaytraphong > ngaydukientra)
+                        DateTime ngaytraphong = DateTime.Now;
+                        TimeSpan thoiGianCheckOut = new TimeSpan(thoiGian.thoigianra.Hour, thoiGian.thoigianra.Minute, thoiGian.thoigianra.Second);
+                        if (ngaytraphong > ngaydukientra + thoiGianCheckOut)
                         {
-                            if (datphong.hinhthucthue == "Theo giờ" && ngaytraphong < ngaydukientra)
+                            if (datphong.hinhthucthue == "Theo giờ")
                             {
                                 datphong.hinhthucthue = "Theo ngày";
                                 datPhongService.UpdateDatPhong(datphong);
                             }
-                            else if (datphong.hinhthucthue == "Theo ngày" && ngaytraphong > ngaydukientra)
+                            else if (datphong.hinhthucthue == "Theo ngày")
                             {
                                 datphong.hinhthucthue = "Theo giờ";
                                 datPhongService.UpdateDatPhong(datphong);
