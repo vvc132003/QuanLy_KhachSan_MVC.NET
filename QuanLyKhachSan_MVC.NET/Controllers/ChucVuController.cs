@@ -12,6 +12,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             chucVuService = chucVuServices;
         }
+       
         public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)

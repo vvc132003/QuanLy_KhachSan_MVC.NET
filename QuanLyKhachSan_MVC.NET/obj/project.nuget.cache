@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "+8c4jCfFKRPXqzOHXK4xBm7V6heGIrCedMQDI94QbFUEnA2xNQd5vtBmgpRWOY5zG8Zdu9w7f+XhgHlOl0k+Ew==",
+  "dgSpecHash": "pc6mOEC6zQvb7TmFRdGmqdoLqRR76+Wn0bgKSmKLq8hqNkr4pJHSIil/xyKHmqfiIZm2yo1GXrMvl9j1hygbKw==",
   "success": true,
   "projectFilePath": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET.csproj",
   "expectedPackageFiles": [
@@ -16,6 +16,8 @@
     "C:\\Users\\vvc13\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\vvc13\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\vvc13\\.nuget\\packages\\npoi\\2.6.2\\npoi.2.6.2.nupkg.sha512",
+    "C:\\Users\\vvc13\\.nuget\\packages\\pagedlist\\1.17.0\\pagedlist.1.17.0.nupkg.sha512",
+    "C:\\Users\\vvc13\\.nuget\\packages\\pagedlist.mvc\\4.5.0\\pagedlist.mvc.4.5.0.nupkg.sha512",
     "C:\\Users\\vvc13\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\vvc13\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\vvc13\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
@@ -38,5 +40,26 @@
     "C:\\Users\\vvc13\\.nuget\\packages\\system.text.encoding.codepages\\5.0.0\\system.text.encoding.codepages.5.0.0.nupkg.sha512",
     "C:\\Users\\vvc13\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'PagedList 1.17.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PagedList",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'PagedList.Mvc 4.5.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PagedList.Mvc",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
 }

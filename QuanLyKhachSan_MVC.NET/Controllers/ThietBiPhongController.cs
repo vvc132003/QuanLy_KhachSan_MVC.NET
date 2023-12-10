@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuanLyKhachSan_MVC.NET.Models;
 using QuanLyKhachSan_MVC.NET.Service;
-
+using PagedList;
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
     public class ThietBiPhongController : Controller
@@ -15,6 +15,23 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             phongService = phongServices;
             thetBiService = thetBiServices;
         }
+        public IActionResult h(int? sotrang, int? soluong)
+        {
+            soluong = thietBiPhongService.SumThietBiPhong();
+            int tranghientai = sotrang ?? 1;
+            int soluonghienthiomoitrang = soluong ?? 10;
+            List<Phong> listphong = phongService.GetAllPhong();
+            List<ThietBi> listthietbi = thetBiService.GetAllThietBi();
+            IPagedList<ThietBiPhong> pagedThietBiPhong = thietBiPhongService.GetALLThietBiPhong().ToPagedList(tranghientai, soluonghienthiomoitrang);
+            Modeldata modeldata = new Modeldata
+            {
+                listphong = listphong,
+                listThietBi = listthietbi,
+                PagedThietBiPhong = pagedThietBiPhong,
+            };
+            return View(modeldata);
+        }
+
         public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)

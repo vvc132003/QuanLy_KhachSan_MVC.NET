@@ -1,4 +1,6 @@
-﻿namespace QuanLyKhachSan_MVC.NET.Models
+﻿using PagedList;
+
+namespace QuanLyKhachSan_MVC.NET.Models
 {
     public class Modeldata
     {
@@ -35,7 +37,7 @@
         public List<ThietBi> listThietBi { get; set; }
         public ThietBiPhong thietBiphong { get; set; }
         public List<ThietBiPhong> listThietBiphong { get; set; }
-
+        public IPagedList<ThietBiPhong> PagedThietBiPhong { get; set; }
         public ThoiGian thoigian { get; set; }
         public List<ThoiGian> listThoiGian { get; set; }
 

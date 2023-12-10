@@ -31,7 +31,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
             List<ThietBiPhong> thietBiPhongs = new List<ThietBiPhong>();
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
-                string query = "SELECT * FROM ThietBiPhong left join ThietBi on ThietBiPhong.idthietbi = ThietBi.id\r\n";
+                string query = "SELECT * FROM ThietBiPhong left join ThietBi on ThietBiPhong.idthietbi = ThietBi.id ";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     connection.Open();
@@ -53,6 +53,24 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 }
             }
             return thietBiPhongs;
+        }
+        public int SumThietBiPhong()
+        {
+            int totalCount = 0;
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                string query = "SELECT count(ThietBiPhong.id) FROM ThietBiPhong left join ThietBi on ThietBiPhong.idthietbi = ThietBi.id ";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    object result = command.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        totalCount = Convert.ToInt32(result);
+                    }
+                }
+            }
+            return totalCount;
         }
 
         public ThietBiPhong GetALLThietBiPhongBYID(int id)

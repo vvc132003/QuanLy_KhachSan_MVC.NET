@@ -10,6 +10,7 @@
         "dependencies": {
           "ClosedXML.DP": "0.95.3.31",
           "NPOI": "2.6.2",
+          "PagedList.Mvc": "4.5.0",
           "System.Data.SqlClient": "4.8.5"
         },
         "runtime": {
@@ -133,6 +134,25 @@
           "lib/net6.0/NPOI.OpenXmlFormats.dll": {
             "assemblyVersion": "2.6.2.0",
             "fileVersion": "2.6.2.0"
+          }
+        }
+      },
+      "PagedList/1.17.0": {
+        "runtime": {
+          "lib/net40/PagedList.dll": {
+            "assemblyVersion": "1.17.0.0",
+            "fileVersion": "1.17.0.0"
+          }
+        }
+      },
+      "PagedList.Mvc/4.5.0": {
+        "dependencies": {
+          "PagedList": "1.17.0"
+        },
+        "runtime": {
+          "lib/net40/PagedList.Mvc.dll": {
+            "assemblyVersion": "4.5.0.0",
+            "fileVersion": "4.5.0.0"
           }
         }
       },
@@ -448,6 +468,20 @@
       "sha512": "sha512-s5lxJQ1Xy2nr3yDvoMH6og2cb2I8reIrUROf2afjKucS+pWNZG07kwITo+CCS3KaXNiPjUn1YaS1PUf8fT9cHg==",
       "path": "npoi/2.6.2",
       "hashPath": "npoi.2.6.2.nupkg.sha512"
+    },
+    "PagedList/1.17.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ou6F3WKXh49hOo0TxWM+SkIGuKllYPuPPvnSYOlQ1sTrtuEyuDUhYbSJd5Sdb06i/sWUJZTjiUecEs3Ht/Hx3g==",
+      "path": "pagedlist/1.17.0",
+      "hashPath": "pagedlist.1.17.0.nupkg.sha512"
+    },
+    "PagedList.Mvc/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-D0M4qW2g4a9cwG8ozIKUnJheCrm5GpFTceqUl63AXWaAVnTgk+TysZYUOGMsBRuzid8aF+/E8b0bXM6+90jiEw==",
+      "path": "pagedlist.mvc/4.5.0",
+      "hashPath": "pagedlist.mvc.4.5.0.nupkg.sha512"
     },
     "runtime.native.System.Data.SqlClient.sni/4.7.0": {
       "type": "package",
