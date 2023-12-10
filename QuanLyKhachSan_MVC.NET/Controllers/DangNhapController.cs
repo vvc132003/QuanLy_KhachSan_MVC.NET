@@ -29,6 +29,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 HttpContext.Session.SetInt32("id", luudangnhap.id);
                 HttpContext.Session.SetString("taikhoan", luudangnhap.taikhoan);
                 HttpContext.Session.SetString("hovaten", luudangnhap.hovaten);
+                HttpContext.Session.SetString("tenchucvu", luudangnhap.tenchucvu);
                 return RedirectToAction("Index", "Phong");
             }
             else
@@ -36,6 +37,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 Console.WriteLine("Ten dang nhap hoac mat khau bi sai!!!");
                 return RedirectToAction("DangNhap", "DangNhap");
             }
+        }
+        public IActionResult DangXuat()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("DangNhap", "DangNhap");
         }
     }
 }

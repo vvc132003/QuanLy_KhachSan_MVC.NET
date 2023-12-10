@@ -21,12 +21,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null && HttpContext.Session.GetString("tenchucvu") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
                 List<NhanVien> nhanViens = nhanVienService.GetAllNhanVien();
                 Modeldata modeldata = new Modeldata
                 {
@@ -41,12 +43,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult AddNhanVien()
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
                 List<ViTriBoPhan> viTriBoPhans = viTriBoPhanService.GetAllViTriBoPhan();
                 List<BoPhan> boPhans = boPhanService.GetALLBoPhan();
                 List<ChucVu> chucVus = chucVuService.GetAllChucVu();
@@ -77,12 +81,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult XuatEclcel()
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
                 nhanVienService.Xuatexcel();
                 return RedirectToAction("Index", "NhanVien");
             }

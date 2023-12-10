@@ -27,103 +27,111 @@
                         <i class="fas fa-home orange_color"></i><span class="hide-menu">Phòng</span>
                     </a>
                 </li>
-                <li>
-                    <a class="waves-effect waves-dark" href="/SanPham/Index" aria-expanded="false">
-                        <i class="fas fa-shopping-bag purple_color2"></i><span class="hide-menu">Sản phẩm</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="waves-effect waves-dark" href="/ThietBi/Index" aria-expanded="false">
-                        <i class="fas fa-desktop purple_color"></i><span class="hide-menu">Thiết bị</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="waves-effect waves-dark" href="/ThietBiPhong/Index" aria-expanded="false">
-                        <i class="fas fa-desktop purple_color"></i><span class="hide-menu">Thiết bị phòng</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="waves-effect waves-dark" href="/LoaiDatPhong/Index" aria-expanded="false">
-                        <i class="fas fa-trophy" style="color: yellow !important;"></i><span class="hide-menu">Loại đặt phòng</span>
-                    </a>
-                </li>
-                @* quy định *@
-                <li>
-                    <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-book blue2_color"></i> <span>Quy định</span>
-                    </a>
-                    <ul class="collapse list-unstyled" id="apps">
-                        <li>
-                            <a class="waves-effect waves-dark" href="/QuyDinhGiamGia/Index" aria-expanded="false">
-                                <i class="fas fa-money-bill-wave red_color"></i><span class="hide-menu">Quy định giảm giá</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="waves-effect waves-dark" href="//Index" aria-expanded="false">
-                                <i class="fas fa-percent red_color"></i><span class="hide-menu">Giảm giá</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                @* nhân sự *@
-                <li>
-                    <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-users blue2_color"></i> <span>Nhân sự</span>
-                    </a>
-                    <ul class="collapse list-unstyled" id="apps">
-                        <li>
-                            <a class="waves-effect waves-dark" href="/ChucVu/Index" aria-expanded="false">
-                                <i class="fas fa-briefcase red_color"></i><span class="hide-menu">Chức vụ</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="waves-effect waves-dark" href="/NhanVien/Index" aria-expanded="false">
-                                <i class="fas fa-users" style="color: yellow !important;"></i><span class="hide-menu">Nhân viên</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="waves-effect waves-dark" href="/BoPhan/Index" aria-expanded="false">
-                                <i class="fas fa-suitcase purple_color2"></i><span class="hide-menu">Bộ phận</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="waves-effect waves-dark" href="/ViTriBoPhan/Index" aria-expanded="false">
-                                <i class="fas fa-exclamation-triangle" style="color: red !important;"></i><span class="hide-menu">Vị trí bộ phận</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                @* loai jđon  *@
-                <li>
-                    <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fa fa-object-group blue2_color"></i> <span>Các loại đơn</span>
-                    </a>
-                    <ul class="collapse list-unstyled" id="apps">
-                        <li>
-                            <a href="">
-                                <i class="fas fa-file-alt blue2_color"></i> <span>Đơn thuê phòng</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <i class="fas fa-file-invoice blue2_color"></i> <span>Đơn chuyển phòng</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <i class="fas fa-file-signature blue2_color"></i> <span>Đơn trả phòng</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @if (ViewData["tenchucvu"] != null && ViewData["tenchucvu"].ToString() == "Quản lý")
+                {
+                    <li>
+                        <a class="waves-effect waves-dark" href="/SanPham/Index" aria-expanded="false">
+                            <i class="fas fa-shopping-bag purple_color2"></i><span class="hide-menu">Sản phẩm</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="/ThietBi/Index" aria-expanded="false">
+                            <i class="fas fa-desktop purple_color"></i><span class="hide-menu">Thiết bị</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="/ThietBiPhong/Index" aria-expanded="false">
+                            <i class="fas fa-desktop purple_color"></i><span class="hide-menu">Thiết bị phòng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="/LoaiDatPhong/Index" aria-expanded="false">
+                            <i class="fas fa-trophy" style="color: yellow !important;"></i><span class="hide-menu">Loại đặt phòng</span>
+                        </a>
+                    </li>
+                    @* quy định *@
+                    <li>
+                        <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-book blue2_color"></i> <span>Quy định</span>
+                        </a>
+                        <ul class="collapse list-unstyled" id="apps">
+                            <li>
+                                <a class="waves-effect waves-dark" href="/QuyDinhGiamGia/Index" aria-expanded="false">
+                                    <i class="fas fa-money-bill-wave red_color"></i><span class="hide-menu">Quy định giảm giá</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="waves-effect waves-dark" href="//Index" aria-expanded="false">
+                                    <i class="fas fa-percent red_color"></i><span class="hide-menu">Giảm giá</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    @* nhân sự *@
+                    <li>
+                        <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-users blue2_color"></i> <span>Nhân sự</span>
+                        </a>
+                        <ul class="collapse list-unstyled" id="apps">
+                            <li>
+                                <a class="waves-effect waves-dark" href="/ChucVu/Index" aria-expanded="false">
+                                    <i class="fas fa-briefcase red_color"></i><span class="hide-menu">Chức vụ</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="waves-effect waves-dark" href="/NhanVien/Index" aria-expanded="false">
+                                    <i class="fas fa-users" style="color: yellow !important;"></i><span class="hide-menu">Nhân viên</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="waves-effect waves-dark" href="/BoPhan/Index" aria-expanded="false">
+                                    <i class="fas fa-suitcase purple_color2"></i><span class="hide-menu">Bộ phận</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="waves-effect waves-dark" href="/ViTriBoPhan/Index" aria-expanded="false">
+                                    <i class="fas fa-exclamation-triangle" style="color: red !important;"></i><span class="hide-menu">Vị trí bộ phận</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    @* loai jđon  *@
+                    <li>
+                        <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fa fa-object-group blue2_color"></i> <span>Các loại đơn</span>
+                        </a>
+                        <ul class="collapse list-unstyled" id="apps">
+                            <li>
+                                <a href="">
+                                    <i class="fas fa-file-alt blue2_color"></i> <span>Đơn thuê phòng</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="fas fa-file-invoice blue2_color"></i> <span>Đơn chuyển phòng</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="fas fa-file-signature blue2_color"></i> <span>Đơn trả phòng</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="pages-blank.html" aria-expanded="false">
+                            <i class="fa fa-bar-chart-o green_color"></i><span class="hide-menu">Thống kê</span>
+                        </a>
+                    </li>
+                }
                 <li>
                     <a class="waves-effect waves-dark" href="" data-bs-toggle="modal" data-bs-target="#exampleModala">
                         <i class="fa fa-calendar green_color"></i><span class="hide-menu">Thời gian</span>
                     </a>
                 </li>
                 <li>
-                    <a class="waves-effect waves-dark" href="pages-blank.html" aria-expanded="false">
-                        <i class="fa fa-bar-chart-o green_color"></i><span class="hide-menu">Thống kê</span>
+                    <a class="waves-effect waves-dark" href="/DangNhap/DangXuat">
+                        <i class="fas fa-sign-out-alt yellow_color"></i><span class="hide-menu">Đăng xuất</span>
                     </a>
                 </li>
             </ul>
@@ -189,4 +197,3 @@
     });
 
 </script>
-

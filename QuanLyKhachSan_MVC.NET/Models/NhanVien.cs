@@ -11,6 +11,7 @@
         public string taikhoan { get; set; }
         public string matkhau { get; set; }
         public string trangthai { get; set; }
+        public string tenchucvu { get; set; }
         public string cccd { get; set; }
         public string gioitinh { get; set; }
         public DateTime ngaysinh { get; set; }

@@ -17,14 +17,16 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult ThueSanPham(ThueSanPham thueSanPham, int id, int iddatphong, int idphong)
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int idnd = HttpContext.Session.GetInt32("id").Value;
+                int idnv = HttpContext.Session.GetInt32("id").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
-                ViewData["id"] = idnd;
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
                 SanPham sanpham = sanPhamService.GetSanPhamByID(id);
-                thueSanPham.idnhanvien = idnd;
+                thueSanPham.idnhanvien = idnv;
                 thueSanPham.soluong = 1;
                 thueSanPham.idsanpham = id;
                 thueSanPham.iddatphong = iddatphong;

@@ -16,11 +16,10 @@ namespace QuanLyKhachSan_MVC.NET.Service
     {
         public NhanVien CheckThongTinDangNhap(string matkhau, string taikhoan)
         {
-            NhanVien nhanVien = null;
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string CheckThongTinDangNhap = "SELECT * FROM NhanVien WHERE taikhoan = @taikhoan AND matkhau = @matkhau";
+                string CheckThongTinDangNhap = "SELECT * FROM NhanVien left join ChucVu on NhanVien.idchucvu = chucvu.id WHERE taikhoan = @taikhoan AND matkhau = @matkhau";
                 using (SqlCommand command = new SqlCommand(CheckThongTinDangNhap, connection))
                 {
                     command.Parameters.AddWithValue("@taikhoan", taikhoan);
@@ -29,7 +28,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     {
                         if (reader.Read())
                         {
-                            nhanVien = new NhanVien()
+                            NhanVien nhanVien = new NhanVien()
                             {
                                 id = Convert.ToInt32(reader["id"]),
                                 hovaten = reader["hovaten"].ToString(),
@@ -40,6 +39,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 taikhoan = reader["taikhoan"].ToString(),
                                 matkhau = reader["matkhau"].ToString(),
                                 trangthai = reader["trangthai"].ToString(),
+                                tenchucvu = reader["tenchucvu"].ToString(),
                                 solanvipham = (int)reader["solanvipham"],
                                 cccd = reader["cccd"].ToString(),
                                 gioitinh = reader["gioitinh"].ToString(),
@@ -48,11 +48,15 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 idvitribophan = (int)reader["idvitribophan"],
                                 idbophan = (int)reader["idbophan"]
                             };
+                            return nhanVien;
+                        }
+                        else
+                        {
+                            return null;
                         }
                     }
                 }
             }
-            return nhanVien;
         }
         public void CapNhatNhanVien(NhanVien nhanVien)
         {
@@ -331,8 +335,9 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     smtpClient.Send(message);
                 }
                 attachment.Dispose();
-/*                File.Delete(filePath);
-*/            }
+                /*                File.Delete(filePath);
+                */
+            }
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = filePath;
             startInfo.UseShellExecute = true;

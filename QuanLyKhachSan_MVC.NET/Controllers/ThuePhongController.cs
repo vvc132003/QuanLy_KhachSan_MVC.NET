@@ -43,12 +43,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult Index(int id)
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int idnv = HttpContext.Session.GetInt32("id").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
                 ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
                 Phong phong = phongService.GetPhongID(id);
                 Modeldata yourModel = new Modeldata
                 {
@@ -161,12 +163,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult Index1()
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int idnv = HttpContext.Session.GetInt32("id").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
                 ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
                 List<Phong> phong = phongService.GetAllPhongTrangThai();
                 Modeldata yourModel = new Modeldata
                 {
@@ -269,12 +273,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult ChiTietThuePhong(int id)
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int idnv = HttpContext.Session.GetInt32("id").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
                 ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
                 List<DatPhong> listdatPhongs = datPhongService.GetAllDatPhongByID(id);
                 List<SanPham> listsanpham = sanPhamService.GetAllSanPham();
                 Phong phongs = phongService.GetPhongID(id);

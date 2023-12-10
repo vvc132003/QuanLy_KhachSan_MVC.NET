@@ -16,12 +16,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int id = HttpContext.Session.GetInt32("id").Value;
+                int idnv = HttpContext.Session.GetInt32("id").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
-                ViewData["id"] = id;
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
                 List<ViTriBoPhan> viTriBoPhans = viTriBoPhanService.GetAllViTriBoPhan();
                 List<BoPhan> boPhans = boPhanService.GetALLBoPhan();
 
