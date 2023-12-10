@@ -287,17 +287,24 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         {
                             tongtien += thueSanPham.thanhtien;
                         }
-                        TimeSpan timeSpan = DateTime.Now - datphong.ngaydat;
-                        if (timeSpan.TotalHours >= 24)
+                        /// thời gian trễ khi trả phòng
+                        ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
+                        DateTime ngaydukientra = datphong.ngaydukientra;
+                        DateTime ngaytraphong = thoiGian.thoigianra;
+                        if (ngaytraphong > ngaydukientra)
                         {
-                            datphong.hinhthucthue = "Theo ngày";
-                            datPhongService.UpdateDatPhong(datphong);
+                            if (datphong.hinhthucthue == "Theo giờ" && ngaytraphong < ngaydukientra)
+                            {
+                                datphong.hinhthucthue = "Theo ngày";
+                                datPhongService.UpdateDatPhong(datphong);
+                            }
+                            else if (datphong.hinhthucthue == "Theo ngày" && ngaytraphong > ngaydukientra)
+                            {
+                                datphong.hinhthucthue = "Theo giờ";
+                                datPhongService.UpdateDatPhong(datphong);
+                            }
                         }
-                        else
-                        {
-                            datphong.hinhthucthue = "Theo giờ";
-                            datPhongService.UpdateDatPhong(datphong);
-                        }
+                        datPhongService.UpdateDatPhong(datphong);
                         GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
                         Modeldata yourModel = new Modeldata
                         {
