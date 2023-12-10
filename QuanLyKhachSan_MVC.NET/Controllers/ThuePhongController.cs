@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NPOI.SS.Formula.Functions;
 using QuanLyKhachSan_MVC.NET.Models;
 using QuanLyKhachSan_MVC.NET.Service;
 using System.Globalization;
@@ -18,8 +19,15 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly QuyDinhGiamGiaService quyDinhGiamGiaservice;
 
 
-        public ThuePhongController(DatPhongService datPhongServices, KhachHangService khachHangServices, PhongService phongServices, NhanPhongService nhanPhongServices,
-            SanPhamService sanPhamServices, ThueSanPhamService thueSanPhamServices, ThoiGianService thoiGianServices, GiamGiaService giamGiaServices, QuyDinhGiamGiaService quydinhGiamGiaServices)
+        public ThuePhongController(DatPhongService datPhongServices,
+            KhachHangService khachHangServices,
+            PhongService phongServices,
+            NhanPhongService nhanPhongServices,
+            SanPhamService sanPhamServices,
+            ThueSanPhamService thueSanPhamServices,
+            ThoiGianService thoiGianServices,
+            GiamGiaService giamGiaServices,
+            QuyDinhGiamGiaService quydinhGiamGiaServices)
         {
             datPhongService = datPhongServices;
             khachHangService = khachHangServices;
@@ -57,19 +65,25 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             {
                 /// kiểm tra xem khách hàng đã tồn tại hay chưa
                 KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
+                ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
                 if (khachHangTonTai != null)
                 {
-                    ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
                     datPhong.idthoigian = thoiGian.id;
                     /// id khách hàng
                     datPhong.idkhachhang = khachHangTonTai.id;
-                    string ngayDuKienText = Request.Form["ngaydukientra"];
-                    DateTime ngayDuKien = DateTime.ParseExact(ngayDuKienText, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture);
-                    datPhong.ngaydukientra = ngayDuKien;
                     datPhong.idloaidatphong = 2;
                     datPhong.trangthai = "đã đặt";
                     datPhong.ngaydat = DateTime.Now;
                     datPhong.idphong = datPhong.idphong;
+                    TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
+                    if (sogio.TotalDays >= 1)
+                    {
+                        datPhong.hinhthucthue = "Theo ngày";
+                    }
+                    else
+                    {
+                        datPhong.hinhthucthue = "Theo giờ";
+                    }
                     /// thực hiện thêm đặt phòng và lấy ra id đặt phòng mới tạo đó
                     int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
                     /// thực hiện thêm đặt phòng và lấy ra id đặt phòng mới tạo đó
@@ -95,8 +109,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         giamGia.idquydinh = quyDinhGiamGia.id;
                         giamGiaService.ThemGiamGia(giamGia);
                     }
-                    TempData["thuephongthanhcong"] = "";
-                    return RedirectToAction("Index", "Phong");
+                    else
+                    {
+                        Console.WriteLine("Không có giảm giá!");
+                    }
                 }
                 /// nếu khách hàng không tồn tại
                 else
@@ -108,15 +124,20 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                     // id khách hàng
                     datPhong.idkhachhang = khachhangmoi.id;
-                    ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
                     datPhong.idthoigian = thoiGian.id;
-                    string ngayDuKienText = Request.Form["ngaydukientra"];
-                    DateTime ngayDuKien = DateTime.ParseExact(ngayDuKienText, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture);
-                    datPhong.ngaydukientra = ngayDuKien;
                     datPhong.idloaidatphong = 2;
                     datPhong.trangthai = "đã đặt";
                     datPhong.ngaydat = DateTime.Now;
                     datPhong.idphong = datPhong.idphong;
+                    TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
+                    if (sogio.TotalDays >= 1)
+                    {
+                        datPhong.hinhthucthue = "Theo ngày";
+                    }
+                    else
+                    {
+                        datPhong.hinhthucthue = "Theo giờ";
+                    }
                     /// thực hiện thêm đặt phòng và lấy ra id đặt phòng mới tạo đó
                     int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
                     /// thêm nhận phòng với id đặt phòng vừa đc lấy ra
@@ -127,9 +148,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     Phong phong = phongService.GetPhongID(datPhong.idphong);
                     phong.tinhtrangphong = "có khách";
                     phongService.CapNhatPhong(phong);
-                    TempData["thuephongthanhcong"] = "";
-                    return RedirectToAction("Index", "Phong");
                 }
+                TempData["thuephongthanhcong"] = "";
+                return RedirectToAction("Index", "Phong");
             }
             else
             {
@@ -163,18 +184,24 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 foreach (int phongId in idphongs)
                 {
                     KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
+                    ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
                     if (khachHangTonTai != null)
                     {
-                        string ngayDuKienText = Request.Form["ngaydukientra"];
-                        DateTime ngayDuKien = DateTime.ParseExact(ngayDuKienText, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture);
-                        ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
                         datPhong.idthoigian = thoiGian.id;
-                        datPhong.ngaydukientra = ngayDuKien;
                         datPhong.idkhachhang = khachHangTonTai.id;
                         datPhong.idloaidatphong = 2;
                         datPhong.trangthai = "đã đặt";
                         datPhong.ngaydat = DateTime.Now;
                         datPhong.idphong = phongId;
+                        TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
+                        if (sogio.TotalDays >= 1)
+                        {
+                            datPhong.hinhthucthue = "Theo ngày";
+                        }
+                        else
+                        {
+                            datPhong.hinhthucthue = "Theo giờ";
+                        }
                         int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
                         nhanPhong.iddatphong = idDatPhongThemVao;
                         nhanPhong.ngaynhanphong = DateTime.Now;
@@ -196,22 +223,31 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             giamGia.idquydinh = quyDinhGiamGia.id;
                             giamGiaService.ThemGiamGia(giamGia);
                         }
+                        else
+                        {
+                            Console.WriteLine("Không có giảm giá!");
+                        }
                     }
                     else
                     {
                         khachHang.trangthai = "còn hoạt động";
                         khachHangService.ThemKhachHang(khachHang);
                         KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
-                        string ngayDuKienText = Request.Form["ngaydukientra"];
-                        DateTime ngayDuKien = DateTime.ParseExact(ngayDuKienText, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture);
-                        ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
                         datPhong.idthoigian = thoiGian.id;
-                        datPhong.ngaydukientra = ngayDuKien;
                         datPhong.idkhachhang = khachhangmoi.id;
                         datPhong.idloaidatphong = 2;
                         datPhong.trangthai = "đã đặt";
                         datPhong.ngaydat = DateTime.Now;
                         datPhong.idphong = phongId;
+                        TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
+                        if (sogio.TotalDays >= 1)
+                        {
+                            datPhong.hinhthucthue = "Theo ngày";
+                        }
+                        else
+                        {
+                            datPhong.hinhthucthue = "Theo giờ";
+                        }
                         int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
                         nhanPhong.iddatphong = idDatPhongThemVao;
                         nhanPhong.ngaynhanphong = DateTime.Now;
@@ -251,6 +287,17 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         {
                             tongtien += thueSanPham.thanhtien;
                         }
+                        TimeSpan timeSpan = DateTime.Now - datphong.ngaydat;
+                        if (timeSpan.TotalHours >= 24)
+                        {
+                            datphong.hinhthucthue = "Theo ngày";
+                            datPhongService.UpdateDatPhong(datphong);
+                        }
+                        else
+                        {
+                            datphong.hinhthucthue = "Theo giờ";
+                            datPhongService.UpdateDatPhong(datphong);
+                        }
                         GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
                         Modeldata yourModel = new Modeldata
                         {
@@ -269,12 +316,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 }
                 return View(listmodeldatas);
             }
-            /*TimeSpan timeSpan = datphong.ngaydukientra - datphong.ngaydat;
-                       if (timeSpan.TotalHours >= 24)
-                       {
-                           datphong.hinhthucthue = "Theo ngày";
-                           datPhongService.UpdateDatPhong(datphong);
-                       }*/
             else
             {
                 return RedirectToAction("DangNhap", "DangNhap");

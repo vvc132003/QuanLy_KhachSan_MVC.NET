@@ -17,7 +17,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         public TraPhongController(DatPhongService datPhongServices,
                                   ThueSanPhamService thueSanPhamServices,
                                   TraPhongService traPhongServices,
-                                  LichSuThanhToanService lichSuThanhToanServices, PhongService phongServices, GiamGiaService giamGiaServices, QuyDinhGiamGiaService quydinhGiamGiaServices)
+                                  LichSuThanhToanService lichSuThanhToanServices,
+                                  PhongService phongServices,
+                                  GiamGiaService giamGiaServices,
+                                  QuyDinhGiamGiaService quydinhGiamGiaServices)
         {
             datPhongService = datPhongServices;
             thueSanPhamService = thueSanPhamServices;
@@ -27,7 +30,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             giamGiaService = giamGiaServices;
             quyDinhGiamGiaservice = quydinhGiamGiaServices;
         }
-        public IActionResult TraPhongandLSThanhToan(int idphong)
+        public IActionResult TraPhongandLSThanhToan(LichSuThanhToan lichSuThanhToan, int idphong)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -46,17 +49,29 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 float sotienthanhtoan = 0;
                 if (giamGia != null && giamGia.solandatphong > 0)
                 {
-                    sotienthanhtoan = (((phong.giatien + tongtien) - datphong.tiendatcoc) * giamGia.phantramgiamgia) / 100;
+                    if (datphong.hinhthucthue == "Theo giờ")
+                    {
+                        sotienthanhtoan = (((phong.giatientheogio + tongtien) - datphong.tiendatcoc) * giamGia.phantramgiamgia) / 100;
+                    }
+                    else
+                    {
+                        sotienthanhtoan = (((phong.giatientheongay + tongtien) - datphong.tiendatcoc) * giamGia.phantramgiamgia) / 100;
+                    }
                 }
                 else
                 {
-                    sotienthanhtoan = (phong.giatien + tongtien) - datphong.tiendatcoc;
+                    if (datphong.hinhthucthue == "Theo giờ")
+                    {
+                        sotienthanhtoan = (phong.giatientheogio + tongtien) - datphong.tiendatcoc;
+                    }
+                    else
+                    {
+                        sotienthanhtoan = (phong.giatientheongay + tongtien) - datphong.tiendatcoc;
+                    }
                 }
                 /// thêm lịch sử thanh toán
-                LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
                 lichSuThanhToan.ngaythanhtoan = DateTime.Now;
                 lichSuThanhToan.sotienthanhtoan = sotienthanhtoan;
-                lichSuThanhToan.hinhthucthanhtoan = "chuyển khoản";
                 lichSuThanhToan.trangthai = "đã thanh toán";
                 lichSuThanhToan.iddatphong = datphong.id;
                 lichSuThanhToan.idnhanvien = idnv;

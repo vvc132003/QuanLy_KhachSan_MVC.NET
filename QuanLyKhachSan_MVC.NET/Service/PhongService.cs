@@ -43,6 +43,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 loaiphong = reader["loaiphong"].ToString(),
                                 tinhtrangphong = reader["tinhtrangphong"].ToString(),
                                 idtang = Convert.ToInt32(reader["idtang"]),
+                                giatientheogio = Convert.ToSingle(reader["giatientheogio"]),
+                                giatientheongay = Convert.ToSingle(reader["giatientheongay"]),
                             };
                             phongs.Add(phong);
                         }
@@ -70,6 +72,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 loaiphong = reader["loaiphong"].ToString(),
                                 tinhtrangphong = reader["tinhtrangphong"].ToString(),
                                 idtang = Convert.ToInt32(reader["idtang"]),
+                                giatientheogio = Convert.ToSingle(reader["giatientheogio"]),
+                                giatientheongay = Convert.ToSingle(reader["giatientheongay"]),
                             };
                             phongs.Add(phong);
                         }
@@ -98,6 +102,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 id = Convert.ToInt32(reader["id"]),
                                 loaiphong = reader["loaiphong"].ToString(),
                                 tinhtrangphong = reader["tinhtrangphong"].ToString(),
+                                giatientheogio = Convert.ToSingle(reader["giatientheogio"]),
+                                giatientheongay = Convert.ToSingle(reader["giatientheongay"]),
                             };
                             phongs.Add(phong);
                         }
@@ -125,7 +131,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 id = Convert.ToInt32(reader["id"]),
                                 loaiphong = reader["loaiphong"].ToString(),
                                 tinhtrangphong = reader["tinhtrangphong"].ToString(),
-                                giatien = Convert.ToSingle(reader["giatien"]),
+                                giatientheogio = Convert.ToSingle(reader["giatientheogio"]),
+                                giatientheongay = Convert.ToSingle(reader["giatientheongay"]),
                             };
                             return phong;
                         }
