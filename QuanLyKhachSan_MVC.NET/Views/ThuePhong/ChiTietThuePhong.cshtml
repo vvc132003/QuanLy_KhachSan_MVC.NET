@@ -54,7 +54,6 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
                                                 <th>Số lượng thuê</th>
                                                 <th>Thành tiền</th>
                                                 <th>Tên Sản phẩm</th>
@@ -66,7 +65,6 @@
                                             @foreach (var thueSanPham in Model[0].listthueSanPham)
                                             {
                                                 <tr>
-                                                    <td>@thueSanPham.id</td>
                                                     <td>@thueSanPham.soluong</td>
                                                     <td>@string.Format("{0:N0} VNĐ", @thueSanPham.thanhtien)</td>
                                                     <td>@thueSanPham.tensanpham</td>

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Math;
+using MathNet.Numerics.LinearAlgebra.Factorization;
+using Microsoft.AspNetCore.Mvc;
 using NPOI.SS.Formula.Functions;
 using QuanLyKhachSan_MVC.NET.Models;
 using QuanLyKhachSan_MVC.NET.Service;
@@ -65,7 +67,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             {
                 /// kiểm tra xem khách hàng đã tồn tại hay chưa
                 KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
-                ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
+                ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now);
                 if (khachHangTonTai != null)
                 {
                     datPhong.idthoigian = thoiGian.id;
@@ -184,7 +186,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 foreach (int phongId in idphongs)
                 {
                     KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
-                    ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
+                    ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now);
                     if (khachHangTonTai != null)
                     {
                         datPhong.idthoigian = thoiGian.id;
@@ -288,24 +290,44 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             tongtien += thueSanPham.thanhtien;
                         }
                         /// thời gian trễ khi trả phòng
-                        ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
-                        DateTime ngaydukientra = datphong.ngaydukientra;
-                        DateTime ngaytraphong = DateTime.Now;
-                        TimeSpan thoiGianCheckOut = new TimeSpan(thoiGian.thoigianra.Hour, thoiGian.thoigianra.Minute, thoiGian.thoigianra.Second);
-                        if (ngaytraphong > ngaydukientra + thoiGianCheckOut)
+                        /// select * from DatPhong dp INNER JOIN ThoiGian tg ON dp.idthoigian = tg.id WHERE dp.trangthai = N'đã đặt' AND DATEPART(HOUR, dp.ngaydukientra) < DATEPART(HOUR, tg.thoigianra) 
+                        /// UPDATE DatPhong
+                        /// SET hinhthucthue =
+                        ///CASE
+                        /// WHEN dp.ngaydukientra > tg.thoigianra THEN 'Theo ngày'
+                        ///      ELSE 'Theo giờ'
+                        ///          END
+                        ///        FROM DatPhong dp
+                        ///    INNER JOIN ThoiGian tg ON dp.idthoigian = tg.id
+                        ///WHERE dp.trangthai = N'đã đặt';
+                        ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
+                        DateTime ngaytramuonsom = DateTime.Now;
+                        if (thoiGian != null)
                         {
-                            if (datphong.hinhthucthue == "Theo giờ")
+                            if (datphong.hinhthucthue == "Theo ngày")
                             {
-                                datphong.hinhthucthue = "Theo ngày";
-                                datPhongService.UpdateDatPhong(datphong);
+                                if (ngaytramuonsom < thoiGian.thoigianra)
+                                {
+                                    datphong.hinhthucthue = "Theo giờ";
+                                }
+                                else
+                                {
+                                    datphong.hinhthucthue = "Theo ngày";
+                                }
                             }
-                            else if (datphong.hinhthucthue == "Theo ngày")
+                            else if (datphong.hinhthucthue == "Theo giờ")
                             {
-                                datphong.hinhthucthue = "Theo giờ";
-                                datPhongService.UpdateDatPhong(datphong);
+                                if (ngaytramuonsom > thoiGian.thoigianra)
+                                {
+                                    datphong.hinhthucthue = "Theo ngày";
+                                }
+                                else
+                                {
+                                    datphong.hinhthucthue = "Theo giờ";
+                                }
                             }
+                            datPhongService.UpdateDatPhong(datphong);
                         }
-                        datPhongService.UpdateDatPhong(datphong);
                         GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
                         Modeldata yourModel = new Modeldata
                         {

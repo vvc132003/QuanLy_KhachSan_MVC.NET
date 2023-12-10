@@ -54,7 +54,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
             return danhSachThoiGian;
         }
 
-        public ThoiGian GetThoiGianById(DateTime thoigianvao)
+        public ThoiGian GetThoiGian(DateTime thoigianvao)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
@@ -62,6 +62,33 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 string query = "SELECT * FROM ThoiGian WHERE CONVERT(date, thoigianvao) = CONVERT(date, @thoigianvao)";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@thoigianvao", thoigianvao);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    ThoiGian thoiGian = new ThoiGian()
+                    {
+                        id = Convert.ToInt32(reader["id"]),
+                        thoigianvao = Convert.ToDateTime(reader["thoigianvao"]),
+                        thoigianra = Convert.ToDateTime(reader["thoigianra"]),
+                        mota = Convert.ToString(reader["mota"]),
+                    };
+                    return thoiGian;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        public ThoiGian GetThoiGianById(int id)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "SELECT * FROM ThoiGian WHERE id = @id ";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", id);
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (reader.Read())

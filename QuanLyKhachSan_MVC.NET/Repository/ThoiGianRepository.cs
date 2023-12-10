@@ -7,6 +7,7 @@ namespace QuanLyKhachSan_MVC.NET.Repository
         void ThemThoiGian(ThoiGian thoiGian);
         void CapNhatThoiGian(ThoiGian thoiGian);
         List<ThoiGian> GetAllThoiGian();
-        ThoiGian GetThoiGianById(DateTime thoigianvao);
+        ThoiGian GetThoiGian(DateTime thoigianvao);
+        ThoiGian GetThoiGianById(int id);
     }
 }

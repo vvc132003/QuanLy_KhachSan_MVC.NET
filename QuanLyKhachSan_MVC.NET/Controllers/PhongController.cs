@@ -26,7 +26,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 List<Tang> tanglist = tangService.GetAllTang();
-                ThoiGian thoiGian = thoiGianService.GetThoiGianById(DateTime.Now);
+                ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now);
                 List<Modeldata> modeldataList = new List<Modeldata>();
                 foreach (var tang in tanglist)
                 {
