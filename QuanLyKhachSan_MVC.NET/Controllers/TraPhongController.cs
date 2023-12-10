@@ -41,32 +41,32 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 /// thực hiện lấy ds thuê sản phẩm và tổng tiền theo id đặt phòng
                 List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datphong.id);
                 GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
-                float tongtien = 0;
+                float tongtienthuesanpham = 0;
                 foreach (var thueSanPham in listthueSanPham)
                 {
-                    tongtien += thueSanPham.thanhtien;
+                    tongtienthuesanpham += thueSanPham.thanhtien;
                 }
                 float sotienthanhtoan = 0;
                 if (giamGia != null && giamGia.solandatphong > 0)
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
-                        sotienthanhtoan = (((phong.giatientheogio + tongtien) - datphong.tiendatcoc) * giamGia.phantramgiamgia) / 100;
+                        sotienthanhtoan = (((phong.giatientheogio * (DateTime.Now.Hour - datphong.ngaydat.Hour) + tongtienthuesanpham) - datphong.tiendatcoc) * giamGia.phantramgiamgia) / 100;
                     }
                     else
                     {
-                        sotienthanhtoan = (((phong.giatientheongay + tongtien) - datphong.tiendatcoc) * giamGia.phantramgiamgia) / 100;
+                        sotienthanhtoan = (((phong.giatientheongay * (DateTime.Now.Hour - datphong.ngaydat.Hour) + tongtienthuesanpham) - datphong.tiendatcoc) * giamGia.phantramgiamgia) / 100;
                     }
                 }
                 else
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
-                        sotienthanhtoan = (phong.giatientheogio + tongtien) - datphong.tiendatcoc;
+                        sotienthanhtoan = (phong.giatientheogio * (DateTime.Now.Hour - datphong.ngaydat.Hour) + tongtienthuesanpham) - datphong.tiendatcoc;
                     }
                     else
                     {
-                        sotienthanhtoan = (phong.giatientheongay + tongtien) - datphong.tiendatcoc;
+                        sotienthanhtoan = (phong.giatientheongay * (DateTime.Now.Hour - datphong.ngaydat.Hour) + tongtienthuesanpham) - datphong.tiendatcoc;
                     }
                 }
                 /// thêm lịch sử thanh toán

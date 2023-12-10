@@ -314,7 +314,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             {
                                 if (ngaytramuonsom < thoiGian.thoigianra)
                                 {
-                                    datphong.hinhthucthue = "Theo giờ";
+                                    datphong.hinhthucthue = "Theo ngày";
                                 }
                                 else
                                 {
@@ -323,7 +323,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             }
                             else if (datphong.hinhthucthue == "Theo giờ")
                             {
-                                if (ngaytramuonsom > thoiGian.thoigianra)
+                                if (ngaytramuonsom > thoiGian.thoigianra && ngaytramuonsom > datphong.ngaydukientra)
                                 {
                                     datphong.hinhthucthue = "Theo ngày";
                                 }
