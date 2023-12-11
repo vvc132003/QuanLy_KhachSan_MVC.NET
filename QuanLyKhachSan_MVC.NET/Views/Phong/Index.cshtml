@@ -206,20 +206,25 @@
                 <div class="modal-body text-left">
                     <div class="text-bg-success p-2">Thêm phòng</div>
                     <div class="border border-secondary-subtle" style="padding:10px 20px">
-                        <form method="post" action="/ChuyenPhong/ChuyenPhong">
+                        <form method="post" action="/Phong/ThemPhong">
                             <div class="row">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" value="@tang.tang.id" id="idtang" name="idtang" readonly>
+                                    <input type="hidden" class="form-control" value="@tang.tang.id" id="idtang" name="idtang" readonly>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="lydo" class="form-label">Lý do:</label>
-                                    <input type="text" class="form-control" id="lydo" name="lydo">
+                                    <label for="giatientheogio" class="form-label">Gía tiền theo giờ :</label>
+                                    <input type="text" class="form-control" id="giatientheogio" name="giatientheogio">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="giatientheongay" class="form-label">Gía tiền theo ngày:</label>
+                                    <input type="text" class="form-control" id="giatientheongay" name="giatientheongay">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="soluongmuonthem" class="form-label">Số lượng phòng muốn thêm:</label>
+                                    <input type="text" class="form-control" id="soluongmuonthem" value="1" name="soluongmuonthem">
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">
-                                    Huỷ
-                                </button>
                                 <input type="submit" value="Thêm phòng" class="btn btn-primary custom-button" />
                             </div>
                         </form>

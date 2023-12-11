@@ -23,6 +23,7 @@ builder.Services.AddScoped<ThietBiPhongService>();
 builder.Services.AddScoped<ThoiGianService>();
 builder.Services.AddScoped<QuyDinhGiamGiaService>();
 builder.Services.AddScoped<GiamGiaService>();
+builder.Services.AddScoped<HopDongLaoDongService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

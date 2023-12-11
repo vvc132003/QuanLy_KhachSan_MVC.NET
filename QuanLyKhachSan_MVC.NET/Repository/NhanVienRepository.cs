@@ -4,7 +4,7 @@ namespace QuanLyKhachSan_MVC.NET.Repository
 {
     public interface NhanVienRepository
     {
-        void ThemNhanVien(NhanVien nhanVien);
+        int ThemNhanVien(NhanVien nhanVien);
         void CapNhatNhanVien(NhanVien nhanVien);
         void XoaNhanVien(int id);
         void Xuatexcel();

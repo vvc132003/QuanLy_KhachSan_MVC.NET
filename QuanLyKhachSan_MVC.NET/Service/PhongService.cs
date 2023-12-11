@@ -144,5 +144,24 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 }
             }
         }
+
+        public void ThemPhong(Phong phong)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "INSERT INTO Phong (loaiphong,tinhtrangphong,giatientheogio,giatientheongay,idtang) " +
+                    " VALUES (@loaiphong,@tinhtrangphong,@giatientheogio,@giatientheongay,@idtang)";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@tinhtrangphong", phong.tinhtrangphong);
+                    command.Parameters.AddWithValue("@loaiphong", phong.loaiphong);
+                    command.Parameters.AddWithValue("@giatientheogio", phong.giatientheogio);
+                    command.Parameters.AddWithValue("@giatientheongay", phong.giatientheongay);
+                    command.Parameters.AddWithValue("@idtang", phong.idtang);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

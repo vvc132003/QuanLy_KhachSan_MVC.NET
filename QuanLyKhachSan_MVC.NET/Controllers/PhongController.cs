@@ -100,5 +100,22 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("DangNhap", "DangNhap");
             }
         }
+        public IActionResult ThemPhong(int soluongmuonthem, Phong phong)
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                for (int i = 0; i < soluongmuonthem; i++)
+                {
+                    phong.loaiphong = "VIP";
+                    phong.tinhtrangphong = "còn trống";
+                    phongService.ThemPhong(phong);
+                }
+                return RedirectToAction("Index", "Phong");
+            }
+            else
+            {
+                return RedirectToAction("DangNhap", "DangNhap");
+            }
+        }
     }
 }

@@ -11,13 +11,15 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly ChucVuService chucVuService;
         private readonly BoPhanService boPhanService;
         private readonly ViTriBoPhanService viTriBoPhanService;
+        private readonly HopDongLaoDongService hopDongLaoDongService;
 
-        public NhanVienController(NhanVienService nhanVienServices, ChucVuService chucVuServices, BoPhanService boPhanServices, ViTriBoPhanService viTriBoPhanServices)
+        public NhanVienController(NhanVienService nhanVienServices, ChucVuService chucVuServices, BoPhanService boPhanServices, ViTriBoPhanService viTriBoPhanServices, HopDongLaoDongService hopDongLaoDongServices)
         {
             nhanVienService = nhanVienServices;
             chucVuService = chucVuServices;
             boPhanService = boPhanServices;
             viTriBoPhanService = viTriBoPhanServices;
+            hopDongLaoDongService = hopDongLaoDongServices;
         }
         public IActionResult Index()
         {
@@ -71,13 +73,29 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("DangNhap", "DangNhap");
             }
         }
-        public IActionResult AddNhanVienn(NhanVien nhanVien)
+        public IActionResult AddNhanVienn(NhanVien nhanVien, HopDongLaoDong hopDongLaoDong)
         {
-            nhanVien.solanvipham = 0;
-            nhanVien.trangthai = "Đang hoạt động";
-            nhanVienService.ThemNhanVien(nhanVien);
-            TempData["themthanhcong"] = "";
-            return RedirectToAction("Index", "NhanVien");
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int id = HttpContext.Session.GetInt32("id").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
+                nhanVien.solanvipham = 0;
+                nhanVien.trangthai = "Đang hoạt động";
+                int idnhanvien = nhanVienService.ThemNhanVien(nhanVien);
+                hopDongLaoDong.idnhanvien = idnhanvien;
+                hopDongLaoDong.ngaybatdau = DateTime.Now;
+                hopDongLaoDongService.ThemHopDongLaoDong(hopDongLaoDong);
+                TempData["themthanhcong"] = "";
+                return RedirectToAction("Index", "NhanVien");
+            }
+            else
+            {
+                return RedirectToAction("DangNhap", "DangNhap");
+            }
         }
         public IActionResult XuatEclcel()
         {

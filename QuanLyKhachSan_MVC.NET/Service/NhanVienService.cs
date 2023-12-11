@@ -187,15 +187,17 @@ namespace QuanLyKhachSan_MVC.NET.Service
             }
         }
 
-        public void ThemNhanVien(NhanVien nhanVien)
+        public int ThemNhanVien(NhanVien nhanVien)
         {
+            int idnhanvienthemvao = 0;
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string insertQuery = @"INSERT INTO NhanVien (hovaten, sodienthoai, tinh, huyen, phuong, taikhoan, 
-                                        matkhau, trangthai, solanvipham,cccd,gioitinh,ngaysinh, image, idchucvu, idvitribophan, idbophan)
-                                        VALUES (@hovaten, @sodienthoai, @tinh, @huyen, @phuong, @taikhoan, @matkhau,
-                                        @trangthai, @solanvipham,@cccd,@gioitinh,@ngaysinh, @image, @idchucvu, @idvitribophan, @idbophan)";
+                string insertQuery = "INSERT INTO NhanVien (hovaten, sodienthoai, tinh, huyen, phuong, taikhoan," +
+                                       " matkhau, trangthai, solanvipham,cccd,gioitinh,ngaysinh, image, idchucvu, idvitribophan, idbophan) " +
+                                        " VALUES (@hovaten, @sodienthoai, @tinh, @huyen, @phuong, @taikhoan, @matkhau, " +
+                                       " @trangthai, @solanvipham, @cccd, @gioitinh, @ngaysinh, @image, @idchucvu, @idvitribophan, @idbophan) " +
+                                        " SELECT SCOPE_IDENTITY();";
                 using (SqlCommand command = new SqlCommand(insertQuery, connection))
                 {
                     command.Parameters.AddWithValue("@hovaten", nhanVien.hovaten);
@@ -214,9 +216,10 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     command.Parameters.AddWithValue("@idchucvu", nhanVien.idchucvu);
                     command.Parameters.AddWithValue("@idvitribophan", nhanVien.idvitribophan);
                     command.Parameters.AddWithValue("@idbophan", nhanVien.idbophan);
-                    command.ExecuteNonQuery();
+                    idnhanvienthemvao = Convert.ToInt32(command.ExecuteScalar());
                 }
             }
+            return idnhanvienthemvao;
         }
 
         public void XoaNhanVien(int id)
