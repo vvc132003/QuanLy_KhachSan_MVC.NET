@@ -12,10 +12,11 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "UPDATE ThoiGian SET thoigianvao = @thoigianvao, thoigianra = @thoigianra, mota = @mota WHERE id = @id";
+                string query = "UPDATE ThoiGian SET thoigianvao = @thoigianvao,thoigiannhanphong=@thoigiannhanphong, thoigianra = @thoigianra, mota = @mota WHERE id = @id";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@thoigianvao", thoiGian.thoigianvao);
+                    command.Parameters.AddWithValue("@thoigiannhanphong", thoiGian.thoigiannhanphong);
                     command.Parameters.AddWithValue("@thoigianra", thoiGian.thoigianra);
                     command.Parameters.AddWithValue("@mota", thoiGian.mota);
                     command.Parameters.AddWithValue("@id", thoiGian.id);
@@ -43,6 +44,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     {
                         id = Convert.ToInt32(reader["id"]),
                         thoigianvao = Convert.ToDateTime(reader["thoigianvao"]),
+                        thoigiannhanphong = Convert.ToDateTime(reader["thoigiannhanphong"]),
                         thoigianra = Convert.ToDateTime(reader["thoigianra"]),
                         mota = Convert.ToString(reader["mota"])
                     };
@@ -70,6 +72,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     {
                         id = Convert.ToInt32(reader["id"]),
                         thoigianvao = Convert.ToDateTime(reader["thoigianvao"]),
+                        thoigiannhanphong = Convert.ToDateTime(reader["thoigiannhanphong"]),
                         thoigianra = Convert.ToDateTime(reader["thoigianra"]),
                         mota = Convert.ToString(reader["mota"]),
                     };
@@ -97,6 +100,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     {
                         id = Convert.ToInt32(reader["id"]),
                         thoigianvao = Convert.ToDateTime(reader["thoigianvao"]),
+                        thoigiannhanphong = Convert.ToDateTime(reader["thoigiannhanphong"]),
                         thoigianra = Convert.ToDateTime(reader["thoigianra"]),
                         mota = Convert.ToString(reader["mota"]),
                     };
@@ -114,11 +118,12 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "INSERT INTO ThoiGian (thoigianvao, thoigianra, mota) " +
-                    "VALUES (@thoigianvao, @thoigianra, @mota)";
+                string query = "INSERT INTO ThoiGian (thoigianvao,thoigiannhanphong, thoigianra, mota) " +
+                    "VALUES (@thoigianvao,@thoigiannhanphong, @thoigianra, @mota)";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@thoigianvao", thoiGian.thoigianvao);
+                    command.Parameters.AddWithValue("@thoigiannhanphong", thoiGian.thoigiannhanphong);
                     command.Parameters.AddWithValue("@thoigianra", thoiGian.thoigianra);
                     command.Parameters.AddWithValue("@mota", thoiGian.mota);
                     command.ExecuteNonQuery();

@@ -8,6 +8,7 @@ namespace QuanLyKhachSan_MVC.NET.Repository
         void UpdateDatPhong(DatPhong datPhong);
         int GetDatPhongCountByKhachHangId(int idkhachhang);
         List<DatPhong> GetAllDatPhongByID(int id);
+        List<DatPhong> GetAllDatPhong();
         DatPhong GetDatPhongByIDTrangThai(int idphong);
     }
 }

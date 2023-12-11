@@ -15,9 +15,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             phongService = phongServices;
             thetBiService = thetBiServices;
         }
-        public IActionResult h(int? sotrang, int? soluong)
+        public IActionResult h(int? sotrang)
         {
-            soluong = thietBiPhongService.SumThietBiPhong();
+            int? soluong = thietBiPhongService.SumThietBiPhong();
             int tranghientai = sotrang ?? 1;
             int soluonghienthiomoitrang = soluong ?? 10;
             List<Phong> listphong = phongService.GetAllPhong();
@@ -32,7 +32,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             return View(modeldata);
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? sotrang)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -42,12 +42,19 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-                List<ThietBiPhong> listthietbiphong = thietBiPhongService.GetALLThietBiPhong();
+                List<ThietBiPhong> thietBiPhongs = thietBiPhongService.GetALLThietBiPhong();
+                int soluong = 0;
+                foreach (var thietbị in thietBiPhongs)
+                {
+                    thietbị.id = soluong;
+                    soluong++;
+                }
                 List<Phong> listphong = phongService.GetAllPhong();
                 List<ThietBi> listthietbi = thetBiService.GetAllThietBi();
+                IPagedList<ThietBiPhong> pagedThietBiPhong = thietBiPhongs.ToPagedList(sotrang ?? 1, soluong);
                 Modeldata modeldata = new Modeldata
                 {
-                    listThietBiphong = listthietbiphong,
+                    PagedThietBiPhong = pagedThietBiPhong,
                     listphong = listphong,
                     listThietBi = listthietbi
                 };

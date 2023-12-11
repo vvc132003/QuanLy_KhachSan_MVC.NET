@@ -80,7 +80,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     datPhong.ngaydat = DateTime.Now;
                     datPhong.idphong = datPhong.idphong;
                     TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
-                    if (sogio.TotalDays >= 1)
+                    if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
                     {
                         datPhong.hinhthucthue = "Theo ngày";
                     }
@@ -134,7 +134,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     datPhong.ngaydat = DateTime.Now;
                     datPhong.idphong = datPhong.idphong;
                     TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
-                    if (sogio.TotalDays >= 1)
+                    if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
                     {
                         datPhong.hinhthucthue = "Theo ngày";
                     }
@@ -200,7 +200,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         datPhong.ngaydat = DateTime.Now;
                         datPhong.idphong = phongId;
                         TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
-                        if (sogio.TotalDays >= 1)
+                        if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
                         {
                             datPhong.hinhthucthue = "Theo ngày";
                         }
@@ -246,7 +246,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         datPhong.ngaydat = DateTime.Now;
                         datPhong.idphong = phongId;
                         TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
-                        if (sogio.TotalDays >= 1)
+                        if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
                         {
                             datPhong.hinhthucthue = "Theo ngày";
                         }
@@ -310,21 +310,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         DateTime ngaytramuonsom = DateTime.Now;
                         if (thoiGian != null)
                         {
-                            if (datphong.hinhthucthue == "Theo ngày")
-                            {
-                                if (ngaytramuonsom < thoiGian.thoigianra)
-                                {
-                                    datphong.hinhthucthue = "Theo ngày";
-                                }
-                                else
-                                {
-                                    datphong.hinhthucthue = "Theo ngày";
-                                }
-                            }
-                            else if (datphong.hinhthucthue == "Theo giờ")
+                            if (datphong.hinhthucthue == "Theo giờ")
                             {
                                 if (ngaytramuonsom > thoiGian.thoigianra && ngaytramuonsom > datphong.ngaydukientra)
                                 {
+                                    datphong.ngaydukientra = DateTime.Now;
                                     datphong.hinhthucthue = "Theo ngày";
                                 }
                                 else

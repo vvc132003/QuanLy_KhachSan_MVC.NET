@@ -8,6 +8,40 @@ namespace QuanLyKhachSan_MVC.NET.Service
 {
     public class DatPhongService : DatPhongRepository
     {
+        public List<DatPhong> GetAllDatPhong()
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<DatPhong> datPhongs = new List<DatPhong>();
+                connection.Open();
+                string sql = "SELECT * FROM DatPhong where trangthai = N'đã đặt online' ";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            DatPhong datPhong = new DatPhong()
+                            {
+                                id = (int)reader["id"],
+                                idphong = (int)reader["idphong"],
+                                idkhachhang = (int)reader["idkhachhang"],
+                                trangthai = reader["trangthai"].ToString(),
+                                hinhthucthue = reader["hinhthucthue"].ToString(),
+                                ngaydat = (DateTime)reader["ngaydat"],
+                                ngaydukientra = (DateTime)reader["ngaydukientra"],
+                                tiendatcoc = Convert.ToSingle(reader["tiendatcoc"]),
+                                idloaidatphong = (int)reader["idloaidatphong"],
+                                idthoigian = (int)reader["idthoigian"],
+                            };
+                            datPhongs.Add(datPhong);
+                        }
+                    }
+                }
+                return datPhongs;
+            }
+        }
+
         public List<DatPhong> GetAllDatPhongByID(int id)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())

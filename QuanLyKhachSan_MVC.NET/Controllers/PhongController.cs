@@ -10,12 +10,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly PhongService phongService;
         private readonly TangService tangService;
         private readonly ThoiGianService thoiGianService;
+        private readonly DatPhongService datPhongService;
 
-        public PhongController(PhongService phongServices, TangService tangServices, ThoiGianService thoiGianServices)
+        public PhongController(PhongService phongServices, TangService tangServices, ThoiGianService thoiGianServices, DatPhongService datPhongServices)
         {
             phongService = phongServices;
             tangService = tangServices;
             thoiGianService = thoiGianServices;
+            datPhongService = datPhongServices;
         }
         public IActionResult Index()
         {
@@ -30,6 +32,22 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 List<Tang> tanglist = tangService.GetAllTang();
                 ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now);
                 List<Modeldata> modeldataList = new List<Modeldata>();
+                List<DatPhong> listdatphong = datPhongService.GetAllDatPhong();
+                /*foreach (var datphong in listdatphong)
+                {
+                    if (datphong.ngaydat.Hour > thoiGian.thoigiannhanphong.Hour)
+                    {
+                        datphong.trangthai = "đã huỷ";
+                        datPhongService.UpdateDatPhong(datphong);
+                        Phong phong = new Phong();
+                        phong.id = datphong.idphong;
+                        phong.tinhtrangphong = "còn trống";
+                        phongService.CapNhatPhong(phong);
+                    }
+                    else
+                    {
+                    }
+                }*/
                 foreach (var tang in tanglist)
                 {
                     List<Phong> phongs = phongService.GetAllPhongIDTang(tang.id);
