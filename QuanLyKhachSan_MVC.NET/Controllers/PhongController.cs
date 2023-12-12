@@ -54,7 +54,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 foreach (var tang in tanglist)
                 {
                     List<Phong> phongs = phongService.GetAllPhongIDTang(tang.id, idkhachsan);
-                    List<Phong> phongtrangthai = phongService.GetAllPhongTrangThai();
+                    List<Phong> phongtrangthai = phongService.GetAllPhongTrangThai(idkhachsan);
                     Modeldata modeldata = new Modeldata
                     {
                         tang = tang,

@@ -59,15 +59,16 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 return phongs;
             }
         }
-        public List<Phong> GetAllPhongTrangThai()
+        public List<Phong> GetAllPhongTrangThai(int idkhachsan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 List<Phong> phongs = new List<Phong>();
                 connection.Open();
-                string query = "select * from Phong where tinhtrangphong = N'còn trống' ";
+                string query = "select * from Phong where tinhtrangphong = N'còn trống' and idkhachsan=@idkhachsan ";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
+                    command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())

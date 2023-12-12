@@ -5,7 +5,7 @@ namespace QuanLyKhachSan_MVC.NET.Repository
     public interface PhongRepository
     {
         List<Phong> GetAllPhong();
-        List<Phong>  GetAllPhongTrangThai();
+        List<Phong>  GetAllPhongTrangThai(int idkhachsan);
         List<Phong> GetAllPhongIDTang(int idtang, int idkhachsan);
         Phong GetPhongID(int id);
         void CapNhatPhong(Phong phong);

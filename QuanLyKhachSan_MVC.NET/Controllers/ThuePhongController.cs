@@ -163,15 +163,16 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult Index1()
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int idnv = HttpContext.Session.GetInt32("id").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
                 string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-                List<Phong> phong = phongService.GetAllPhongTrangThai();
+                List<Phong> phong = phongService.GetAllPhongTrangThai(idkhachsan);
                 Modeldata yourModel = new Modeldata
                 {
                     listphong = phong,
