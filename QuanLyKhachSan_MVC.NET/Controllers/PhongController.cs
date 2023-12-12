@@ -33,9 +33,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now);
                 List<Modeldata> modeldataList = new List<Modeldata>();
                 List<DatPhong> listdatphong = datPhongService.GetAllDatPhong();
-                /*foreach (var datphong in listdatphong)
+                foreach (var datphong in listdatphong)
                 {
-                    if (datphong.ngaydat.Hour > thoiGian.thoigiannhanphong.Hour)
+                    if (DateTime.Now.Hour > thoiGian.thoigiannhanphong.Hour)
                     {
                         datphong.trangthai = "đã huỷ";
                         datPhongService.UpdateDatPhong(datphong);
@@ -46,8 +46,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     }
                     else
                     {
+                        //không huỷ đặt phòng
                     }
-                }*/
+                }
                 foreach (var tang in tanglist)
                 {
                     List<Phong> phongs = phongService.GetAllPhongIDTang(tang.id);

@@ -322,7 +322,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
         public void GuiEmail(string filePath)
         {
             string emailnguoigui = "vvc132003@gmail.com";
-            string matkhau = "qyqgwwjbbajzrrex";
+            string matkhau = "bzcaumaekzuvwlia";
             string emailnguoinhan = "vvc132003@gmail.com";
             using (MailMessage message = new MailMessage(emailnguoigui, emailnguoinhan))
             {
@@ -338,9 +338,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     smtpClient.Send(message);
                 }
                 attachment.Dispose();
-                /*                File.Delete(filePath);
-                */
-            }
+/*                File.Delete(filePath);
+*/            }
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = filePath;
             startInfo.UseShellExecute = true;

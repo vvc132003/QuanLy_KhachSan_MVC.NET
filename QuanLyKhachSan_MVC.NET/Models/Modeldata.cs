@@ -63,5 +63,14 @@ namespace QuanLyKhachSan_MVC.NET.Models
         public HopDongLaoDong hopDongLaoDong { get; set; }
         public List<HopDongLaoDong> listhopDongLaoDong { get; set; }
         public IPagedList<HopDongLaoDong> PagedThopDongLaoDong { get; set; }
+        public TinNhanCaNhan tinNhanCaNhan { get; set; }
+        public List<TinNhanCaNhan> listTinNhanCaNhan { get; set; }
+        public IPagedList<TinNhanCaNhan> PagedTTinNhanCaNhan { get; set; }
+        public KhachSan khachSan { get; set; }
+        public List<KhachSan> listKhachSan { get; set; }
+        public IPagedList<KhachSan> PagedTKhachSan { get; set; }
+        public PhongKhachSan phongKhachSan { get; set; }
+        public List<PhongKhachSan> listPhongKhachSan { get; set; }
+        public IPagedList<PhongKhachSan> PagedPhongKhachSan { get; set; }
     }
 }

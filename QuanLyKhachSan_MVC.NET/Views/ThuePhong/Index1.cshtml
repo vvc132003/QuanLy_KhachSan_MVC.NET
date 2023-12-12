@@ -25,25 +25,27 @@
                                     <input type="hidden" id="idnhanvien" name="idnhanvien" value="@ViewData["id"]" class="form-control" />
                                     <div class="row">
                                         <div class="col-4">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Phòng</th>
-                                                        <th>Chọn</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach (var phong in Model.listphong)
-                                                    {
+                                            <div class="table-container">
+                                                <table class="table">
+                                                    <thead>
                                                         <tr>
-                                                            <td>Phòng @phong.id</td>
-                                                            <td>
-                                                                <input type="checkbox" id="@phong.id" name="idphongs" value="@phong.id">
-                                                            </td>
+                                                            <th>Phòng</th>
+                                                            <th>Chọn</th>
                                                         </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var phong in Model.listphong)
+                                                        {
+                                                            <tr>
+                                                                <td>Phòng @phong.id</td>
+                                                                <td>
+                                                                    <input type="checkbox" id="@phong.id" name="idphongs" value="@phong.id">
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                         <div class="col-4">
                                             <div class="mb-3">
@@ -94,12 +96,12 @@
                                                 <label for="tiendatcoc" class="form-label">Tiền đặt cọc:</label>
                                                 <input type="number" class="form-control" id="tiendatcoc" name="tiendatcoc" required>
                                             </div>
-                                           @*  <div class="mb-3">
-                                                <label for="hinhthucthue" class="form-label">Hình thức thuê:</label>
-                                                <select id="hinhthucthue" name="hinhthucthue" class="form-control">
-                                                    <option value="Theo ngày" selected>Theo ngày</option>
-                                                    <option value="Theo giờ" selected>Theo giờ</option>
-                                                </select>
+                                            @*  <div class="mb-3">
+                                            <label for="hinhthucthue" class="form-label">Hình thức thuê:</label>
+                                            <select id="hinhthucthue" name="hinhthucthue" class="form-control">
+                                            <option value="Theo ngày" selected>Theo ngày</option>
+                                            <option value="Theo giờ" selected>Theo giờ</option>
+                                            </select>
                                             </div> *@
                                         </div>
                                     </div>

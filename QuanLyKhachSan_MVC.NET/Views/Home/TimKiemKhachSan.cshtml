@@ -1,0 +1,85 @@
+﻿@model QuanLyKhachSan_MVC.NET.Models.Modeldata
+<link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
+<link rel='stylesheet'
+      href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="/static/css/flaticon.css" type="text/css">
+<link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="/static/css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="/static/css/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="/static/css/magnific-popup.css" type="text/css">
+<link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="/static/css/style.css" type="text/css">
+
+<form method="post" action="/Home/TimKiemKhachSan">
+    <input type="text" name="tenkhachsan" id="search-input" placeholder="Search here.....">
+</form>
+<div class="container-fluid">
+    @if (Model.listKhachSan != null && Model.listKhachSan.Count > 0)
+    {
+        foreach (var ks in Model.listKhachSan)
+        {
+            <p>Tên khách sạn: @ks.tenkhachsan</p>
+            <p>Số sao: @ks.sosao</p>
+            <p>Địa chỉ: @ks.diachi</p>
+            <p>Tiện ích: @ks.tienich</p>
+        }
+    }
+</div>
+<section class="hp-room-section">
+    <div class="container-fluid">
+        <div class="hp-room-items">
+            <div class="row">
+
+                @if (Model.listPhongKhachSan != null && Model.listPhongKhachSan.Count > 0)
+                {
+                    foreach (var phong in Model.listPhongKhachSan)
+                    {
+                        <div class="col-lg-3 col-md-6">
+                            <div class="hp-room-item set-bg" data-setbg="/static/img/room/room-b4.jpg">
+                                <div class="hr-text">
+                                    <h3>Phòng gia đình</h3>
+                                    <h2>@string.Format("{0:N0} VNĐ", @phong.giatientheogio)<span>/Mỗi giờ</span></h2>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td class="r-o">Size:</td>
+                                                <td>30 ft</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="r-o">Số lượng:</td>
+                                                <td>Tối đa 5 người 5</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="r-o">Giường:</td>
+                                                <td>Giường đôi</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="r-o">Dịch vụ:</td>
+                                                <td>Wifi, Sản phẩm,...</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <a href="" class="primary-btn">Đặt phòng</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/static/js/jquery-3.3.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.magnific-popup.min.js"></script>
+<script src="/static/js/jquery.nice-select.min.js"></script>
+<script src="/static/js/jquery-ui.min.js"></script>
+<script src="/static/js/jquery.slicknav.js"></script>
+<script src="/static/js/owl.carousel.min.js"></script>
+<script src="/static/js/main.js"></script>

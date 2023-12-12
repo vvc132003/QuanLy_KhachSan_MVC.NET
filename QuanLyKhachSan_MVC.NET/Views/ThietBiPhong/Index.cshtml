@@ -107,50 +107,54 @@
                     <form method="post" action="/ThietBiPhong/ThemThietBiPhong">
                         <div class="row">
                             <div class="col-6">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Phòng</th>
-                                            <th>Chọn</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var phong in Model.listphong)
-                                        {
+                                <div class="table-container">
+                                    <table class="table">
+                                        <thead>
                                             <tr>
-                                                <td>Phòng @phong.id</td>
-                                                <td>
-                                                    <input type="checkbox" id="@phong.id" name="idphongs" value="@phong.id">
-                                                </td>
+                                                <th>Phòng</th>
+                                                <th>Chọn</th>
                                             </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Tên thiết bị</th>
-                                            <th>Chọn</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var thietbi in Model.listThietBi)
-                                        {
-                                            <tr>
-                                                <td>Tên thiết bị @thietbi.tenthietbi</td>
-                                                <td>
-                                                    <input type="checkbox" id="@thietbi.id" name="idthietbis" value="@thietbi.id">
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var phong in Model.listphong)
+                                            {
+                                                <tr>
+                                                    <td>Phòng @phong.id</td>
+                                                    <td>
+                                                        <input type="checkbox" id="@phong.id" name="idphongs" value="@phong.id">
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="soluongduavao" class="form-label">Số lượng:</label>
-                                    <input type="number" name="soluongduavao" id="soluongduavao" class="form-control" />
+                                <div class="table-container">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tên thiết bị</th>
+                                                <th>Chọn</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var thietbi in Model.listThietBi)
+                                            {
+                                                <tr>
+                                                    <td>Tên thiết bị @thietbi.tenthietbi</td>
+                                                    <td>
+                                                        <input type="checkbox" id="@thietbi.id" name="idthietbis" value="@thietbi.id">
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
                                 </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="soluongduavao" class="form-label">Số lượng:</label>
+                                <input type="number" name="soluongduavao" id="soluongduavao" class="form-control" />
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -178,7 +182,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script>

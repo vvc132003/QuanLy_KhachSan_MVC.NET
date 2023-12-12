@@ -50,9 +50,11 @@
 .room-box:hover .context-menu {
     display: block;
 }
+
 .room-box i {
     font-size: 30px;
 }
+
 .student-info {
     display: none;
     position: absolute;
@@ -190,3 +192,18 @@ h3 {
     margin-right: 20px;
     clear: both;
 }
+
+.table-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .table th, .table td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
