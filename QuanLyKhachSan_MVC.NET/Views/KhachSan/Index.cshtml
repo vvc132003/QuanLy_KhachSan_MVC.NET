@@ -45,7 +45,8 @@
                                                 <th>Địa chỉ</th>
                                                 <th>Email</th>
                                                 <th>Số điện thoại</th>
-                                                <th>Tiện ích</th>
+                                                <th>Giấy phép kinh doanh</th>
+                                                <th>Ngày thành lập</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -62,7 +63,8 @@
                                                         <td>@khachsan.diachi</td>
                                                         <td>@khachsan.email</td>
                                                         <td>@khachsan.sodienthoai</td>
-                                                        <td>@khachsan.tienich</td>
+                                                        <td>@khachsan.giayphepkinhdoanh</td>
+                                                        <td>@khachsan.ngaythanhlap</td>
                                                         <td>
                                                             <a href="/Tang//@khachsan.id" class="btn btn-danger" title="Xoá">
                                                                 <i class="fas fa-times-circle"></i>
@@ -107,8 +109,16 @@
                             <input type="text" name="tenkhachsan" id="tenkhachsan" class="form-control" />
                         </div>
                         <div class="mb-3">
-                            <label for="diachi" class="form-label">Địa chỉ:</label>
+                            <label for="thanhpho" class="form-label">Địa chỉ:</label>
+                            <input type="text" name="thanhpho" id="thanhpho" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="diachi" class="form-label">Thành phố:</label>
                             <input type="text" name="diachi" id="diachi" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="quocgia" class="form-label">Quốc gia:</label>
+                            <input type="text" name="quocgia" id="quocgia" class="form-control" />
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email:</label>
@@ -119,8 +129,16 @@
                             <input type="text" name="sodienthoai" id="sodienthoai" class="form-control" />
                         </div>
                         <div class="mb-3">
-                            <label for="tienich" class="form-label">Tiện ích:</label>
+                            <label for="tienich" class="form-label">Loại hình:</label>
                             <input type="text" name="tienich" id="tienich" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="giayphepkinhdoanh" class="form-label">Giay phép kinh doanh:</label>
+                            <input type="text" name="giayphepkinhdoanh" id="giayphepkinhdoanh" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="ngaythanhlap" class="form-label">Ngày thành lập:</label>
+                            <input type="datetime-local" name="ngaythanhlap" id="ngaythanhlap" class="form-control" />
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">

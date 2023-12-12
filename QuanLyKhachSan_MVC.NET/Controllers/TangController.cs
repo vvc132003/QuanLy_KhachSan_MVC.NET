@@ -14,15 +14,17 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
                 string tenchucvu = HttpContext.Session.GetString("tenchucvu");
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-                List<Tang> tangs = tangService.GetAllTang();
+                ViewData["idkhachsan"] = idkhachsan;
+                List<Tang> tangs = tangService.GetAllTang(idkhachsan);
                 List<Modeldata> modellisst = new List<Modeldata>();
                 foreach (var tang in tangs)
                 {
@@ -42,6 +44,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 
         public IActionResult ThemTang(Tang tang)
         {
+            tang.idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
             tangService.ThemTang(tang);
             TempData["themthanhcong"] = "";
             return RedirectToAction("Index", "Tang");

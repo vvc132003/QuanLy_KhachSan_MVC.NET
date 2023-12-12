@@ -21,15 +21,17 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
                 string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                ViewData["idkhachsan"] = idkhachsan;
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-                List<Tang> tanglist = tangService.GetAllTang();
+                List<Tang> tanglist = tangService.GetAllTang(idkhachsan);
                 ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now);
                 List<Modeldata> modeldataList = new List<Modeldata>();
                 List<DatPhong> listdatphong = datPhongService.GetAllDatPhong();
@@ -51,7 +53,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 }
                 foreach (var tang in tanglist)
                 {
-                    List<Phong> phongs = phongService.GetAllPhongIDTang(tang.id);
+                    List<Phong> phongs = phongService.GetAllPhongIDTang(tang.id, idkhachsan);
                     List<Phong> phongtrangthai = phongService.GetAllPhongTrangThai();
                     Modeldata modeldata = new Modeldata
                     {

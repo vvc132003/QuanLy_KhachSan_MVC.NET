@@ -45,7 +45,7 @@
                             @foreach (var phong in tang.listphong)
                             {
                                 <div id="table-@(phong.id)" class="room-box @GetTinhTrangPhong(phong.tinhtrangphong)">
-                                    <p>Phòng: @phong.id</p>
+                                    <p>Phòng: @phong.sophong</p>
                                     <p>Loại phòng: @phong.loaiphong</p>
                                     @if (phong.tinhtrangphong == "có khách")
                                     {
@@ -208,8 +208,15 @@
                     <div class="border border-secondary-subtle" style="padding:10px 20px">
                         <form method="post" action="/Phong/ThemPhong">
                             <div class="row">
+                                <input type="hidden" class="form-control" value="@ViewData["idkhachsan"]" id="idkhachsan" name="idkhachsan" readonly>
+                                <input type="hidden" class="form-control" value="@tang.tang.id" id="idtang" name="idtang" readonly>
                                 <div class="mb-3">
-                                    <input type="hidden" class="form-control" value="@tang.tang.id" id="idtang" name="idtang" readonly>
+                                    <label for="songuoi" class="form-label">Số người :</label>
+                                    <input type="text" class="form-control" id="songuoi" name="songuoi">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="sophong" class="form-label">Số phòng :</label>
+                                    <input type="number" class="form-control" id="sophong" name="sophong">
                                 </div>
                                 <div class="mb-3">
                                     <label for="giatientheogio" class="form-label">Gía tiền theo giờ :</label>

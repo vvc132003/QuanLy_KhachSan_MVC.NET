@@ -16,11 +16,11 @@
         <br />
         <div class="page-wrapper">
             <div class="container-fluid">
-               @*  <div class="d-flex justify-content-between">
-                    <a href="" class="btn btn-primary mb-4 ml-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="fas fa-plus"></i>
-                        Thêm tầng
-                    </a>
+                @*  <div class="d-flex justify-content-between">
+                <a href="" class="btn btn-primary mb-4 ml-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fas fa-plus"></i>
+                Thêm tầng
+                </a>
                 </div> *@
                 <div class="row">
                     <div class="col-12">
@@ -47,6 +47,7 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Tên tầng</th>
+                                                <th>ID khách sạn</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -59,7 +60,7 @@
                                                     <tr id="row-@count">
                                                         <td>@count</td>
                                                         <td>@tang.tang.tentang</td>
-
+                                                        <td>@tang.tang.idkhachsan</td>
                                                         <td>
                                                             <a href="/Tang/XoaTang/@tang.tang.id" class="btn btn-danger" title="Xoá">
                                                                 <i class="fas fa-times-circle"></i>

@@ -7,17 +7,22 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
     public class DangNhapController : Controller
     {
         private readonly NhanVienService nhanVienService;
+        private readonly KhachSanService khachSanService;
 
-        public DangNhapController(NhanVienService nhanVienServices)
+
+        public DangNhapController(NhanVienService nhanVienServices, KhachSanService khachSanServices)
         {
             nhanVienService = nhanVienServices;
+            khachSanService = khachSanServices;
         }
         public IActionResult DangNhap()
         {
             NhanVien nhanVien = new NhanVien();
+            List<KhachSan> listkhachsan = khachSanService.GetAllKhachSan();
             Modeldata yourModel = new Modeldata
             {
                 nhanVien = nhanVien,
+                listKhachSan = listkhachsan,
             };
             return View(yourModel);
         }
@@ -30,6 +35,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 HttpContext.Session.SetString("taikhoan", luudangnhap.taikhoan);
                 HttpContext.Session.SetString("hovaten", luudangnhap.hovaten);
                 HttpContext.Session.SetString("tenchucvu", luudangnhap.tenchucvu);
+                HttpContext.Session.SetInt32("idkhachsan", luudangnhap.idkhachsan);
                 return RedirectToAction("Index", "Phong");
             }
             else

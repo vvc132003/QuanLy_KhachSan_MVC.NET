@@ -6,6 +6,22 @@
         <div class="form-value">
             <form action="/DangNhap/DangNhapVaoHeThong" method="post">
                 <h2>Đăng nhập</h2>
+                <div class="mb-3">
+                    <label for="idkhachsan" class="form-label">Khách sạn:</label>
+                    <select id="idkhachsan" name="idkhachsan" class="form-control">
+                        @if (Model.listKhachSan != null && Model.listKhachSan.Count > 0)
+                        {
+                            foreach (var khachsan in Model.listKhachSan)
+                            {
+                                <option value="@khachsan.id">@khachsan.tenkhachsan</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="" selected>Không có dữ liệu</option>
+                        }
+                    </select>
+                </div>
                 <div class="inputbox">
                     <ion-icon name="person-outline"></ion-icon>
                     <input type="text" id="taikhoan" name="taikhoan" required>

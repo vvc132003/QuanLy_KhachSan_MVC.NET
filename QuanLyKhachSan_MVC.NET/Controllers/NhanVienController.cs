@@ -75,15 +75,17 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult AddNhanVienn(NhanVien nhanVien, HopDongLaoDong hopDongLaoDong)
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
                 string tenchucvu = HttpContext.Session.GetString("tenchucvu");
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 nhanVien.solanvipham = 0;
+                nhanVien.idkhachsan = idkhachsan;
                 nhanVien.trangthai = "Đang hoạt động";
                 int idnhanvien = nhanVienService.ThemNhanVien(nhanVien);
                 hopDongLaoDong.idnhanvien = idnhanvien;

@@ -20,5 +20,6 @@
         public int idchucvu { get; set; }
         public int idvitribophan { get; set; }
         public int idbophan { get; set; }
+        public int idkhachsan { get; set; }
     }
 }

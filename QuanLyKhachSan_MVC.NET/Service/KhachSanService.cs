@@ -28,7 +28,11 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 sosao = Convert.ToInt32(reader["sosao"]),
                                 email = reader["email"].ToString(),
                                 sodienthoai = reader["sodienthoai"].ToString(),
-                                tienich = reader["tienich"].ToString(),
+                                thanhpho = reader["thanhpho"].ToString(),
+                                quocgia = reader["quocgia"].ToString(),
+                                loaihinh = reader["loaihinh"].ToString(),
+                                giayphepkinhdoanh = reader["giayphepkinhdoanh"].ToString(),
+                                ngaythanhlap =(DateTime)reader["ngaythanhlap"]
                             };
                             listkhachsan.Add(khachSan);
                         }
@@ -59,7 +63,11 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 sosao = Convert.ToInt32(reader["sosao"]),
                                 email = reader["email"].ToString(),
                                 sodienthoai = reader["sodienthoai"].ToString(),
-                                tienich = reader["tienich"].ToString(),
+                                thanhpho = reader["thanhpho"].ToString(),
+                                quocgia = reader["quocgia"].ToString(),
+                                loaihinh = reader["loaihinh"].ToString(),
+                                giayphepkinhdoanh = reader["giayphepkinhdoanh"].ToString(),
+                                ngaythanhlap = (DateTime)reader["ngaythanhlap"]
                             };
                             listkhachsan.Add(khachSan);
                         }
@@ -90,7 +98,11 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 sosao = Convert.ToInt32(reader["sosao"]),
                                 email = reader["email"].ToString(),
                                 sodienthoai = reader["sodienthoai"].ToString(),
-                                tienich = reader["tienich"].ToString(),
+                                thanhpho = reader["thanhpho"].ToString(),
+                                quocgia = reader["quocgia"].ToString(),
+                                loaihinh = reader["loaihinh"].ToString(),
+                                giayphepkinhdoanh = reader["giayphepkinhdoanh"].ToString(),
+                                ngaythanhlap = (DateTime)reader["ngaythanhlap"]
                             };
                             return khachSan;
                         }
@@ -108,16 +120,20 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "INSERT INTO KhachSan (tenkhachsan,sosao,diachi,email,sodienthoai,tienich) " +
-                    " VALUES (@tenkhachsan,@sosao,@diachi,@email,@sodienthoai,@tienich)";
+                string query = "INSERT INTO KhachSan (tenkhachsan,sosao,diachi,thanhpho,quocgia,email,sodienthoai,loaihinh,giayphepkinhdoanh,ngaythanhlap) " +
+                    " VALUES (@tenkhachsan,@sosao,@diachi,@thanhpho,@quocgia,@email,@sodienthoai,@loaihinh,@giayphepkinhdoanh,@ngaythanhlap)";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@tenkhachsan", khachSan.tenkhachsan);
                     command.Parameters.AddWithValue("@sosao", khachSan.sosao);
                     command.Parameters.AddWithValue("@diachi", khachSan.diachi);
+                    command.Parameters.AddWithValue("@thanhpho", khachSan.thanhpho);
+                    command.Parameters.AddWithValue("@quocgia", khachSan.quocgia);
                     command.Parameters.AddWithValue("@email", khachSan.email);
                     command.Parameters.AddWithValue("@sodienthoai", khachSan.sodienthoai);
-                    command.Parameters.AddWithValue("@tienich", khachSan.tienich);
+                    command.Parameters.AddWithValue("@loaihinh", khachSan.loaihinh);
+                    command.Parameters.AddWithValue("@giayphepkinhdoanh", khachSan.giayphepkinhdoanh);
+                    command.Parameters.AddWithValue("@ngaythanhlap", khachSan.ngaythanhlap);
                     command.ExecuteNonQuery();
                 }
             }

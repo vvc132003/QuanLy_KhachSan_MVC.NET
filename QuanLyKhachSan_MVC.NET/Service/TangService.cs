@@ -13,8 +13,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-/*                string query = "UPDATE Tang SET tentang = @tentang WHERE id = @id";
-*/
+                /*                string query = "UPDATE Tang SET tentang = @tentang WHERE id = @id";
+                */
                 using (SqlCommand command = new SqlCommand("UpdateTang", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
@@ -26,16 +26,16 @@ namespace QuanLyKhachSan_MVC.NET.Service
         }
 
 
-        public List<Tang> GetAllTang()
+        public List<Tang> GetAllTang(int idkhachsan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 List<Tang> tangs = new List<Tang>();
                 connection.Open();
-/*                string query = "select * from Tang";
-*/                using (SqlCommand command = new SqlCommand("GetAllTang", connection))
+                string query = "select * from Tang where idkhachsan=@idkhachsan ";
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -44,6 +44,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                             {
                                 id = Convert.ToInt32(reader["id"]),
                                 tentang = reader["tentang"].ToString(),
+                                idkhachsan = Convert.ToInt32(reader["idkhachsan"]),
                             };
                             tangs.Add(tang);
                         }
@@ -58,10 +59,10 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-/*                string query = "select * from Tang where id = @id";
-*/                using (SqlCommand command = new SqlCommand("GetTangId", connection))
+                string query = "select * from Tang where id = @id";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@id", id);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -71,6 +72,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                             {
                                 id = Convert.ToInt32(reader["id"]),
                                 tentang = reader["tentang"].ToString(),
+                                idkhachsan = Convert.ToInt32(reader["idkhachsan"]),
                             };
                             return tang;
                         }
@@ -88,11 +90,11 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-/*                string query = "INSERT INTO Tang (tentang) VALUES (@tentang)";
-*/                using (SqlCommand command = new SqlCommand("InsertTang", connection))
+                string query = "INSERT INTO Tang (tentang,idkhachsan) VALUES (@tentang,@idkhachsan)";
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@tentang", tang.tentang);
+                    command.Parameters.AddWithValue("@idkhachsan", tang.idkhachsan);
                     command.ExecuteNonQuery();
                 }
             }
@@ -103,8 +105,9 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-/*                string query = "DELETE FROM Tang WHERE id = @id";
-*/                using (SqlCommand command = new SqlCommand("DeleteTang", connection))
+                /*                string query = "DELETE FROM Tang WHERE id = @id";
+                */
+                using (SqlCommand command = new SqlCommand("DeleteTang", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@id", id);

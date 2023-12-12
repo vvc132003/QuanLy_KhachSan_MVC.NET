@@ -13,7 +13,7 @@ namespace ketnoicsdllan1
         public static SqlConnection GetDBConnection()
         {
             string datasource = @"Vo_Van_Chinh\SQLEXPRESS";
-            string database = "QuanLy_KhachSan";
+            string database = "QuanLy_KhachSans";
             string username = "sa";
             string password = "chinh@2003";
             return DBSQLServerUtils.GetDBConnection(datasource, database, username, password);

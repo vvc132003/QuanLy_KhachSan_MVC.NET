@@ -19,7 +19,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string CheckThongTinDangNhap = "SELECT * FROM NhanVien left join ChucVu on NhanVien.idchucvu = chucvu.id WHERE taikhoan = @taikhoan AND matkhau = @matkhau";
+                string CheckThongTinDangNhap = "SELECT NhanVien.*, ChucVu.*, KhachSan.* FROM NhanVien LEFT JOIN ChucVu ON NhanVien.idchucvu = ChucVu.id  LEFT JOIN KhachSan ON NhanVien.idkhachsan = KhachSan.id  WHERE NhanVien.taikhoan = @taikhoan  AND NhanVien.matkhau = @matkhau  ";
                 using (SqlCommand command = new SqlCommand(CheckThongTinDangNhap, connection))
                 {
                     command.Parameters.AddWithValue("@taikhoan", taikhoan);
@@ -46,7 +46,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 image = reader["image"].ToString(),
                                 idchucvu = (int)reader["idchucvu"],
                                 idvitribophan = (int)reader["idvitribophan"],
-                                idbophan = (int)reader["idbophan"]
+                                idbophan = (int)reader["idbophan"],
+                                idkhachsan = (int)reader["idkhachsan"],
                             };
                             return nhanVien;
                         }
