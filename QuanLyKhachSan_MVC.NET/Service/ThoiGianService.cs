@@ -12,10 +12,9 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "UPDATE ThoiGian SET thoigianvao = @thoigianvao,thoigiannhanphong=@thoigiannhanphong, thoigianra = @thoigianra, mota = @mota WHERE id = @id";
+                string query = "UPDATE ThoiGian SET thoigiannhanphong=@thoigiannhanphong, thoigianra = @thoigianra, mota = @mota WHERE id = @id";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@thoigianvao", thoiGian.thoigianvao);
                     command.Parameters.AddWithValue("@thoigiannhanphong", thoiGian.thoigiannhanphong);
                     command.Parameters.AddWithValue("@thoigianra", thoiGian.thoigianra);
                     command.Parameters.AddWithValue("@mota", thoiGian.mota);
@@ -43,7 +42,6 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     ThoiGian thoiGian = new ThoiGian
                     {
                         id = Convert.ToInt32(reader["id"]),
-                        thoigianvao = Convert.ToDateTime(reader["thoigianvao"]),
                         thoigiannhanphong = Convert.ToDateTime(reader["thoigiannhanphong"]),
                         thoigianra = Convert.ToDateTime(reader["thoigianra"]),
                         mota = Convert.ToString(reader["mota"])
@@ -56,14 +54,14 @@ namespace QuanLyKhachSan_MVC.NET.Service
             return danhSachThoiGian;
         }
 
-        public ThoiGian GetThoiGian(DateTime thoigianvao, int idkhachsan)
+        public ThoiGian GetThoiGian(DateTime thoigiannhanphong, int idkhachsan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "SELECT * FROM ThoiGian WHERE CONVERT(date, thoigianvao) = CONVERT(date, @thoigianvao) and idkhachsan=@idkhachsan ";
+                string query = "SELECT * FROM ThoiGian WHERE CONVERT(date, thoigiannhanphong) = CONVERT(date, @thoigiannhanphong) and idkhachsan=@idkhachsan ";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@thoigianvao", thoigianvao);
+                command.Parameters.AddWithValue("@thoigiannhanphong", thoigiannhanphong);
                 command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
                 SqlDataReader reader = command.ExecuteReader();
 
@@ -72,7 +70,6 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     ThoiGian thoiGian = new ThoiGian()
                     {
                         id = Convert.ToInt32(reader["id"]),
-                        thoigianvao = Convert.ToDateTime(reader["thoigianvao"]),
                         thoigiannhanphong = Convert.ToDateTime(reader["thoigiannhanphong"]),
                         thoigianra = Convert.ToDateTime(reader["thoigianra"]),
                         mota = Convert.ToString(reader["mota"]),
@@ -100,7 +97,6 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     ThoiGian thoiGian = new ThoiGian()
                     {
                         id = Convert.ToInt32(reader["id"]),
-                        thoigianvao = Convert.ToDateTime(reader["thoigianvao"]),
                         thoigiannhanphong = Convert.ToDateTime(reader["thoigiannhanphong"]),
                         thoigianra = Convert.ToDateTime(reader["thoigianra"]),
                         mota = Convert.ToString(reader["mota"]),
@@ -119,11 +115,10 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "INSERT INTO ThoiGian (thoigianvao,thoigiannhanphong, thoigianra, mota,idkhachsan) " +
-                    "VALUES (@thoigianvao,@thoigiannhanphong, @thoigianra, @mota,@idkhachsan)";
+                string query = "INSERT INTO ThoiGian (thoigiannhanphong, thoigianra, mota,idkhachsan) " +
+                    "VALUES (@thoigiannhanphong, @thoigianra, @mota,@idkhachsan)";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@thoigianvao", thoiGian.thoigianvao);
                     command.Parameters.AddWithValue("@thoigiannhanphong", thoiGian.thoigiannhanphong);
                     command.Parameters.AddWithValue("@thoigianra", thoiGian.thoigianra);
                     command.Parameters.AddWithValue("@mota", thoiGian.mota);

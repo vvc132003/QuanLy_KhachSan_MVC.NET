@@ -8,6 +8,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
 {
     public class DatPhongService : DatPhongRepository
     {
+
+
         public List<DatPhong> GetAllDatPhong()
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())

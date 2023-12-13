@@ -19,12 +19,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             return View();
         }
-        public IActionResult TimKiemKhachSan(string tenkhachsan)
+        public IActionResult TimKiemKhachSan(string tenkhachsan, string loaiphong, int songuoi)
         {
             List<KhachSan> KhachSanlisst = khachSanService.GetAllKhachSanByname(tenkhachsan);
             foreach (var khachSan in KhachSanlisst)
             {
-                List<Phong> phonglisst = phongService.GetAllPhongTrangThai(khachSan.id);
+                List<Phong> phonglisst = phongService.GetAllPhongTrangThaiandidksloaiphongsonguoi(khachSan.id, loaiphong, songuoi);
                 Modeldata modeldata = new Modeldata()
                 {
                     listKhachSan = KhachSanlisst,

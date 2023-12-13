@@ -10,5 +10,7 @@ namespace QuanLyKhachSan_MVC.NET.Repository
         Phong GetPhongID(int id);
         void CapNhatPhong(Phong phong);
         void ThemPhong(Phong phong);
+        List<Phong> GetAllPhongTrangThaiandidksloaiphongsonguoi(int idkhachsan, string loaiphong, int songuoi);
+
     }
 }
