@@ -6,12 +6,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly PhongKhachSanService phongkhachsanService;
+        private readonly PhongService phongService;
         private readonly KhachSanService khachSanService;
 
-        public HomeController(PhongKhachSanService phongkhachsanServices, KhachSanService khachSanServices)
+        public HomeController(PhongService phongServices, KhachSanService khachSanServices)
         {
-            phongkhachsanService = phongkhachsanServices;
+            phongService = phongServices;
             khachSanService = khachSanServices;
         }
 
@@ -24,11 +24,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             List<KhachSan> KhachSanlisst = khachSanService.GetAllKhachSanByname(tenkhachsan);
             foreach (var khachSan in KhachSanlisst)
             {
-                List<PhongKhachSan> phongkhachsanlisst = phongkhachsanService.GetAllPhongIDKhachSan(khachSan.id);
+                List<Phong> phonglisst = phongService.GetAllPhongTrangThai(khachSan.id);
                 Modeldata modeldata = new Modeldata()
                 {
                     listKhachSan = KhachSanlisst,
-                    listPhongKhachSan = phongkhachsanlisst,
+                    listphong = phonglisst,
                 };
                 return View(modeldata);
             }

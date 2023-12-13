@@ -7,5 +7,7 @@
         public DateTime thoigiannhanphong { get; set; }
         public DateTime thoigianra { get; set; }
         public string mota { get; set; }
+        public int idkhachsan { get; set; }
+
     }
 }

@@ -8,6 +8,7 @@ namespace QuanLyKhachSan_MVC.NET.Repository
         void CapNhatSanPham(SanPham sanPham);
         void XoaSanPham(int id);
         SanPham GetSanPhamByID(int id);
+        List<SanPham> GetAllSanPhamIDKhachSan(int idkhachsan);
         List<SanPham> GetAllSanPham();
     }
 }

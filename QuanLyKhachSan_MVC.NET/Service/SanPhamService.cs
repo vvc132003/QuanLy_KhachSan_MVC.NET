@@ -58,6 +58,37 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 return sanPhams;
             }
         }
+        public List<SanPham> GetAllSanPhamIDKhachSan(int idkhachsan)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<SanPham> sanPhams = new List<SanPham>();
+                connection.Open();
+                string sql = "SELECT * FROM SanPham where idkhachsan=@idkhachsan ";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            SanPham sanPham = new SanPham()
+                            {
+                                id = (int)reader["id"],
+                                tensanpham = reader["tensanpham"].ToString(),
+                                mota = reader["mota"].ToString(),
+                                soluongcon = (int)reader["soluongcon"],
+                                image = reader["image"].ToString(),
+                                trangthai = reader["trangthai"].ToString(),
+                                giaban = Convert.ToSingle(reader["giaban"]),
+                            };
+                            sanPhams.Add(sanPham);
+                        }
+                    }
+                }
+                return sanPhams;
+            }
+        }
 
         public SanPham GetSanPhamByID(int id)
         {

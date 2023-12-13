@@ -32,7 +32,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 List<Tang> tanglist = tangService.GetAllTang(idkhachsan);
-                ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now);
+                ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now, idkhachsan);
                 List<Modeldata> modeldataList = new List<Modeldata>();
                 List<DatPhong> listdatphong = datPhongService.GetAllDatPhong();
                 foreach (var datphong in listdatphong)

@@ -9,5 +9,7 @@
         public int soluongcon { get; set; }
         public string trangthai { get; set; }
         public string image { get; set; }
+        public int idkhachsan { get; set; }
+
     }
 }

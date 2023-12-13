@@ -69,7 +69,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             {
                 /// kiểm tra xem khách hàng đã tồn tại hay chưa
                 KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
-                ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now);
+                ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now, HttpContext.Session.GetInt32("idkhachsan").Value);
                 if (khachHangTonTai != null)
                 {
                     datPhong.idthoigian = thoiGian.id;
@@ -191,7 +191,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 foreach (int phongId in idphongs)
                 {
                     KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
-                    ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now);
+                    ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now, HttpContext.Session.GetInt32("idkhachsan").Value);
                     if (khachHangTonTai != null)
                     {
                         datPhong.idthoigian = thoiGian.id;
@@ -274,8 +274,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult ChiTietThuePhong(int id)
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 int idnv = HttpContext.Session.GetInt32("id").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
                 string tenchucvu = HttpContext.Session.GetString("tenchucvu");
@@ -283,7 +284,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 List<DatPhong> listdatPhongs = datPhongService.GetAllDatPhongByID(id);
-                List<SanPham> listsanpham = sanPhamService.GetAllSanPham();
+                List<SanPham> listsanpham = sanPhamService.GetAllSanPhamIDKhachSan(idkhachsan);
                 Phong phongs = phongService.GetPhongID(id);
                 List<Modeldata> listmodeldatas = new List<Modeldata>();
                 if (listdatPhongs != null && listdatPhongs.Any())

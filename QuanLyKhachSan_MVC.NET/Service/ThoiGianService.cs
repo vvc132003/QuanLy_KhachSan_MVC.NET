@@ -56,14 +56,15 @@ namespace QuanLyKhachSan_MVC.NET.Service
             return danhSachThoiGian;
         }
 
-        public ThoiGian GetThoiGian(DateTime thoigianvao)
+        public ThoiGian GetThoiGian(DateTime thoigianvao, int idkhachsan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "SELECT * FROM ThoiGian WHERE CONVERT(date, thoigianvao) = CONVERT(date, @thoigianvao)";
+                string query = "SELECT * FROM ThoiGian WHERE CONVERT(date, thoigianvao) = CONVERT(date, @thoigianvao) and idkhachsan=@idkhachsan ";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@thoigianvao", thoigianvao);
+                command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (reader.Read())
@@ -118,14 +119,15 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "INSERT INTO ThoiGian (thoigianvao,thoigiannhanphong, thoigianra, mota) " +
-                    "VALUES (@thoigianvao,@thoigiannhanphong, @thoigianra, @mota)";
+                string query = "INSERT INTO ThoiGian (thoigianvao,thoigiannhanphong, thoigianra, mota,idkhachsan) " +
+                    "VALUES (@thoigianvao,@thoigiannhanphong, @thoigianra, @mota,@idkhachsan)";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@thoigianvao", thoiGian.thoigianvao);
                     command.Parameters.AddWithValue("@thoigiannhanphong", thoiGian.thoigiannhanphong);
                     command.Parameters.AddWithValue("@thoigianra", thoiGian.thoigianra);
                     command.Parameters.AddWithValue("@mota", thoiGian.mota);
+                    command.Parameters.AddWithValue("@idkhachsan", thoiGian.idkhachsan);
                     command.ExecuteNonQuery();
                 }
             }
