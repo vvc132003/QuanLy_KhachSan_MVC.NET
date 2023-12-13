@@ -129,8 +129,8 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string sql = "INSERT INTO SanPham (tensanpham, mota,giaban , soluongcon, image, trangthai) " +
-                                     " VALUES (@tensanpham, @mota,@giaban,  @soluongcon, @image, @trangthai)";
+                string sql = "INSERT INTO SanPham (tensanpham, mota,giaban , soluongcon, image, trangthai,idkhachsan) " +
+                                     " VALUES (@tensanpham, @mota,@giaban,  @soluongcon, @image, @trangthai,@idkhachsan)";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@tensanpham", sanPham.tensanpham);
@@ -139,6 +139,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     command.Parameters.AddWithValue("@soluongcon", sanPham.soluongcon);
                     command.Parameters.AddWithValue("@image", sanPham.image);
                     command.Parameters.AddWithValue("@trangthai", sanPham.trangthai);
+                    command.Parameters.AddWithValue("@idkhachsan", sanPham.idkhachsan);
                     command.ExecuteNonQuery();
                 }
             }

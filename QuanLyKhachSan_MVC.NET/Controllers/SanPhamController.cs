@@ -43,6 +43,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 string hovaten = HttpContext.Session.GetString("hovaten");
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
+                sanPham.idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 sanPham.trangthai = "còn bán";
                 sanPhamService.ThemSanPham(sanPham);
                 return RedirectToAction("Index", "SanPham");
