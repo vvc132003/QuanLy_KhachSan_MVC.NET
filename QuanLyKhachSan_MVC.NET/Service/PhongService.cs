@@ -100,14 +100,15 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 List<Phong> phongs = new List<Phong>();
                 connection.Open();
                 string query = @"
-                                SELECT Phong.id, Phong.sophong, MAX(Phong.giatientheogio) AS giatientheogio,MAX(Phong.giatientheongay) 
-                                AS giatientheongay, Phong.idkhachsan, Phong.loaiphong, Phong.songuoi
+                                SELECT Phong.id, Phong.sophong, 
+                                MAX(Phong.giatientheogio) AS giatientheogio, 
+                                MAX(Phong.giatientheongay) AS giatientheongay, 
+                                Phong.idkhachsan, Phong.loaiphong, Phong.songuoi
                                 FROM DatPhong
-                                RIGHT JOIN Phong ON DatPhong.idphong = Phong.id
+                                LEFT JOIN Phong ON DatPhong.idphong = Phong.id
                                 WHERE Phong.idkhachsan = @idkhachsan AND Phong.loaiphong = @loaiphong AND Phong.songuoi = @songuoi
-                                GROUP BY Phong.id, Phong.sophong, Phong.giatientheogio, Phong.idkhachsan, Phong.loaiphong, Phong.songuoi
+                                GROUP BY Phong.id, Phong.sophong, Phong.idkhachsan, Phong.loaiphong, Phong.songuoi
                                 HAVING COUNT(DatPhong.idphong) > 1;
-                                ;
                             ";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

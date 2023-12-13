@@ -51,24 +51,45 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
-                        sotienthanhtoan = (((phong.giatientheogio * (DateTime.Now.Hour - datphong.ngaydat.Hour) + tongtienthuesanpham) - datphong.tiendatcoc) * giamGia.phantramgiamgia) / 100;
+                        if (DateTime.Now > datphong.ngaydukientra)
+                        {
+                            // Quá hạn trả phòng, chuyển sang thuê theo ngày
+                            sotienthanhtoan = ((phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * giamGia.phantramgiamgia / 100;
+                        }
+                        else
+                        {
+                            // Đang trong thời gian thuê theo giờ
+                            sotienthanhtoan = ((phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * giamGia.phantramgiamgia / 100;
+                        }
                     }
                     else
                     {
-                        sotienthanhtoan = (((phong.giatientheongay * (DateTime.Now.Hour - datphong.ngaydat.Hour) + tongtienthuesanpham) - datphong.tiendatcoc) * giamGia.phantramgiamgia) / 100;
+                        // Đang thuê theo ngày
+                        sotienthanhtoan = ((phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * giamGia.phantramgiamgia / 100;
                     }
                 }
                 else
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
-                        sotienthanhtoan = (phong.giatientheogio * (DateTime.Now.Hour - datphong.ngaydat.Hour) + tongtienthuesanpham) - datphong.tiendatcoc;
+                        if (DateTime.Now > datphong.ngaydukientra)
+                        {
+                            // Quá hạn trả phòng, chuyển sang thuê theo ngày
+                            sotienthanhtoan = (phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc;
+                        }
+                        else
+                        {
+                            // Đang trong thời gian thuê theo giờ
+                            sotienthanhtoan = (phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
+                        }
                     }
                     else
                     {
-                        sotienthanhtoan = (phong.giatientheongay * (DateTime.Now.Hour - datphong.ngaydat.Hour) + tongtienthuesanpham) - datphong.tiendatcoc;
+                        // Đang thuê theo ngày
+                        sotienthanhtoan = (phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc;
                     }
                 }
+
                 /// thêm lịch sử thanh toán
                 lichSuThanhToan.ngaythanhtoan = DateTime.Now;
                 lichSuThanhToan.sotienthanhtoan = sotienthanhtoan;
