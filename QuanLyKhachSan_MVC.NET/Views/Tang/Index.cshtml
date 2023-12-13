@@ -104,6 +104,22 @@
                             <label for="tentang" class="form-label">Tên tầng:</label>
                             <input type="text" name="tentang" id="tentang" class="form-control" />
                         </div>
+                        <div class="mb-3">
+                            <label for="idkhachsan" class="form-label">Khách sạn:</label>
+                            <select id="idkhachsan" name="idkhachsan" class="form-control">
+                                @if (Model[0].listKhachSan != null && Model[0].listKhachSan.Count > 0)
+                                {
+                                    foreach (var khachsan in Model[0].listKhachSan)
+                                    {
+                                        <option value="@khachsan.id">@khachsan.tenkhachsan</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="" selected>Không có dữ liệu</option>
+                                }
+                            </select>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">
                                 Huỷ

@@ -8,9 +8,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
     public class TangController : Controller
     {
         private readonly TangService tangService;
-        public TangController(TangService tangServices)
+        private readonly KhachSanService khachSanService;
+        public TangController(TangService tangServices, KhachSanService khachSanServices)
         {
             tangService = tangServices;
+            khachSanService = khachSanServices;
         }
         public IActionResult Index()
         {
@@ -25,16 +27,18 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["tenchucvu"] = tenchucvu;
                 ViewData["idkhachsan"] = idkhachsan;
                 List<Tang> tangs = tangService.GetAllTang(idkhachsan);
-                List<Modeldata> modellisst = new List<Modeldata>();
+                List<KhachSan> listkhachsan = khachSanService.GetAllKhachSan();
+                List<Modeldata> modelDataList = new List<Modeldata>();
                 foreach (var tang in tangs)
                 {
                     Modeldata modeldata = new Modeldata
                     {
                         tang = tang,
+                        listKhachSan = listkhachsan
                     };
-                    modellisst.Add(modeldata);
+                    modelDataList.Add(modeldata);
                 }
-                return View(modellisst);
+                return View(modelDataList);
             }
             else
             {
@@ -42,9 +46,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
         }
 
+
         public IActionResult ThemTang(Tang tang)
         {
-            tang.idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
             tangService.ThemTang(tang);
             TempData["themthanhcong"] = "";
             return RedirectToAction("Index", "Tang");

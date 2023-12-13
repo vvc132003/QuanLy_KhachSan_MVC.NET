@@ -71,72 +71,59 @@
                                     {
                                         <i class="fas fa-question-circle"></i>
                                     }
-                                    @foreach (var thoigian in Model)
-                                    {
-                                        if (thoigian != null && thoigian.thoigian != null && thoigian.thoigian.thoigiannhanphong != null)
+                                    <div class="context-menu">
+                                        @if (phong.tinhtrangphong == "có khách")
                                         {
-                                            if (thoigian.thoigian.thoigiannhanphong.Date == DateTime.Today)
-                                            {
-                                                <div class="context-menu">
-                                                    @if (phong.tinhtrangphong == "có khách")
-                                                    {
-                                                        <a href="/ThuePhong/ChiTietThuePhong/?id=@phong.id">
-                                                            <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
-                                                            Thông tin thuê phòng
-                                                        </a>
-                                                        <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal@(phong.id)">
-                                                            <i class="fas fa-exchange-alt" style="color: blue; font-size: 20px; margin-right: 5px;"></i>
-                                                            Chuyển phòng
-                                                        </a>
-                                                    }
-                                                    else if (phong.tinhtrangphong == "còn trống")
-                                                    {
-                                                        <a href="/ThuePhong/Index/@phong.id">
-                                                            <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-bed"></i>
-                                                            Thuê bình thường
-                                                        </a>
-                                                        <a href="/ThuePhong/Index1">
-                                                            <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-users"></i>
-                                                            Thuê theo đoàn
-                                                        </a>
-                                                        <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
-                                                            <i style="font-size: 20px; margin-right: 14px;color: #8B4513;" class="fas fa-wrench"></i>
-                                                            Sửa phòng
-                                                        </a>
-                                                    }
-                                                    else if (phong.tinhtrangphong == "đã đặt")
-                                                    {
-                                                        <a href="">
-                                                            <i style="font-size: 20px; margin-right: 14px" class="fas fa-check-circle"></i>
-                                                            Check nhận phòng
-                                                        </a>
-                                                    }
-                                                    else if (phong.tinhtrangphong == "đang sửa chữa")
-                                                    {
-                                                        <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
-                                                            <i style="font-size: 20px; margin-right: 2px; color: blue;" class="fas fa-check"></i>
-                                                            Hoàn tất sửa chữa
-                                                        </a>
-                                                    }
-                                                    else if (phong.tinhtrangphong == "chưa dọn")
-                                                    {
-                                                        <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
-                                                            <i style="font-size: 20px; margin-right: 10px; color: blue;" class="fas fa-check"></i>
-                                                            Dọn xong
-                                                        </a>
-                                                        <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
-                                                            <i style="font-size: 20px; margin-right: 10px" class="fas fa-wrench"></i>
-                                                            Sửa phòng
-                                                        </a>
-                                                    }
-                                                </div>
-                                            }
-                                            else
-                                            {
-
-                                            }
+                                            <a href="/ThuePhong/ChiTietThuePhong/?id=@phong.id">
+                                                <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
+                                                Thông tin thuê phòng
+                                            </a>
+                                            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal@(phong.id)">
+                                                <i class="fas fa-exchange-alt" style="color: blue; font-size: 20px; margin-right: 5px;"></i>
+                                                Chuyển phòng
+                                            </a>
                                         }
-                                    }
+                                        else if (phong.tinhtrangphong == "còn trống")
+                                        {
+                                            <a href="/ThuePhong/Index/@phong.id">
+                                                <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-bed"></i>
+                                                Thuê bình thường
+                                            </a>
+                                            <a href="/ThuePhong/Index1">
+                                                <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-users"></i>
+                                                Thuê theo đoàn
+                                            </a>
+                                            <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
+                                                <i style="font-size: 20px; margin-right: 14px;color: #8B4513;" class="fas fa-wrench"></i>
+                                                Sửa phòng
+                                            </a>
+                                        }
+                                        else if (phong.tinhtrangphong == "đã đặt")
+                                        {
+                                            <a href="">
+                                                <i style="font-size: 20px; margin-right: 14px" class="fas fa-check-circle"></i>
+                                                Check nhận phòng
+                                            </a>
+                                        }
+                                        else if (phong.tinhtrangphong == "đang sửa chữa")
+                                        {
+                                            <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
+                                                <i style="font-size: 20px; margin-right: 2px; color: blue;" class="fas fa-check"></i>
+                                                Hoàn tất sửa chữa
+                                            </a>
+                                        }
+                                        else if (phong.tinhtrangphong == "chưa dọn")
+                                        {
+                                            <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
+                                                <i style="font-size: 20px; margin-right: 10px; color: blue;" class="fas fa-check"></i>
+                                                Dọn xong
+                                            </a>
+                                            <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
+                                                <i style="font-size: 20px; margin-right: 10px" class="fas fa-wrench"></i>
+                                                Sửa phòng
+                                            </a>
+                                        }
+                                    </div>
                                 </div>
                             }
                         </div>

@@ -2,6 +2,7 @@
 using QuanLyKhachSan_MVC.NET.Models;
 using QuanLyKhachSan_MVC.NET.Repository;
 using System.Data.SqlClient;
+using System.Globalization;
 
 namespace QuanLyKhachSan_MVC.NET.Service
 {
@@ -12,11 +13,13 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "UPDATE ThoiGian SET thoigiannhanphong=@thoigiannhanphong, thoigianra = @thoigianra, mota = @mota WHERE id = @id";
+                string query = "UPDATE ThoiGian SET thoigiannhanphong=@thoigiannhanphong,phuthunhanphong=@phuthunhanphong, thoigianra = @thoigianra,phuthutraphong=@phuthutraphong, mota = @mota WHERE id = @id";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@thoigiannhanphong", thoiGian.thoigiannhanphong);
+                    command.Parameters.AddWithValue("@phuthunhanphong", thoiGian.phuthunhanphong);
                     command.Parameters.AddWithValue("@thoigianra", thoiGian.thoigianra);
+                    command.Parameters.AddWithValue("@phuthutraphong", thoiGian.phuthutraphong);
                     command.Parameters.AddWithValue("@mota", thoiGian.mota);
                     command.Parameters.AddWithValue("@id", thoiGian.id);
                     command.ExecuteNonQuery();
@@ -42,9 +45,11 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     ThoiGian thoiGian = new ThoiGian
                     {
                         id = Convert.ToInt32(reader["id"]),
-                        thoigiannhanphong = Convert.ToDateTime(reader["thoigiannhanphong"]),
-                        thoigianra = Convert.ToDateTime(reader["thoigianra"]),
-                        mota = Convert.ToString(reader["mota"])
+                        thoigiannhanphong = TimeSpan.ParseExact(reader["thoigiannhanphong"].ToString(), "HH:mm", CultureInfo.InvariantCulture),
+                        phuthunhanphong = (float)reader["phuthunhanphong"],
+                        thoigianra = TimeSpan.ParseExact(reader["thoigianra"].ToString(), "HH:mm", CultureInfo.InvariantCulture),
+                        phuthutraphong = (float)reader["phuthutraphong"],
+                        mota = Convert.ToString(reader["mota"]),
                     };
                     danhSachThoiGian.Add(thoiGian);
                 }
@@ -54,32 +59,61 @@ namespace QuanLyKhachSan_MVC.NET.Service
             return danhSachThoiGian;
         }
 
-        public ThoiGian GetThoiGian(DateTime thoigiannhanphong, int idkhachsan)
+        public ThoiGian GetThoiGian(int idkhachsan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "SELECT * FROM ThoiGian WHERE CONVERT(date, thoigiannhanphong) = CONVERT(date, @thoigiannhanphong) and idkhachsan=@idkhachsan ";
+                string query = "SELECT * FROM ThoiGian WHERE idkhachsan=@idkhachsan ";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@thoigiannhanphong", thoigiannhanphong);
                 command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
-                    ThoiGian thoiGian = new ThoiGian()
+                    ThoiGian thoiGian = new ThoiGian();
+                    thoiGian.id = Convert.ToInt32(reader["id"]);
+                    thoiGian.mota = Convert.ToString(reader["mota"]);
+                    TimeSpan thoigiannhanphong;
+                    if (TimeSpan.TryParseExact(reader["thoigiannhanphong"].ToString(), "hh\\:mm", CultureInfo.InvariantCulture, out thoigiannhanphong))
                     {
-                        id = Convert.ToInt32(reader["id"]),
-                        thoigiannhanphong = Convert.ToDateTime(reader["thoigiannhanphong"]),
-                        thoigianra = Convert.ToDateTime(reader["thoigianra"]),
-                        mota = Convert.ToString(reader["mota"]),
-                    };
+                        thoiGian.thoigiannhanphong = thoigiannhanphong;
+                    }
+                    else
+                    {
+
+                    }
+                    TimeSpan thoigianra;
+                    if (TimeSpan.TryParseExact(reader["thoigianra"].ToString(), "hh\\:mm", CultureInfo.InvariantCulture, out thoigianra))
+                    {
+                        thoiGian.thoigianra = thoigianra;
+                    }
+                    else
+                    {
+                    }
+                    float phuthunhanphong;
+                    if (float.TryParse(reader["phuthunhanphong"].ToString(), out phuthunhanphong))
+                    {
+                        thoiGian.phuthunhanphong = phuthunhanphong;
+                    }
+                    else
+                    {
+                    }
+                    float phuthutraphong;
+                    if (float.TryParse(reader["phuthutraphong"].ToString(), out phuthutraphong))
+                    {
+                        thoiGian.phuthutraphong = phuthutraphong;
+                    }
+                    else
+                    {
+                    }
                     return thoiGian;
                 }
                 else
                 {
                     return null;
                 }
+
             }
         }
         public ThoiGian GetThoiGianById(int id)
@@ -94,13 +128,42 @@ namespace QuanLyKhachSan_MVC.NET.Service
 
                 if (reader.Read())
                 {
-                    ThoiGian thoiGian = new ThoiGian()
+                    ThoiGian thoiGian = new ThoiGian();
+                    thoiGian.id = Convert.ToInt32(reader["id"]);
+                    thoiGian.mota = Convert.ToString(reader["mota"]);
+                    TimeSpan thoigiannhanphong;
+                    if (TimeSpan.TryParseExact(reader["thoigiannhanphong"].ToString(), "hh\\:mm", CultureInfo.InvariantCulture, out thoigiannhanphong))
                     {
-                        id = Convert.ToInt32(reader["id"]),
-                        thoigiannhanphong = Convert.ToDateTime(reader["thoigiannhanphong"]),
-                        thoigianra = Convert.ToDateTime(reader["thoigianra"]),
-                        mota = Convert.ToString(reader["mota"]),
-                    };
+                        thoiGian.thoigiannhanphong = thoigiannhanphong;
+                    }
+                    else
+                    {
+
+                    }
+                    TimeSpan thoigianra;
+                    if (TimeSpan.TryParseExact(reader["thoigianra"].ToString(), "hh\\:mm", CultureInfo.InvariantCulture, out thoigianra))
+                    {
+                        thoiGian.thoigianra = thoigianra;
+                    }
+                    else
+                    {
+                    }
+                    float phuthunhanphong;
+                    if (float.TryParse(reader["phuthunhanphong"].ToString(), out phuthunhanphong))
+                    {
+                        thoiGian.phuthunhanphong = phuthunhanphong;
+                    }
+                    else
+                    {
+                    }
+                    float phuthutraphong;
+                    if (float.TryParse(reader["phuthutraphong"].ToString(), out phuthutraphong))
+                    {
+                        thoiGian.phuthutraphong = phuthutraphong;
+                    }
+                    else
+                    {
+                    }
                     return thoiGian;
                 }
                 else
@@ -115,17 +178,20 @@ namespace QuanLyKhachSan_MVC.NET.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "INSERT INTO ThoiGian (thoigiannhanphong, thoigianra, mota,idkhachsan) " +
-                    "VALUES (@thoigiannhanphong, @thoigianra, @mota,@idkhachsan)";
+                string query = "INSERT INTO ThoiGian (thoigiannhanphong, phuthunhanphong, thoigianra, phuthutraphong, mota, idkhachsan) " +
+                               "VALUES (@thoigiannhanphong, @phuthunhanphong, @thoigianra, @phuthutraphong, @mota, @idkhachsan)";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@thoigiannhanphong", thoiGian.thoigiannhanphong);
+                    command.Parameters.AddWithValue("@phuthunhanphong", thoiGian.phuthunhanphong);
                     command.Parameters.AddWithValue("@thoigianra", thoiGian.thoigianra);
+                    command.Parameters.AddWithValue("@phuthutraphong", thoiGian.phuthutraphong);
                     command.Parameters.AddWithValue("@mota", thoiGian.mota);
                     command.Parameters.AddWithValue("@idkhachsan", thoiGian.idkhachsan);
                     command.ExecuteNonQuery();
                 }
             }
         }
+
     }
 }

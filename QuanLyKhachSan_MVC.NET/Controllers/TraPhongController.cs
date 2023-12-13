@@ -13,6 +13,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly PhongService phongService;
         private readonly GiamGiaService giamGiaService;
         private readonly QuyDinhGiamGiaService quyDinhGiamGiaservice;
+        private readonly ThoiGianService thoiGianService;
+
 
         public TraPhongController(DatPhongService datPhongServices,
                                   ThueSanPhamService thueSanPhamServices,
@@ -20,7 +22,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                   LichSuThanhToanService lichSuThanhToanServices,
                                   PhongService phongServices,
                                   GiamGiaService giamGiaServices,
-                                  QuyDinhGiamGiaService quydinhGiamGiaServices)
+                                  QuyDinhGiamGiaService quydinhGiamGiaServices,
+                                  ThoiGianService thoiGianServices)
         {
             datPhongService = datPhongServices;
             thueSanPhamService = thueSanPhamServices;
@@ -29,6 +32,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             phongService = phongServices;
             giamGiaService = giamGiaServices;
             quyDinhGiamGiaservice = quydinhGiamGiaServices;
+            thoiGianService = thoiGianServices;
         }
         public IActionResult TraPhongandLSThanhToan(LichSuThanhToan lichSuThanhToan, int idphong)
         {
@@ -46,12 +50,13 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     tongtienthuesanpham += thueSanPham.thanhtien;
                 }
+                ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
                 float sotienthanhtoan = 0;
                 if (giamGia != null && giamGia.solandatphong > 0)
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
-                        if (DateTime.Now > datphong.ngaydukientra)
+                        if (DateTime.Now.Hour > thoiGian.thoigianra.Hours)
                         {
                             // Quá hạn trả phòng, chuyển sang thuê theo ngày
                             sotienthanhtoan = ((phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * giamGia.phantramgiamgia / 100;
@@ -72,7 +77,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
-                        if (DateTime.Now > datphong.ngaydukientra)
+                        if (DateTime.Now.Hour > thoiGian.thoigianra.Hours)
                         {
                             // Quá hạn trả phòng, chuyển sang thuê theo ngày
                             sotienthanhtoan = (phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc;

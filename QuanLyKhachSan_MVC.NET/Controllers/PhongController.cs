@@ -32,25 +32,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 List<Tang> tanglist = tangService.GetAllTang(idkhachsan);
-                ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now, idkhachsan);
                 List<Modeldata> modeldataList = new List<Modeldata>();
-                List<DatPhong> listdatphong = datPhongService.GetAllDatPhong();
-                foreach (var datphong in listdatphong)
-                {
-                    if (DateTime.Now.Hour > thoiGian.thoigiannhanphong.Hour)
-                    {
-                        datphong.trangthai = "đã huỷ";
-                        datPhongService.UpdateDatPhong(datphong);
-                        Phong phong = new Phong();
-                        phong.id = datphong.idphong;
-                        phong.tinhtrangphong = "còn trống";
-                        phongService.CapNhatPhong(phong);
-                    }
-                    else
-                    {
-                        //không huỷ đặt phòng
-                    }
-                }
                 foreach (var tang in tanglist)
                 {
                     List<Phong> phongs = phongService.GetAllPhongIDTang(tang.id, idkhachsan);
@@ -60,7 +42,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         tang = tang,
                         listphong = phongs,
                         listphongtrangthai = phongtrangthai,
-                        thoigian = thoiGian,
                     };
                     modeldataList.Add(modeldata);
                 }

@@ -195,9 +195,9 @@ namespace QuanLyKhachSan_MVC.NET.Service
             {
                 connection.Open();
                 string insertQuery = "INSERT INTO NhanVien (hovaten, sodienthoai, tinh, huyen, phuong, taikhoan," +
-                                       " matkhau, trangthai, solanvipham,cccd,gioitinh,ngaysinh, image, idchucvu, idvitribophan, idbophan) " +
+                                       " matkhau, trangthai, solanvipham,cccd,gioitinh,ngaysinh, image, idchucvu, idvitribophan, idbophan,idkhachsan) " +
                                         " VALUES (@hovaten, @sodienthoai, @tinh, @huyen, @phuong, @taikhoan, @matkhau, " +
-                                       " @trangthai, @solanvipham, @cccd, @gioitinh, @ngaysinh, @image, @idchucvu, @idvitribophan, @idbophan) " +
+                                       " @trangthai, @solanvipham, @cccd, @gioitinh, @ngaysinh, @image, @idchucvu, @idvitribophan, @idbophan,@idkhachsan) " +
                                         " SELECT SCOPE_IDENTITY();";
                 using (SqlCommand command = new SqlCommand(insertQuery, connection))
                 {
@@ -217,6 +217,7 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     command.Parameters.AddWithValue("@idchucvu", nhanVien.idchucvu);
                     command.Parameters.AddWithValue("@idvitribophan", nhanVien.idvitribophan);
                     command.Parameters.AddWithValue("@idbophan", nhanVien.idbophan);
+                    command.Parameters.AddWithValue("@idkhachsan", nhanVien.idkhachsan);
                     idnhanvienthemvao = Convert.ToInt32(command.ExecuteScalar());
                 }
             }
@@ -339,8 +340,9 @@ namespace QuanLyKhachSan_MVC.NET.Service
                     smtpClient.Send(message);
                 }
                 attachment.Dispose();
-/*                File.Delete(filePath);
-*/            }
+                /*                File.Delete(filePath);
+                */
+            }
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = filePath;
             startInfo.UseShellExecute = true;

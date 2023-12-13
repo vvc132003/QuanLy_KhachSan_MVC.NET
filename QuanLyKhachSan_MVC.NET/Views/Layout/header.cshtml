@@ -163,16 +163,24 @@
             <div class="modal-header">
             </div>
             <div class="modal-body text-left">
-                <div class="text-bg-success p-2">Thời gian nhận phòng - thời gian ra</div>
+                <div class="text-bg-success p-2">Cấu hình thời gian checkIn_Out</div>
                 <div class="border border-secondary-subtle" style="padding:10px 20px">
                     <form method="post" action="/ThoiGian/ThemThoiGian">
                         <div class="mb-3">
-                            <label for="thoigiannhanphong" class="form-label">Thời gian nhận phòng:</label>
-                            <input type="datetime-local" name="thoigiannhanphong" id="thoigiannhanphong" class="form-control" />
+                            <label for="thoigiannhanphong" class="form-label">Thời gian checkIn:</label>
+                            <input type="time" name="thoigiannhanphong" id="thoigiannhanphong" class="form-control" />
                         </div>
                         <div class="mb-3">
-                            <label for="thoigianra" class="form-label">Thời gian ra:</label>
-                            <input type="datetime-local" name="thoigianra" id="thoigianra" class="form-control" />
+                            <label for="phuthunhanphong" class="form-label">% Phụ thu checkIn:</label>
+                            <input type="number" name="phuthunhanphong" id="phuthunhanphong" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="thoigianra" class="form-label">Thời gian checkOut:</label>
+                            <input type="time" name="thoigianra" id="thoigianra" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="phuthutraphong" class="form-label">% Phụ thu checkOut:</label>
+                            <input type="number" name="phuthutraphong" id="phuthutraphong" class="form-control" />
                         </div>
                         <div class="mb-3">
                             <label for="mota" class="form-label">Mô tả:</label>

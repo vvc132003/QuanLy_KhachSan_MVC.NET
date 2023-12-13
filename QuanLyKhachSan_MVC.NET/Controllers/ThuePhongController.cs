@@ -69,7 +69,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             {
                 /// kiểm tra xem khách hàng đã tồn tại hay chưa
                 KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
-                ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now, HttpContext.Session.GetInt32("idkhachsan").Value);
+                ThoiGian thoiGian = thoiGianService.GetThoiGian(HttpContext.Session.GetInt32("idkhachsan").Value);
                 if (khachHangTonTai != null)
                 {
                     datPhong.idthoigian = thoiGian.id;
@@ -186,90 +186,101 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult ThueNhieuPhong(List<int> idphongs, KhachHang khachHang, DatPhong datPhong, NhanPhong nhanPhong)
         {
-            if (idphongs != null && idphongs.Any())
+            if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                foreach (int phongId in idphongs)
+                int idnv = HttpContext.Session.GetInt32("id").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                ViewData["id"] = idnv;
+                ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
+                if (idphongs != null && idphongs.Any())
                 {
-                    KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
-                    ThoiGian thoiGian = thoiGianService.GetThoiGian(DateTime.Now, HttpContext.Session.GetInt32("idkhachsan").Value);
-                    if (khachHangTonTai != null)
+                    foreach (int phongId in idphongs)
                     {
-                        datPhong.idthoigian = thoiGian.id;
-                        datPhong.idkhachhang = khachHangTonTai.id;
-                        datPhong.idloaidatphong = 2;
-                        datPhong.trangthai = "đã đặt";
-                        datPhong.ngaydat = DateTime.Now;
-                        datPhong.idphong = phongId;
-                        TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
-                        if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
+                        KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
+                        ThoiGian thoiGian = thoiGianService.GetThoiGian(idkhachsan);
+                        if (khachHangTonTai != null)
                         {
-                            datPhong.hinhthucthue = "Theo ngày";
+                            datPhong.idthoigian = thoiGian.id;
+                            datPhong.idkhachhang = khachHangTonTai.id;
+                            datPhong.idloaidatphong = 1;
+                            datPhong.trangthai = "đã đặt";
+                            datPhong.ngaydat = DateTime.Now;
+                            datPhong.idphong = phongId;
+                            TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
+                            if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
+                            {
+                                datPhong.hinhthucthue = "Theo ngày";
+                            }
+                            else
+                            {
+                                datPhong.hinhthucthue = "Theo giờ";
+                            }
+                            int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
+                            nhanPhong.iddatphong = idDatPhongThemVao;
+                            nhanPhong.ngaynhanphong = DateTime.Now;
+                            nhanPhongService.ThemNhanPhong(nhanPhong); Phong phong = phongService.GetPhongID(phongId);
+                            phong.tinhtrangphong = "có khách";
+                            phongService.CapNhatPhong(phong);
+                            /// thêm giảm giá
+                            /// lấy tổng số lần đặt phòng của khách hàng
+                            int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
+                            QuyDinhGiamGia quyDinhGiamGia = quyDinhGiamGiaservice.GetQuyDinhGia(solandatphong);
+                            if (quyDinhGiamGia != null && solandatphong == quyDinhGiamGia.solandatphong)
+                            {
+                                GiamGia giamGia = new GiamGia();
+                                giamGia.iddatphong = idDatPhongThemVao;
+                                giamGia.ngaythemgiamgia = DateTime.Now;
+                                giamGia.solandatphong = solandatphong;
+                                giamGia.phantramgiamgia = quyDinhGiamGia.phantramgiamgia;
+                                giamGia.idkhachhang = khachHangTonTai.id;
+                                giamGia.idquydinh = quyDinhGiamGia.id;
+                                giamGiaService.ThemGiamGia(giamGia);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Không có giảm giá!");
+                            }
                         }
                         else
                         {
-                            datPhong.hinhthucthue = "Theo giờ";
-                        }
-                        int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
-                        nhanPhong.iddatphong = idDatPhongThemVao;
-                        nhanPhong.ngaynhanphong = DateTime.Now;
-                        nhanPhongService.ThemNhanPhong(nhanPhong); Phong phong = phongService.GetPhongID(phongId);
-                        phong.tinhtrangphong = "có khách";
-                        phongService.CapNhatPhong(phong);
-                        /// thêm giảm giá
-                        /// lấy tổng số lần đặt phòng của khách hàng
-                        int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
-                        QuyDinhGiamGia quyDinhGiamGia = quyDinhGiamGiaservice.GetQuyDinhGia(solandatphong);
-                        if (quyDinhGiamGia != null && solandatphong == quyDinhGiamGia.solandatphong)
-                        {
-                            GiamGia giamGia = new GiamGia();
-                            giamGia.iddatphong = idDatPhongThemVao;
-                            giamGia.ngaythemgiamgia = DateTime.Now;
-                            giamGia.solandatphong = solandatphong;
-                            giamGia.phantramgiamgia = quyDinhGiamGia.phantramgiamgia;
-                            giamGia.idkhachhang = khachHangTonTai.id;
-                            giamGia.idquydinh = quyDinhGiamGia.id;
-                            giamGiaService.ThemGiamGia(giamGia);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Không có giảm giá!");
+                            khachHang.trangthai = "còn hoạt động";
+                            khachHangService.ThemKhachHang(khachHang);
+                            KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
+                            datPhong.idthoigian = thoiGian.id;
+                            datPhong.idkhachhang = khachhangmoi.id;
+                            datPhong.idloaidatphong = 1;
+                            datPhong.trangthai = "đã đặt";
+                            datPhong.ngaydat = DateTime.Now;
+                            datPhong.idphong = phongId;
+                            TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
+                            if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
+                            {
+                                datPhong.hinhthucthue = "Theo ngày";
+                            }
+                            else
+                            {
+                                datPhong.hinhthucthue = "Theo giờ";
+                            }
+                            int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
+                            nhanPhong.iddatphong = idDatPhongThemVao;
+                            nhanPhong.ngaynhanphong = DateTime.Now;
+                            nhanPhongService.ThemNhanPhong(nhanPhong);
+                            Phong phong = phongService.GetPhongID(phongId);
+                            phong.tinhtrangphong = "có khách";
+                            phongService.CapNhatPhong(phong);
                         }
                     }
-                    else
-                    {
-                        khachHang.trangthai = "còn hoạt động";
-                        khachHangService.ThemKhachHang(khachHang);
-                        KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
-                        datPhong.idthoigian = thoiGian.id;
-                        datPhong.idkhachhang = khachhangmoi.id;
-                        datPhong.idloaidatphong = 2;
-                        datPhong.trangthai = "đã đặt";
-                        datPhong.ngaydat = DateTime.Now;
-                        datPhong.idphong = phongId;
-                        TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
-                        if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
-                        {
-                            datPhong.hinhthucthue = "Theo ngày";
-                        }
-                        else
-                        {
-                            datPhong.hinhthucthue = "Theo giờ";
-                        }
-                        int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
-                        nhanPhong.iddatphong = idDatPhongThemVao;
-                        nhanPhong.ngaynhanphong = DateTime.Now;
-                        nhanPhongService.ThemNhanPhong(nhanPhong);
-                        Phong phong = phongService.GetPhongID(phongId);
-                        phong.tinhtrangphong = "có khách";
-                        phongService.CapNhatPhong(phong);
-                    }
+                    TempData["thuephongthanhcong"] = "";
+                    return RedirectToAction("Index", "Phong");
                 }
-                TempData["thuephongthanhcong"] = "";
-                return RedirectToAction("Index", "Phong");
+                return RedirectToAction("Index", "Index1");
             }
             else
             {
-                return RedirectToAction("Index", "Index1");
+                return RedirectToAction("DangNhap", "DangNhap");
             }
         }
         public IActionResult ChiTietThuePhong(int id)
@@ -314,10 +325,17 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         {
                             if (datphong.hinhthucthue == "Theo giờ")
                             {
-                                if (ngaytramuonsom > thoiGian.thoigianra && ngaytramuonsom > datphong.ngaydukientra)
+                                TimeSpan ngayTraMuonSomAsTimeSpan = ngaytramuonsom.TimeOfDay;
+                                if (ngayTraMuonSomAsTimeSpan > thoiGian.thoigianra)
                                 {
-                                    datphong.ngaydukientra = DateTime.Now;
-                                    datphong.hinhthucthue = "Theo ngày";
+                                    if (ngaytramuonsom > datphong.ngaydukientra)
+                                    {
+                                        datphong.hinhthucthue = "Theo ngày";
+                                    }
+                                    else
+                                    {
+                                        datphong.hinhthucthue = "Theo giờ";
+                                    }
                                 }
                                 else
                                 {
@@ -335,6 +353,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             tongtienhueSanPham = tongtien,
                             phong = phongs,
                             giamGia = giamGia,
+                            thoigian = thoiGian,
                         };
                         listmodeldatas.Add(yourModel);
                     }
