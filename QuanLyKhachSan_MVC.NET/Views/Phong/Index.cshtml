@@ -73,9 +73,9 @@
                                     }
                                     @foreach (var thoigian in Model)
                                     {
-                                        if (thoigian != null && thoigian.thoigian != null && thoigian.thoigian.thoigianvao != null)
+                                        if (thoigian != null && thoigian.thoigian != null && thoigian.thoigian.thoigiannhanphong != null)
                                         {
-                                            if (thoigian.thoigian.thoigianvao.Date == DateTime.Today)
+                                            if (thoigian.thoigian.thoigiannhanphong.Date == DateTime.Today)
                                             {
                                                 <div class="context-menu">
                                                     @if (phong.tinhtrangphong == "có khách")
