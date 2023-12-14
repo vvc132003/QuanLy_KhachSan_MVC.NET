@@ -3,6 +3,9 @@ using ketnoicsdllan1;
 using QuanLyKhachSan_MVC.NET.Models;
 using QuanLyKhachSan_MVC.NET.Repository;
 using System.Data.SqlClient;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
 
 namespace QuanLyKhachSan_MVC.NET.Service
 {
@@ -179,6 +182,33 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 command.Parameters.AddWithValue("@idthoigian", datPhong.idthoigian);
                 command.Parameters.AddWithValue("@id", datPhong.id);
                 command.ExecuteNonQuery();
+            }
+        }
+        public void GuiEmail(KhachHang khachHang, DatPhong datPhong, Phong phong, ThoiGian thoiGian)
+        {
+            try
+            {
+                string fromEmail = "vvc132003@gmail.com";
+                string password = "bzcaumaekzuvwlia";
+                string toEmail = khachHang.email;
+                MailMessage message = new MailMessage(fromEmail, toEmail);
+                message.Subject = "Bạn đã đặt phòng thành công";
+                StringBuilder bodyBuilder = new StringBuilder();
+                bodyBuilder.AppendLine($"Tên sinh viên: {khachHang.hovaten}");
+                bodyBuilder.AppendLine($"Số phòng: {phong.sophong}");
+                bodyBuilder.AppendLine($"Ngày dự kiến trả: {datPhong.ngaydukientra}");
+                bodyBuilder.AppendLine($"Ngày thuê: {datPhong.ngaydat}");
+                bodyBuilder.AppendLine($"Thời gian check_In và Out của khách sạn là: {thoiGian.thoigiannhanphong - thoiGian.thoigianra}");
+                message.Body = bodyBuilder.ToString();
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential(fromEmail, password);
+                smtpClient.EnableSsl = true;
+                smtpClient.Send(message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Loi: " + ex.Message);
             }
         }
     }

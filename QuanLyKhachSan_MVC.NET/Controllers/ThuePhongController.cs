@@ -98,6 +98,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     Phong phong = phongService.GetPhongID(datPhong.idphong);
                     phong.tinhtrangphong = "có khách";
                     phongService.CapNhatPhong(phong);
+                    datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
                     /// thêm giảm giá
                     /// lấy tổng số lần đặt phòng của khách hàng
                     int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
@@ -152,6 +153,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     Phong phong = phongService.GetPhongID(datPhong.idphong);
                     phong.tinhtrangphong = "có khách";
                     phongService.CapNhatPhong(phong);
+                    datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
                 }
                 TempData["thuephongthanhcong"] = "";
                 return RedirectToAction("Index", "Phong");
@@ -224,6 +226,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             nhanPhongService.ThemNhanPhong(nhanPhong); Phong phong = phongService.GetPhongID(phongId);
                             phong.tinhtrangphong = "có khách";
                             phongService.CapNhatPhong(phong);
+                            datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
                             /// thêm giảm giá
                             /// lấy tổng số lần đặt phòng của khách hàng
                             int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
@@ -271,6 +274,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             Phong phong = phongService.GetPhongID(phongId);
                             phong.tinhtrangphong = "có khách";
                             phongService.CapNhatPhong(phong);
+                            datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
                         }
                     }
                     TempData["thuephongthanhcong"] = "";

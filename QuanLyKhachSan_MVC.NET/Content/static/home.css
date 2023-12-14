@@ -14,14 +14,13 @@
     position: relative;
     width: 205px;
     height: 190px;
-    border: 1px solid black;
     padding: 40px;
     text-align: center;
     cursor: pointer;
 }
 
     .room-box:hover {
-        background: rgb(255, 128, 0);
+        background: #81a6b6;
         color: #f9f9f9;
     }
 
@@ -90,19 +89,19 @@
 }
 
 .cokhach {
-    background-color: #009900;
+    background-color: #0171a3;
 }
 
 .controng {
-    background-color: #0066CC;
+    background-color: #a8c4cf;
 }
 
 .dangsua {
-    background-color: #666633;
+    background-color: #285665;
 }
 
 .dadat {
-    background-color: #996600;
+    background-color: #35c3d7;
 }
 
 .chuadon {
