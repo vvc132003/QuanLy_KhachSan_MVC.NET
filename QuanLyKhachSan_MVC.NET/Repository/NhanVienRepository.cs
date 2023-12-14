@@ -11,7 +11,7 @@ namespace QuanLyKhachSan_MVC.NET.Repository
         void GuiEmail(string filePath);
         List<NhanVien> GetAllNhanVien();
         NhanVien GetNhanVienID(int id);
-        NhanVien CheckThongTinDangNhap(string matkhau, string taikhoan);
+        NhanVien CheckThongTinDangNhap(string matkhau, string taikhoan, int idkhachsan);
         List<NhanVien> GetallNhanVientheoidbophan(int idbophan);
     }
 }

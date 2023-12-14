@@ -15,6 +15,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             nhanVienService = nhanVienServices;
             khachSanService = khachSanServices;
         }
+        public IActionResult Index()
+        {
+            return View();
+        }
         public IActionResult DangNhap()
         {
             NhanVien nhanVien = new NhanVien();
@@ -26,9 +30,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             };
             return View(yourModel);
         }
-        public IActionResult DangNhapVaoHeThong(string taikhoan, string matkhau)
+        public IActionResult DangNhapVaoHeThong(string taikhoan, string matkhau, int idkhachsan)
         {
-            var luudangnhap = nhanVienService.CheckThongTinDangNhap(matkhau, taikhoan);
+            var luudangnhap = nhanVienService.CheckThongTinDangNhap(matkhau, taikhoan, idkhachsan);
             if (luudangnhap != null)
             {
                 HttpContext.Session.SetInt32("id", luudangnhap.id);
@@ -44,10 +48,23 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("DangNhap", "DangNhap");
             }
         }
+        public IActionResult DangNhaps(string taikhoan, string matkhau)
+        {
+            var luudangnhap = nhanVienService.index(matkhau, taikhoan);
+            if (luudangnhap != null)
+            {
+                return RedirectToAction("DangNhap", "DangNhap");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
         public IActionResult DangXuat()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("DangNhap", "DangNhap");
+            return RedirectToAction("Index", "DangNhap");
         }
     }
 }

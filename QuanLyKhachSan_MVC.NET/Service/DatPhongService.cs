@@ -11,8 +11,6 @@ namespace QuanLyKhachSan_MVC.NET.Service
 {
     public class DatPhongService : DatPhongRepository
     {
-
-
         public List<DatPhong> GetAllDatPhong()
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
@@ -108,6 +106,44 @@ namespace QuanLyKhachSan_MVC.NET.Service
                                 ngaydat = (DateTime)reader["ngaydat"],
                                 ngaydukientra = (DateTime)reader["ngaydukientra"],
                                 tiendatcoc = Convert.ToSingle(reader["tiendatcoc"]),
+                            };
+                            return datPhong;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+        public DatPhong GetDatPhongByIDTrangThaiOnline(int idphong)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "select * from DatPhong left join KhachHang on datphong.idkhachhang = khachhang.id where DatPhong.idphong = @idphong and DatPhong.trangthai= N'đã đặt online' ";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idphong", idphong);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            DatPhong datPhong = new DatPhong
+                            {
+                                id = (int)reader["id"],
+                                idphong = (int)reader["idphong"],
+                                idkhachhang = (int)reader["idkhachhang"],
+                                hovaten = reader["hovaten"].ToString(),
+                                trangthai = reader["trangthai"].ToString(),
+                                hinhthucthue = reader["hinhthucthue"].ToString(),
+                                ngaydat = (DateTime)reader["ngaydat"],
+                                ngaydukientra = (DateTime)reader["ngaydukientra"],
+                                tiendatcoc = Convert.ToSingle(reader["tiendatcoc"]),
+                                idloaidatphong = (int)reader["idloaidatphong"],
+                                idthoigian = (int)reader["idthoigian"],
+                                cccd = reader["cccd"].ToString(),
                             };
                             return datPhong;
                         }

@@ -10,5 +10,7 @@ namespace QuanLyKhachSan_MVC.NET.Repository
         List<DatPhong> GetAllDatPhongByID(int id);
         List<DatPhong> GetAllDatPhong();
         DatPhong GetDatPhongByIDTrangThai(int idphong);
+        DatPhong GetDatPhongByIDTrangThaiOnline(int idphong);
+
     }
 }

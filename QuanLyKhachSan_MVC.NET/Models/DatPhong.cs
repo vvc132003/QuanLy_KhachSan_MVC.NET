@@ -11,6 +11,7 @@
         public int idloaidatphong { get; set; }
         public int idkhachhang { get; set; }
         public string hovaten { get; set; }
+        public string cccd { get; set; }
         public int idphong { get; set; }
         public int idthoigian { get; set; }
 
