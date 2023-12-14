@@ -29,6 +29,11 @@
                 </li>
                 @if (ViewData["tenchucvu"] != null && ViewData["tenchucvu"].ToString() == "Quản lý")
                 {
+                    <li>
+                        <a class="waves-effect waves-dark" href="/KhachSan/Index">
+                            <i class="fas fa-sign-out-alt yellow_color"></i><span class="hide-menu">Khách sạn</span>
+                        </a>
+                    </li>
                     @* tài sản *@
                     <li>
                         <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -135,16 +140,6 @@
                 <li>
                     <a class="waves-effect waves-dark" href="" data-bs-toggle="modal" data-bs-target="#exampleModala">
                         <i class="fa fa-calendar" style="color: #CCFFCC !important;"></i><span class="hide-menu">Thời gian</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="waves-effect waves-dark" href="/KhachSan/Index">
-                        <i class="fas fa-sign-out-alt yellow_color"></i><span class="hide-menu">Khách sạn</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="waves-effect waves-dark" href="/PhongKhachSan/Index">
-                        <i class="fas fa-sign-out-alt yellow_color"></i><span class="hide-menu">Phòng khách sạn</span>
                     </a>
                 </li>
                 <li>

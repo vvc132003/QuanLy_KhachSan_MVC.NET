@@ -1,98 +1,134 @@
 ﻿@model QuanLyKhachSan_MVC.NET.Models.Modeldata
-<link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
-<link rel='stylesheet'
-      href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
-<link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
-<link rel="stylesheet" href="/static/css/flaticon.css" type="text/css">
-<link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
-<link rel="stylesheet" href="/static/css/nice-select.css" type="text/css">
-<link rel="stylesheet" href="/static/css/jquery-ui.min.css" type="text/css">
-<link rel="stylesheet" href="/static/css/magnific-popup.css" type="text/css">
-<link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
-<link rel="stylesheet" href="/static/css/style.css" type="text/css">
+<link href="/static/img/favicon.ico" rel="icon">
+<link href="/static/img/apple-favicon.png" rel="apple-touch-icon">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+<link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="/static/vendor/animate/animate.min.css" rel="stylesheet">
+<link href="/static/vendor/slick/slick.css" rel="stylesheet">
+<link href="/static/vendor/slick/slick-theme.css" rel="stylesheet">
+<link href="/static/vendor/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+<link href="/static/css/hover-style.css" rel="stylesheet">
+<link href="/static/css/style.css" rel="stylesheet">
 @Html.Partial("~/Views/layout/homenavbar.cshtml")
-<div class="breadcrumb-section">
+<div id="rooms">
     <div class="container">
+        <div class="section-header">
+            <h2>Our Rooms</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in mi libero. Quisque convallis, enim at venenatis tincidunt.
+            </p>
+        </div>
         <div class="row">
-            <div class="col-lg-12">
-                <div class="breadcrumb-text">
-                    @if (Model.listKhachSan != null && Model.listKhachSan.Count > 0)
-                    {
-                        foreach (var ks in Model.listKhachSan)
-                        {
-                            <h2>@ks.tenkhachsan</h2>
-                            <p>&#9733;&#9733;&#9733;&#9733;&#9733; @ks.sosao</p>
-                            <p>Thành phố: @ks.diachi - Quốc gia: @ks.quocgia</p>
-                        }
-                    }
+            @if (Model.listphong != null && Model.listphong.Count > 0)
+            {
+                foreach (var phong in Model.listphong)
+                {
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="room-img">
+                                    <div class="box12">
+                                        <img src="/static/img/room/room-4.jpg">
+                                        <div class="box-content">
+                                            <h3 class="title">Silver Double</h3>
+                                            <ul class="icon">
+                                                <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="room-des">
+                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">Silver Double</a></h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                    <ul class="room-size">
+                                        <li><i class="fa fa-arrow-right"></i>Size: 200 sq ft </li>
+                                        <li><i class="fa fa-arrow-right"></i>Beds: 2 Double(s) </li>
+                                    </ul>
+                                    <ul class="room-icon">
+                                        <li class="icon-1"></li>
+                                        <li class="icon-2"></li>
+                                        <li class="icon-3"></li>
+                                        <li class="icon-4"></li>
+                                        <li class="icon-5"></li>
+                                        <li class="icon-6"></li>
+                                        <li class="icon-7"></li>
+                                        <li class="icon-8"></li>
+                                        <li class="icon-9"></li>
+                                        <li class="icon-10"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="room-rate">
+                                    <h3>From</h3>
+                                    <h1>@string.Format("{0:N0} VNĐ", @phong.giatientheogio)<span>/Mỗi giờ</span></h1>
+                                    <a href="#">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<div id="modal-id" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="port-slider">
+                            <div><img src="/static/img/room-slider/room-1.jpg"></div>
+                            <div><img src="/static/img/room-slider/room-2.jpg"></div>
+                            <div><img src="/static/img/room-slider/room-3.jpg"></div>
+                            <div><img src="/static/img/room-slider/room-4.jpg"></div>
+                            <div><img src="/static/img/room-slider/room-5.jpg"></div>
+                            <div><img src="/static/img/room-slider/room-6.jpg"></div>
+                        </div>
+                        <div class="port-slider-nav">
+                            <div><img src="/static/img/room-slider/room-1.jpg"></div>
+                            <div><img src="/static/img/room-slider/room-2.jpg"></div>
+                            <div><img src="/static/img/room-slider/room-3.jpg"></div>
+                            <div><img src="/static/img/room-slider/room-4.jpg"></div>
+                            <div><img src="/static/img/room-slider/room-5.jpg"></div>
+                            <div><img src="/static/img/room-slider/room-6.jpg"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h2>Lorem ipsum dolor</h2>
+                        <p>
+                            Lorem ipsum dolor viverra purus imperdiet rhoncus imperdiet. Suspendisse vulputate condimentum ligula sollicitudin hendrerit. Phasellus luctus, elit et ultrices interdum, neque mi pellentesque massorci. Nam in cursus ex, nec mattis lectus. Curabitur quis elementum nunc. Mauris iaculis, justo eu aliquam sagittis, arcu eros cursus libero, sit amet eleifend dolor odio at lacus.
+                        </p>
+                        <div class="modal-link">
+                            <a href="#">Book Now</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<section class="hp-room-section">
-    <div class="container-fluid">
-        <div class="hp-room-items">
-            <div class="row">
-
-                @if (Model.listphong != null && Model.listphong.Count > 0)
-                {
-                    foreach (var phong in Model.listphong)
-                    {
-                        <div class="col-lg-3 col-md-6">
-                            <div class="hp-room-item set-bg" data-setbg="/static/img/room/room-b4.jpg">
-                                <div class="hr-text">
-                                    <h3>Phòng gia đình</h3>
-                                    <h2>@string.Format("{0:N0} VNĐ", @phong.giatientheogio)<span>/Mỗi giờ</span></h2>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td class="r-o">Size:</td>
-                                                <td>30 ft</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="r-o">Số lượng:</td>
-                                                <td>Tối đa 5 người 5</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="r-o">Giường:</td>
-                                                <td>Giường đôi</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="r-o">Dịch vụ:</td>
-                                                <td>Wifi, Sản phẩm,...</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <a href="" class="primary-btn">Đặt phòng</a>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                }
-            </div>
-        </div>
-    </div>
-</section>
-<script src="/static/js/jquery-3.3.1.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/jquery.magnific-popup.min.js"></script>
-<script src="/static/js/jquery.nice-select.min.js"></script>
-<script src="/static/js/jquery-ui.min.js"></script>
-<script src="/static/js/jquery.slicknav.js"></script>
-<script src="/static/js/owl.carousel.min.js"></script>
+@Html.Partial("~/Views/layout/footer.cshtml")
+<script src="/static/vendor/jquery/jquery.min.js"></script>
+<script src="/static/vendor/jquery/jquery-migrate.min.js"></script>
+<script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/static/vendor/easing/easing.min.js"></script>
+<script src="/static/vendor/stickyjs/sticky.js"></script>
+<script src="/static/vendor/superfish/hoverIntent.js"></script>
+<script src="/static/vendor/superfish/superfish.min.js"></script>
+<script src="/static/vendor/wow/wow.min.js"></script>
+<script src="/static/vendor/slick/slick.min.js"></script>
+<script src="/static/vendor/tempusdominus/js/moment.min.js"></script>
+<script src="/static/vendor/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="/static/vendor/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="/static/js/booking.js"></script>
+<script src="/static/js/jqBootstrapValidation.min.js"></script>
 <script src="/static/js/main.js"></script>
-<style>
-    .modal-backdrop {
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-</style>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
