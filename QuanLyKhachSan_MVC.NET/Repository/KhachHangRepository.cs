@@ -6,5 +6,7 @@ namespace QuanLyKhachSan_MVC.NET.Repository
     {
         void ThemKhachHang(KhachHang khachHang);
         KhachHang GetKhachHangCCCD(string cccd);
+        KhachHang GetKhachHangDangNhap(string taikhoan , string matkhau);
+        void CapNhatKhachHang(KhachHang khachHang);
     }
 }

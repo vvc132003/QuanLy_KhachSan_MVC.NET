@@ -8,12 +8,13 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
     {
         private readonly NhanVienService nhanVienService;
         private readonly KhachSanService khachSanService;
+        private readonly KhachHangService khachHangService;
 
-
-        public DangNhapController(NhanVienService nhanVienServices, KhachSanService khachSanServices)
+        public DangNhapController(NhanVienService nhanVienServices, KhachSanService khachSanServices, KhachHangService khachHangServices)
         {
             nhanVienService = nhanVienServices;
             khachSanService = khachSanServices;
+            khachHangService = khachHangServices;
         }
         public IActionResult Index()
         {
@@ -32,7 +33,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult DangNhapVaoHeThong(string taikhoan, string matkhau, int idkhachsan)
         {
-            var luudangnhap = nhanVienService.CheckThongTinDangNhap(matkhau, taikhoan, idkhachsan);
+            NhanVien luudangnhap = nhanVienService.CheckThongTinDangNhap(matkhau, taikhoan, idkhachsan);
             if (luudangnhap != null)
             {
                 HttpContext.Session.SetInt32("id", luudangnhap.id);
@@ -50,16 +51,20 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult DangNhaps(string taikhoan, string matkhau)
         {
-            var luudangnhap = nhanVienService.index(matkhau, taikhoan);
-            if (luudangnhap != null)
+            NhanVien luudangnhap = nhanVienService.index(matkhau, taikhoan);
+            KhachHang khachHang = khachHangService.GetKhachHangDangNhap(taikhoan, matkhau);
+            if (luudangnhap != null && (luudangnhap.tenchucvu == "Quản lý" || luudangnhap.tenchucvu == "Nhân viên"))
             {
                 return RedirectToAction("DangNhap", "DangNhap");
             }
-            else
+            else if (khachHang != null)
             {
                 return RedirectToAction("Index", "Home");
             }
-
+            else
+            {
+                return RedirectToAction("Index", "DangNhap");
+            }
         }
         public IActionResult DangXuat()
         {
