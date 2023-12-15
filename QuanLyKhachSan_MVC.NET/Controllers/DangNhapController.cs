@@ -51,7 +51,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
         public IActionResult DangNhaps(string taikhoan, string matkhau)
         {
-            NhanVien luudangnhap = nhanVienService.index(matkhau, taikhoan);
+            NhanVien luudangnhap = nhanVienService.GetNhanVienDangNhap(matkhau, taikhoan);
             KhachHang khachHang = khachHangService.GetKhachHangDangNhap(taikhoan, matkhau);
             if (luudangnhap != null && (luudangnhap.tenchucvu == "Quản lý" || luudangnhap.tenchucvu == "Nhân viên"))
             {

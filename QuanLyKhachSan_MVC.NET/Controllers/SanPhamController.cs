@@ -32,7 +32,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("Index", "DangNhap");
             }
         }
         public IActionResult ThemSanPham(SanPham sanPham)
@@ -50,7 +50,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("Index", "DangNhap");
             }
         }
         public IActionResult XoaSanPham(int id)
@@ -66,7 +66,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("Index", "DangNhap");
             }
         }
     }

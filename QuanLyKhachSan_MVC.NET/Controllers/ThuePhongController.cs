@@ -60,7 +60,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("Index", "DangNhap");
             }
         }
         public IActionResult ThemThuePhong(KhachHang khachHang, DatPhong datPhong, NhanPhong nhanPhong)
@@ -160,7 +160,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("Index", "DangNhap");
             }
         }
         public IActionResult Index1()
@@ -183,7 +183,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("Index", "DangNhap");
             }
         }
         public IActionResult ThueNhieuPhong(List<int> idphongs, KhachHang khachHang, DatPhong datPhong, NhanPhong nhanPhong)
@@ -284,7 +284,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("Index", "DangNhap");
             }
         }
         public IActionResult ChiTietThuePhong(int id)
@@ -369,7 +369,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("Index", "DangNhap");
             }
         }
         public IActionResult DatPhongOnline(int id)
@@ -470,7 +470,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("Index", "DangNhap");
             }
         }
 

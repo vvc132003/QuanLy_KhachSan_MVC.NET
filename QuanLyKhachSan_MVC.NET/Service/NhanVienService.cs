@@ -14,12 +14,12 @@ namespace QuanLyKhachSan_MVC.NET.Service
 {
     public class NhanVienService : NhanVienRepository
     {
-        public NhanVien index(string matkhau, string taikhoan)
+        public NhanVien GetNhanVienDangNhap(string matkhau, string taikhoan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string CheckThongTinDangNhap = "SELECT NhanVien.*, ChucVu.*, KhachSan.* FROM NhanVien LEFT JOIN ChucVu ON NhanVien.idchucvu = ChucVu.id  LEFT JOIN KhachSan ON NhanVien.idkhachsan = KhachSan.id  WHERE NhanVien.taikhoan = @taikhoan  AND NhanVien.matkhau = @matkhau ";
+                string CheckThongTinDangNhap = "SELECT NhanVien.*, ChucVu.*, KhachSan.* FROM NhanVien LEFT JOIN ChucVu ON NhanVien.idchucvu = ChucVu.id  LEFT JOIN KhachSan ON NhanVien.idkhachsan = KhachSan.id  WHERE NhanVien.taikhoan = @taikhoan  AND NhanVien.matkhau = @matkhau and (ChucVu.tenchucvu = N'Quản lý' or ChucVu.tenchucvu = N'Nhân viên') ";
                 using (SqlCommand command = new SqlCommand(CheckThongTinDangNhap, connection))
                 {
                     command.Parameters.AddWithValue("@taikhoan", taikhoan);

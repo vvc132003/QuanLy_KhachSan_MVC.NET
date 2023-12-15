@@ -41,7 +41,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("Index", "DangNhap");
             }
         }
         public IActionResult ThemBoPhan(BoPhan boPhan)
