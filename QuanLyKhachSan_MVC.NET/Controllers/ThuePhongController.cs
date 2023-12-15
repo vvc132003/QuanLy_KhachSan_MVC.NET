@@ -332,7 +332,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                 TimeSpan ngayTraMuonSomAsTimeSpan = ngaytramuonsom.TimeOfDay;
                                 if (ngayTraMuonSomAsTimeSpan > thoiGian.thoigianra)
                                 {
-                                    if (ngaytramuonsom > datphong.ngaydukientra)
+                                    if (ngaytramuonsom > datphong.ngaydukientra && datphong.ngaydukientra.Hour > thoiGian.thoigianra.Hours)
                                     {
                                         datphong.hinhthucthue = "Theo ngày";
                                     }
@@ -343,7 +343,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                 }
                                 else
                                 {
-                                    datphong.hinhthucthue = "Theo giờ";
+                                    datphong.hinhthucthue = "Theo ngày";
                                 }
                             }
                             datPhongService.UpdateDatPhong(datphong);

@@ -54,7 +54,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThaiOnline(id);
                 // Inside your controller action
                 List<Modeldata> yourModelList = new List<Modeldata>();
-
                 if (datPhong != null)
                 {
                     Modeldata yourModel = new Modeldata
@@ -64,7 +63,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     yourModelList.Add(yourModel);
                 }
                 return View(yourModelList);
-
             }
             else
             {

@@ -1,0 +1,124 @@
+﻿@model QuanLyKhachSan_MVC.NET.Models.Modeldata
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Elegant Login Form Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript">
+    addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+           function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link rel="stylesheet" href="/static/login/css/style.css">
+<link href="/static/login/css/font-awesome.css" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<div class="login-form w3_form">
+    <div class="login-title w3_title">
+    </div>
+    <div class="signup w3_login">
+        <h2 class="login-header w3_header">Đăng ký</h2>
+        <div class="w3l_grid">
+            <form class="login-container" action="" method="post">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="text" placeholder="Họ và tên" name="hovaten" required="">
+                        <input type="email" placeholder="Email" name="taikhoan" required="">
+                        <input type="text" placeholder="CCCD" name="cccd" required="">
+                        <select id="tinh" name="tinh" class="form-control">
+                            <option value="" selected>Chọn tỉnh thành</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <select id="huyen" name="huyen" class="form-control">
+                            <option value="" selected>Chọn quận huyện</option>
+                        </select>
+                        <select id="phuong" name="phuong" class="form-control">
+                            <option value="" selected>Chọn phường xã</option>
+                        </select>
+                        <input type="text" placeholder="Tên đăng nhập" name="taikhoan" required="">
+                        <input type="password" placeholder="Mật kẩu" name="matkhau" required="">
+                    </div>
+                    <input type="text" placeholder="Số điện thoại" name="sodienthoai" required="">
+                </div>
+                <input type="submit" value="Đăng nhập">
+            </form>
+            <div class="second-section w3_section">
+                <div class="bottom-header w3_bottom">
+                    <h3>Hoặc</h3>
+                </div>
+                <div class="social-links w3_social">
+                    <ul>
+                        <li>
+                            <a class="facebook" href="#" target="blank"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a class="twitter" href="#" target="blank"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li>
+                            <a class="googleplus" href="#" target="blank">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bottom-text w3_bottom_text">
+                <p>Đã có tài khoản?<a href="/DangNhap/Index">Đăng nhập</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    const host = "https://provinces.open-api.vn/api/";
+    var callAPI = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data, "tinh");
+            });
+    }
+    callAPI('https://provinces.open-api.vn/api/?depth=1');
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.districts, "huyen");
+            });
+    }
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.wards, "phuong");
+            });
+    }
+
+    var renderData = (array, select) => {
+        let row = ' <option disable value="">Chọn</option>';
+        array.forEach(element => {
+            row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
+        });
+        document.querySelector("#" + select).innerHTML = row
+    }
+
+    $("#tinh").change(() => {
+        callApiDistrict(host + "p/" + $("#tinh").find(':selected').data('id') + "?depth=2");
+        printResult();
+    });
+    $("#huyen").change(() => {
+        callApiWard(host + "d/" + $("#huyen").find(':selected').data('id') + "?depth=2");
+        printResult();
+    });
+    $("#phuong").change(() => {
+        printResult();
+    })
+
+    var printResult = () => {
+        if ($("#huyen").find(':selected').data('id') != "" && $("#tinh").find(':selected').data('id') != "" &&
+            $("#phuong").find(':selected').data('id') != "") {
+            let result = $("#tinh option:selected").text() +
+                " | " + $("#huyen option:selected").text() + " | " +
+                $("#phuong option:selected").text();
+            $("#result").text(result)
+        }
+
+    }
+</script>
