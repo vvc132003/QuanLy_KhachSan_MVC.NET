@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Math;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using MathNet.Numerics.LinearAlgebra.Factorization;
 using Microsoft.AspNetCore.Mvc;
 using NPOI.SS.Formula.Functions;
@@ -46,15 +47,18 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int idnv = HttpContext.Session.GetInt32("id").Value;
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
                 string tenchucvu = HttpContext.Session.GetString("tenchucvu");
                 ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
+                List<SanPham> listsanpham = sanPhamService.GetAllSanPhamIDKhachSan(idkhachsan);
                 Phong phong = phongService.GetPhongID(id);
                 Modeldata yourModel = new Modeldata
                 {
                     phong = phong,
+                    listsanPham = listsanpham,
                 };
                 return View(yourModel);
             }
@@ -63,10 +67,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("Index", "DangNhap");
             }
         }
-        public IActionResult ThemThuePhong(KhachHang khachHang, DatPhong datPhong, NhanPhong nhanPhong)
+        public IActionResult ThemThuePhong(KhachHang khachHang, DatPhong datPhong, NhanPhong nhanPhong, List<int> idsanpham)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
+                int idnd = HttpContext.Session.GetInt32("id").Value;
                 /// kiểm tra xem khách hàng đã tồn tại hay chưa
                 KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                 ThoiGian thoiGian = thoiGianService.GetThoiGian(HttpContext.Session.GetInt32("idkhachsan").Value);
@@ -98,6 +103,26 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     Phong phong = phongService.GetPhongID(datPhong.idphong);
                     phong.tinhtrangphong = "có khách";
                     phongService.CapNhatPhong(phong);
+                    if (idsanpham != null && idsanpham.Any())
+                    {
+                        ThueSanPham thueSanPham = new ThueSanPham();
+                        foreach (int idsp in idsanpham)
+                        {
+                            SanPham sanpham = sanPhamService.GetSanPhamByID(idsp);
+                            thueSanPham.idnhanvien = idnd;
+                            thueSanPham.soluong = 1;
+                            thueSanPham.idsanpham = idsp;
+                            thueSanPham.iddatphong = idDatPhongThemVao;
+                            sanpham.soluongcon -= 1;
+                            sanPhamService.CapNhatSanPham(sanpham);
+                            thueSanPham.thanhtien = 1 * sanpham.giaban;
+                            thueSanPhamService.ThueSanPham(thueSanPham);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Không thuê được sản phẩm");
+                    }
                     datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
                     /// thêm giảm giá
                     /// lấy tổng số lần đặt phòng của khách hàng
@@ -153,6 +178,26 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     Phong phong = phongService.GetPhongID(datPhong.idphong);
                     phong.tinhtrangphong = "có khách";
                     phongService.CapNhatPhong(phong);
+                    if (idsanpham != null && idsanpham.Any())
+                    {
+                        ThueSanPham thueSanPham = new ThueSanPham();
+                        foreach (int idsp in idsanpham)
+                        {
+                            SanPham sanpham = sanPhamService.GetSanPhamByID(idsp);
+                            thueSanPham.idnhanvien = idnd;
+                            thueSanPham.soluong = 1;
+                            thueSanPham.idsanpham = idsp;
+                            thueSanPham.iddatphong = idDatPhongThemVao;
+                            sanpham.soluongcon -= 1;
+                            sanPhamService.CapNhatSanPham(sanpham);
+                            thueSanPham.thanhtien = 1 * sanpham.giaban;
+                            thueSanPhamService.ThueSanPham(thueSanPham);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Không thuê được sản phẩm");
+                    }
                     datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
                 }
                 TempData["thuephongthanhcong"] = "";
@@ -191,9 +236,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int idnv = HttpContext.Session.GetInt32("id").Value;
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
                 string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
