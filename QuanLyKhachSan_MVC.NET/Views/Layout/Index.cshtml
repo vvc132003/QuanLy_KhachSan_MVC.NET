@@ -26,6 +26,7 @@
                         <div class="input-group date" id="date-3" data-target-input="nearest">
                             <input type="text" id="tenkhachsan" name="tenkhachsan" class="form-control datetimepicker-input" />
                         </div>
+                        <div id="suggest" style="display: none; position: absolute; background-color: #f8f9fa; border: 1px solid #ccc; z-index: 999; max-height: 200px; overflow-y: auto;"></div> <!-- Hiển thị gợi ý -->
                     </div>
                 </div>
                 <div class="control-group col-md-3">
@@ -58,3 +59,60 @@
         </div>
     </div>
 </form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#tenkhachsan').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '/Home/GetAllKhachSan', // Đường dẫn tới action trong Controller để lấy tất cả khách sạn
+                success: function (data) {
+                    $('#suggest').html(data); // Đổ dữ liệu vào phần tử suggest
+                    $('#suggest').css({ 'display': 'block' }); // Hiển thị phần tử suggest
+                    $('#suggest li').on('click', function () {
+                        var selected = $(this).text();
+                        $('#tenkhachsan').val(selected); // Hiển thị khách sạn đã chọn trong ô nhập liệu
+                        $('#suggest').css({ 'display': 'none' }); // Ẩn danh sách gợi ý sau khi chọn
+                    });
+                }
+            });
+        });
+    });
+</script>
+<style>
+    /* CSS cho ô nhập liệu và gợi ý */
+    #tenkhachsan {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    #suggest {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        z-index: 999;
+        max-height: 200px;
+        overflow-y: auto;
+        width: calc(100% - 2px); /* Adjust width to match the input field */
+    }
+
+        #suggest ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #suggest li {
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+            #suggest li:hover {
+                background-color: #f0f0f0;
+            }
+</style>

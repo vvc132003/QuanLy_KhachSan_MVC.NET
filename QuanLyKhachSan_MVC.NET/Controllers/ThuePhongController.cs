@@ -57,13 +57,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 List<SanPham> listsanpham = sanPhamService.GetAllSanPhamIDKhachSan(idkhachsan);
-                int soluong = 0;
-                foreach (var sanPham in listsanpham)
-                {
-                    sanPham.id = soluong;
-                    soluong++;
-                }
-                PagedList.IPagedList<SanPham> PagedTSanPham = listsanpham.ToPagedList(sotrang ?? 1, soluong);
+                const int PageSize = 10; // Số lượng phòng trên mỗi trang
+                int pageNumber = sotrang ?? 1; // Trang hiện tại, mặc định là trang 1
+                PagedList.IPagedList<SanPham> PagedTSanPham = listsanpham.ToPagedList(pageNumber, PageSize);
                 Phong phong = phongService.GetPhongID(id);
                 Modeldata yourModel = new Modeldata
                 {
@@ -288,13 +284,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 List<Phong> listphong = phongService.GetAllPhongTrangThai(idkhachsan);
-                int soluong = 0;
-                foreach (var phong in listphong)
-                {
-                    phong.id = soluong;
-                    soluong++;
-                }
-                PagedList.IPagedList<Phong> ipagelistphong = listphong.ToPagedList(sotrang ?? 1, soluong);
+                const int PageSize = 10; // Số lượng phòng trên mỗi trang
+                int pageNumber = sotrang ?? 1; // Trang hiện tại, mặc định là trang 1
+                PagedList.IPagedList<Phong> ipagelistphong = listphong.ToPagedList(pageNumber, PageSize);
                 Modeldata yourModel = new Modeldata
                 {
                     PagedTPhong = ipagelistphong,
@@ -306,7 +298,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("Index", "DangNhap");
             }
         }
-        public IActionResult ThueNhieuPhong(List<int> idphongs, KhachHang khachHang, DatPhong datPhong, NhanPhong nhanPhong)
+        public IActionResult ThueNhieuPhong(KhachHang khachHang, DatPhong datPhong, NhanPhong nhanPhong, List<int> idphongs)
         {
             if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -319,7 +311,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["tenchucvu"] = tenchucvu;
                 if (idphongs != null && idphongs.Any())
                 {
-                    foreach (int phongId in idphongs)
+                    foreach (int idphong in idphongs)
                     {
                         KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                         ThoiGian thoiGian = thoiGianService.GetThoiGian(idkhachsan);
@@ -330,7 +322,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             datPhong.idloaidatphong = 1;
                             datPhong.trangthai = "đã đặt";
                             datPhong.ngaydat = DateTime.Now;
-                            datPhong.idphong = phongId;
+                            datPhong.idphong = idphong;
                             TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
                             if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
                             {
@@ -343,7 +335,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
                             nhanPhong.iddatphong = idDatPhongThemVao;
                             nhanPhong.ngaynhanphong = DateTime.Now;
-                            nhanPhongService.ThemNhanPhong(nhanPhong); Phong phong = phongService.GetPhongID(phongId);
+                            nhanPhongService.ThemNhanPhong(nhanPhong);
+                            Phong phong = phongService.GetPhongID(idphong);
                             phong.tinhtrangphong = "có khách";
                             phongService.CapNhatPhong(phong);
                             datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
@@ -377,7 +370,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             datPhong.idloaidatphong = 1;
                             datPhong.trangthai = "đã đặt";
                             datPhong.ngaydat = DateTime.Now;
-                            datPhong.idphong = phongId;
+                            datPhong.idphong = idphong;
                             TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
                             if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
                             {
@@ -391,7 +384,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             nhanPhong.iddatphong = idDatPhongThemVao;
                             nhanPhong.ngaynhanphong = DateTime.Now;
                             nhanPhongService.ThemNhanPhong(nhanPhong);
-                            Phong phong = phongService.GetPhongID(phongId);
+                            Phong phong = phongService.GetPhongID(idphong);
                             phong.tinhtrangphong = "có khách";
                             phongService.CapNhatPhong(phong);
                             datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);

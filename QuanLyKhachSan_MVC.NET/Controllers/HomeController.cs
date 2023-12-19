@@ -14,7 +14,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             phongService = phongServices;
             khachSanService = khachSanServices;
         }
-
         public IActionResult Index()
         {
             return View();
@@ -33,6 +32,17 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return View(modeldata);
             }
             return View();
+        }
+        public ActionResult GetAllKhachSan()
+        {
+            List<KhachSan> allKhachSans = khachSanService.GetAllKhachSan();
+            string html = "<ul style='list-style-type: none; margin: 0; padding: 0;'>";
+            foreach (KhachSan khachSan in allKhachSans)
+            {
+                html += "<li style='background-color: #fff; padding: 8px; border-bottom: 1px solid #ccc; cursor: pointer;'>" + khachSan.tenkhachsan + "</li>";
+            }
+            html += "</ul>";
+            return Content(html);
         }
     }
 }
