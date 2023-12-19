@@ -23,17 +23,16 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         public IActionResult DangNhap()
         {
             NhanVien nhanVien = new NhanVien();
-            List<KhachSan> listkhachsan = khachSanService.GetAllKhachSan();
             Modeldata yourModel = new Modeldata
             {
                 nhanVien = nhanVien,
-                listKhachSan = listkhachsan,
             };
             return View(yourModel);
         }
-        public IActionResult DangNhapVaoHeThong(string taikhoan, string matkhau, int idkhachsan)
+        public IActionResult DangNhapVaoHeThong(string taikhoan, string matkhau)
         {
-            NhanVien luudangnhap = nhanVienService.CheckThongTinDangNhap(matkhau, taikhoan, idkhachsan);
+            NhanVien luudangnhap = nhanVienService.CheckThongTinDangNhap(matkhau, taikhoan);
+            KhachHang khachHang = khachHangService.GetKhachHangDangNhap(taikhoan, matkhau);
             if (luudangnhap != null)
             {
                 HttpContext.Session.SetInt32("id", luudangnhap.id);
@@ -41,7 +40,18 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 HttpContext.Session.SetString("hovaten", luudangnhap.hovaten);
                 HttpContext.Session.SetString("tenchucvu", luudangnhap.tenchucvu);
                 HttpContext.Session.SetInt32("idkhachsan", luudangnhap.idkhachsan);
-                return RedirectToAction("Index", "Phong");
+                if (luudangnhap != null && (luudangnhap.tenchucvu == "Quản lý" || luudangnhap.tenchucvu == "Nhân viên"))
+                {
+                    return RedirectToAction("Index", "Phong");
+                }
+                else if (khachHang != null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "DangNhap");
+                }
             }
             else
             {
@@ -49,27 +59,27 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("DangNhap", "DangNhap");
             }
         }
-        public IActionResult DangNhaps(string taikhoan, string matkhau)
-        {
-            NhanVien luudangnhap = nhanVienService.GetNhanVienDangNhap(matkhau, taikhoan);
-            KhachHang khachHang = khachHangService.GetKhachHangDangNhap(taikhoan, matkhau);
-            if (luudangnhap != null && (luudangnhap.tenchucvu == "Quản lý" || luudangnhap.tenchucvu == "Nhân viên"))
-            {
-                return RedirectToAction("DangNhap", "DangNhap");
-            }
-            else if (khachHang != null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return RedirectToAction("Index", "DangNhap");
-            }
-        }
+        /* public IActionResult DangNhaps(string taikhoan, string matkhau)
+         {
+             NhanVien luudangnhap = nhanVienService.GetNhanVienDangNhap(matkhau, taikhoan);
+             KhachHang khachHang = khachHangService.GetKhachHangDangNhap(taikhoan, matkhau);
+             if (luudangnhap != null && (luudangnhap.tenchucvu == "Quản lý" || luudangnhap.tenchucvu == "Nhân viên"))
+             {
+                 return RedirectToAction("DangNhap", "DangNhap");
+             }
+             else if (khachHang != null)
+             {
+                 return RedirectToAction("Index", "Home");
+             }
+             else
+             {
+                 return RedirectToAction("Index", "DangNhap");
+             }
+         }*/
         public IActionResult DangXuat()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Index", "DangNhap");
+            return RedirectToAction("DangNhap", "DangNhap");
         }
     }
 }

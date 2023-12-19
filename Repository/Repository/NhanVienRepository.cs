@@ -12,7 +12,7 @@ namespace QuanLyKhachSan_MVC.NET.Repository
         List<NhanVien> GetAllNhanVien();
         NhanVien GetNhanVienID(int id);
         NhanVien GetNhanVienDangNhap(string matkhau, string taikhoan);
-        NhanVien CheckThongTinDangNhap(string matkhau, string taikhoan, int idkhachsan);
+        NhanVien CheckThongTinDangNhap(string matkhau, string taikhoan);
         List<NhanVien> GetallNhanVientheoidbophan(int idbophan);
     }
 }

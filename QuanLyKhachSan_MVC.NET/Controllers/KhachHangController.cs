@@ -22,12 +22,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             KhachHang khachhangtontai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
             KhachHang taikhoantontai = khachHangService.GetKhachHangTaiKhoan(khachHang.taikhoan);
-            NhanVien nhanVien = nhanVienService.GetNhanVienDangNhap(khachHang.matkhau, khachHang.taikhoan);
-            if (taikhoantontai != null || nhanVien != null)
-            {
-                return RedirectToAction("DangKy", "KhachHang");
-            }
-            else
+            NhanVien nhanVientontai = nhanVienService.NhanVienTonTai(khachHang.taikhoan);
+            if (taikhoantontai == null || nhanVientontai == null)
             {
                 if (khachhangtontai != null)
                 {
@@ -46,8 +42,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     khachHang.trangthai = "còn hoạt động";
                     khachHangService.KhachHangDangKy(khachHang);
                 }
-                return RedirectToAction("Index", "Home");
             }
+            else
+            {
+                return RedirectToAction("DangKy", "KhachHang");
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

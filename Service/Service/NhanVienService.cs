@@ -59,17 +59,16 @@ namespace  Service
                 }
             }
         }
-        public NhanVien CheckThongTinDangNhap(string matkhau, string taikhoan, int idkhachsan)
+        public NhanVien CheckThongTinDangNhap(string matkhau, string taikhoan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string CheckThongTinDangNhap = "SELECT NhanVien.*, ChucVu.*, KhachSan.* FROM NhanVien LEFT JOIN ChucVu ON NhanVien.idchucvu = ChucVu.id  LEFT JOIN KhachSan ON NhanVien.idkhachsan = KhachSan.id  WHERE NhanVien.taikhoan = @taikhoan  AND NhanVien.matkhau = @matkhau  and NhanVien.idkhachsan = @idkhachsan";
+                string CheckThongTinDangNhap = "SELECT NhanVien.*, ChucVu.*, KhachSan.* FROM NhanVien LEFT JOIN ChucVu ON NhanVien.idchucvu = ChucVu.id  LEFT JOIN KhachSan ON NhanVien.idkhachsan = KhachSan.id  WHERE NhanVien.taikhoan = @taikhoan  AND NhanVien.matkhau = @matkhau";
                 using (SqlCommand command = new SqlCommand(CheckThongTinDangNhap, connection))
                 {
                     command.Parameters.AddWithValue("@taikhoan", taikhoan);
                     command.Parameters.AddWithValue("@matkhau", matkhau);
-                    command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
@@ -233,7 +232,48 @@ namespace  Service
                 }
             }
         }
-
+        public NhanVien NhanVienTonTai(string taikhoan)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "select * from NhanVien where taikhoan = @taikhoan";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@taikhoan", taikhoan);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            NhanVien nhanVien = new NhanVien
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                hovaten = reader["hovaten"].ToString(),
+                                sodienthoai = reader["sodienthoai"].ToString(),
+                                tinh = reader["tinh"].ToString(),
+                                huyen = reader["huyen"].ToString(),
+                                phuong = reader["phuong"].ToString(),
+                                taikhoan = reader["taikhoan"].ToString(),
+                                matkhau = reader["matkhau"].ToString(),
+                                trangthai = reader["trangthai"].ToString(),
+                                solanvipham = (int)reader["solanvipham"],
+                                cccd = reader["cccd"].ToString(),
+                                gioitinh = reader["gioitinh"].ToString(),
+                                image = reader["image"].ToString(),
+                                idchucvu = (int)reader["idchucvu"],
+                                idvitribophan = (int)reader["idvitribophan"],
+                                idbophan = (int)reader["idbophan"]
+                            };
+                            return nhanVien;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
         public int ThemNhanVien(NhanVien nhanVien)
         {
             int idnhanvienthemvao = 0;
