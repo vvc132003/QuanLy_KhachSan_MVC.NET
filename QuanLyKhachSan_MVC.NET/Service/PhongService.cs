@@ -59,6 +59,40 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 return phongs;
             }
         }
+        public List<Phong> GetAllPhongSoPhong(string loaiphong, int idkhachsan)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<Phong> phongs = new List<Phong>();
+                connection.Open();
+                string query = "select * from Phong where  loaiphong=@loaiphong and idkhachsan=@idkhachsan";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@loaiphong", loaiphong);
+                    command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Phong phong = new Phong()
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                sophong = Convert.ToInt32(reader["sophong"]),
+                                songuoi = Convert.ToInt32(reader["songuoi"]),
+                                loaiphong = reader["loaiphong"].ToString(),
+                                tinhtrangphong = reader["tinhtrangphong"].ToString(),
+                                idtang = Convert.ToInt32(reader["idtang"]),
+                                giatientheogio = Convert.ToSingle(reader["giatientheogio"]),
+                                giatientheongay = Convert.ToSingle(reader["giatientheongay"]),
+                                idkhachsan = Convert.ToInt32(reader["idkhachsan"]),
+                            };
+                            phongs.Add(phong);
+                        }
+                    }
+                }
+                return phongs;
+            }
+        }
         public List<Phong> GetAllPhongTrangThai(int idkhachsan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())

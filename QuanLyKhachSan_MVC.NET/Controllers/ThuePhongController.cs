@@ -3,6 +3,7 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 using MathNet.Numerics.LinearAlgebra.Factorization;
 using Microsoft.AspNetCore.Mvc;
 using NPOI.SS.Formula.Functions;
+using PagedList;
 using QuanLyKhachSan_MVC.NET.Models;
 using QuanLyKhachSan_MVC.NET.Service;
 using System.Globalization;
@@ -42,7 +43,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             giamGiaService = giamGiaServices;
             quyDinhGiamGiaservice = quydinhGiamGiaServices;
         }
-        public IActionResult Index(int id)
+        public IActionResult Index(int id, int? sotrang)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -54,11 +55,18 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 List<SanPham> listsanpham = sanPhamService.GetAllSanPhamIDKhachSan(idkhachsan);
+                int soluong = 0;
+                foreach (var sanPham in listsanpham)
+                {
+                    sanPham.id = soluong;
+                    soluong++;
+                }
+                IPagedList<SanPham> PagedTSanPham = listsanpham.ToPagedList(sotrang ?? 1, soluong);
                 Phong phong = phongService.GetPhongID(id);
                 Modeldata yourModel = new Modeldata
                 {
                     phong = phong,
-                    listsanPham = listsanpham,
+                    PagedTSanPham = PagedTSanPham,
                 };
                 return View(yourModel);
             }
@@ -266,7 +274,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("Index", "DangNhap");
             }
         }
-        public IActionResult Index1()
+        public IActionResult Index1(int? sotrang)
         {
             if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -277,10 +285,17 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-                List<Phong> phong = phongService.GetAllPhongTrangThai(idkhachsan);
+                List<Phong> listphong = phongService.GetAllPhongTrangThai(idkhachsan);
+                int soluong = 0;
+                foreach (var phong in listphong)
+                {
+                    phong.id = soluong;
+                    soluong++;
+                }
+                IPagedList<Phong> ipagelistphong = listphong.ToPagedList(sotrang ?? 1, soluong);
                 Modeldata yourModel = new Modeldata
                 {
-                    listphong = phong,
+                    PagedTPhong = ipagelistphong,
                 };
                 return View(yourModel);
             }

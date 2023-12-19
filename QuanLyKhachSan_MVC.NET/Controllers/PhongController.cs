@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NPOI.SS.Formula.Functions;
 using QuanLyKhachSan_MVC.NET.Models;
 using QuanLyKhachSan_MVC.NET.Service;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             thoiGianService = thoiGianServices;
             datPhongService = datPhongServices;
         }
-        public IActionResult Index()
+        public IActionResult Index(string loaiphong)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -31,21 +32,39 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-                List<Tang> tanglist = tangService.GetAllTang(idkhachsan);
-                List<Modeldata> modeldataList = new List<Modeldata>();
-                foreach (var tang in tanglist)
+                if (loaiphong == null)
                 {
-                    List<Phong> phongs = phongService.GetAllPhongIDTang(tang.id, idkhachsan);
+                    List<Tang> tanglist = tangService.GetAllTang(idkhachsan);
+                    List<Modeldata> modeldataList = new List<Modeldata>();
+                    foreach (var tang in tanglist)
+                    {
+                        List<Phong> phongs = phongService.GetAllPhongIDTang(tang.id, idkhachsan);
+                        List<Phong> phongtrangthai = phongService.GetAllPhongTrangThai(idkhachsan);
+                        Modeldata modeldata = new Modeldata
+                        {
+                            tang = tang,
+                            listphong = phongs,
+                            listphongtrangthai = phongtrangthai,
+                        };
+                        modeldataList.Add(modeldata);
+                    }
+                    return View(modeldataList);
+                }
+                else
+                {
+                    Tang tang = tangService.GetTangidkhachsan(idkhachsan);
+                    List<Modeldata> modeldataList = new List<Modeldata>();
+                    List<Phong> listphong = phongService.GetAllPhongSoPhong(loaiphong, idkhachsan);
                     List<Phong> phongtrangthai = phongService.GetAllPhongTrangThai(idkhachsan);
                     Modeldata modeldata = new Modeldata
                     {
                         tang = tang,
-                        listphong = phongs,
+                        listphong = listphong,
                         listphongtrangthai = phongtrangthai,
                     };
                     modeldataList.Add(modeldata);
+                    return View(modeldataList);
                 }
-                return View(modeldataList);
             }
             else
             {

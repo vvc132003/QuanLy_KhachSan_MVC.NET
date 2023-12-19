@@ -24,7 +24,6 @@ builder.Services.AddScoped<ThoiGianService>();
 builder.Services.AddScoped<QuyDinhGiamGiaService>();
 builder.Services.AddScoped<GiamGiaService>();
 builder.Services.AddScoped<HopDongLaoDongService>();
-builder.Services.AddScoped<TinNhanCaNhanService>();
 builder.Services.AddScoped<KhachSanService>();
 builder.Services.AddScoped<PhongKhachSanService>();
 builder.Services.AddScoped<HuyDatPhongService>();

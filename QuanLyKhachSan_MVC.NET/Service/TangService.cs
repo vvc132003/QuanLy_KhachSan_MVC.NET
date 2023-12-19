@@ -53,6 +53,36 @@ namespace QuanLyKhachSan_MVC.NET.Service
                 return tangs;
             }
         }
+        public Tang GetTangidkhachsan(int idkhachsan)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "select * from Tang where idkhachsan = @idkhachsan";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Tang tang = new Tang
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                tentang = reader["tentang"].ToString(),
+                                idkhachsan = Convert.ToInt32(reader["idkhachsan"]),
+                            };
+                            return tang;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
 
         public Tang GetTangID(int id)
         {

@@ -34,6 +34,11 @@
                         <a>Phòng đang dọn dẹp</a>
                     </div>
                 </div>
+                <form style="padding: 20px 34px; text-align: right;" action="/Phong/Index" method="GET">
+                    <input type="text"
+                           placeholder="Nhập số phòng..." id="loaiphong" name="loaiphong">
+                    <input type="submit" value="Tìm kiếm">
+                </form>
                 @if (Model != null && Model.Count > 0)
                 {
                     foreach (var tang in Model)
