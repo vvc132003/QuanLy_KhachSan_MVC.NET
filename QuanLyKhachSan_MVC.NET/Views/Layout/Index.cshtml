@@ -1,0 +1,60 @@
+﻿@model Model.Models.Modeldata
+<!-- Header Section Start -->
+<header id="header">
+    <a href="index.html" class="logo"><img src="/static/img/logo.jpg" alt="logo"></a>
+    <div class="phone"><i class="fa fa-phone"></i>+1 234 567 8900</div>
+    <div class="mobile-menu-btn"><i class="fa fa-bars"></i></div>
+    <nav class="main-menu top-menu">
+        <ul>
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="room.html">Rooms</a></li>
+            <li><a href="amenities.html">Amenities</a></li>
+            <li><a href="booking.html">Booking</a></li>
+            <li><a href="/DangNhap/Index">Login</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+</header>
+<form method="post" action="/Home/TimKiemKhachSan">
+    <div id="search">
+        <div class="container">
+            <div class="form-row">
+                <div class="control-group col-md-3">
+                    <label>Thành phố hoặc tên khách sạn</label>
+                    <div class="form-group">
+                        <div class="input-group date" id="date-3" data-target-input="nearest">
+                            <input type="text" id="tenkhachsan" name="tenkhachsan" class="form-control datetimepicker-input" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group col-md-3">
+                    <label>Loại phòng</label>
+                    <div class="form-group">
+                        <div class="input-group date" id="date-4" data-target-input="nearest">
+                            <input type="text" id="loaiphong" name="loaiphong" class="form-control datetimepicker-input" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group col-md-3">
+                    <label>Số người</label>
+                    <select id="songuoi" name="songuoi" class="custom-select">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <div class="control-group col-md-3">
+                    <button type="submit" class="btn btn-block">Tìm kiếm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

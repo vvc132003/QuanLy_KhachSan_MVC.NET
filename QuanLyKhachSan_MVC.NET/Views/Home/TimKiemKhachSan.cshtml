@@ -1,4 +1,4 @@
-﻿@model QuanLyKhachSan_MVC.NET.Models.Modeldata
+﻿@model Model.Models.Modeldata
 <link href="/static/img/favicon.ico" rel="icon">
 <link href="/static/img/apple-favicon.png" rel="apple-touch-icon">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -10,7 +10,7 @@
 <link href="/static/vendor/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 <link href="/static/css/hover-style.css" rel="stylesheet">
 <link href="/static/css/style.css" rel="stylesheet">
-@Html.Partial("~/Views/layout/homenavbar.cshtml")
+@Html.Partial("~/Views/layout/index.cshtml")
 <div id="rooms">
     <div class="container">
         <div class="section-header">
@@ -65,7 +65,7 @@
                                 <div class="room-rate">
                                     <h3>From</h3>
                                     <h1>@string.Format("{0:N0} VNĐ", @phong.giatientheogio)<span>/Mỗi giờ</span></h1>
-                                    <a href="#">Book Now</a>
+                                    <a href="">Đặt phòng</a>
                                 </div>
                             </div>
                         </div>

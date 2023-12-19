@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using QuanLyKhachSan_MVC.NET.Models;
-using QuanLyKhachSan_MVC.NET.Service;
+using Model.Models;
+using Service;
+using Auth0.ManagementApi.Paging;
 using PagedList;
+
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
     public class ThietBiPhongController : Controller
@@ -15,7 +17,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             phongService = phongServices;
             thetBiService = thetBiServices;
         }
-        public IActionResult h(int? sotrang)
+      /*  public IActionResult h(int? sotrang)
         {
             int? soluong = thietBiPhongService.SumThietBiPhong();
             int tranghientai = sotrang ?? 1;
@@ -30,7 +32,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 PagedThietBiPhong = pagedThietBiPhong,
             };
             return View(modeldata);
-        }
+        }*/
 
         public IActionResult Index(int? sotrang)
         {
@@ -51,7 +53,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 }
                 List<Phong> listphong = phongService.GetAllPhong();
                 List<ThietBi> listthietbi = thetBiService.GetAllThietBi();
-                IPagedList<ThietBiPhong> pagedThietBiPhong = thietBiPhongs.ToPagedList(sotrang ?? 1, soluong);
+                PagedList.IPagedList<ThietBiPhong> pagedThietBiPhong = thietBiPhongs.ToPagedList(sotrang ?? 1, soluong);
                 Modeldata modeldata = new Modeldata
                 {
                     PagedThietBiPhong = pagedThietBiPhong,

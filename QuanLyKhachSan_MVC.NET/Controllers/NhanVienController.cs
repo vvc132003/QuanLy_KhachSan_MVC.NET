@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using QuanLyKhachSan_MVC.NET.Models;
-using QuanLyKhachSan_MVC.NET.Service;
+using Model.Models;
+using Service;
 using System.Collections.Generic;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers

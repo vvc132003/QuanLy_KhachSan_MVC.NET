@@ -3,10 +3,12 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 using MathNet.Numerics.LinearAlgebra.Factorization;
 using Microsoft.AspNetCore.Mvc;
 using NPOI.SS.Formula.Functions;
-using PagedList;
-using QuanLyKhachSan_MVC.NET.Models;
-using QuanLyKhachSan_MVC.NET.Service;
+using Auth0.ManagementApi.Paging;
+using Model.Models;
+using Service;
 using System.Globalization;
+using PagedList;
+
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
@@ -61,7 +63,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     sanPham.id = soluong;
                     soluong++;
                 }
-                IPagedList<SanPham> PagedTSanPham = listsanpham.ToPagedList(sotrang ?? 1, soluong);
+                PagedList.IPagedList<SanPham> PagedTSanPham = listsanpham.ToPagedList(sotrang ?? 1, soluong);
                 Phong phong = phongService.GetPhongID(id);
                 Modeldata yourModel = new Modeldata
                 {
@@ -292,7 +294,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     phong.id = soluong;
                     soluong++;
                 }
-                IPagedList<Phong> ipagelistphong = listphong.ToPagedList(sotrang ?? 1, soluong);
+                PagedList.IPagedList<Phong> ipagelistphong = listphong.ToPagedList(sotrang ?? 1, soluong);
                 Modeldata yourModel = new Modeldata
                 {
                     PagedTPhong = ipagelistphong,
