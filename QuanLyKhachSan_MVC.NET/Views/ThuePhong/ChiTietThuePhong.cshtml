@@ -96,29 +96,29 @@
                                                 <h4>Gía phòng theo ngày: @string.Format("{0:N0} VNĐ", @Model[0].phong.giatientheongay)</h4>
                                             }
                                             <h4>Tiền khách hàng đặt cọc: @string.Format("{0:N0} VNĐ", @Model[0].datPhong.tiendatcoc)</h4>
-                                            @if (Model != null && Model.Count > 0 && Model[0].giamGia != null)
+                                            @if (Model != null && Model.Count > 0 && Model[0].magiamGia != null)
                                             {
-                                                <h4>Giảm giá: @Model[0].giamGia.phantramgiamgia %</h4>
+                                                <h4>Giảm giá: @Model[0].magiamGia.phantramgiamgia %</h4>
                                                 float sotienthanhtoan = 0;
                                                 @if (Model[0].datPhong.hinhthucthue == "Theo giờ")
                                                 {
                                                     @if (DateTime.Now.Hour > Model[0].thoigian.thoigianra.Hours)
                                                     {
                                                         // Quá hạn trả phòng, chuyển sang thuê theo ngày
-                                                        sotienthanhtoan = ((Model[0].phong.giatientheongay * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].giamGia.phantramgiamgia / 100;
+                                                        sotienthanhtoan = ((Model[0].phong.giatientheongay * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
                                                         <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
                                                     }
                                                     else
                                                     {
                                                         // Đang trong thời gian thuê theo giờ
-                                                        sotienthanhtoan = ((Model[0].phong.giatientheogio * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].giamGia.phantramgiamgia / 100;
+                                                        sotienthanhtoan = ((Model[0].phong.giatientheogio * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
                                                         <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
                                                     }
                                                 }
                                                 else
                                                 {
                                                     // Đang thuê theo ngày
-                                                    sotienthanhtoan = ((Model[0].phong.giatientheongay * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].giamGia.phantramgiamgia / 100;
+                                                    sotienthanhtoan = ((Model[0].phong.giatientheongay * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
                                                     <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
                                                 }
                                             }

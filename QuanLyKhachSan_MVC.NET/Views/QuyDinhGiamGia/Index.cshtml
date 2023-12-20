@@ -40,7 +40,9 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Số lần đặt phòng</th>
+                                                <th>Số lần đặt phòng tối thiểu</th>
+                                                <th>Tổng tiền tối thiểu</th>
+                                                <th>Tổng thời gian đặt phòng tối thiểu</th>
                                                 <th>Phần trăm được giảm</th>
                                                 <th>Ngày thêm quy định</th>
                                                 <th>Action</th>
@@ -54,7 +56,11 @@
                                                 {
                                                     <tr id="row-@count">
                                                         <td>@count</td>
-                                                        <td>@quydinhgiamgia.solandatphong</td>
+                                                        <td>@quydinhgiamgia.soluongdatphongtoithieu</td>
+                                                        <td>
+                                                            >@string.Format("{0:N0} VNĐ", @quydinhgiamgia.tongtientoithieu)
+                                                        </td>
+                                                        <td>@quydinhgiamgia.thoigiandatphong</td>
                                                         <td>@quydinhgiamgia.phantramgiamgia %</td>
                                                         <td>@quydinhgiamgia.ngaythemquydinh.ToString("dd/MM/yyyy")</td>
                                                         <td>
@@ -93,16 +99,40 @@
             <div class="modal-header">
             </div>
             <div class="modal-body text-left">
-                <div class="text-bg-success p-2">Thông tin tầng</div>
+                <div class="text-bg-success p-2">Thêm quy định giảm giá</div>
                 <div class="border border-secondary-subtle" style="padding:10px 20px">
                     <form method="post" action="/QuyDinhGiamGia/ThemQuyDinhGiamGia">
                         <div class="mb-3">
-                            <label for="solandatphong" class="form-label">Số lần đặt phòng:</label>
-                            <input type="number" name="solandatphong" id="solandatphong" class="form-control" />
+                            <label for="soluongdatphongtoithieu" class="form-label">Số lần đặt phòng tối thiểu:</label>
+                            <input type="number" name="soluongdatphongtoithieu" id="soluongdatphongtoithieu" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="tongtientoithieu" class="form-label">Tổng tiền tối thiểu:</label>
+                            <input type="number" name="tongtientoithieu" id="tongtientoithieu" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="soluongdatphongtoithieu" class="form-label">Số lần đặt phòng:</label>
+                            <input type="number" name="soluongdatphongtoithieu" id="soluongdatphongtoithieu" class="form-control" />
                         </div>
                         <div class="mb-3">
                             <label for="phantramgiamgia" class="form-label">Phần trăm được giảm:</label>
                             <input type="number" name="phantramgiamgia" id="phantramgiamgia" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="idkhachsan" class="form-label">Khách sạn:</label>
+                            <select id="idkhachsan" name="idkhachsan" class="form-control">
+                                @if (Model.listKhachSan != null && Model.listKhachSan.Count > 0)
+                                {
+                                    foreach (var tKhachSan in Model.listKhachSan)
+                                    {
+                                        <option value="@tKhachSan.id">Quy định @tKhachSan.tenkhachsan</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="" selected>Không có dữ liệu</option>
+                                }
+                            </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">

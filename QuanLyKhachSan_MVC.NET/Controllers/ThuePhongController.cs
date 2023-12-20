@@ -8,7 +8,7 @@ using Model.Models;
 using Service;
 using System.Globalization;
 using PagedList;
-
+using Service.Service;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
@@ -21,9 +21,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly SanPhamService sanPhamService;
         private readonly ThueSanPhamService thueSanPhamService;
         private readonly ThoiGianService thoiGianService;
-        private readonly GiamGiaService giamGiaService;
+        private readonly MaGiamGiaService maGiamGiaService;
         private readonly QuyDinhGiamGiaService quyDinhGiamGiaservice;
-
+        private readonly SuDungMaGiamGiaService dungMaGiamGiaService;
+        private readonly SuDungMaGiamGiaService suDungMaGiamGiaService;
 
         public ThuePhongController(DatPhongService datPhongServices,
             KhachHangService khachHangServices,
@@ -32,8 +33,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             SanPhamService sanPhamServices,
             ThueSanPhamService thueSanPhamServices,
             ThoiGianService thoiGianServices,
-            GiamGiaService giamGiaServices,
-            QuyDinhGiamGiaService quydinhGiamGiaServices)
+            MaGiamGiaService maGiamGiaServices,
+            QuyDinhGiamGiaService quydinhGiamGiaServices,
+            SuDungMaGiamGiaService dungMaGiamGiaServices,
+            SuDungMaGiamGiaService suDungMaGiamGiaServices)
         {
             datPhongService = datPhongServices;
             khachHangService = khachHangServices;
@@ -42,8 +45,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             sanPhamService = sanPhamServices;
             thueSanPhamService = thueSanPhamServices;
             thoiGianService = thoiGianServices;
-            giamGiaService = giamGiaServices;
+            maGiamGiaService = maGiamGiaServices;
             quyDinhGiamGiaservice = quydinhGiamGiaServices;
+            dungMaGiamGiaService = dungMaGiamGiaServices;
+            suDungMaGiamGiaService = suDungMaGiamGiaServices;
         }
         public IActionResult Index(int id, int? sotrang)
         {
@@ -73,7 +78,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("Index", "DangNhap");
             }
         }
-        public IActionResult ThemThuePhong(KhachHang khachHang, DatPhong datPhong, List<int> idsanpham, string nhanphong)
+        public IActionResult ThemThuePhong(KhachHang khachHang, DatPhong datPhong, List<int> idsanpham, string nhanphong, string magiamgia)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -129,22 +134,32 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         nhanPhongService.ThemNhanPhong(nhanPhong);
                         phong.tinhtrangphong = "có khách";
                         phongService.CapNhatPhong(phong);
-                        int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
-                        QuyDinhGiamGia quyDinhGiamGia = quyDinhGiamGiaservice.GetQuyDinhGia(solandatphong);
-                        if (quyDinhGiamGia != null && solandatphong == quyDinhGiamGia.solandatphong)
+                        int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
+                        QuyDinhGiamGia quydinhgiamgia = quyDinhGiamGiaservice.GetQuyDinhGiasolandatphong(soluongdatphongtoithieu);
+                        MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
+                        if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
                         {
-                            GiamGia giamGia = new GiamGia();
-                            giamGia.iddatphong = idDatPhongThemVao;
-                            giamGia.ngaythemgiamgia = DateTime.Now;
-                            giamGia.solandatphong = solandatphong;
-                            giamGia.phantramgiamgia = quyDinhGiamGia.phantramgiamgia;
-                            giamGia.idkhachhang = khachHangTonTai.id;
-                            giamGia.idquydinh = quyDinhGiamGia.id;
-                            giamGiaService.ThemGiamGia(giamGia);
+                            maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
+                            MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(magiamgias.id);
+                            capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
+                            maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
                         }
                         else
                         {
-                            Console.WriteLine("Không có giảm giá!");
+                            /// ko có mã giảm giá
+                        }
+                        if (magiamgia != null)
+                        {
+                            MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
+                            SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                            suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                            suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                            suDungMaGiamGia.ngaysudung = DateTime.Now;
+                            dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                        }
+                        else
+                        {
+                            /// không áp dụng mã giảm giá
                         }
                     }
                     else
@@ -167,22 +182,32 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
                         phong.tinhtrangphong = "đã đặt";
                         phongService.CapNhatPhong(phong);
-                        int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
-                        QuyDinhGiamGia quyDinhGiamGia = quyDinhGiamGiaservice.GetQuyDinhGia(solandatphong);
-                        if (quyDinhGiamGia != null && solandatphong == quyDinhGiamGia.solandatphong)
+                        int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
+                        QuyDinhGiamGia quydinhgiamgia = quyDinhGiamGiaservice.GetQuyDinhGiasolandatphong(soluongdatphongtoithieu);
+                        MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
+                        if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
                         {
-                            GiamGia giamGia = new GiamGia();
-                            giamGia.iddatphong = idDatPhongThemVao;
-                            giamGia.ngaythemgiamgia = DateTime.Now;
-                            giamGia.solandatphong = solandatphong;
-                            giamGia.phantramgiamgia = quyDinhGiamGia.phantramgiamgia;
-                            giamGia.idkhachhang = khachHangTonTai.id;
-                            giamGia.idquydinh = quyDinhGiamGia.id;
-                            giamGiaService.ThemGiamGia(giamGia);
+                            maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
+                            MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(magiamgias.id);
+                            capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
+                            maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
                         }
                         else
                         {
-                            Console.WriteLine("Không có giảm giá!");
+                            /// ko có mã giảm giá
+                        }
+                        if (magiamgia != null)
+                        {
+                            MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
+                            SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                            suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                            suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                            suDungMaGiamGia.ngaysudung = DateTime.Now;
+                            dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                        }
+                        else
+                        {
+                            /// không áp dụng mã giảm giá
                         }
                     }
                     datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
@@ -298,7 +323,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("Index", "DangNhap");
             }
         }
-        public IActionResult ThueNhieuPhong(KhachHang khachHang, DatPhong datPhong, NhanPhong nhanPhong, List<int> idphongs)
+        public IActionResult ThueNhieuPhong(KhachHang khachHang, DatPhong datPhong, NhanPhong nhanPhong, List<int> idphongs, string magiamgia)
         {
             if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -339,26 +364,35 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             Phong phong = phongService.GetPhongID(idphong);
                             phong.tinhtrangphong = "có khách";
                             phongService.CapNhatPhong(phong);
-                            datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
-                            /// thêm giảm giá
-                            /// lấy tổng số lần đặt phòng của khách hàng
-                            int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
-                            QuyDinhGiamGia quyDinhGiamGia = quyDinhGiamGiaservice.GetQuyDinhGia(solandatphong);
-                            if (quyDinhGiamGia != null && solandatphong == quyDinhGiamGia.solandatphong)
+                            int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
+                            QuyDinhGiamGia quydinhgiamgia = quyDinhGiamGiaservice.GetQuyDinhGiasolandatphong(soluongdatphongtoithieu);
+                            MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
+                            if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
                             {
-                                GiamGia giamGia = new GiamGia();
-                                giamGia.iddatphong = idDatPhongThemVao;
-                                giamGia.ngaythemgiamgia = DateTime.Now;
-                                giamGia.solandatphong = solandatphong;
-                                giamGia.phantramgiamgia = quyDinhGiamGia.phantramgiamgia;
-                                giamGia.idkhachhang = khachHangTonTai.id;
-                                giamGia.idquydinh = quyDinhGiamGia.id;
-                                giamGiaService.ThemGiamGia(giamGia);
+                                maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
+                                MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(magiamgias.id);
+                                capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
+                                maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
                             }
                             else
                             {
-                                Console.WriteLine("Không có giảm giá!");
+                                /// ko có mã giảm giá
                             }
+                            if (magiamgia != null)
+                            {
+                                MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
+                                SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                                suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                                suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                                suDungMaGiamGia.ngaysudung = DateTime.Now;
+                                dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                            }
+                            else
+                            {
+                                /// không áp dụng mã giảm giá
+                            }
+                            datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
+
                         }
                         else
                         {
@@ -461,7 +495,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             }
                             datPhongService.UpdateDatPhong(datphong);
                         }
-                        GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
+                        /*                        GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
+                        */
+                        SuDungMaGiamGia sudunggiamGia = suDungMaGiamGiaService.GetSuDungMaGiamGiaByIddatphong(datphong.id);
+                        MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia);
                         Modeldata yourModel = new Modeldata
                         {
                             listsanPham = listsanpham,
@@ -469,7 +506,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             listthueSanPham = listthueSanPham,
                             tongtienhueSanPham = tongtien,
                             phong = phongs,
-                            giamGia = giamGia,
+                            magiamGia = maGiamGia,
                             thoigian = thoiGian,
                         };
                         listmodeldatas.Add(yourModel);
@@ -494,7 +531,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             };
             return View(yourModel);
         }
-        public IActionResult CheckInDatPhongOnline(KhachHang khachHang, DatPhong datPhong)
+        public IActionResult CheckInDatPhongOnline(KhachHang khachHang, DatPhong datPhong, string magiamgia)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -526,24 +563,32 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     phong.tinhtrangphong = "đã đặt";
                     phongService.CapNhatPhong(phong);
                     datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
-                    /// thêm giảm giá
-                    /// lấy tổng số lần đặt phòng của khách hàng
-                    int solandatphong = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
-                    QuyDinhGiamGia quyDinhGiamGia = quyDinhGiamGiaservice.GetQuyDinhGia(solandatphong);
-                    if (quyDinhGiamGia != null && solandatphong == quyDinhGiamGia.solandatphong)
+                    int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
+                    QuyDinhGiamGia quydinhgiamgia = quyDinhGiamGiaservice.GetQuyDinhGiasolandatphong(soluongdatphongtoithieu);
+                    MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
+                    if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
                     {
-                        GiamGia giamGia = new GiamGia();
-                        giamGia.iddatphong = idDatPhongThemVao;
-                        giamGia.ngaythemgiamgia = DateTime.Now;
-                        giamGia.solandatphong = solandatphong;
-                        giamGia.phantramgiamgia = quyDinhGiamGia.phantramgiamgia;
-                        giamGia.idkhachhang = khachHangTonTai.id;
-                        giamGia.idquydinh = quyDinhGiamGia.id;
-                        giamGiaService.ThemGiamGia(giamGia);
+                        maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
+                        MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(magiamgias.id);
+                        capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
+                        maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
                     }
                     else
                     {
-                        Console.WriteLine("Không có giảm giá!");
+                        /// ko có mã giảm giá
+                    }
+                    if (magiamgia != null)
+                    {
+                        MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
+                        SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                        suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                        suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                        suDungMaGiamGia.ngaysudung = DateTime.Now;
+                        dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                    }
+                    else
+                    {
+                        /// không áp dụng mã giảm giá
                     }
                 }
                 /// nếu khách hàng không tồn tại

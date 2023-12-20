@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using Service;
+using Service.Service;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
@@ -11,9 +12,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly TraPhongService traPhongService;
         private readonly LichSuThanhToanService lichSuThanhToanService;
         private readonly PhongService phongService;
-        private readonly GiamGiaService giamGiaService;
+        private readonly SuDungMaGiamGiaService sugiamGiaService;
         private readonly QuyDinhGiamGiaService quyDinhGiamGiaservice;
         private readonly ThoiGianService thoiGianService;
+        private readonly MaGiamGiaService maGiamGiaService;
+
 
 
         public TraPhongController(DatPhongService datPhongServices,
@@ -21,18 +24,19 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                   TraPhongService traPhongServices,
                                   LichSuThanhToanService lichSuThanhToanServices,
                                   PhongService phongServices,
-                                  GiamGiaService giamGiaServices,
+                                  SuDungMaGiamGiaService sugiamGiaServices,
                                   QuyDinhGiamGiaService quydinhGiamGiaServices,
-                                  ThoiGianService thoiGianServices)
+                                  ThoiGianService thoiGianServices, MaGiamGiaService maGiamGiaServices)
         {
             datPhongService = datPhongServices;
             thueSanPhamService = thueSanPhamServices;
             traPhongService = traPhongServices;
             lichSuThanhToanService = lichSuThanhToanServices;
             phongService = phongServices;
-            giamGiaService = giamGiaServices;
+            sugiamGiaService = sugiamGiaServices;
             quyDinhGiamGiaservice = quydinhGiamGiaServices;
             thoiGianService = thoiGianServices;
+            maGiamGiaService = maGiamGiaServices;
         }
         public IActionResult TraPhongandLSThanhToan(LichSuThanhToan lichSuThanhToan, int idphong)
         {
@@ -44,7 +48,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 Phong phong = phongService.GetPhongID(idphong);
                 /// thực hiện lấy ds thuê sản phẩm và tổng tiền theo id đặt phòng
                 List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datphong.id);
-                GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
+                SuDungMaGiamGia sudunggiamGia = sugiamGiaService.GetSuDungMaGiamGiaByIddatphong(datphong.id);
+                MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia);
                 float tongtienthuesanpham = 0;
                 foreach (var thueSanPham in listthueSanPham)
                 {
@@ -52,25 +57,25 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 }
                 ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
                 float sotienthanhtoan = 0;
-                if (giamGia != null && giamGia.solandatphong > 0)
+                if (maGiamGia != null)
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
                         if (DateTime.Now.Hour > thoiGian.thoigianra.Hours)
                         {
                             // Quá hạn trả phòng, chuyển sang thuê theo ngày
-                            sotienthanhtoan = ((phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * giamGia.phantramgiamgia / 100;
+                            sotienthanhtoan = ((phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
                         }
                         else
                         {
                             // Đang trong thời gian thuê theo giờ
-                            sotienthanhtoan = ((phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * giamGia.phantramgiamgia / 100;
+                            sotienthanhtoan = ((phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
                         }
                     }
                     else
                     {
                         // Đang thuê theo ngày
-                        sotienthanhtoan = ((phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * giamGia.phantramgiamgia / 100;
+                        sotienthanhtoan = ((phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
                     }
                 }
                 else

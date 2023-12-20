@@ -56,9 +56,9 @@ namespace Model.Models
         public QuyDinhGiamGia quyDinhGiamGia { get; set; }
         public List<QuyDinhGiamGia> listquyDinhGiamGia { get; set; }
         public IPagedList<QuyDinhGiamGia> PagedTQuyDinhGiamGia { get; set; }
-        public GiamGia giamGia { get; set; }
-        public List<GiamGia> listGiamGia { get; set; }
-        public IPagedList<GiamGia> PagedTGiamGia { get; set; }
+        public MaGiamGia magiamGia { get; set; }
+        public List<MaGiamGia> listmaGiamGia { get; set; }
+        public IPagedList<MaGiamGia> PagedTmaGiamGia { get; set; }
         public HopDongLaoDong hopDongLaoDong { get; set; }
         public List<HopDongLaoDong> listhopDongLaoDong { get; set; }
         public IPagedList<HopDongLaoDong> PagedThopDongLaoDong { get; set; }

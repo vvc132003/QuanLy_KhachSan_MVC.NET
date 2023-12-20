@@ -7,9 +7,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
     public class QuyDinhGiamGiaController : Controller
     {
         private readonly QuyDinhGiamGiaService quyDinhGiamGiaService;
-        public QuyDinhGiamGiaController(QuyDinhGiamGiaService quyDinhGiamGiaServices)
+        private readonly KhachSanService khachSanService;
+        public QuyDinhGiamGiaController(QuyDinhGiamGiaService quyDinhGiamGiaServices, KhachSanService khachSanServices)
         {
             quyDinhGiamGiaService = quyDinhGiamGiaServices;
+            khachSanService = khachSanServices;
         }
 
         public IActionResult Index()
@@ -23,15 +25,17 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 List<QuyDinhGiamGia> quyDinhGiamGias = quyDinhGiamGiaService.GetAllQuyDinhGia();
+                List<KhachSan> listkhachsan = khachSanService.GetAllKhachSan();
                 Modeldata modeldata = new Modeldata
                 {
                     listquyDinhGiamGia = quyDinhGiamGias,
+                    listKhachSan = listkhachsan
                 };
                 return View(modeldata);
             }
             else
             {
-                return RedirectToAction("Index", "DangNhap");
+                return RedirectToAction("DangNhap", "DangNhap");
             }
         }
         public IActionResult ThemQuyDinhGiamGia(QuyDinhGiamGia quyDinhGiamGia)
@@ -46,7 +50,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "DangNhap");
+                return RedirectToAction("DangNhap", "DangNhap");
             }
         }
     }

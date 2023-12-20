@@ -5,6 +5,7 @@
         public int id { get; set; }
         public DateTime ngaythanhtoan { get; set; }
         public float sotienthanhtoan { get; set; }
+        public float phantramgiamgia { get; set; }
         public string hinhthucthanhtoan { get; set; }
         public string trangthai { get; set; }
         public int iddatphong { get; set; }
