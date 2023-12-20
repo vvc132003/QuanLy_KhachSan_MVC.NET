@@ -33,15 +33,37 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             return View();
         }
-        public ActionResult GetAllKhachSan()
+        public IActionResult GetAllKhachSan()
         {
             List<KhachSan> allKhachSans = khachSanService.GetAllKhachSan();
             string html = "<ul style='list-style-type: none; margin: 0; padding: 0;'>";
             foreach (KhachSan khachSan in allKhachSans)
             {
-                html += "<li style='background-color: #fff; padding: 8px; border-bottom: 1px solid #ccc; cursor: pointer;'>" + khachSan.tenkhachsan + "</li>";
+                html += "<li style='background-color: #fff; padding: 8px; border-bottom: 1px solid #ccc; cursor: pointer;' data-id='" + khachSan.id + "'>" + khachSan.tenkhachsan + "</li>";
             }
             html += "</ul>";
+            return Content(html);
+        }
+        public IActionResult GetAllLoaiPhongIdKhachSan(int idkhachsan)
+        {
+            List<string> loaiPhongs = phongService.GetAllLoaiPhongIdKhachSan(idkhachsan);
+            string html = "<ul style='list-style-type: none; margin: 0; padding: 0;'>";
+            foreach (string loaiPhong in loaiPhongs)
+            {
+                html += "<li style='background-color: #fff; padding: 8px; border-bottom: 1px solid #ccc; cursor: pointer;'>" + loaiPhong + "</li>";
+            }
+            html += "</ul>";
+            return Content(html);
+        }
+        public IActionResult GetAllSoNguoiLoaiPhong(int idphong)
+        {
+            List<int> songuois = phongService.GetAllSoNguoiLoaiPhong(idphong);
+            string html = "";
+            foreach (int songuoi in songuois)
+            {
+                html += "<input type='text' id='songuoi' name='songuoi' class='form-control datetimepicker-input' value='" + songuoi + "' />";
+            }
+            html += "";
             return Content(html);
         }
     }

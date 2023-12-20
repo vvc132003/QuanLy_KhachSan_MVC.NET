@@ -3,7 +3,7 @@ using Model.Models;
 using QuanLyKhachSan_MVC.NET.Repository;
 using System.Data.SqlClient;
 
-namespace  Service
+namespace Service
 {
     public class PhongService : PhongRepository
     {
@@ -93,6 +93,51 @@ namespace  Service
                 return phongs;
             }
         }
+        public List<string> GetAllLoaiPhongIdKhachSan(int idkhachsan)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<string> loaiPhongs = new List<string>();
+                connection.Open();
+                string query = "SELECT DISTINCT loaiphong FROM Phong WHERE idkhachsan = @idkhachsan";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string loaiPhong = reader["loaiphong"].ToString();
+                            loaiPhongs.Add(loaiPhong);
+                        }
+                    }
+                }
+                return loaiPhongs;
+            }
+        }
+        public List<int> GetAllSoNguoiLoaiPhong(int idphong)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<int> songuois = new List<int>();
+                connection.Open();
+                string query = "SELECT DISTINCT songuoi FROM Phong WHERE id = @idphong";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idphong", idphong);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int songuoi = Convert.ToInt32(reader["songuoi"]);
+                            songuois.Add(songuoi);
+                        }
+                    }
+                }
+                return songuois;
+            }
+        }
+
         public List<Phong> GetAllPhongTrangThai(int idkhachsan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
