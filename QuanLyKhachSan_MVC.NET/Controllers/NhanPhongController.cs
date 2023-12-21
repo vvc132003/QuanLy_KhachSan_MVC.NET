@@ -13,7 +13,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly SanPhamService sanPhamService;
         private readonly ThueSanPhamService thueSanPhamService;
         private readonly ThoiGianService thoiGianService;
-        private readonly GiamGiaService giamGiaService;
         private readonly QuyDinhGiamGiaService quyDinhGiamGiaservice;
 
 
@@ -24,7 +23,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             SanPhamService sanPhamServices,
             ThueSanPhamService thueSanPhamServices,
             ThoiGianService thoiGianServices,
-            GiamGiaService giamGiaServices,
             QuyDinhGiamGiaService quydinhGiamGiaServices)
         {
             datPhongService = datPhongServices;
@@ -34,7 +32,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             sanPhamService = sanPhamServices;
             thueSanPhamService = thueSanPhamServices;
             thoiGianService = thoiGianServices;
-            giamGiaService = giamGiaServices;
             quyDinhGiamGiaservice = quydinhGiamGiaServices;
         }
         public IActionResult Index()

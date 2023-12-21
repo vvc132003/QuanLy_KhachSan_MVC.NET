@@ -109,7 +109,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             {
                 for (int i = 0; i < soluongmuonthem; i++)
                 {
-                    phong.loaiphong = "VIP";
                     phong.tinhtrangphong = "còn trống";
                     phongService.ThemPhong(phong);
                 }

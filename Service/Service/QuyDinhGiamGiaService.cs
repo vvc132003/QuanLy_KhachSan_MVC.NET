@@ -117,7 +117,7 @@ namespace Service
             {
                 connection.Open();
                 string query = "INSERT INTO QuyDinhGiamGia (soluongdatphongtoithieu,tongtientoithieu,thoigiandatphong, phantramgiamgia,ngaythemquydinh,idkhachsan) " +
-                    "VALUES (@solandatphong,@tongtientoithieu,@thoigiandatphong, @phantramgiamgia,@ngaythemquydinh,@idkhachsan)";
+                    "VALUES (@soluongdatphongtoithieu,@tongtientoithieu,@thoigiandatphong, @phantramgiamgia,@ngaythemquydinh,@idkhachsan)";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@soluongdatphongtoithieu", quyDinhGiamGia.soluongdatphongtoithieu);
                 command.Parameters.AddWithValue("@tongtientoithieu", quyDinhGiamGia.tongtientoithieu);

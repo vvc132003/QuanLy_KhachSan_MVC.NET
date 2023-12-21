@@ -58,9 +58,9 @@
                                                         <td>@count</td>
                                                         <td>@quydinhgiamgia.soluongdatphongtoithieu</td>
                                                         <td>
-                                                            >@string.Format("{0:N0} VNĐ", @quydinhgiamgia.tongtientoithieu)
+                                                            @string.Format("{0:N0} VNĐ", @quydinhgiamgia.tongtientoithieu)
                                                         </td>
-                                                        <td>@quydinhgiamgia.thoigiandatphong</td>
+                                                        <td>@quydinhgiamgia.thoigiandatphong h</td>
                                                         <td>@quydinhgiamgia.phantramgiamgia %</td>
                                                         <td>@quydinhgiamgia.ngaythemquydinh.ToString("dd/MM/yyyy")</td>
                                                         <td>
@@ -111,8 +111,8 @@
                             <input type="number" name="tongtientoithieu" id="tongtientoithieu" class="form-control" />
                         </div>
                         <div class="mb-3">
-                            <label for="soluongdatphongtoithieu" class="form-label">Số lần đặt phòng:</label>
-                            <input type="number" name="soluongdatphongtoithieu" id="soluongdatphongtoithieu" class="form-control" />
+                            <label for="thoigiandatphong" class="form-label">Thời gian đặt phòng tối thiểu:</label>
+                            <input type="datetime" name="thoigiandatphong" id="thoigiandatphong" class="form-control" />
                         </div>
                         <div class="mb-3">
                             <label for="phantramgiamgia" class="form-label">Phần trăm được giảm:</label>

@@ -40,15 +40,15 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("DangNhap", "DangNhap");
             }
         }
-        public IActionResult ThemMaGiamGia(MaGiamGia maGiamGia)
+        public IActionResult ThemMaGiamGia(MaGiamGia magiamgias)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
                 ViewData["id"] = id;
-                maGiamGia.ngaybatdau = DateTime.Now;
-                maGiamGia.solandasudung = 0;
-                maGiamGiaService.ThemMaGiamGia(maGiamGia);
+                magiamgias.ngaybatdau = DateTime.Now;
+                magiamgias.solandasudung = 0;
+                maGiamGiaService.ThemMaGiamGia(magiamgias);
                 return RedirectToAction("Index");
             }
             else

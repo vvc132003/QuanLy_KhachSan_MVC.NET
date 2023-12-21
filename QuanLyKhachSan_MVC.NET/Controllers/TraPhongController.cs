@@ -26,7 +26,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                   PhongService phongServices,
                                   SuDungMaGiamGiaService sugiamGiaServices,
                                   QuyDinhGiamGiaService quydinhGiamGiaServices,
-                                  ThoiGianService thoiGianServices, MaGiamGiaService maGiamGiaServices)
+                                  ThoiGianService thoiGianServices, 
+                                  MaGiamGiaService maGiamGiaServices)
         {
             datPhongService = datPhongServices;
             thueSanPhamService = thueSanPhamServices;

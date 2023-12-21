@@ -115,16 +115,16 @@ namespace Service
                 return loaiPhongs;
             }
         }
-        public List<int> GetAllSoNguoiLoaiPhong(int idphong)
+        public List<int> GetAllSoNguoiLoaiPhong(string  loaiphong)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 List<int> songuois = new List<int>();
                 connection.Open();
-                string query = "SELECT DISTINCT songuoi FROM Phong WHERE id = @idphong";
+                string query = "SELECT DISTINCT songuoi FROM Phong WHERE loaiphong = @loaiphong";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@idphong", idphong);
+                    command.Parameters.AddWithValue("@loaiphong", loaiphong);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())

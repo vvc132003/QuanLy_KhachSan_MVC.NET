@@ -214,11 +214,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 }
                 else
                 {
-                    KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                     if (nhanphong != null)
                     {
                         khachHang.trangthai = "còn hoạt động";
                         khachHangService.ThemKhachHang(khachHang);
+                        KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                         datPhong.idkhachhang = khachhangmoi.id;
                         datPhong.idthoigian = thoiGian.id;
                         datPhong.idloaidatphong = 2;
@@ -267,6 +267,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     else
                     {
                         khachHangService.ThemKhachHang(khachHang);
+                        KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                         datPhong.idkhachhang = khachhangmoi.id;
                         datPhong.idthoigian = thoiGian.id;
                         datPhong.idloaidatphong = 2;

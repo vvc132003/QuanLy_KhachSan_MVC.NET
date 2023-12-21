@@ -1,6 +1,7 @@
 using Microsoft.Extensions.FileProviders;
 using Model.Models;
 using Service;
+using Service.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<TangService>();
@@ -22,7 +23,8 @@ builder.Services.AddScoped<ThietBiService>();
 builder.Services.AddScoped<ThietBiPhongService>();
 builder.Services.AddScoped<ThoiGianService>();
 builder.Services.AddScoped<QuyDinhGiamGiaService>();
-builder.Services.AddScoped<GiamGiaService>();
+builder.Services.AddScoped<SuDungMaGiamGiaService>();
+builder.Services.AddScoped<MaGiamGiaService>();
 builder.Services.AddScoped<HopDongLaoDongService>();
 builder.Services.AddScoped<KhachSanService>();
 builder.Services.AddScoped<PhongKhachSanService>();

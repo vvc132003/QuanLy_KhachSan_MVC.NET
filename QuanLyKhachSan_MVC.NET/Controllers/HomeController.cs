@@ -55,9 +55,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             html += "</ul>";
             return Content(html);
         }
-        public IActionResult GetAllSoNguoiLoaiPhong(int idphong)
+        public IActionResult GetAllSoNguoiLoaiPhong(string loaiphong)
         {
-            List<int> songuois = phongService.GetAllSoNguoiLoaiPhong(idphong);
+            List<int> songuois = phongService.GetAllSoNguoiLoaiPhong(loaiphong);
             string html = "";
             foreach (int songuoi in songuois)
             {
