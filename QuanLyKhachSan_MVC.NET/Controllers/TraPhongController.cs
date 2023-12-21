@@ -50,7 +50,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 /// thực hiện lấy ds thuê sản phẩm và tổng tiền theo id đặt phòng
                 List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datphong.id);
                 SuDungMaGiamGia sudunggiamGia = sugiamGiaService.GetSuDungMaGiamGiaByIddatphong(datphong.id);
-                MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia);
+                MaGiamGia maGiamGia = null;
                 float tongtienthuesanpham = 0;
                 foreach (var thueSanPham in listthueSanPham)
                 {
@@ -58,6 +58,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 }
                 ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
                 float sotienthanhtoan = 0;
+                if(sudunggiamGia != null)
+                {
+                    maGiamGia = maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia);
+                }
                 if (maGiamGia != null)
                 {
                     if (datphong.hinhthucthue == "Theo giờ")

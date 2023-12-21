@@ -241,8 +241,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         nhanPhongService.ThemNhanPhong(nhanPhong);
                         phong.tinhtrangphong = "có khách";
                         phongService.CapNhatPhong(phong);
-                        phong.tinhtrangphong = "đã đặt";
-                        phongService.CapNhatPhong(phong);
                         if (idsanpham != null && idsanpham.Any())
                         {
                             ThueSanPham thueSanPham = new ThueSanPham();
