@@ -35,7 +35,7 @@ namespace Service.Service
                                 id = reader.GetInt32(reader.GetOrdinal("id")),
                                 magiamgia = reader.GetString(reader.GetOrdinal("magiamgia")),
                                 mota = reader.GetString(reader.GetOrdinal("mota")),
-                                phantramgiamgia = (float)reader["phantramgiamgia"],
+                                phantramgiamgia = Convert.ToSingle(reader["phantramgiamgia"]),
                                 ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
                                 ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
                                 idquydinhgiamgia = reader.GetInt32(reader.GetOrdinal("idquydinhgiamgia")),
@@ -77,8 +77,8 @@ namespace Service.Service
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
-                string query = "INSERT INTO MaGiamGia (magiamgia, mota, phantramgiamgia,solansudungtoida,solandasudung, ngaybatdau, ngayketthuc, idquydinhgiamgia)" +
-                    " VALUES (@MaGiamGia, @MoTa, @PhanTramGiamGia,@solansudungtoida,@solandasudung @NgayBatDau, @NgayKetThuc, @IDQuyDinhGiamGia)";
+                string query = "INSERT INTO MaGiamGia (magiamgia, mota, phantramgiamgia, solansudungtoida, solandasudung, ngaybatdau, ngayketthuc, idquydinhgiamgia)" +
+                " VALUES (@MaGiamGia, @MoTa, @PhanTramGiamGia, @solansudungtoida, @solandasudung, @NgayBatDau, @NgayKetThuc, @IDQuyDinhGiamGia)";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@MaGiamGia", maGiamGia.magiamgia);
                 command.Parameters.AddWithValue("@MoTa", maGiamGia.mota);
@@ -124,7 +124,7 @@ namespace Service.Service
                                 id = reader.GetInt32(reader.GetOrdinal("id")),
                                 magiamgia = reader.GetString(reader.GetOrdinal("magiamgia")),
                                 mota = reader.GetString(reader.GetOrdinal("mota")),
-                                phantramgiamgia = (float)reader["phantramgiamgia"],
+                                phantramgiamgia = Convert.ToSingle(reader["phantramgiamgia"]),
                                 ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
                                 ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
                                 idquydinhgiamgia = reader.GetInt32(reader.GetOrdinal("idquydinhgiamgia")),
@@ -159,7 +159,7 @@ namespace Service.Service
                                 id = reader.GetInt32(reader.GetOrdinal("id")),
                                 magiamgia = reader.GetString(reader.GetOrdinal("magiamgia")),
                                 mota = reader.GetString(reader.GetOrdinal("mota")),
-                                phantramgiamgia = (float)reader["phantramgiamgia"],
+                                phantramgiamgia = Convert.ToSingle(reader["phantramgiamgia"]),
                                 ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
                                 ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
                                 idquydinhgiamgia = reader.GetInt32(reader.GetOrdinal("idquydinhgiamgia")),
@@ -194,7 +194,7 @@ namespace Service.Service
                                 id = reader.GetInt32(reader.GetOrdinal("id")),
                                 magiamgia = reader.GetString(reader.GetOrdinal("magiamgia")),
                                 mota = reader.GetString(reader.GetOrdinal("mota")),
-                                phantramgiamgia = (float)reader["phantramgiamgia"],
+                                phantramgiamgia = Convert.ToSingle(reader["phantramgiamgia"]),
                                 ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
                                 ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
                                 idquydinhgiamgia = reader.GetInt32(reader.GetOrdinal("idquydinhgiamgia")),

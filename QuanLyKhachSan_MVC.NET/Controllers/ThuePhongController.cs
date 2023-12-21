@@ -499,18 +499,39 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         /*                        GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
                         */
                         SuDungMaGiamGia sudunggiamGia = suDungMaGiamGiaService.GetSuDungMaGiamGiaByIddatphong(datphong.id);
-                        MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia);
-                        Modeldata yourModel = new Modeldata
+                        MaGiamGia maGiamGia = null;
+                        if (sudunggiamGia != null)
                         {
-                            listsanPham = listsanpham,
-                            datPhong = datphong,
-                            listthueSanPham = listthueSanPham,
-                            tongtienhueSanPham = tongtien,
-                            phong = phongs,
-                            magiamGia = maGiamGia,
-                            thoigian = thoiGian,
-                        };
-                        listmodeldatas.Add(yourModel);
+                            maGiamGia = maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia);
+                        }
+                        if (maGiamGia != null)
+                        {
+
+                            Modeldata yourModel = new Modeldata
+                            {
+                                listsanPham = listsanpham,
+                                datPhong = datphong,
+                                listthueSanPham = listthueSanPham,
+                                tongtienhueSanPham = tongtien,
+                                phong = phongs,
+                                magiamGia = maGiamGia,
+                                thoigian = thoiGian,
+                            };
+                            listmodeldatas.Add(yourModel);
+                        }
+                        else
+                        {
+                            Modeldata yourModel = new Modeldata
+                            {
+                                listsanPham = listsanpham,
+                                datPhong = datphong,
+                                listthueSanPham = listthueSanPham,
+                                tongtienhueSanPham = tongtien,
+                                phong = phongs,
+                                thoigian = thoiGian,
+                            };
+                            listmodeldatas.Add(yourModel);
+                        }
                     }
                 }
                 else

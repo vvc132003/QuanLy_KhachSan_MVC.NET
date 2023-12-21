@@ -46,7 +46,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
                 ViewData["id"] = id;
-                magiamgias.ngaybatdau = DateTime.Now;
                 magiamgias.solandasudung = 0;
                 maGiamGiaService.ThemMaGiamGia(magiamgias);
                 return RedirectToAction("Index");
