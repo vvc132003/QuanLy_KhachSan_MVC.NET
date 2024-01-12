@@ -376,11 +376,16 @@
 
         const iconInsideInput = document.querySelector('.icon-inside-input');
         const haha = document.getElementById('haha');
-
         if (iconInsideInput && haha) {
             iconInsideInput.addEventListener('click', function () {
                 haha.style.display = haha.style.display === 'none' ? 'block' : 'none';
-                sendButton.style.display = 'none';
+                if (messageInput.value.trim() !== '') {
+                    likeButton.style.display = 'none';
+                    sendButton.style.display = 'inline-block';
+                } else {
+                    likeButton.style.display = 'inline-block';
+                    sendButton.style.display = 'none';
+                }
             });
         }
     }
@@ -389,7 +394,13 @@
         if (inputField) {
             inputField.value += icon;
             haha.style.display = 'none';
-            dom();
+            if (messageInput.value.trim() !== '') {
+                likeButton.style.display = 'none';
+                sendButton.style.display = 'inline-block';
+            } else {
+                likeButton.style.display = 'inline-block';
+                sendButton.style.display = 'none';
+            }
         }
     }
 </script>

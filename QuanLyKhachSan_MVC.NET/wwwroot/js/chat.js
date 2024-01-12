@@ -21,6 +21,10 @@ function chat() {
             var cuochoithoaiid = parseInt(document.getElementById("cuochoithoaiidinput").value);
             var nhanvienguiid = parseInt(document.getElementById("nhanvienguiidinput").value);
             var noidung = document.getElementById("messageInput").value;
+            const likeButton = document.getElementById('likeButton');
+            const sendButton = document.getElementById('sendButton');
+            likeButton.style.display = 'inline-block';
+            sendButton.style.display = 'none';
             connection.invoke("SendMessage", cuochoithoaiid, nhanvienguiid, noidung)
                 .catch(function (err) {
                     return console.error(err.toString());
@@ -28,6 +32,41 @@ function chat() {
             event.preventDefault();
         });
         chatInitialized = true;
+    }
+}
+var chatInitializeds = false;
+function chats() {
+    if (!chatInitializeds) {
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+        document.getElementById("likeButton").disabled = true;
+        connection.on("ReceiveMessages", function (cuochoithoaiid, nhanvienguiid, noidung) {
+            var cuochoithoaiid = parseInt(document.getElementById("cuochoithoaiidinput").value);
+            displayMessages(cuochoithoaiid);
+            document.getElementById('messageInput').value = '';
+            callChatBot();
+        });
+        connection.start()
+            .then(function () {
+                document.getElementById("likeButton").disabled = false;
+            })
+            .catch(function (err) {
+                return console.error(err.toString());
+            });
+        document.getElementById("likeButton").addEventListener("click", function (event) {
+            var cuochoithoaiid = parseInt(document.getElementById("cuochoithoaiidinput").value);
+            var nhanvienguiid = parseInt(document.getElementById("nhanvienguiidinput").value);
+            var noidung = document.getElementById("messageInput").value;
+            const likeButton = document.getElementById('likeButton');
+            const sendButton = document.getElementById('sendButton');
+            likeButton.style.display = 'inline-block';
+            sendButton.style.display = 'none';
+            connection.invoke("SendMessages", cuochoithoaiid, nhanvienguiid, noidung)
+                .catch(function (err) {
+                    return console.error(err.toString());
+                });
+            event.preventDefault();
+        });
+        chatInitializeds = true;
     }
 }
 function handleAjax(url, data, successCallback) {
@@ -61,4 +100,5 @@ function callChatBot() {
         $('.conversation-lists').html(data);
     });
     chat();
+    chats();
 }
