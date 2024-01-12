@@ -42,7 +42,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "DangNhap");
+                               return RedirectToAction("DangNhap", "DangNhap");
             }
         }
         public IActionResult AddNhanVien()
@@ -76,7 +76,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "DangNhap");
+                               return RedirectToAction("DangNhap", "DangNhap");
             }
         }
         public IActionResult AddNhanVienn(NhanVien nhanVien, HopDongLaoDong hopDongLaoDong)
@@ -101,7 +101,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "DangNhap");
+                               return RedirectToAction("DangNhap", "DangNhap");
             }
         }
         public IActionResult XuatEclcel()
@@ -119,7 +119,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "DangNhap");
+                               return RedirectToAction("DangNhap", "DangNhap");
             }
         }
     }

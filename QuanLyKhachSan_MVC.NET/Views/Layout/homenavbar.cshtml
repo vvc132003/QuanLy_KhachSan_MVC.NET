@@ -6,7 +6,7 @@
     <div class="mobile-menu-btn"><i class="fa fa-bars"></i></div>
     <nav class="main-menu top-menu">
         <ul>
-            <li class="active"><a href="index.html">Home</a></li>
+            <li class="active"><a href="/DangNhap/DangXuat">Home</a></li>
             <li><a href="about.html">About Us</a></li>
             <li><a href="room.html">Rooms</a></li>
             <li><a href="amenities.html">Amenities</a></li>
@@ -149,7 +149,6 @@
                 success: function (data) {
                     $('#suggestLoaiPhong').html(data);
                     $('#suggestLoaiPhong').css({ 'display': 'block' });
-
                     $('#suggestLoaiPhong li').on('click', function () {
                         var selected = $(this).text();
                         var selectedId = $(this).data('id');

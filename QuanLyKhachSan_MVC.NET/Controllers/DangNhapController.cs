@@ -33,29 +33,21 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             NhanVien luudangnhap = nhanVienService.CheckThongTinDangNhap(matkhau, taikhoan);
             KhachHang khachHang = khachHangService.GetKhachHangDangNhap(taikhoan, matkhau);
-            if (luudangnhap != null)
+            if (luudangnhap != null && (luudangnhap.tenchucvu == "Quản lý" || luudangnhap.tenchucvu == "Nhân viên"))
             {
                 HttpContext.Session.SetInt32("id", luudangnhap.id);
                 HttpContext.Session.SetString("taikhoan", luudangnhap.taikhoan);
                 HttpContext.Session.SetString("hovaten", luudangnhap.hovaten);
                 HttpContext.Session.SetString("tenchucvu", luudangnhap.tenchucvu);
                 HttpContext.Session.SetInt32("idkhachsan", luudangnhap.idkhachsan);
-                if (luudangnhap != null && (luudangnhap.tenchucvu == "Quản lý" || luudangnhap.tenchucvu == "Nhân viên"))
-                {
-                    return RedirectToAction("Index", "Phong");
-                }
-                else if (khachHang != null)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    return RedirectToAction("Index", "DangNhap");
-                }
+                return RedirectToAction("Index", "Phong");
+            }
+            else if (khachHang != null)
+            {
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-                Console.WriteLine("Ten dang nhap hoac mat khau bi sai!!!");
                 return RedirectToAction("DangNhap", "DangNhap");
             }
         }
@@ -73,7 +65,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
              }
              else
              {
-                 return RedirectToAction("Index", "DangNhap");
+                                return RedirectToAction("DangNhap", "DangNhap");
              }
          }*/
         public IActionResult DangXuat()

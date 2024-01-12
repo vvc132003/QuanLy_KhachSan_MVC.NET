@@ -35,7 +35,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "DangNhap");
+                               return RedirectToAction("DangNhap", "DangNhap");
             }
         }
         public IActionResult ThemPhongKhachSan(PhongKhachSan phongKhachSan)

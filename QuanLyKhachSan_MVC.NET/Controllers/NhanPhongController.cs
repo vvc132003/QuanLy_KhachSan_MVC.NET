@@ -63,7 +63,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "DangNhap");
+                               return RedirectToAction("DangNhap", "DangNhap");
             }
         }
         public IActionResult CheckInNhanPhongOnline(NhanPhong nhanPhong, int idphong, string cccd)
@@ -97,7 +97,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "DangNhap");
+                               return RedirectToAction("DangNhap", "DangNhap");
             }
         }
     }
