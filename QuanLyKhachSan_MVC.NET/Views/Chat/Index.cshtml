@@ -304,15 +304,6 @@
                             <input type="text" placeholder="Tìm kiếm...">
                         </div>
                         <div class="conversation-lists">
-                            <div class="conversation">
-                                <img src="https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/157765/Originals/15(1).jpg"
-                                     alt="">
-                                <div class="details">
-                                    <h3>Người dùng 1</h3>
-                                    <p>Đây là tin nhắn cuối cùng</p>
-                                </div>
-                                <span class="time">09:30</span>
-                            </div>
                         </div>
                     </div>
                     <div class="chat">
@@ -321,34 +312,8 @@
                             <h3>User's Name</h3>
                         </div>
                         <div class="message-chat">
-                            <div class="message received">
-                                <p>Chào! Bạn đang làm gì?</p>
-                                <span class="time">09:30</span>
-                            </div>
-                            <div class="message sent">
-                                <p>Xin chào! Tôi đang làm việc.</p>
-                                <span class="time">09:32</span>
-                            </div>
-                            <div class="message received">
-                                <p>Chào! Bạn đang làm gì?</p>
-                                <span class="time">09:30</span>
-                            </div>
-                            <div class="message sent">
-                                <p>Xin chào! Tôi đang làm việc.</p>
-                                <span class="time">09:32</span>
-                            </div>
-                            <div class="message received">
-                                <p>
-                                    Chào! Bạn đang làm gìChào! Bạn đang làm gìChào! Bạn đang làm gìChào! Bạn đang làm gìChào! Bạn đang làm
-                                    gìChào! Bạn đang làm gìChào! Bạn đang làm gìChào! Bạn đang làm gìChào! Bạn đang làm gìChào! Bạn đang làm
-                                    gìChào! Bạn đang làm gìChào! Bạn đang làm gìChào! Bạn đang làm gìChào! Bạn đang làm gì?
-                                </p>
-                                <span class="time">09:30</span>
-                            </div>
-                            <div class="message received">
-                                <p>Chào! Bạn đang làm gì?</p>
-                                <span class="time">09:30</span>
-                            </div>
+                        </div>
+                        <div class="input">
                         </div>
                         <div class="message-input">
                             <input type="text" id="messageInput" placeholder="Type your message...">
@@ -382,30 +347,49 @@
         </div>
     </div>
 </div>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/chat.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    $(document).ready(function () {
+        callChatBot();
+        dom();
+    });
+</script>
+<script>
+    function dom() {
         const messageInput = document.getElementById('messageInput');
         const likeButton = document.getElementById('likeButton');
         const sendButton = document.getElementById('sendButton');
 
-        messageInput.addEventListener('input', function () {
-            if (messageInput.value.trim() !== '') {
-                likeButton.style.display = 'none';
-                sendButton.style.display = 'inline-block';
-            } else {
-                likeButton.style.display = 'inline-block';
-                sendButton.style.display = 'none';
-            }
-        });
-    });
-    const iconInsideInput = document.querySelector('.icon-inside-input');
-    const haha = document.getElementById('haha');
+        if (messageInput && likeButton && sendButton) {
+            messageInput.addEventListener('input', function () {
+                if (messageInput.value.trim() !== '') {
+                    likeButton.style.display = 'none';
+                    sendButton.style.display = 'inline-block';
+                } else {
+                    likeButton.style.display = 'inline-block';
+                    sendButton.style.display = 'none';
+                }
+            });
+        }
 
-    iconInsideInput.addEventListener('click', function () {
-        haha.style.display = haha.style.display === 'none' ? 'block' : 'none';
-    });
+        const iconInsideInput = document.querySelector('.icon-inside-input');
+        const haha = document.getElementById('haha');
+
+        if (iconInsideInput && haha) {
+            iconInsideInput.addEventListener('click', function () {
+                haha.style.display = haha.style.display === 'none' ? 'block' : 'none';
+                sendButton.style.display = 'none';
+            });
+        }
+    }
     function insertIcon(icon) {
-        var inputField = document.getElementById('messageInput');
-        inputField.value += icon;
+        const inputField = document.getElementById('messageInput');
+        if (inputField) {
+            inputField.value += icon;
+            haha.style.display = 'none';
+            dom();
+        }
     }
 </script>

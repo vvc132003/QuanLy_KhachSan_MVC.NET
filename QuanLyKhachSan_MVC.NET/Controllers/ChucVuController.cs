@@ -12,7 +12,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             chucVuService = chucVuServices;
         }
-       
+
         public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
@@ -37,7 +37,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("DangNhap", "DangNhap");
             }
         }
         public IActionResult XoaChucVu(int id)

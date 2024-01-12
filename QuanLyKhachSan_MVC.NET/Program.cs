@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.FileProviders;
 using Model.Models;
 using Service;
 using Service.Service;
+using SignalRChat.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<TangService>();
@@ -29,6 +31,12 @@ builder.Services.AddScoped<HopDongLaoDongService>();
 builder.Services.AddScoped<KhachSanService>();
 builder.Services.AddScoped<PhongKhachSanService>();
 builder.Services.AddScoped<HuyDatPhongService>();
+builder.Services.AddScoped<CuocHoiThoaiService>();
+builder.Services.AddScoped<NguoiThamGiaService>();
+builder.Services.AddScoped<TinNhanService>();
+builder.Services.AddScoped<TinNhanIconService>();
+builder.Services.AddScoped<IconService>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -39,6 +47,12 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSignalR();
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+          new[] { "application/octet-stream" });
+});
 var app = builder.Build();
 app.UseSession();
 app.UseHttpsRedirection();
@@ -55,5 +69,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.UseResponseCompression();
+app.MapHub<ChatHub>("/chathub");
 app.Run();
