@@ -75,7 +75,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult ThemThuePhong(KhachHang khachHang, DatPhong datPhong, List<int> idsanpham, string nhanphong, string magiamgia)
@@ -293,7 +293,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult Index1(int? sotrang)
@@ -319,7 +319,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult ThueNhieuPhong(KhachHang khachHang, DatPhong datPhong, NhanPhong nhanPhong, List<int> idphongs, string magiamgia)
@@ -430,7 +430,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult ChiTietThuePhong(int id)
@@ -539,7 +539,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult DatPhongOnline(int id)
@@ -557,7 +557,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             {
                 /// kiểm tra xem khách hàng đã tồn tại hay chưa
                 KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
-                ThoiGian thoiGian = thoiGianService.GetThoiGian(HttpContext.Session.GetInt32("idkhachsan").Value);
+                ThoiGian thoiGian = thoiGianService.GetThoiGian(1);
                 if (khachHangTonTai != null)
                 {
                     datPhong.idthoigian = thoiGian.id;
@@ -648,7 +648,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
 

@@ -115,7 +115,7 @@ namespace Service
                 return loaiPhongs;
             }
         }
-        public List<int> GetAllSoNguoiLoaiPhong(string  loaiphong)
+        public List<int> GetAllSoNguoiLoaiPhong(string loaiphong)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
@@ -250,6 +250,41 @@ namespace Service
         }
 
         public Phong GetPhongID(int id)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "select * from Phong where id = @id";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Phong phong = new Phong
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                sophong = Convert.ToInt32(reader["sophong"]),
+                                songuoi = Convert.ToInt32(reader["songuoi"]),
+                                loaiphong = reader["loaiphong"].ToString(),
+                                tinhtrangphong = reader["tinhtrangphong"].ToString(),
+                                giatientheogio = Convert.ToSingle(reader["giatientheogio"]),
+                                giatientheongay = Convert.ToSingle(reader["giatientheongay"]),
+                                idkhachsan = Convert.ToInt32(reader["idkhachsan"]),
+
+                            };
+                            return phong;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+        public Phong GetPhongIDsophong(int id)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {

@@ -56,6 +56,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else if (khachHang != null)
             {
+                HttpContext.Session.SetInt32("id", khachHang.id);
+                HttpContext.Session.SetString("hovaten", khachHang.hovaten);
                 return RedirectToAction("index", "home");
             }
             else

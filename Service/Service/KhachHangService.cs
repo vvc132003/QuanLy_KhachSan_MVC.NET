@@ -44,6 +44,43 @@ namespace Service
                 }
             }
         }
+        public KhachHang GetKhachHangbyid(int id)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "select * from KhachHang where id = @id";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            KhachHang KhachHangs = new KhachHang
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                hovaten = reader["hovaten"].ToString(),
+                                sodienthoai = reader["sodienthoai"].ToString(),
+                                email = reader["email"].ToString(),
+                                cccd = reader["cccd"].ToString(),
+                                tinh = reader["tinh"].ToString(),
+                                huyen = reader["huyen"].ToString(),
+                                phuong = reader["phuong"].ToString(),
+                                taikhoan = reader["taikhoan"].ToString(),
+                                matkhau = reader["matkhau"].ToString(),
+                                trangthai = reader["trangthai"].ToString(),
+                            };
+                            return KhachHangs;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
 
         public void ThemKhachHang(KhachHang khachHang)
         {
@@ -70,7 +107,7 @@ namespace Service
             {
                 connection.Open();
                 string query = @"INSERT INTO KhachHang (hovaten, sodienthoai, email, cccd, tinh, huyen, phuong, taikhoan, matkhau,  trangthai) 
-                         VALUES (@hovaten, @sodienthoai, @email, @cccd, @tinh, @huyen, @phuong,  @trangthai, @matkhau , @taikhoan)";
+                         VALUES (@hovaten, @sodienthoai, @email, @cccd, @tinh, @huyen, @phuong, @taikhoan, @matkhau,  @trangthai)";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@hovaten", khachHang.hovaten);
                 command.Parameters.AddWithValue("@sodienthoai", khachHang.sodienthoai);

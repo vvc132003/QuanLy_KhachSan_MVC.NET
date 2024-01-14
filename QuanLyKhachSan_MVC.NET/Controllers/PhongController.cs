@@ -12,13 +12,15 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly TangService tangService;
         private readonly ThoiGianService thoiGianService;
         private readonly DatPhongService datPhongService;
+        private readonly KhachHangService khachHangService;
 
-        public PhongController(PhongService phongServices, TangService tangServices, ThoiGianService thoiGianServices, DatPhongService datPhongServices)
+        public PhongController(PhongService phongServices, TangService tangServices, ThoiGianService thoiGianServices, DatPhongService datPhongServices, KhachHangService khachHangService)
         {
             phongService = phongServices;
             tangService = tangServices;
             thoiGianService = thoiGianServices;
             datPhongService = datPhongServices;
+            this.khachHangService = khachHangService;
         }
         public IActionResult Index(string loaiphong)
         {
@@ -132,6 +134,28 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     phongService.ThemPhong(phong);
                 }
                 return RedirectToAction("Index", "Phong");
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
+        }
+        public IActionResult SoPhong(int idphong)
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int id = HttpContext.Session.GetInt32("id").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                KhachHang khachHang = khachHangService.GetKhachHangbyid(id);
+                Phong phong = phongService.GetPhongID(idphong);
+                Modeldata modeldata = new Modeldata
+                {
+                    khachhang = khachHang,
+                    phong = phong,
+                };
+                return View(modeldata);
             }
             else
             {
