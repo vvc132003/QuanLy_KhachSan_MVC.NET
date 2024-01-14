@@ -26,15 +26,17 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 ViewData["idkhachsan"] = idkhachsan;
-                List<Tang> tangs = tangService.GetAllTang(idkhachsan);
+                List<Tang> tangs = tangService.GetAllTang();
                 List<KhachSan> listkhachsan = khachSanService.GetAllKhachSan();
                 List<Modeldata> modelDataList = new List<Modeldata>();
                 foreach (var tang in tangs)
                 {
+                    KhachSan khachSan = khachSanService.GetKhachSanById(tang.idkhachsan);
                     Modeldata modeldata = new Modeldata
                     {
                         tang = tang,
-                        listKhachSan = listkhachsan
+                        listKhachSan = listkhachsan,
+                        khachSan = khachSan,
                     };
                     modelDataList.Add(modeldata);
                 }
@@ -42,7 +44,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
 

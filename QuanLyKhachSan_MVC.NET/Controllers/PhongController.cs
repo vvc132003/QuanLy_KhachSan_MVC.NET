@@ -34,7 +34,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["tenchucvu"] = tenchucvu;
                 if (loaiphong == null)
                 {
-                    List<Tang> tanglist = tangService.GetAllTang(idkhachsan);
+                    List<Tang> tanglist = tangService.GetAllTangkhachsanid(idkhachsan);
                     List<Modeldata> modeldataList = new List<Modeldata>();
                     foreach (var tang in tanglist)
                     {
@@ -68,7 +68,26 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
+        }
+        public IActionResult Home()
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int id = HttpContext.Session.GetInt32("id").Value;
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                ViewData["idkhachsan"] = idkhachsan;
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult CapNhatTrangThaiPhong(int idphong)
@@ -100,7 +119,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult ThemPhong(int soluongmuonthem, Phong phong)
@@ -116,7 +135,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
     }

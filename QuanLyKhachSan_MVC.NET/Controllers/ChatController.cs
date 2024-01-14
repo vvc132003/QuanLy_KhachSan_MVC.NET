@@ -21,7 +21,22 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int id = HttpContext.Session.GetInt32("id").Value;
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                ViewData["idkhachsan"] = idkhachsan;
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
         }
         public IActionResult DanhSachCuocTroChuyen()
         {
@@ -87,7 +102,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult HienThiNhanVienNhan(int cuochoithoaiid)
@@ -132,7 +147,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult HienThiThongTinHoiThoai(int cuochoithoaiid)
@@ -177,7 +192,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult TinNhanBuycuochoithoaiid(int cuochoithoaiid)
@@ -235,7 +250,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
     }

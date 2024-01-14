@@ -7,11 +7,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
     public class SanPhamController : Controller
     {
         private readonly SanPhamService sanPhamService;
+        private readonly KhachSanService khachSanService;
 
-
-        public SanPhamController(SanPhamService sanPhamServices)
+        public SanPhamController(SanPhamService sanPhamServices, KhachSanService khachSanService)
         {
             sanPhamService = sanPhamServices;
+            this.khachSanService = khachSanService;
         }
         public IActionResult Index()
         {
@@ -24,15 +25,22 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 List<SanPham> sanphams = sanPhamService.GetAllSanPham();
-                Modeldata modeldata = new Modeldata
+                List<Modeldata> modeldatalist = new List<Modeldata>();
+                foreach (var sanPham in sanphams)
                 {
-                    listsanPham = sanphams,
-                };
-                return View(modeldata);
+                    KhachSan khachSan = khachSanService.GetKhachSanById(sanPham.idkhachsan);
+                    Modeldata modeldata = new Modeldata
+                    {
+                        sanPham = sanPham,
+                        khachSan = khachSan,
+                    };
+                    modeldatalist.Add(modeldata);
+                }
+                return View(modeldatalist);
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult ThemSanPham(SanPham sanPham)
@@ -50,7 +58,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult XoaSanPham(int id)
@@ -66,7 +74,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
     }

@@ -37,7 +37,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult ThemMaGiamGia(MaGiamGia magiamgias)
@@ -52,7 +52,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
     }

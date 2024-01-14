@@ -14,7 +14,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly HopDongLaoDongService hopDongLaoDongService;
         private readonly KhachSanService khachSanService;
 
-        public NhanVienController(NhanVienService nhanVienServices, ChucVuService chucVuServices, BoPhanService boPhanServices, ViTriBoPhanService viTriBoPhanServices, HopDongLaoDongService hopDongLaoDongServices,KhachSanService khachSanServices)
+        public NhanVienController(NhanVienService nhanVienServices, ChucVuService chucVuServices, BoPhanService boPhanServices, ViTriBoPhanService viTriBoPhanServices, HopDongLaoDongService hopDongLaoDongServices, KhachSanService khachSanServices)
         {
             nhanVienService = nhanVienServices;
             chucVuService = chucVuServices;
@@ -34,20 +34,28 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 List<NhanVien> nhanViens = nhanVienService.GetAllNhanVien();
-                Modeldata modeldata = new Modeldata
+                List<Modeldata> modeldatalist = new List<Modeldata>();
+                foreach (var nhanvien in nhanViens)
                 {
-                    listnhanVien = nhanViens,
-                };
-                return View(modeldata);
+                    KhachSan khachSan = khachSanService.GetKhachSanById(nhanvien.idkhachsan);
+                    Modeldata modeldata = new Modeldata
+                    {
+                        nhanVien = nhanvien,
+                        khachSan = khachSan,
+
+                    };
+                    modeldatalist.Add(modeldata);
+                }
+                return View(modeldatalist);
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult AddNhanVien()
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null &&  HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 int id = HttpContext.Session.GetInt32("id").Value;
@@ -76,7 +84,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult AddNhanVienn(NhanVien nhanVien, HopDongLaoDong hopDongLaoDong)
@@ -101,7 +109,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult XuatEclcel()
@@ -119,7 +127,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
     }

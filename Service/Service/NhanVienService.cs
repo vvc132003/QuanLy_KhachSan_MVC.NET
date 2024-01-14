@@ -180,7 +180,9 @@ namespace  Service
                                 image = reader["image"].ToString(),
                                 idchucvu = (int)reader["idchucvu"],
                                 idvitribophan = (int)reader["idvitribophan"],
-                                idbophan = (int)reader["idbophan"]
+                                idbophan = (int)reader["idbophan"],
+                                idkhachsan = (int)reader["idkhachsan"]
+
                             };
                             nhanViens.Add(nhanVien);
                         }

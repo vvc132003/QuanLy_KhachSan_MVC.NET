@@ -45,6 +45,19 @@ namespace Service.Service
 
             return cuocHoiThoaiList;
         }
+        public int GetConversationCount(int nhanVienHienTai, int nhanVienDuocChon)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("SELECT COUNT(*) AS so_luong_cuoc_tro_chuyen FROM CuocHoiThoai WHERE EXISTS (SELECT 1 FROM NguoiThamGia WHERE CuocHoiThoai.id = NguoiThamGia.cuochoithoaiid AND NguoiThamGia.nhanvienthamgiaid = @nhanVienHienTai) AND EXISTS (SELECT 1 FROM NguoiThamGia WHERE CuocHoiThoai.id = NguoiThamGia.cuochoithoaiid AND NguoiThamGia.nhanvienthamgiaid = @nhanVienDuocChon) AND CuocHoiThoai.loaihoithoai = '1-1'", connection))
+                {
+                    command.Parameters.AddWithValue("@nhanVienHienTai", nhanVienHienTai);
+                    command.Parameters.AddWithValue("@nhanVienDuocChon", nhanVienDuocChon);
+                    return (int)command.ExecuteScalar();
+                }
+            }
+        }
         public List<CuocHoiThoai> GetCuocHoiThoaiListById(int nhanvienthamgiaid)
         {
             List<CuocHoiThoai> cuocHoiThoaiList = new List<CuocHoiThoai>();
@@ -157,6 +170,30 @@ namespace Service.Service
                 command.Parameters.AddWithValue("@DaXoaVao", cuocHoiThoai.DaXoaVao);
 
                 command.ExecuteNonQuery();
+            }
+        }
+        public int AddCuocHoiThoaiByid(CuocHoiThoai cuocHoiThoai)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+
+                string query = "INSERT INTO CuocHoiThoai (Tieude, NhanVienTaoid, LoaiHoiThoai, DuocTaoVao, DuocCaonhatVao, DaXoaVao) " +
+                               "VALUES (@Tieude, @NhanVienTaoid, @LoaiHoiThoai, @DuocTaoVao, @DuocCaonhatVao, @DaXoaVao);" +
+                               "SELECT SCOPE_IDENTITY();";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Tieude", cuocHoiThoai.Tieude);
+                    command.Parameters.AddWithValue("@NhanVienTaoid", cuocHoiThoai.NhanVienTaoid);
+                    command.Parameters.AddWithValue("@LoaiHoiThoai", cuocHoiThoai.LoaiHoiThoai);
+                    command.Parameters.AddWithValue("@DuocTaoVao", cuocHoiThoai.DuocTaoVao);
+                    command.Parameters.AddWithValue("@DuocCaonhatVao", cuocHoiThoai.DuocCaonhatVao);
+                    command.Parameters.AddWithValue("@DaXoaVao", cuocHoiThoai.DaXoaVao);
+                    int insertedId = Convert.ToInt32(command.ExecuteScalar());
+
+                    return insertedId;
+                }
             }
         }
 

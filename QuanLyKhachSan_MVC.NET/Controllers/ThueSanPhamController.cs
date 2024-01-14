@@ -64,7 +64,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                               return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult XoasoluongThueSanPham(int id, int idphong)
@@ -100,7 +100,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                               return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult UpdatesoluongThueSanPham(int id, int idphong)
@@ -129,7 +129,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                               return RedirectToAction("dangnhap", "dangnhap");
             }
         }
     }

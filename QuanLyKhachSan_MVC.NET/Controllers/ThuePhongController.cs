@@ -75,7 +75,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                               return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult ThemThuePhong(KhachHang khachHang, DatPhong datPhong, List<int> idsanpham, string nhanphong, string magiamgia)
@@ -293,7 +293,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                               return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult Index1(int? sotrang)
@@ -319,7 +319,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                               return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult ThueNhieuPhong(KhachHang khachHang, DatPhong datPhong, NhanPhong nhanPhong, List<int> idphongs, string magiamgia)
@@ -430,7 +430,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                               return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult ChiTietThuePhong(int id)
@@ -539,7 +539,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                               return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult DatPhongOnline(int id)
@@ -648,7 +648,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("DangNhap", "DangNhap");
+                               return RedirectToAction("dangnhap", "dangnhap");
             }
         }
 

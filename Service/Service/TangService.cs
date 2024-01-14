@@ -26,7 +26,7 @@ namespace  Service
         }
 
 
-        public List<Tang> GetAllTang(int idkhachsan)
+        public List<Tang> GetAllTangkhachsanid(int idkhachsan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
@@ -36,6 +36,32 @@ namespace  Service
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Tang tang = new Tang()
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                tentang = reader["tentang"].ToString(),
+                                idkhachsan = Convert.ToInt32(reader["idkhachsan"]),
+                            };
+                            tangs.Add(tang);
+                        }
+                    }
+                }
+                return tangs;
+            }
+        }
+        public List<Tang> GetAllTang()
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<Tang> tangs = new List<Tang>();
+                connection.Open();
+                string query = "select * from Tang ";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())

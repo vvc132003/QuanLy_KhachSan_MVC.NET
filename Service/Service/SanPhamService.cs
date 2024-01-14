@@ -4,7 +4,7 @@ using Model.Models;
 using QuanLyKhachSan_MVC.NET.Repository;
 using System.Data.SqlClient;
 
-namespace  Service
+namespace Service
 {
     public class SanPhamService : SanPhamRepository
     {
@@ -50,6 +50,8 @@ namespace  Service
                                 image = reader["image"].ToString(),
                                 trangthai = reader["trangthai"].ToString(),
                                 giaban = Convert.ToSingle(reader["giaban"]),
+                                idkhachsan = (int)reader["idkhachsan"],
+
                             };
                             sanPhams.Add(sanPham);
                         }
