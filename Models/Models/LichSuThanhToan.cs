@@ -11,5 +11,6 @@
         public int iddatphong { get; set; }
         public int idnhanvien { get; set; }
 
+      
     }
 }

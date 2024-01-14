@@ -27,5 +27,40 @@ namespace Service
                 }
             }
         }
+        public List<LichSuThanhToan> GetLichSuThanhToan()
+        {
+            List<LichSuThanhToan> lichSuThanhToanList = new List<LichSuThanhToan>();
+
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+
+                string query = "SELECT MONTH(ngaythanhtoan) as month, SUM(sotienthanhtoan) as total " +
+                               "FROM LichSuThanhToan " +
+                               "GROUP BY MONTH(ngaythanhtoan) " +
+                               "ORDER BY MONTH(ngaythanhtoan)";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int month = Convert.ToInt32(reader["month"]);
+                            float total = Convert.ToSingle(reader["total"]);
+                            LichSuThanhToan lichSuThanhToan = new LichSuThanhToan
+                            {
+                                ngaythanhtoan = new DateTime(1, month, 1),
+                                sotienthanhtoan = total,
+                            };
+
+                            lichSuThanhToanList.Add(lichSuThanhToan);
+                        }
+                    }
+                }
+            }
+
+            return lichSuThanhToanList;
+        }
     }
 }
