@@ -36,8 +36,16 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 
         public IActionResult Index(int? sotrang)
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
             {
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                int id = HttpContext.Session.GetInt32("id").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
+                ViewData["idkhachsan"] = idkhachsan;
                 List<ThietBiPhong> thietBiPhongs = thietBiPhongService.GetALLThietBiPhong();
 
                 if (thietBiPhongs.Any())
@@ -73,14 +81,29 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 
         public IActionResult Addthietbiphongs()
         {
-            List<Phong> listphong = phongService.GetAllPhong();
-            List<ThietBi> listthietbi = thetBiService.GetAllThietBi();
-            Modeldata modeldata = new Modeldata
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                listphong = listphong,
-                listThietBi = listthietbi
-            };
-            return View(modeldata);
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                int id = HttpContext.Session.GetInt32("id").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
+                ViewData["idkhachsan"] = idkhachsan;
+                List<Phong> listphong = phongService.GetAllPhong();
+                List<ThietBi> listthietbi = thetBiService.GetAllThietBi();
+                Modeldata modeldata = new Modeldata
+                {
+                    listphong = listphong,
+                    listThietBi = listthietbi
+                };
+                return View(modeldata);
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
         }
 
         public IActionResult ThemThietBiPhong(List<int> idphongs, List<int> idthietbis, int soluongduavao)

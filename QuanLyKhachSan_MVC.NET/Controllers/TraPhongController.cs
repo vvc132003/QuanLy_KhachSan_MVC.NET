@@ -16,6 +16,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly QuyDinhGiamGiaService quyDinhGiamGiaservice;
         private readonly ThoiGianService thoiGianService;
         private readonly MaGiamGiaService maGiamGiaService;
+        private readonly KhachHangService khachHangService;
 
 
 
@@ -26,8 +27,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                   PhongService phongServices,
                                   SuDungMaGiamGiaService sugiamGiaServices,
                                   QuyDinhGiamGiaService quydinhGiamGiaServices,
-                                  ThoiGianService thoiGianServices, 
-                                  MaGiamGiaService maGiamGiaServices)
+                                  ThoiGianService thoiGianServices,
+                                  MaGiamGiaService maGiamGiaServices, KhachHangService khachHangServices)
         {
             datPhongService = datPhongServices;
             thueSanPhamService = thueSanPhamServices;
@@ -38,6 +39,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             quyDinhGiamGiaservice = quydinhGiamGiaServices;
             thoiGianService = thoiGianServices;
             maGiamGiaService = maGiamGiaServices;
+            khachHangService = khachHangServices;
         }
         public IActionResult TraPhongandLSThanhToan(LichSuThanhToan lichSuThanhToan, int idphong)
         {
@@ -58,7 +60,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 }
                 ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
                 float sotienthanhtoan = 0;
-                if(sudunggiamGia != null)
+                if (sudunggiamGia != null)
                 {
                     maGiamGia = maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia);
                 }
@@ -66,16 +68,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
-                        if (DateTime.Now.Hour > thoiGian.thoigianra.Hours)
-                        {
-                            // Quá hạn trả phòng, chuyển sang thuê theo ngày
-                            sotienthanhtoan = ((phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
-                        }
-                        else
-                        {
-                            // Đang trong thời gian thuê theo giờ
-                            sotienthanhtoan = ((phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
-                        }
+                        // Đang trong thời gian thuê theo giờ
+                        sotienthanhtoan = ((phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
+
                     }
                     else
                     {
@@ -87,16 +82,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
-                        if (DateTime.Now.Hour > thoiGian.thoigianra.Hours)
-                        {
-                            // Quá hạn trả phòng, chuyển sang thuê theo ngày
-                            sotienthanhtoan = (phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc;
-                        }
-                        else
-                        {
-                            // Đang trong thời gian thuê theo giờ
-                            sotienthanhtoan = (phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
-                        }
+                        // Đang trong thời gian thuê theo giờ
+                        sotienthanhtoan = (phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
                     }
                     else
                     {
@@ -104,7 +91,17 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         sotienthanhtoan = (phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc;
                     }
                 }
-
+                KhachHang khachHang = khachHangService.GetKhachHangbyid(datphong.idkhachhang);
+                float giatienphong = 0;
+                if (datphong.hinhthucthue == "Theo ngày")
+                {
+                    giatienphong = phong.giatientheongay;
+                }
+                else
+                {
+                    giatienphong = phong.giatientheogio;
+                }
+                maGiamGiaService.GuiEmailThanhToan(khachHang, giatienphong, lichSuThanhToan.phantramgiamgia, phong.sophong, datphong.ngaydat, listthueSanPham, sotienthanhtoan);
                 /// thêm lịch sử thanh toán
                 lichSuThanhToan.ngaythanhtoan = DateTime.Now;
                 lichSuThanhToan.sotienthanhtoan = sotienthanhtoan;
@@ -129,7 +126,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
     }

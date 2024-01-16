@@ -102,18 +102,9 @@
                                                 float sotienthanhtoan = 0;
                                                 @if (Model[0].datPhong.hinhthucthue == "Theo giờ")
                                                 {
-                                                    @if (DateTime.Now.Hour > Model[0].thoigian.thoigianra.Hours)
-                                                    {
-                                                        // Quá hạn trả phòng, chuyển sang thuê theo ngày
-                                                        sotienthanhtoan = ((Model[0].phong.giatientheongay * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
-                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
-                                                    }
-                                                    else
-                                                    {
-                                                        // Đang trong thời gian thuê theo giờ
-                                                        sotienthanhtoan = ((Model[0].phong.giatientheogio * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
-                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
-                                                    }
+                                                    // Đang thuê theo giờ
+                                                    sotienthanhtoan = ((Model[0].phong.giatientheogio * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
+                                                    <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
                                                 }
                                                 else
                                                 {
@@ -128,18 +119,9 @@
                                                 float sotienthanhtoan = 0;
                                                 if (Model != null && Model.Count > 0 && Model[0].datPhong.hinhthucthue == "Theo giờ")
                                                 {
-                                                    @if (DateTime.Now.Hour > Model[0].thoigian.thoigianra.Hours)
-                                                    {
-                                                        // Quá hạn trả phòng, chuyển sang thuê theo ngày
-                                                        sotienthanhtoan = (Model[0].phong.giatientheongay * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
-                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
-                                                    }
-                                                    else
-                                                    {
-                                                        // Đang trong thời gian thuê theo giờ
-                                                        sotienthanhtoan = (Model[0].phong.giatientheogio * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
-                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
-                                                    }
+                                                    // Đang thuê theo giờ
+                                                    sotienthanhtoan = (Model[0].phong.giatientheogio * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
+                                                    <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
                                                 }
                                                 else
                                                 {

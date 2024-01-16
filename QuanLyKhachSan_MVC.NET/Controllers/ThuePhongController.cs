@@ -264,6 +264,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     }
                     else
                     {
+                        khachHang.trangthai = "còn hoạt động";
                         khachHangService.ThemKhachHang(khachHang);
                         KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                         datPhong.idkhachhang = khachhangmoi.id;
@@ -307,7 +308,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-                List<Phong> listphong = phongService.GetAllPhongTrangThai(idkhachsan);
+                List<Phong> listphong = phongService.GetAllPhongTrangThai(HttpContext.Session.GetInt32("idkhachsan").Value);
                 const int PageSize = 10; // Số lượng phòng trên mỗi trang
                 int pageNumber = sotrang ?? 1; // Trang hiện tại, mặc định là trang 1
                 PagedList.IPagedList<Phong> ipagelistphong = listphong.ToPagedList(pageNumber, PageSize);
@@ -471,6 +472,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         ///WHERE dp.trangthai = N'đã đặt';
                         ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
                         DateTime ngaytramuonsom = DateTime.Now;
+                        /*Console.WriteLine(datphong.ngaydukientra.Hour);
+                        Console.WriteLine(datphong.ngaydat.Hour);
+                        Console.WriteLine(phongs.giatientheogio);
+                        Console.WriteLine(datphong.tiendatcoc);
+                        Console.WriteLine(tongtien);*/
                         if (thoiGian != null)
                         {
                             if (datphong.hinhthucthue == "Theo giờ")
