@@ -19,8 +19,8 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="row">
-                        <div class="fs-2 text-center">Thuê phòng</div>
-                        <div class="border border-secondary-subtle" style="padding:10px 20px">
+@*                         <div class="fs-2 text-center">Thuê phòng</div>
+ *@                        <div class="border border-secondary-subtle" style="padding:10px 20px">
                             <form action="/ThuePhong/ThemThuePhong" method="POST">
                                 <input type="hidden" id="idphong" name="idphong" value="@Model.phong.id" class="form-control" />
                                 <input type="hidden" id="idnhanvien" name="idnhanvien" value="@ViewData["id"]" class="form-control" />
@@ -74,7 +74,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="magiamgia" class="form-label">Mã giảm giá:</label>
-                                            <input type="number" class="form-control" id="magiamgia" name="magiamgia" >
+                                            <input type="number" class="form-control" id="magiamgia" name="magiamgia">
                                         </div>
                                         <label for="nhanphong" class="form-label">Giao phòng:</label>
                                         <input type="checkbox" id="nhanphong" name="nhanphong" value="nhanphong">
@@ -98,7 +98,7 @@
                                                             <td>@string.Format("{0:N0} VNĐ", @sanpham.giaban)</td>
                                                             <td><img src="@sanpham.image" width="50px" height="50px" alt=""></td>
                                                             <td>
-                                                                <input type="checkbox" id="@sanpham.id" name="idsanpham" value="@sanpham.id">
+                                                                <input type="checkbox" class="idsanpham" name="idsanpham" value="@sanpham.id">
                                                             </td>
                                                         </tr>
                                                     }
@@ -108,7 +108,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-lg">
+                                    <button type="submit" class="btn btn-primary btn-lg" id="btnLuu" disabled>
                                         <i class="fas fa-save"></i> Lưu
                                     </button>
                                 </div>
@@ -120,7 +120,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@2.9.3/dist/umd/popper.min.js"></script>
@@ -211,7 +210,43 @@
     }
 </script>
 
-
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const nhanphongCheckbox = document.getElementById('nhanphong');
+        const idsanphamCheckboxes = document.querySelectorAll('.idsanpham');
+        nhanphongCheckbox.addEventListener('change', function () {
+            if (nhanphongCheckbox.checked) {
+                idsanphamCheckboxes.forEach(function (checkbox) {
+                    checkbox.disabled = false;
+                });
+            } else {
+                idsanphamCheckboxes.forEach(function (checkbox) {
+                    checkbox.disabled = true;
+                });
+            }
+        });
+        if (nhanphongCheckbox.checked) {
+            idsanphamCheckboxes.forEach(function (checkbox) {
+                checkbox.disabled = false;
+            });
+        } else {
+            idsanphamCheckboxes.forEach(function (checkbox) {
+                checkbox.disabled = true;
+            });
+        }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const tiendatcocInput = document.getElementById('tiendatcoc');
+        const btnLuu = document.getElementById('btnLuu');
+        tiendatcocInput.addEventListener('input', function () {
+            if (tiendatcocInput.value.trim() !== '') {
+                btnLuu.disabled = false;
+            } else {
+                btnLuu.disabled = true;
+            }
+        });
+    });
+</script>
 
 @if (TempData["xoathanhcong"] != null)
 {

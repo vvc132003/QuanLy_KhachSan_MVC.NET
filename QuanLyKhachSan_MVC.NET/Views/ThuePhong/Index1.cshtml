@@ -20,8 +20,8 @@
                 <div class="card">
                     <div class="row">
                         <div class="col-12">
-                            <div class="fs-2 text-center">Thuê phòng</div>
-                            <div class="border border-secondary-subtle" style="padding:10px 20px">
+                            @*                             <div class="fs-2 text-center">Thuê phòng</div>
+                            *@                            <div class="border border-secondary-subtle" style="padding:10px 20px">
                                 <form action="/ThuePhong/ThueNhieuPhong" method="POST">
                                     <input type="hidden" id="idnhanvien" name="idnhanvien" value="@ViewData["id"]" class="form-control" />
                                     <div class="row">
@@ -94,7 +94,7 @@
                                                                 <td>@string.Format("{0:N0} VNĐ", @phong.giatientheogio)</td>
                                                                 <td>@string.Format("{0:N0} VNĐ", @phong.giatientheongay)</td>
                                                                 <td>
-                                                                    <input type="checkbox" id="@phong.id" name="idphongs" value="@phong.id">
+                                                                    <input type="checkbox" class="idphongs" name="idphongs" value="@phong.id">
                                                                 </td>
                                                             </tr>
                                                         }
@@ -104,7 +104,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary btn-lg">
+                                        <button type="submit" class="btn btn-primary btn-lg" id="btnLuu" disabled>
                                             <i class="fas fa-save"></i> Lưu
                                         </button>
                                     </div>
@@ -206,6 +206,31 @@
 
     }
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tiendatcocInput = document.getElementById('tiendatcoc');
+        const idphongsCheckboxes = document.querySelectorAll('.idphongs');
+        const btnLuu = document.getElementById('btnLuu');
+        idphongsCheckboxes.forEach(function (checkbox) {
+            checkbox.disabled = true;
+        });
+        tiendatcocInput.addEventListener('input', function () {
+            if (tiendatcocInput.value.trim() !== '') {
+                btnLuu.disabled = false;
+                idphongsCheckboxes.forEach(function (checkbox) {
+                    checkbox.disabled = false;
+                });
+            } else {
+                btnLuu.disabled = true;
+                idphongsCheckboxes.forEach(function (checkbox) {
+                    checkbox.disabled = true;
+                });
+            }
+        });
+    });
+</script>
+
 
 
 

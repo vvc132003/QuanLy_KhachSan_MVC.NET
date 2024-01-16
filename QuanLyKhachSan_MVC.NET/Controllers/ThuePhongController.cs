@@ -184,17 +184,24 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         phongService.CapNhatPhong(phong);
                         int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
                         QuyDinhGiamGia quydinhgiamgia = quyDinhGiamGiaservice.GetQuyDinhGiasolandatphong(soluongdatphongtoithieu);
-                        if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                        if (quydinhgiamgia != null)
                         {
-                            MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
-                            maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
-                            MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(magiamgias.id);
-                            capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
-                            maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
+                            if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                            {
+                                MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
+                                maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
+                                MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(magiamgias.id);
+                                capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
+                                maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
+                            }
+                            else
+                            {
+                                /// ko có mã giảm giá
+                            }
                         }
                         else
                         {
-                            /// ko có mã giảm giá
+                            //// null
                         }
                         if (magiamgia != null)
                         {
@@ -366,17 +373,24 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             phongService.CapNhatPhong(phong);
                             int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
                             QuyDinhGiamGia quydinhgiamgia = quyDinhGiamGiaservice.GetQuyDinhGiasolandatphong(soluongdatphongtoithieu);
-                            if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                            if (quydinhgiamgia != null)
                             {
-                                MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
-                                maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
-                                MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(magiamgias.id);
-                                capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
-                                maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
+                                if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                                {
+                                    MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
+                                    maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
+                                    MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(magiamgias.id);
+                                    capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
+                                    maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
+                                }
+                                else
+                                {
+                                    /// ko có mã giảm giá
+                                }
                             }
                             else
                             {
-                                /// ko có mã giảm giá
+                                //// null
                             }
                             if (magiamgia != null)
                             {
@@ -459,17 +473,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         {
                             tongtien += thueSanPham.thanhtien;
                         }
-                        /// thời gian trễ khi trả phòng
-                        /// select * from DatPhong dp INNER JOIN ThoiGian tg ON dp.idthoigian = tg.id WHERE dp.trangthai = N'đã đặt' AND DATEPART(HOUR, dp.ngaydukientra) < DATEPART(HOUR, tg.thoigianra) 
-                        /// UPDATE DatPhong
-                        /// SET hinhthucthue =
-                        ///CASE
-                        /// WHEN dp.ngaydukientra > tg.thoigianra THEN 'Theo ngày'
-                        ///      ELSE 'Theo giờ'
-                        ///          END
-                        ///        FROM DatPhong dp
-                        ///    INNER JOIN ThoiGian tg ON dp.idthoigian = tg.id
-                        ///WHERE dp.trangthai = N'đã đặt';
                         ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
                         DateTime ngaytramuonsom = DateTime.Now;
                         /*Console.WriteLine(datphong.ngaydukientra.Hour);
