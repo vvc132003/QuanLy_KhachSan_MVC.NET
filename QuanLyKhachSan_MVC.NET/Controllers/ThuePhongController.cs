@@ -571,7 +571,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         }
                         /*                        GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
                         */
-                        NgayLe ngayLe = ngayLeService.GetNgayLesbyNgay();
+                        NgayLe ngayLe = ngayLeService.GetNgayLesbyNgay(DateTime.Now);
                         ChinhSachGia chinhSachGia = null;
                         if (ngayLe != null)
                         {

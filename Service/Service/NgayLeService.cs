@@ -1,4 +1,5 @@
-﻿using ketnoicsdllan1;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using ketnoicsdllan1;
 using Model.Models;
 using Repository.Repository;
 using System;
@@ -79,14 +80,14 @@ namespace Service.Service
 
             return ngayLes;
         }
-        public NgayLe GetNgayLesbyNgay()
+        public NgayLe GetNgayLesbyNgay(DateTime ngayles)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-
-                string query = "SELECT ngayles, tenngayle, mota FROM NgayLe WHERE ngayles = GETDATE()";
+                string query = "SELECT CAST(ngayles AS DATE) AS ngayles, tenngayle, mota FROM NgayLe WHERE CAST(ngayles AS DATE) = @ngayles";
                 SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@ngayles", ngayles);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
@@ -95,7 +96,6 @@ namespace Service.Service
                     }
                 }
             }
-
             return null;
         }
         public NgayLe GetNgayLeById(int id)

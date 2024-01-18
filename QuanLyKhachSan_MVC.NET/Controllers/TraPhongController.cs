@@ -63,8 +63,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     tongtienthuesanpham += thueSanPham.thanhtien;
                 }
-                ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
-                NgayLe ngayLe = ngayLeService.GetNgayLesbyNgay();
+/*                ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
+*/                
+                NgayLe ngayLe = ngayLeService.GetNgayLesbyNgay(DateTime.Now);
                 ChinhSachGia chinhSachGia = null;
                 if (ngayLe != null)
                 {
