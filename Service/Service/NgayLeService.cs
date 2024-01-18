@@ -12,35 +12,33 @@ namespace Service.Service
 {
     public class NgayLeService : NgayLeRepository
     {
-        public void ThemNgayLe(NgayLe ngayLe)
+        public void ThemNgayLe(NgayLe ngayLes)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
 
-                string query = "INSERT INTO NgayLe (ngayle, tenngayle, mota) VALUES (@NgayLe, @TenNgayLe, @MoTa)";
+                string query = "INSERT INTO NgayLe (ngayles, tenngayle, mota) VALUES (@ngayles, @TenNgayLe, @MoTa)";
                 SqlCommand command = new SqlCommand(query, connection);
-
-                command.Parameters.AddWithValue("@NgayLe", ngayLe.ngayle);
-                command.Parameters.AddWithValue("@TenNgayLe", ngayLe.tenngayle);
-                command.Parameters.AddWithValue("@MoTa", ngayLe.mota);
-
+                command.Parameters.AddWithValue("@ngayles", ngayLes.ngayles);
+                command.Parameters.AddWithValue("@TenNgayLe", ngayLes.tenngayle);
+                command.Parameters.AddWithValue("@MoTa", ngayLes.mota);
                 command.ExecuteNonQuery();
             }
         }
-        public void CapNhatNgayLe(NgayLe ngayLe)
+        public void CapNhatNgayLe(NgayLe ngayLes)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
 
-                string query = "UPDATE NgayLe SET ngayle = @NgayLe, tenngayle = @TenNgayLe, mota = @MoTa WHERE id = @Id";
+                string query = "UPDATE NgayLe SET ngayles = @NgayLe, tenngayle = @TenNgayLe, mota = @MoTa WHERE id = @Id";
                 SqlCommand command = new SqlCommand(query, connection);
 
-                command.Parameters.AddWithValue("@NgayLe", ngayLe.ngayle);
-                command.Parameters.AddWithValue("@TenNgayLe", ngayLe.tenngayle);
-                command.Parameters.AddWithValue("@MoTa", ngayLe.mota);
-                command.Parameters.AddWithValue("@Id", ngayLe.id);
+                command.Parameters.AddWithValue("@NgayLe", ngayLes.ngayles);
+                command.Parameters.AddWithValue("@TenNgayLe", ngayLes.tenngayle);
+                command.Parameters.AddWithValue("@MoTa", ngayLes.mota);
+                command.Parameters.AddWithValue("@Id", ngayLes.id);
 
                 command.ExecuteNonQuery();
             }
@@ -69,7 +67,6 @@ namespace Service.Service
 
                 string query = "SELECT * FROM NgayLe";
                 SqlCommand command = new SqlCommand(query, connection);
-
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -81,6 +78,25 @@ namespace Service.Service
             }
 
             return ngayLes;
+        }
+        public NgayLe GetNgayLesbyNgay()
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+
+                string query = "SELECT ngayles, tenngayle, mota FROM NgayLe WHERE ngayles = GETDATE()";
+                SqlCommand command = new SqlCommand(query, connection);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return MapNgayLeFromDataReader(reader);
+                    }
+                }
+            }
+
+            return null;
         }
         public NgayLe GetNgayLeById(int id)
         {
@@ -108,7 +124,7 @@ namespace Service.Service
             return new NgayLe
             {
                 id = (int)reader["id"],
-                ngayle = (DateTime)reader["ngayle"],
+                ngayles = (DateTime)reader["ngayles"],
                 tenngayle = reader["tenngayle"].ToString(),
                 mota = reader["mota"].ToString()
             };

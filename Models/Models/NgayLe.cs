@@ -7,9 +7,9 @@ namespace Model.Models
 {
     public class NgayLe
     {
-        public int id;
-        public DateTime ngayle;
-        public string tenngayle;
-        public string mota;
+        public int id { get; set; }
+        public DateTime ngayles { get; set; }
+        public string tenngayle { get; set; }
+        public string mota { get; set; }
     }
 }

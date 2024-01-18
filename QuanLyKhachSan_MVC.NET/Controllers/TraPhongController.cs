@@ -17,6 +17,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly ThoiGianService thoiGianService;
         private readonly MaGiamGiaService maGiamGiaService;
         private readonly KhachHangService khachHangService;
+        private readonly NgayLeService ngayLeService;
+        private readonly ChinhSachGiaService chinhSachGiaService;
 
 
 
@@ -28,7 +30,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                   SuDungMaGiamGiaService sugiamGiaServices,
                                   QuyDinhGiamGiaService quydinhGiamGiaServices,
                                   ThoiGianService thoiGianServices,
-                                  MaGiamGiaService maGiamGiaServices, KhachHangService khachHangServices)
+                                  MaGiamGiaService maGiamGiaServices, KhachHangService khachHangServices,
+                                  NgayLeService ngayLeService, ChinhSachGiaService chinhSachGiaService)
         {
             datPhongService = datPhongServices;
             thueSanPhamService = thueSanPhamServices;
@@ -40,6 +43,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             thoiGianService = thoiGianServices;
             maGiamGiaService = maGiamGiaServices;
             khachHangService = khachHangServices;
+            this.ngayLeService = ngayLeService;
+            this.chinhSachGiaService = chinhSachGiaService;
         }
         public IActionResult TraPhongandLSThanhToan(LichSuThanhToan lichSuThanhToan, int idphong)
         {
@@ -59,6 +64,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     tongtienthuesanpham += thueSanPham.thanhtien;
                 }
                 ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
+                NgayLe ngayLe = ngayLeService.GetNgayLesbyNgay();
+                ChinhSachGia chinhSachGia = null;
+                if (ngayLe != null)
+                {
+                    chinhSachGia = chinhSachGiaService.GetChinhSachGiaByIdngayle(ngayLe.id);
+                }
                 float sotienthanhtoan = 0;
                 if (sudunggiamGia != null)
                 {
@@ -68,40 +79,85 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
-                        // Đang trong thời gian thuê theo giờ
-                        sotienthanhtoan = ((phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
-
+                        if (ngayLe != null)
+                        {
+                            // Đang trong thời gian thuê theo giờ
+                            sotienthanhtoan = ((((phong.giatientheogio * chinhSachGia.dieuchinhgiaphong) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
+                        }
+                        else
+                        {
+                            // Đang trong thời gian thuê theo giờ
+                            sotienthanhtoan = ((phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
+                        }
                     }
                     else
                     {
-                        // Đang thuê theo ngày
-                        sotienthanhtoan = ((phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
+                        if (ngayLe != null)
+                        {
+                            // Đang thuê theo ngày
+                            sotienthanhtoan = ((((phong.giatientheongay * chinhSachGia.dieuchinhgiaphong) / 100) * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
+                        }
+                        else
+                        {
+                            // Đang thuê theo ngày
+                            sotienthanhtoan = ((phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
+                        }
                     }
                 }
                 else
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
-                        // Đang trong thời gian thuê theo giờ
-                        sotienthanhtoan = (phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
+                        if (ngayLe != null)
+                        {
+                            // Đang trong thời gian thuê theo giờ
+                            sotienthanhtoan = (((phong.giatientheogio * chinhSachGia.dieuchinhgiaphong) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
+                        }
+                        else
+                        {
+                            // Đang trong thời gian thuê theo giờ
+                            sotienthanhtoan = (phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
+                        }
                     }
                     else
                     {
-                        // Đang thuê theo ngày
-                        sotienthanhtoan = (phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc;
+                        if (ngayLe != null)
+                        {
+                            // Đang thuê theo ngày
+                            sotienthanhtoan = (((phong.giatientheongay * chinhSachGia.dieuchinhgiaphong) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
+                        }
+                        else
+                        {
+                            // Đang thuê theo ngày
+                            sotienthanhtoan = (phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc;
+                        }
                     }
                 }
                 KhachHang khachHang = khachHangService.GetKhachHangbyid(datphong.idkhachhang);
                 float giatienphong = 0;
                 if (datphong.hinhthucthue == "Theo ngày")
                 {
-                    giatienphong = phong.giatientheongay;
+                    if (ngayLe != null)
+                    {
+                        giatienphong = (phong.giatientheongay * chinhSachGia.dieuchinhgiaphong) / 100;
+                    }
+                    else
+                    {
+                        giatienphong = phong.giatientheongay;
+                    }
                 }
                 else
                 {
-                    giatienphong = phong.giatientheogio;
+                    if (ngayLe != null)
+                    {
+                        giatienphong = (phong.giatientheogio * chinhSachGia.dieuchinhgiaphong) / 100;
+                    }
+                    else
+                    {
+                        giatienphong = phong.giatientheogio;
+                    }
                 }
-                maGiamGiaService.GuiEmailThanhToan(khachHang, giatienphong, lichSuThanhToan.phantramgiamgia, phong.sophong, datphong.ngaydat, listthueSanPham, sotienthanhtoan);
+                traPhongService.GuiEmailThanhToan(khachHang, giatienphong, lichSuThanhToan.phantramgiamgia, phong.sophong, datphong.ngaydat, listthueSanPham, sotienthanhtoan);
                 /// thêm lịch sử thanh toán
                 lichSuThanhToan.ngaythanhtoan = DateTime.Now;
                 lichSuThanhToan.sotienthanhtoan = sotienthanhtoan;

@@ -1,4 +1,4 @@
-﻿@model Model.Models.Modeldata
+﻿@model List<Model.Models.Modeldata>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel='stylesheet'
@@ -28,9 +28,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link btn btn-primary me-2" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <a class="nav-link btn btn-primary me-2" href="/chinhsachgia/addchinhsach">
                                         <i class="fas fa-plus"></i>
-                                        Thêm ngày lễ
+                                        Thêm chính sách giá
                                     </a>
                                 </li>
                             </ul>
@@ -40,28 +40,32 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Tên chính sách</th>
                                                 <th>Tên ngày lễ</th>
-                                                <th>Mô tả</th>
-                                                <th>Ngày lễ</th>
+                                                <th>Ngày bắt đầu</th>
+                                                <th>Ngày kết thúc</th>
+                                                <th>Phầm trăm được tăng</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (Model.listngayle != null && Model.listngayle.Count > 0)
+                                            @if (Model != null && Model.Count > 0)
                                             {
                                                 int count = 1;
-                                                foreach (var ngayle in Model.listngayle)
+                                                foreach (var modeldata in Model)
                                                 {
                                                     <tr id="row-@count">
                                                         <td>@count</td>
-                                                        <td>@ngayle.tenngayle</td>
-                                                        <td>@ngayle.mota</td>
-                                                        <td>@ngayle.ngayles.ToString("dd/MM/yyyy")</td>
+                                                        <td>@modeldata.chinhSachGia.tenchinhsach</td>
+                                                        <td>@modeldata.ngayLe.tenngayle</td>
+                                                        <td>@modeldata.chinhSachGia.ngaybatdau.ToString("dd/MM/yyyy")</td>
+                                                        <td>@modeldata.chinhSachGia.ngayketthuc.ToString("dd/MM/yyyy")</td>
+                                                        <td>@modeldata.chinhSachGia.dieuchinhgiaphong %</td>
                                                         <td>
-                                                            <a href="/Tang//@ngayle.id" class="btn btn-danger" title="Xoá">
+                                                            <a href="/Tang//@modeldata.chinhSachGia.id" class="btn btn-danger" title="Xoá">
                                                                 <i class="fas fa-times-circle"></i>
                                                             </a>
-                                                            <a href="/KyLuat//@ngayle.id" class="btn btn-warning" title="Cập nhât">
+                                                            <a href="/KyLuat//@modeldata.chinhSachGia.id" class="btn btn-warning" title="Cập nhât">
                                                                 <i class="fas fa-check-circle"></i>
                                                             </a>
                                                         </td>
@@ -72,7 +76,7 @@
                                             else
                                             {
                                                 <tr>
-                                                    <td colspan="5">Danh sách ngày lễ trống!.</td>
+                                                    <td colspan="5">Danh sách chính sách giá trống trống!.</td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -81,39 +85,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-     data-bs-backdrop="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            </div>
-            <div class="modal-body text-left">
-                <div class="border border-secondary-subtle" style="padding:10px 20px">
-                    <form method="post" action="/NgayLe/AddNgayLe">
-                        <div class="mb-3">
-                            <label for="ngayles" class="form-label">Ngày lễ:</label>
-                            <input type="date" name="ngayles" id="ngayles" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="tenngayle" class="form-label">Tên ngày lễ:</label>
-                            <input type="text" name="tenngayle" id="tenngayle" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="mota" class="form-label">Mô tả:</label>
-                            <input type="text" name="mota" id="mota" class="form-control" />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">
-                                Huỷ
-                            </button>
-                            <input type="submit" value="Thêm ngày lễ" class="btn btn-primary custom-button" />
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -138,7 +109,7 @@
     <script>
         Swal.fire({
             position: "top-right",
-            title: 'Thêm ngày lễ thành công!',
+            title: 'Thêm thành công!',
             icon: "success",
             showConfirmButton: false,
         });

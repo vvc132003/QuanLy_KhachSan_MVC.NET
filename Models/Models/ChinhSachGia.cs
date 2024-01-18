@@ -11,8 +11,7 @@ namespace Model.Models
         public string tenchinhsach;
         public DateTime ngaybatdau;
         public DateTime ngayketthuc;
-        public int idphong;
         public int idngayle;
-        public float dieuchinhgia;
+        public float dieuchinhgiaphong;
     }
 }

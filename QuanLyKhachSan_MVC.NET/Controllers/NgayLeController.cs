@@ -1,19 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model.Models;
-using Service;
+using Service.Service;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
-    public class PhongKhachSanController : Controller
+    public class NgayLeController : Controller
     {
-        private readonly PhongKhachSanService phongKhachSanService;
-        private readonly KhachSanService khachSanService;
-        public PhongKhachSanController(PhongKhachSanService phongKhachSanServices, KhachSanService khachSanServices)
+        private readonly NgayLeService ngayLeService;
+        public NgayLeController(NgayLeService ngayLeService)
         {
-            phongKhachSanService = phongKhachSanServices;
-            khachSanService = khachSanServices;
+            this.ngayLeService = ngayLeService;
         }
-
         public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
@@ -24,12 +21,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-                List<KhachSan> khachsanlist = khachSanService.GetAllKhachSan();
-                List<PhongKhachSan> phongkhachsanlist = phongKhachSanService.GetAllPhongKhachSan();
+                List<NgayLe> ngayLelist = ngayLeService.GetAllNgayLes();
                 Modeldata modeldata = new Modeldata()
                 {
-                    listKhachSan = khachsanlist,
-                    listPhongKhachSan = phongkhachsanlist,
+                    listngayle = ngayLelist,
                 };
                 return View(modeldata);
             }
@@ -38,12 +33,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
-        public IActionResult ThemPhongKhachSan(PhongKhachSan phongKhachSan)
+        public IActionResult AddNgayLe(NgayLe ngayLe)
         {
-            phongKhachSan.tinhtrangphong = "còn trống";
-            phongKhachSanService.ThemPhongKhachSan(phongKhachSan);
+            ngayLeService.ThemNgayLe(ngayLe);
             TempData["themthanhcong"] = "";
-            return RedirectToAction("Index", "PhongKhachSan");
+            return RedirectToAction("index", "ngayle");
         }
     }
 }

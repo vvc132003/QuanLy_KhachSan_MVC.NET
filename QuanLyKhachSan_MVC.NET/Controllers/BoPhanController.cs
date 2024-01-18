@@ -26,7 +26,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 List<BoPhan> boPhans = boPhanService.GetALLBoPhan();
-                List<Modeldata  > modeldataList = new List<Modeldata>();
+                List<Modeldata> modeldataList = new List<Modeldata>();
                 foreach (var boPhan in boPhans)
                 {
                     List<NhanVien> nhanViens = nhanVienService.GetallNhanVientheoidbophan(boPhan.id);
@@ -41,7 +41,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult ThemBoPhan(BoPhan boPhan)

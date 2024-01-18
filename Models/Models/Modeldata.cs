@@ -68,5 +68,9 @@ namespace Model.Models
         public PhongKhachSan phongKhachSan { get; set; }
         public List<PhongKhachSan> listPhongKhachSan { get; set; }
         public IPagedList<PhongKhachSan> PagedPhongKhachSan { get; set; }
+        public List<NgayLe> listngayle { get; set; }
+        public NgayLe ngayLe { get; set; }
+        public List<ChinhSachGia> chinhSachGialist { get; set; }
+        public ChinhSachGia chinhSachGia { get; set; }
     }
 }

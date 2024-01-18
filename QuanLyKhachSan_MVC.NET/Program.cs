@@ -36,6 +36,8 @@ builder.Services.AddScoped<NguoiThamGiaService>();
 builder.Services.AddScoped<TinNhanService>();
 builder.Services.AddScoped<TinNhanIconService>();
 builder.Services.AddScoped<IconService>();
+builder.Services.AddScoped<NgayLeService>();
+builder.Services.AddScoped<ChinhSachGiaService>();
 
 
 // Add services to the container.

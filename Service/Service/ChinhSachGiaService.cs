@@ -17,18 +17,14 @@ namespace Service.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-
-                string query = "INSERT INTO ChinhSachGia (tenchinhsach, ngaybatdau, ngayketthuc, idphong, idngayle, dieuchinhgia) " +
-                               "VALUES (@TenChinhSach, @NgayBatDau, @NgayKetThuc, @IdPhong, @IdNgayLe, @DieuChinhGia)";
+                string query = "INSERT INTO ChinhSachGia (tenchinhsach, ngaybatdau, ngayketthuc, idngayle, dieuchinhgiaphong) " +
+                               "VALUES (@TenChinhSach, @NgayBatDau, @NgayKetThuc, @IdNgayLe, @dieuchinhgiaphong)";
                 SqlCommand command = new SqlCommand(query, connection);
-
                 command.Parameters.AddWithValue("@TenChinhSach", chinhSachGia.tenchinhsach);
                 command.Parameters.AddWithValue("@NgayBatDau", chinhSachGia.ngaybatdau);
                 command.Parameters.AddWithValue("@NgayKetThuc", chinhSachGia.ngayketthuc);
-                command.Parameters.AddWithValue("@IdPhong", chinhSachGia.idphong);
                 command.Parameters.AddWithValue("@IdNgayLe", chinhSachGia.idngayle);
-                command.Parameters.AddWithValue("@DieuChinhGia", chinhSachGia.dieuchinhgia);
-
+                command.Parameters.AddWithValue("@dieuchinhgiaphong", chinhSachGia.dieuchinhgiaphong);
                 command.ExecuteNonQuery();
             }
         }
@@ -38,20 +34,16 @@ namespace Service.Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-
                 string query = "UPDATE ChinhSachGia SET tenchinhsach = @TenChinhSach, ngaybatdau = @NgayBatDau, " +
-                               "ngayketthuc = @NgayKetThuc, idphong = @IdPhong, idngayle = @IdNgayLe, " +
-                               "dieuchinhgia = @DieuChinhGia WHERE id = @Id";
+                               "ngayketthuc = @NgayKetThuc, idngayle = @IdNgayLe, " +
+                               "dieuchinhgiaphong = @dieuchinhgiaphong WHERE id = @Id";
                 SqlCommand command = new SqlCommand(query, connection);
-
                 command.Parameters.AddWithValue("@TenChinhSach", chinhSachGia.tenchinhsach);
                 command.Parameters.AddWithValue("@NgayBatDau", chinhSachGia.ngaybatdau);
                 command.Parameters.AddWithValue("@NgayKetThuc", chinhSachGia.ngayketthuc);
-                command.Parameters.AddWithValue("@IdPhong", chinhSachGia.idphong);
                 command.Parameters.AddWithValue("@IdNgayLe", chinhSachGia.idngayle);
-                command.Parameters.AddWithValue("@DieuChinhGia", chinhSachGia.dieuchinhgia);
+                command.Parameters.AddWithValue("@dieuchinhgiaphong", chinhSachGia.dieuchinhgiaphong);
                 command.Parameters.AddWithValue("@Id", chinhSachGia.id);
-
                 command.ExecuteNonQuery();
             }
         }
@@ -117,6 +109,29 @@ namespace Service.Service
             return null;
         }
 
+        public ChinhSachGia GetChinhSachGiaByIdngayle(int idngayle)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+
+                string query = "SELECT * FROM ChinhSachGia WHERE idngayle = @idngayle";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@idngayle", idngayle);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return MapChinhSachGiaFromDataReader(reader);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+
         private ChinhSachGia MapChinhSachGiaFromDataReader(SqlDataReader reader)
         {
             return new ChinhSachGia
@@ -125,9 +140,8 @@ namespace Service.Service
                 tenchinhsach = reader["tenchinhsach"].ToString(),
                 ngaybatdau = (DateTime)reader["ngaybatdau"],
                 ngayketthuc = (DateTime)reader["ngayketthuc"],
-                idphong = (int)reader["idphong"],
                 idngayle = (int)reader["idngayle"],
-                dieuchinhgia = (float)reader["dieuchinhgia"]
+                dieuchinhgiaphong = Convert.ToSingle(reader["dieuchinhgiaphong"]),
             };
         }
     }

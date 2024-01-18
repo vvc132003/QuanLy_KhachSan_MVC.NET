@@ -25,6 +25,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly QuyDinhGiamGiaService quyDinhGiamGiaservice;
         private readonly SuDungMaGiamGiaService dungMaGiamGiaService;
         private readonly SuDungMaGiamGiaService suDungMaGiamGiaService;
+        private readonly ChinhSachGiaService chinhSachGiaService;
+        private readonly NgayLeService ngayLeService;
 
         public ThuePhongController(DatPhongService datPhongServices,
             KhachHangService khachHangServices,
@@ -36,7 +38,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             MaGiamGiaService maGiamGiaServices,
             QuyDinhGiamGiaService quydinhGiamGiaServices,
             SuDungMaGiamGiaService dungMaGiamGiaServices,
-            SuDungMaGiamGiaService suDungMaGiamGiaServices)
+            SuDungMaGiamGiaService suDungMaGiamGiaServices,
+            ChinhSachGiaService chinhSachGiaService,
+            NgayLeService ngayLeService)
         {
             datPhongService = datPhongServices;
             khachHangService = khachHangServices;
@@ -49,6 +53,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             quyDinhGiamGiaservice = quydinhGiamGiaServices;
             dungMaGiamGiaService = dungMaGiamGiaServices;
             suDungMaGiamGiaService = suDungMaGiamGiaServices;
+            this.chinhSachGiaService = chinhSachGiaService;
+            this.ngayLeService = ngayLeService;
         }
         public IActionResult Index(int id, int? sotrang)
         {
@@ -540,11 +546,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         }
                         ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
                         DateTime ngaytramuonsom = DateTime.Now;
-                        /*Console.WriteLine(datphong.ngaydukientra.Hour);
-                        Console.WriteLine(datphong.ngaydat.Hour);
-                        Console.WriteLine(phongs.giatientheogio);
-                        Console.WriteLine(datphong.tiendatcoc);
-                        Console.WriteLine(tongtien);*/
                         if (thoiGian != null)
                         {
                             if (datphong.hinhthucthue == "Theo giờ")
@@ -570,6 +571,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         }
                         /*                        GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
                         */
+                        NgayLe ngayLe = ngayLeService.GetNgayLesbyNgay();
+                        ChinhSachGia chinhSachGia = null;
+                        if (ngayLe != null)
+                        {
+                            chinhSachGia = chinhSachGiaService.GetChinhSachGiaByIdngayle(ngayLe.id);
+                        }
                         SuDungMaGiamGia sudunggiamGia = suDungMaGiamGiaService.GetSuDungMaGiamGiaByIddatphong(datphong.id);
                         MaGiamGia maGiamGia = null;
                         if (sudunggiamGia != null)
@@ -588,6 +595,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                 phong = phongs,
                                 magiamGia = maGiamGia,
                                 thoigian = thoiGian,
+                                ngayLe = ngayLe,
+                                chinhSachGia = chinhSachGia,
                             };
                             listmodeldatas.Add(yourModel);
                         }
@@ -601,6 +610,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                 tongtienhueSanPham = tongtien,
                                 phong = phongs,
                                 thoigian = thoiGian,
+                                ngayLe = ngayLe,
+                                chinhSachGia = chinhSachGia,
                             };
                             listmodeldatas.Add(yourModel);
                         }

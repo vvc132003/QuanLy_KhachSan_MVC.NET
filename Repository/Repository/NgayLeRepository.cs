@@ -9,8 +9,8 @@ namespace Repository.Repository
 {
     public interface NgayLeRepository
     {
-        void ThemNgayLe(NgayLe ngayLe);
-        void CapNhatNgayLe(NgayLe ngayLe);
+        void ThemNgayLe(NgayLe ngayLes);
+        void CapNhatNgayLe(NgayLe ngayLes);
         void XoaNgayLe(int id);
         List<NgayLe> GetAllNgayLes();
         NgayLe GetNgayLeById(int id);
