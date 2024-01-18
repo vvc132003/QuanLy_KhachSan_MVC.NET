@@ -136,26 +136,50 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         phongService.CapNhatPhong(phong);
                         int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
                         QuyDinhGiamGia quydinhgiamgia = quyDinhGiamGiaservice.GetQuyDinhGiasolandatphong(soluongdatphongtoithieu);
-                        if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                        if (quydinhgiamgia != null)
                         {
-                            MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
-                            maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
-                            MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(magiamgias.id);
-                            capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
-                            maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
+                            if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                            {
+                                MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
+                                maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
+                            }
+                            else
+                            {
+                                /// ko có mã giảm giá
+                            }
                         }
                         else
                         {
-                            /// ko có mã giảm giá
+                            //// null
                         }
                         if (magiamgia != null)
                         {
                             MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
-                            SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
-                            suDungMaGiamGia.idmagiamgia = maGiamGia.id;
-                            suDungMaGiamGia.iddatphong = idDatPhongThemVao;
-                            suDungMaGiamGia.ngaysudung = DateTime.Now;
-                            dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                            if (maGiamGia.ngayketthuc.Year > DateTime.Now.Year ||
+                               (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month > DateTime.Now.Month) ||
+                               (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month == DateTime.Now.Month &&
+                               maGiamGia.ngayketthuc.Day > DateTime.Now.Day))
+                            {
+                                if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                {
+                                    SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                                    suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                                    suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                                    suDungMaGiamGia.ngaysudung = DateTime.Now;
+                                    dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                                    /// cập nhật số lần sử dụng tăng lên 1
+                                    maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
+                                    maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                                }
+                                else
+                                {
+                                    /// 
+                                }
+                            }
+                            else
+                            {
+                                // nulll
+                            }
                         }
                         else
                         {
@@ -190,9 +214,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             {
                                 MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
                                 maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
-                                MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(magiamgias.id);
-                                capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
-                                maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
                             }
                             else
                             {
@@ -206,11 +227,31 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         if (magiamgia != null)
                         {
                             MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
-                            SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
-                            suDungMaGiamGia.idmagiamgia = maGiamGia.id;
-                            suDungMaGiamGia.iddatphong = idDatPhongThemVao;
-                            suDungMaGiamGia.ngaysudung = DateTime.Now;
-                            dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                            if (maGiamGia.ngayketthuc.Year > DateTime.Now.Year ||
+                               (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month > DateTime.Now.Month) ||
+                               (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month == DateTime.Now.Month &&
+                               maGiamGia.ngayketthuc.Day > DateTime.Now.Day))
+                            {
+                                if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                {
+                                    SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                                    suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                                    suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                                    suDungMaGiamGia.ngaysudung = DateTime.Now;
+                                    dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                                    /// cập nhật số lần sử dụng tăng lên 1
+                                    maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
+                                    maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                                }
+                                else
+                                {
+                                    /// 
+                                }
+                            }
+                            else
+                            {
+                                // nulll
+                            }
                         }
                         else
                         {
@@ -379,9 +420,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                 {
                                     MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
                                     maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
-                                    MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(magiamgias.id);
-                                    capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
-                                    maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
                                 }
                                 else
                                 {
@@ -395,11 +433,38 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             if (magiamgia != null)
                             {
                                 MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
-                                SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
-                                suDungMaGiamGia.idmagiamgia = maGiamGia.id;
-                                suDungMaGiamGia.iddatphong = idDatPhongThemVao;
-                                suDungMaGiamGia.ngaysudung = DateTime.Now;
-                                dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                                if (maGiamGia != null)
+                                {
+                                    if (maGiamGia.ngayketthuc.Year > DateTime.Now.Year ||
+                                   (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month > DateTime.Now.Month) ||
+                                   (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month == DateTime.Now.Month &&
+                                   maGiamGia.ngayketthuc.Day > DateTime.Now.Day))
+                                    {
+                                        if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                        {
+                                            SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                                            suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                                            suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                                            suDungMaGiamGia.ngaysudung = DateTime.Now;
+                                            dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                                            /// cập nhật số lần sử dụng tăng lên 1
+                                            maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
+                                            maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                                        }
+                                        else
+                                        {
+                                            /// 
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // nulll
+                                    }
+                                }
+                                else
+                                {
+                                    // null
+                                }
                             }
                             else
                             {
