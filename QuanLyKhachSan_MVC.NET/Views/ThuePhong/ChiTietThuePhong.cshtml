@@ -92,8 +92,9 @@
 
                                                 if (Model[0].ngayLe != null)
                                                 {
-                                                    <h4>Gía phòng theo giờ: @string.Format("{0:N0} VNĐ", (@Model[0].phong.giatientheogio * Model[0].chinhSachGia.dieuchinhgiaphong)/100)</h4>
-                                                }
+                                                    <h4>Giá phòng theo giờ: @string.Format("{0:N0} VNĐ", (Model[0].phong.giatientheogio * (100 + Model[0].chinhSachGia.dieuchinhgiaphong)) / 100)</h4>
+@*                                                     <h4>Gía phòng theo giờ: @string.Format("{0:N0} VNĐ", (@Model[0].phong.giatientheogio * Model[0].chinhSachGia.dieuchinhgiaphong)/100)</h4>
+ *@                                                }
                                                 else
                                                 {
                                                     <h4>Gía phòng theo giờ: @string.Format("{0:N0} VNĐ", @Model[0].phong.giatientheogio)</h4>
@@ -103,8 +104,9 @@
                                             {
                                                 if (Model[0].ngayLe != null)
                                                 {
-                                                    <h4>Gía phòng theo ngày: @string.Format("{0:N0} VNĐ", (@Model[0].phong.giatientheongay * Model[0].chinhSachGia.dieuchinhgiaphong)/100)</h4>
-                                                }
+                                                    <h4>Giá phòng theo giờ: @string.Format("{0:N0} VNĐ", (Model[0].phong.giatientheongay * (100 + Model[0].chinhSachGia.dieuchinhgiaphong)) / 100)</h4>
+@*                                                     <h4>Gía phòng theo ngày: @string.Format("{0:N0} VNĐ", (@Model[0].phong.giatientheongay * Model[0].chinhSachGia.dieuchinhgiaphong)/100)</h4>
+ *@                                                }
                                                 else
                                                 {
                                                     <h4>Gía phòng theo ngày: @string.Format("{0:N0} VNĐ", @Model[0].phong.giatientheongay)</h4>
@@ -120,8 +122,9 @@
                                                     if (Model[0].ngayLe != null)
                                                     {
                                                         // Đang thuê theo giờ
-                                                        sotienthanhtoan = ((((Model[0].phong.giatientheogio * Model[0].chinhSachGia.dieuchinhgiaphong) / 100) * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
-                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
+                                                        sotienthanhtoan = ((((Model[0].phong.giatientheogio * (100 + Model[0].chinhSachGia.dieuchinhgiaphong)) / 100) * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * (100 - Model[0].magiamGia.phantramgiamgia) / 100;
+@*                                                         sotienthanhtoan = ((((Model[0].phong.giatientheogio * Model[0].chinhSachGia.dieuchinhgiaphong) / 100) * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
+ *@                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
                                                     }
                                                     else
                                                     {
@@ -134,8 +137,9 @@
                                                     if (Model[0].ngayLe != null)
                                                     {
                                                         // Đang thuê theo ngày
-                                                        sotienthanhtoan = ((((Model[0].phong.giatientheongay * Model[0].chinhSachGia.dieuchinhgiaphong) / 100) * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
-                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
+                                                        sotienthanhtoan = ((((Model[0].phong.giatientheongay * (100 + Model[0].chinhSachGia.dieuchinhgiaphong)) / 100) * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * (100 - Model[0].magiamGia.phantramgiamgia) / 100;
+@*                                                         sotienthanhtoan = ((((Model[0].phong.giatientheongay * Model[0].chinhSachGia.dieuchinhgiaphong) / 100) * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
+ *@                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
                                                     }
                                                     else
                                                     {
@@ -154,8 +158,9 @@
                                                     if (Model[0].ngayLe != null)
                                                     {
                                                         // Đang thuê theo giờ
-                                                        sotienthanhtoan = (((Model[0].phong.giatientheogio * Model[0].chinhSachGia.dieuchinhgiaphong)) / 100 * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
-                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
+                                                        sotienthanhtoan = ((Model[0].phong.giatientheogio * (100 + Model[0].chinhSachGia.dieuchinhgiaphong)) / 100 * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
+@*                                                         sotienthanhtoan = (((Model[0].phong.giatientheogio * Model[0].chinhSachGia.dieuchinhgiaphong)) / 100 * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
+ *@                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
                                                     }
                                                     else
                                                     {
@@ -168,8 +173,9 @@
                                                     if (Model[0].ngayLe != null)
                                                     {
                                                         // Đang thuê theo ngày
-                                                        sotienthanhtoan = (((Model[0].phong.giatientheongay * Model[0].chinhSachGia.dieuchinhgiaphong) / 100) * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
-                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
+                                                        sotienthanhtoan = ((Model[0].phong.giatientheongay * (100 + Model[0].chinhSachGia.dieuchinhgiaphong)) / 100 * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
+@*                                                         sotienthanhtoan = (((Model[0].phong.giatientheongay * Model[0].chinhSachGia.dieuchinhgiaphong) / 100) * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
+ *@                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
                                                     }
                                                     else
                                                     {

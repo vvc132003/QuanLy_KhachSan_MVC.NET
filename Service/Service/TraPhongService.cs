@@ -6,7 +6,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 
-namespace  Service
+namespace Service
 {
     public class TraPhongService : TraPhongRepository
     {
@@ -79,12 +79,12 @@ namespace  Service
                             <p>Địa chỉ: " + khachHang.tinh + @"</p>
                             <p>Điện thoại: " + khachHang.sodienthoai + @"</p>
                             <p>Mã phòng: " + sophong + @"</p>
-                            <p>Mã phòng: " + tienphong + @"</p>
+                            <p>Gia phòng: " + string.Format("{0:N0} VNĐ", tienphong) + @"</p>
                         </div>
                         <div style='width: 50%; margin-top: 20px; text-align: end;'>
                             <p>Ngày đến: " + ngayden + @"</p>
                             <p>Ngày đi: " + DateTime.Now + @"</p>
-                            <p>Số đêm: 2</p>
+                            <p>Số đêm: " + (DateTime.Now.Day - ngayden.Day) + @"</p>
                             <p>Thanh toán: Đã thanh toán</p>
                         </div>
                     </div>
@@ -108,7 +108,7 @@ namespace  Service
                                     <tr>
                                         <td>{thueSanPham.tensanpham}</td>
                                         <td style='text-align: center;'>{thueSanPham.soluong}</td>
-                                        <td style='text-align: right;'>{thueSanPham.thanhtien} VND</td>
+                                        <td style='text-align: right;'>{string.Format("{0:N0} VNĐ", thueSanPham.thanhtien)}</td>
                                     </tr>
                                 ");
                 }
@@ -118,7 +118,7 @@ namespace  Service
                         </div>
                     </div>
                     <p style='text-align: end;' >Mã giảm giá: " + phantramgiamgia + "%" + @"</p>
-                    <p style='text-align: end;' >Tổng tiền: " + tongtien + @"</p>
+                    <p style='text-align: end;' >Tổng tiền: " + string.Format("{0:N0} VNĐ", tongtien) + @"</p>
                 </div>
             </div>
         ");

@@ -80,14 +80,13 @@ namespace Service.Service
 
             return ngayLes;
         }
-        public NgayLe GetNgayLesbyNgay(DateTime ngayles)
+        public NgayLe GetNgayLesbyNgay()
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "SELECT CAST(ngayles AS DATE) AS ngayles, tenngayle, mota FROM NgayLe WHERE CAST(ngayles AS DATE) = @ngayles";
+                string query = "SELECT * FROM NgayLe WHERE ngayles = GETDATE() ";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@ngayles", ngayles);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
