@@ -158,7 +158,9 @@
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label for="idphongcu" class="form-label">Phòng cũ:</label>
-                                        <input type="text" class="form-control" value="@phong.id" id="idphongcu" name="idphongcu" readonly>
+                                        <select id="idphongcu" name="idphongcu" class="form-control">
+                                            <option readonly value="@phong.id">@phong.sophong</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -316,6 +318,17 @@
         Swal.fire({
             position: "top-right",
             title: 'Tạo thời gian thành công!',
+            icon: 'success',
+            showConfirmButton: false,
+        });
+    </script>
+}
+@if (TempData["chuyenphongthanhcong"] != null)
+{
+    <script>
+        Swal.fire({
+            position: "top-right",
+            title: 'Chuyển phòng thành công!',
             icon: 'success',
             showConfirmButton: false,
         });

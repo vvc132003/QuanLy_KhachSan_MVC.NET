@@ -41,6 +41,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     /// cap nhật tình trạng phòng mới
                     phongmoi.tinhtrangphong = "có khách";
                     phongService.CapNhatPhong(phongmoi);
+                    TempData["chuyenphongthanhcong"] = "";
                 }
                 else
                 {
@@ -50,7 +51,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
     }
