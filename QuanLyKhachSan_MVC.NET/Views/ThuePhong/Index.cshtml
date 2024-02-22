@@ -19,8 +19,8 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="row">
-@*                         <div class="fs-2 text-center">Thuê phòng</div>
- *@                        <div class="border border-secondary-subtle" style="padding:10px 20px">
+                        @*                         <div class="fs-2 text-center">Thuê phòng</div>
+                        *@                        <div class="border border-secondary-subtle" style="padding:10px 20px">
                             <form action="/ThuePhong/ThemThuePhong" method="POST">
                                 <input type="hidden" id="idphong" name="idphong" value="@Model.phong.id" class="form-control" />
                                 <input type="hidden" id="idnhanvien" name="idnhanvien" value="@ViewData["id"]" class="form-control" />
@@ -156,59 +156,63 @@
         });
     });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
-    const host = "https://provinces.open-api.vn/api/";
-    var callAPI = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data, "tinh");
-            });
-    }
-    callAPI('https://provinces.open-api.vn/api/?depth=1');
-    var callApiDistrict = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.districts, "huyen");
-            });
-    }
-    var callApiWard = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.wards, "phuong");
-            });
-    }
-
-    var renderData = (array, select) => {
-        let row = ' <option disable value="">Chọn</option>';
-        array.forEach(element => {
-            row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
-        });
-        document.querySelector("#" + select).innerHTML = row
-    }
-
-    $("#tinh").change(() => {
-        callApiDistrict(host + "p/" + $("#tinh").find(':selected').data('id') + "?depth=2");
-        printResult();
+    var citis = document.getElementById("tinh");
+    var districts = document.getElementById("huyen");
+    var wards = document.getElementById("phuong");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
     });
-    $("#huyen").change(() => {
-        callApiWard(host + "d/" + $("#huyen").find(':selected').data('id') + "?depth=2");
-        printResult();
-    });
-    $("#phuong").change(() => {
-        printResult();
-    })
 
-    var printResult = () => {
-        if ($("#huyen").find(':selected').data('id') != "" && $("#tinh").find(':selected').data('id') != "" &&
-            $("#phuong").find(':selected').data('id') != "") {
-            let result = $("#tinh option:selected").text() +
-                " | " + $("#huyen option:selected").text() + " | " +
-                $("#phuong option:selected").text();
-            $("#result").text(result)
+    function renderCity(data) {
+        for (const x of data) {
+            var opt = document.createElement('option');
+            opt.value = x.Name;
+            opt.text = x.Name;
+            opt.setAttribute('data-id', x.Id);
+            citis.options.add(opt);
         }
+        citis.onchange = function () {
+            districts.length = 1;
+            wards.length = 1;
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
 
+                for (const k of result[0].Districts) {
+                    var opt = document.createElement('option');
+                    opt.value = k.Name;
+                    opt.text = k.Name;
+                    opt.setAttribute('data-id', k.Id);
+                    districts.options.add(opt);
+                }
+            }
+        };
+        districts.onchange = function () {
+            wards.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
+
+                for (const w of dataWards) {
+                    var opt = document.createElement('option');
+                    opt.value = w.Name;
+                    opt.text = w.Name;
+                    opt.setAttribute('data-id', w.Id);
+                    wards.options.add(opt);
+                }
+            }
+        };
     }
 </script>
+
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

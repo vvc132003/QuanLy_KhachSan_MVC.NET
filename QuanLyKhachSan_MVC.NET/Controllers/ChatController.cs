@@ -186,7 +186,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 html += $@"
                                 <input type=""hidden"" id=""cuochoithoaiidinput"" value=""{cuochoithoaiid}"">
                                 <input type=""hidden"" id=""nhanvienguiidinput"" value=""{id}"">
-                                
 ";
                 return Content(html);
             }

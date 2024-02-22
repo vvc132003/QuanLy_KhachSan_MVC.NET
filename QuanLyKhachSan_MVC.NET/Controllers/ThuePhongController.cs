@@ -477,7 +477,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                 /// không áp dụng mã giảm giá
                             }
                             datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
-
                         }
                         else
                         {
