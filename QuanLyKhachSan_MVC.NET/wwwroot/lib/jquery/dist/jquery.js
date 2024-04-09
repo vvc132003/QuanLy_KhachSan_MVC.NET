@@ -3690,7 +3690,7 @@ jQuery.extend( {
 	Deferred: function( func ) {
 		var tuples = [
 
-				// action, add listener, callbacks,
+				// Action, add listener, callbacks,
 				// ... .then handlers, argument index, [final state]
 				[ "notify", "progress", jQuery.Callbacks( "memory" ),
 					jQuery.Callbacks( "memory" ), 2 ],
@@ -8726,7 +8726,7 @@ jQuery.extend( jQuery.event, {
 		}
 		event.type = type;
 
-		// If nobody prevented the default action, do it now
+		// If nobody prevented the default Action, do it now
 		if ( !onlyHandlers && !event.isDefaultPrevented() ) {
 
 			if ( ( !special._default ||
@@ -8734,7 +8734,7 @@ jQuery.extend( jQuery.event, {
 				acceptData( elem ) ) {
 
 				// Call a native DOM method on the target with the same name as the event.
-				// Don't do default actions on window, that's where global variables be (#6170)
+				// Don't do default Actions on window, that's where global variables be (#6170)
 				if ( ontype && isFunction( elem[ type ] ) && !isWindow( elem ) ) {
 
 					// Don't re-trigger an onFOO event when we call its FOO() method
@@ -10804,7 +10804,7 @@ jQuery.isNumeric = function( obj ) {
 
 		// parseFloat NaNs numeric-cast false positives ("")
 		// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
-		// subtraction forces infinities to NaN
+		// subtrAction forces infinities to NaN
 		!isNaN( obj - parseFloat( obj ) );
 };
 

@@ -5322,19 +5322,19 @@ a.badge-dark:hover, a.badge-dark:focus {
   margin-bottom: 0;
 }
 
-.list-group-item-action {
+.list-group-item-Action {
   width: 100%;
   color: #495057;
   text-align: inherit;
 }
 
-.list-group-item-action:hover, .list-group-item-action:focus {
+.list-group-item-Action:hover, .list-group-item-Action:focus {
   color: #495057;
   text-decoration: none;
   background-color: #f8f9fa;
 }
 
-.list-group-item-action:active {
+.list-group-item-Action:active {
   color: #212529;
   background-color: #e9ecef;
 }
@@ -5401,12 +5401,12 @@ a.badge-dark:hover, a.badge-dark:focus {
   background-color: #b8daff;
 }
 
-.list-group-item-primary.list-group-item-action:hover, .list-group-item-primary.list-group-item-action:focus {
+.list-group-item-primary.list-group-item-Action:hover, .list-group-item-primary.list-group-item-Action:focus {
   color: #004085;
   background-color: #9fcdff;
 }
 
-.list-group-item-primary.list-group-item-action.active {
+.list-group-item-primary.list-group-item-Action.active {
   color: #fff;
   background-color: #004085;
   border-color: #004085;
@@ -5417,12 +5417,12 @@ a.badge-dark:hover, a.badge-dark:focus {
   background-color: #d6d8db;
 }
 
-.list-group-item-secondary.list-group-item-action:hover, .list-group-item-secondary.list-group-item-action:focus {
+.list-group-item-secondary.list-group-item-Action:hover, .list-group-item-secondary.list-group-item-Action:focus {
   color: #383d41;
   background-color: #c8cbcf;
 }
 
-.list-group-item-secondary.list-group-item-action.active {
+.list-group-item-secondary.list-group-item-Action.active {
   color: #fff;
   background-color: #383d41;
   border-color: #383d41;
@@ -5433,12 +5433,12 @@ a.badge-dark:hover, a.badge-dark:focus {
   background-color: #c3e6cb;
 }
 
-.list-group-item-success.list-group-item-action:hover, .list-group-item-success.list-group-item-action:focus {
+.list-group-item-success.list-group-item-Action:hover, .list-group-item-success.list-group-item-Action:focus {
   color: #155724;
   background-color: #b1dfbb;
 }
 
-.list-group-item-success.list-group-item-action.active {
+.list-group-item-success.list-group-item-Action.active {
   color: #fff;
   background-color: #155724;
   border-color: #155724;
@@ -5449,12 +5449,12 @@ a.badge-dark:hover, a.badge-dark:focus {
   background-color: #bee5eb;
 }
 
-.list-group-item-info.list-group-item-action:hover, .list-group-item-info.list-group-item-action:focus {
+.list-group-item-info.list-group-item-Action:hover, .list-group-item-info.list-group-item-Action:focus {
   color: #0c5460;
   background-color: #abdde5;
 }
 
-.list-group-item-info.list-group-item-action.active {
+.list-group-item-info.list-group-item-Action.active {
   color: #fff;
   background-color: #0c5460;
   border-color: #0c5460;
@@ -5465,12 +5465,12 @@ a.badge-dark:hover, a.badge-dark:focus {
   background-color: #ffeeba;
 }
 
-.list-group-item-warning.list-group-item-action:hover, .list-group-item-warning.list-group-item-action:focus {
+.list-group-item-warning.list-group-item-Action:hover, .list-group-item-warning.list-group-item-Action:focus {
   color: #856404;
   background-color: #ffe8a1;
 }
 
-.list-group-item-warning.list-group-item-action.active {
+.list-group-item-warning.list-group-item-Action.active {
   color: #fff;
   background-color: #856404;
   border-color: #856404;
@@ -5481,12 +5481,12 @@ a.badge-dark:hover, a.badge-dark:focus {
   background-color: #f5c6cb;
 }
 
-.list-group-item-danger.list-group-item-action:hover, .list-group-item-danger.list-group-item-action:focus {
+.list-group-item-danger.list-group-item-Action:hover, .list-group-item-danger.list-group-item-Action:focus {
   color: #721c24;
   background-color: #f1b0b7;
 }
 
-.list-group-item-danger.list-group-item-action.active {
+.list-group-item-danger.list-group-item-Action.active {
   color: #fff;
   background-color: #721c24;
   border-color: #721c24;
@@ -5497,12 +5497,12 @@ a.badge-dark:hover, a.badge-dark:focus {
   background-color: #fdfdfe;
 }
 
-.list-group-item-light.list-group-item-action:hover, .list-group-item-light.list-group-item-action:focus {
+.list-group-item-light.list-group-item-Action:hover, .list-group-item-light.list-group-item-Action:focus {
   color: #818182;
   background-color: #ececf6;
 }
 
-.list-group-item-light.list-group-item-action.active {
+.list-group-item-light.list-group-item-Action.active {
   color: #fff;
   background-color: #818182;
   border-color: #818182;
@@ -5513,12 +5513,12 @@ a.badge-dark:hover, a.badge-dark:focus {
   background-color: #c6c8ca;
 }
 
-.list-group-item-dark.list-group-item-action:hover, .list-group-item-dark.list-group-item-action:focus {
+.list-group-item-dark.list-group-item-Action:hover, .list-group-item-dark.list-group-item-Action:focus {
   color: #1b1e21;
   background-color: #b9bbbe;
 }
 
-.list-group-item-dark.list-group-item-action.active {
+.list-group-item-dark.list-group-item-Action.active {
   color: #fff;
   background-color: #1b1e21;
   border-color: #1b1e21;
@@ -6091,8 +6091,8 @@ a.close.disabled {
 }
 
 .carousel.pointer-event {
-  -ms-touch-action: pan-y;
-  touch-action: pan-y;
+  -ms-touch-Action: pan-y;
+  touch-Action: pan-y;
 }
 
 .carousel-inner {

@@ -22,7 +22,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly ThueSanPhamService thueSanPhamService;
         private readonly ThoiGianService thoiGianService;
         private readonly MaGiamGiaService maGiamGiaService;
-        private readonly QuyDinhGiamGiaService quyDinhGiamGiaservice;
         private readonly SuDungMaGiamGiaService dungMaGiamGiaService;
         private readonly SuDungMaGiamGiaService suDungMaGiamGiaService;
         private readonly ChinhSachGiaService chinhSachGiaService;
@@ -36,7 +35,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             ThueSanPhamService thueSanPhamServices,
             ThoiGianService thoiGianServices,
             MaGiamGiaService maGiamGiaServices,
-            QuyDinhGiamGiaService quydinhGiamGiaServices,
             SuDungMaGiamGiaService dungMaGiamGiaServices,
             SuDungMaGiamGiaService suDungMaGiamGiaServices,
             ChinhSachGiaService chinhSachGiaService,
@@ -50,7 +48,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             thueSanPhamService = thueSanPhamServices;
             thoiGianService = thoiGianServices;
             maGiamGiaService = maGiamGiaServices;
-            quyDinhGiamGiaservice = quydinhGiamGiaServices;
             dungMaGiamGiaService = dungMaGiamGiaServices;
             suDungMaGiamGiaService = suDungMaGiamGiaServices;
             this.chinhSachGiaService = chinhSachGiaService;
@@ -141,13 +138,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         phong.tinhtrangphong = "có khách";
                         phongService.CapNhatPhong(phong);
                         int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
-                        QuyDinhGiamGia quydinhgiamgia = quyDinhGiamGiaservice.GetQuyDinhGiasolandatphong(soluongdatphongtoithieu);
-                        if (quydinhgiamgia != null)
+                        MaGiamGia maGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
+                        if (maGiamgia != null)
                         {
-                            if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                            if (maGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
                             {
-                                MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
-                                maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
+                                maGiamGiaService.GuiEmail(khachHang, maGiamgia.magiamgia);
                             }
                             else
                             {
@@ -213,13 +209,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         phong.tinhtrangphong = "đã đặt";
                         phongService.CapNhatPhong(phong);
                         int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
-                        QuyDinhGiamGia quydinhgiamgia = quyDinhGiamGiaservice.GetQuyDinhGiasolandatphong(soluongdatphongtoithieu);
-                        if (quydinhgiamgia != null)
+                        MaGiamGia maGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
+                        if (maGiamgia != null)
                         {
-                            if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                            if (maGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
                             {
-                                MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
-                                maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
+                                maGiamGiaService.GuiEmail(khachHang, maGiamgia.magiamgia);
                             }
                             else
                             {
@@ -419,13 +414,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             phong.tinhtrangphong = "có khách";
                             phongService.CapNhatPhong(phong);
                             int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
-                            QuyDinhGiamGia quydinhgiamgia = quyDinhGiamGiaservice.GetQuyDinhGiasolandatphong(soluongdatphongtoithieu);
-                            if (quydinhgiamgia != null)
+                            MaGiamGia maGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
+                            if (maGiamgia != null)
                             {
-                                if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                                if (maGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
                                 {
-                                    MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
-                                    maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
+                                    maGiamGiaService.GuiEmail(khachHang, maGiamgia.magiamgia);
                                 }
                                 else
                                 {
@@ -668,12 +662,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     phongService.CapNhatPhong(phong);
                     datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
                     int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
-                    QuyDinhGiamGia quydinhgiamgia = quyDinhGiamGiaservice.GetQuyDinhGiasolandatphong(soluongdatphongtoithieu);
-                    MaGiamGia magiamgias = maGiamGiaService.GetMaGiamGiaByIdQuyDinhGiamGia(quydinhgiamgia.id);
-                    if (quydinhgiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                    MaGiamGia maGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
+                    if (maGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
                     {
-                        maGiamGiaService.GuiEmail(khachHang, magiamgias.magiamgia);
-                        MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(magiamgias.id);
+                        maGiamGiaService.GuiEmail(khachHang, maGiamgia.magiamgia);
+                        MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(maGiamgia.id);
                         capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
                         maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
                     }

@@ -60,11 +60,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         Console.WriteLine("Sản phẩm này đã hết");
                     }
                 }
-                return RedirectToAction("ChiTietThuePhong", "ThuePhong", new { id = idphong });
+                return RedirectToAction("chitietthuephong", "thuephong", new { id = idphong });
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult XoasoluongThueSanPham(int id, int idphong)
@@ -84,7 +84,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         sanpham.soluongcon += 1;
                         sanPhamService.CapNhatSanPham(sanpham);
                         thueSanPhamService.XoaThueSanPham(id);
-                        return RedirectToAction("ChiTietThuePhong", "ThuePhong", new { id = idphong });
+                        return RedirectToAction("chitietthuephong", "thuephong", new { id = idphong });
                     }
                     else if (thueSanPham.soluong > 1)
                     {
@@ -93,14 +93,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         thueSanPham.soluong -= 1;
                         thueSanPham.thanhtien = thueSanPham.soluong * sanpham.giaban;
                         thueSanPhamService.CapNhatThueSanPham(thueSanPham);
-                        return RedirectToAction("ChiTietThuePhong", "ThuePhong", new { id = idphong });
+                        return RedirectToAction("chitietthuephong", "thuephong", new { id = idphong });
                     }
                 }
-                return RedirectToAction("ChiTietThuePhong", "ThuePhong", new { id = idphong });
+                return RedirectToAction("chitietthuephong", "thuephong", new { id = idphong });
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult UpdatesoluongThueSanPham(int id, int idphong)
@@ -125,11 +125,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     Console.WriteLine("Sản phẩm này đã hết");
                 }
-                return RedirectToAction("ChiTietThuePhong", "ThuePhong", new { id = idphong });
+                return RedirectToAction("chitietthuephong", "thuephong", new { id = idphong });
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
     }

@@ -53,9 +53,7 @@ namespace Model.Models
         public ThoiGian thoigian { get; set; }
         public List<ThoiGian> listThoiGian { get; set; }
         public IPagedList<ThoiGian> PagedTThoiGian { get; set; }
-        public QuyDinhGiamGia quyDinhGiamGia { get; set; }
-        public List<QuyDinhGiamGia> listquyDinhGiamGia { get; set; }
-        public IPagedList<QuyDinhGiamGia> PagedTQuyDinhGiamGia { get; set; }
+
         public MaGiamGia magiamGia { get; set; }
         public List<MaGiamGia> listmaGiamGia { get; set; }
         public IPagedList<MaGiamGia> PagedTmaGiamGia { get; set; }

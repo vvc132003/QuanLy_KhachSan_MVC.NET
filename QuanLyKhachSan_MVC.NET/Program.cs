@@ -24,7 +24,6 @@ builder.Services.AddScoped<LichSuThanhToanService>();
 builder.Services.AddScoped<ThietBiService>();
 builder.Services.AddScoped<ThietBiPhongService>();
 builder.Services.AddScoped<ThoiGianService>();
-builder.Services.AddScoped<QuyDinhGiamGiaService>();
 builder.Services.AddScoped<SuDungMaGiamGiaService>();
 builder.Services.AddScoped<MaGiamGiaService>();
 builder.Services.AddScoped<HopDongLaoDongService>();
@@ -70,7 +69,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{Action=Index}/{id?}");
 app.UseResponseCompression();
 app.MapHub<ChatHub>("/chathub");
 app.Run();

@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using Service;
 using System.Collections.Generic;
+using Emgu.CV;
+using Emgu.CV.Structure;
+using System.Drawing;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
@@ -128,6 +132,46 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             else
             {
                 return RedirectToAction("dangnhap", "dangnhap");
+            }
+        }
+        public ActionResult Index1()
+        {
+            return View();
+        }
+        public ActionResult Upload(string imagePath)
+        {
+            try
+            {
+                string cascadePath = "haarcascade_frontalface_default.xml";
+                CascadeClassifier faceCascade = new CascadeClassifier(cascadePath);
+
+                // Đọc ảnh từ đường dẫn
+                Mat image = CvInvoke.Imread(imagePath);
+
+                // Chuyển đổi ảnh sang ảnh xám để tăng hiệu suất
+                Mat grayImage = new Mat();
+                CvInvoke.CvtColor(image, grayImage, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
+
+                // Nhận diện khuôn mặt trong ảnh xám
+                Rectangle[] faces = faceCascade.DetectMultiScale(grayImage, 1.1, 5);
+
+                // Vẽ hình chữ nhật xung quanh các khuôn mặt đã nhận diện được
+                foreach (Rectangle face in faces)
+                {
+                    CvInvoke.Rectangle(image, face, new Bgr(System.Drawing.Color.Red).MCvScalar, 2);
+                }
+
+                // Lưu ảnh đã nhận diện khuôn mặt
+                string outputImagePath = "detected_faces.jpg";
+                CvInvoke.Imwrite(outputImagePath, image);
+
+                // Trả về URL đến ảnh đã nhận diện khuôn mặt
+                return Content(outputImagePath);
+            }
+            catch (Exception e)
+            {
+                // Xử lý lỗi và trả về thông điệp lỗi
+                return Content($"Lỗi không nhận dạng được khuôn mặt: {e.Message}");
             }
         }
     }

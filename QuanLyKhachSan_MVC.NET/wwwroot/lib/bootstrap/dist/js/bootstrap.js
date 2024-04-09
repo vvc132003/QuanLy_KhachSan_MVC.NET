@@ -1554,16 +1554,16 @@
         };
       }
 
-      const action = typeof config === 'string' ? config : _config.slide;
+      const Action = typeof config === 'string' ? config : _config.slide;
 
       if (typeof config === 'number') {
         data.to(config);
-      } else if (typeof action === 'string') {
-        if (typeof data[action] === 'undefined') {
-          throw new TypeError(`No method named "${action}"`);
+      } else if (typeof Action === 'string') {
+        if (typeof data[Action] === 'undefined') {
+          throw new TypeError(`No method named "${Action}"`);
         }
 
-        data[action]();
+        data[Action]();
       } else if (_config.interval && _config.ride) {
         data.pause();
         data.cycle();
@@ -4818,8 +4818,8 @@
       super(element);
       this._config = this._getConfig(config);
       this._timeout = null;
-      this._hasMouseInteraction = false;
-      this._hasKeyboardInteraction = false;
+      this._hasMouseInterAction = false;
+      this._hasKeyboardInterAction = false;
 
       this._setListeners();
     } // Getters
@@ -4923,7 +4923,7 @@
         return;
       }
 
-      if (this._hasMouseInteraction || this._hasKeyboardInteraction) {
+      if (this._hasMouseInterAction || this._hasKeyboardInterAction) {
         return;
       }
 
@@ -4932,16 +4932,16 @@
       }, this._config.delay);
     }
 
-    _onInteraction(event, isInteracting) {
+    _onInterAction(event, isInteracting) {
       switch (event.type) {
         case 'mouseover':
         case 'mouseout':
-          this._hasMouseInteraction = isInteracting;
+          this._hasMouseInterAction = isInteracting;
           break;
 
         case 'focusin':
         case 'focusout':
-          this._hasKeyboardInteraction = isInteracting;
+          this._hasKeyboardInterAction = isInteracting;
           break;
       }
 
@@ -4961,10 +4961,10 @@
     }
 
     _setListeners() {
-      EventHandler.on(this._element, EVENT_MOUSEOVER, event => this._onInteraction(event, true));
-      EventHandler.on(this._element, EVENT_MOUSEOUT, event => this._onInteraction(event, false));
-      EventHandler.on(this._element, EVENT_FOCUSIN, event => this._onInteraction(event, true));
-      EventHandler.on(this._element, EVENT_FOCUSOUT, event => this._onInteraction(event, false));
+      EventHandler.on(this._element, EVENT_MOUSEOVER, event => this._onInterAction(event, true));
+      EventHandler.on(this._element, EVENT_MOUSEOUT, event => this._onInterAction(event, false));
+      EventHandler.on(this._element, EVENT_FOCUSIN, event => this._onInterAction(event, true));
+      EventHandler.on(this._element, EVENT_FOCUSOUT, event => this._onInterAction(event, false));
     }
 
     _clearTimeout() {

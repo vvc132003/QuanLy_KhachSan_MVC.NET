@@ -13,7 +13,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly SanPhamService sanPhamService;
         private readonly ThueSanPhamService thueSanPhamService;
         private readonly ThoiGianService thoiGianService;
-        private readonly QuyDinhGiamGiaService quyDinhGiamGiaservice;
 
 
         public NhanPhongController(DatPhongService datPhongServices,
@@ -22,8 +21,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             NhanPhongService nhanPhongServices,
             SanPhamService sanPhamServices,
             ThueSanPhamService thueSanPhamServices,
-            ThoiGianService thoiGianServices,
-            QuyDinhGiamGiaService quydinhGiamGiaServices)
+            ThoiGianService thoiGianServices)
         {
             datPhongService = datPhongServices;
             khachHangService = khachHangServices;
@@ -32,7 +30,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             sanPhamService = sanPhamServices;
             thueSanPhamService = thueSanPhamServices;
             thoiGianService = thoiGianServices;
-            quyDinhGiamGiaservice = quydinhGiamGiaServices;
         }
         public IActionResult Index()
         {
@@ -49,7 +46,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThaiOnline(id);
-                // Inside your controller action
+                // Inside your controller Action
                 List<Modeldata> yourModelList = new List<Modeldata>();
                 if (datPhong != null)
                 {
@@ -63,7 +60,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
         public IActionResult CheckInNhanPhongOnline(NhanPhong nhanPhong, int idphong, string cccd)
@@ -97,7 +94,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
     }

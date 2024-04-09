@@ -257,3 +257,7 @@ C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\De
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Debug\net6.0\QuanLyKhachSan_MVC.NET.pdb
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Debug\net6.0\QuanLyKhachSan_MVC.NET.genruntimeconfig.cache
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Debug\net6.0\ref\QuanLyKhachSan_MVC.NET.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\bin\Debug\net6.0\Emgu.CV.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\bin\Debug\net6.0\System.Text.Json.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll

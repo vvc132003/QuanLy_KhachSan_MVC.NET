@@ -14,6 +14,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             phongService = phongServices;
             khachSanService = khachSanServices;
         }
+        public IActionResult AddNhanVien()
+        {
+            return View();
+        }
+        public IActionResult DiemDanh()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();

@@ -113,7 +113,7 @@ class TimeoutError extends Error {
         this.__proto__ = trueProto;
     }
 }
-/** Error thrown when an action is aborted. */
+/** Error thrown when an Action is aborted. */
 class AbortError extends Error {
     /** Constructs a new instance of {@link AbortError}.
      *
@@ -226,9 +226,9 @@ class HttpResponse {
         this.content = content;
     }
 }
-/** Abstraction over an HTTP client.
+/** AbstrAction over an HTTP client.
  *
- * This class provides an abstraction over an HTTP client so that a different implementation can be provided on different platforms.
+ * This class provides an abstrAction over an HTTP client so that a different implementation can be provided on different platforms.
  */
 class HttpClient {
     get(url, options) {

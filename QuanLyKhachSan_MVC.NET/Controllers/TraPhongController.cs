@@ -13,7 +13,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly LichSuThanhToanService lichSuThanhToanService;
         private readonly PhongService phongService;
         private readonly SuDungMaGiamGiaService sugiamGiaService;
-        private readonly QuyDinhGiamGiaService quyDinhGiamGiaservice;
         private readonly ThoiGianService thoiGianService;
         private readonly MaGiamGiaService maGiamGiaService;
         private readonly KhachHangService khachHangService;
@@ -28,7 +27,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                   LichSuThanhToanService lichSuThanhToanServices,
                                   PhongService phongServices,
                                   SuDungMaGiamGiaService sugiamGiaServices,
-                                  QuyDinhGiamGiaService quydinhGiamGiaServices,
                                   ThoiGianService thoiGianServices,
                                   MaGiamGiaService maGiamGiaServices, KhachHangService khachHangServices,
                                   NgayLeService ngayLeService, ChinhSachGiaService chinhSachGiaService)
@@ -39,7 +37,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             lichSuThanhToanService = lichSuThanhToanServices;
             phongService = phongServices;
             sugiamGiaService = sugiamGiaServices;
-            quyDinhGiamGiaservice = quydinhGiamGiaServices;
             thoiGianService = thoiGianServices;
             maGiamGiaService = maGiamGiaServices;
             khachHangService = khachHangServices;

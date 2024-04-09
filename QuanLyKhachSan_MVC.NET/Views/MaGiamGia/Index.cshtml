@@ -42,13 +42,15 @@
                                                 <th>ID</th>
                                                 <th>Mã giảm giá</th>
                                                 <th>Mô tả</th>
+                                                <th>Số lượng đặt phòng tối thiểu</th>
+                                                <th>Tổng tiền tối thiểu</th>
+                                                <th>Thời gian đặt phòng</th>
                                                 <th>Phần trăm được giảm</th>
                                                 <th>Số lần sử dụng tối đa</th>
                                                 <th>Số lần đã sử dụng</th>
                                                 <th>Ngày bắt đầu</th>
                                                 <th>Ngày kết thúc</th>
-                                                <th>Id quy định</th>
-                                                <th>Action</th>
+                                                <th>Thao tác</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -61,12 +63,16 @@
                                                         <td>@count</td>
                                                         <td>@maGiamGia.magiamgia</td>
                                                         <td>@maGiamGia.mota</td>
+                                                        <td>@maGiamGia.soluongdatphongtoithieu</td>
+                                                        <td>
+                                                            @string.Format("{0:N0} VNĐ", @maGiamGia.tongtientoithieu)
+                                                        </td>
+                                                        <td>@maGiamGia.thoigiandatphong h</td>
                                                         <td>@maGiamGia.phantramgiamgia %</td>
                                                         <td>@maGiamGia.solansudungtoida</td>
                                                         <td>@maGiamGia.solandasudung</td>
                                                         <td>@maGiamGia.ngaybatdau.ToString("dd/MM/yyyy")</td>
                                                         <td>@maGiamGia.ngayketthuc.ToString("dd/MM/yyyy")</td>
-                                                        <td>@maGiamGia.idquydinhgiamgia</td>
                                                         <td>
                                                             <a href="/Tang//@maGiamGia.id" class="btn btn-danger" title="Xoá">
                                                                 <i class="fas fa-times-circle"></i>
@@ -105,7 +111,7 @@
             <div class="modal-body text-left">
                 <div class="text-bg-success p-2">Thêm mã giảm giá</div>
                 <div class="border border-secondary-subtle" style="padding:10px 20px">
-                    <form method="post" action="/MaGiamGia/ThemMaGiamGia">
+                    <form method="post" Action="/MaGiamGia/ThemMaGiamGia">
                         <div class="mb-3">
                             <label for="magiamgia" class="form-label">Mã giảm giá:</label>
                             <input type="text" name="magiamgia" id="magiamgia" class="form-control" />
@@ -113,6 +119,18 @@
                         <div class="mb-3">
                             <label for="mota" class="form-label">Mô tả:</label>
                             <input type="text" name="mota" id="mota" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="soluongdatphongtoithieu" class="form-label">Số lần đặt phòng tối thiểu:</label>
+                            <input type="number" name="soluongdatphongtoithieu" id="soluongdatphongtoithieu" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="tongtientoithieu" class="form-label">Tổng tiền tối thiểu:</label>
+                            <input type="number" name="tongtientoithieu" id="tongtientoithieu" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="thoigiandatphong" class="form-label">Thời gian đặt phòng tối thiểu:</label>
+                            <input type="datetime" name="thoigiandatphong" id="thoigiandatphong" class="form-control" />
                         </div>
                         <div class="mb-3">
                             <label for="phantramgiamgia" class="form-label">Phần trăm giảm giá:</label>
@@ -129,22 +147,6 @@
                         <div class="mb-3">
                             <label for="ngayketthuc" class="form-label">Ngày kết thúc:</label>
                             <input type="datetime-local" name="ngayketthuc" id="ngayketthuc" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="idquydinhgiamgia" class="form-label">Quy định giảm giá:</label>
-                            <select id="idquydinhgiamgia" name="idquydinhgiamgia" class="form-control">
-                                @if (Model.listquyDinhGiamGia != null && Model.listquyDinhGiamGia.Count > 0)
-                                {
-                                    foreach (var quyDinhGiamGia in Model.listquyDinhGiamGia)
-                                    {
-                                        <option value="@quyDinhGiamGia.id">Quy định @quyDinhGiamGia.id</option>
-                                    }
-                                }
-                                else
-                                {
-                                    <option value="" selected>Không có dữ liệu</option>
-                                }
-                            </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">

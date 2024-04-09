@@ -30,18 +30,18 @@ namespace Service.Service
                     {
                         while (reader.Read())
                         {
-                            MaGiamGia magiamgia = new MaGiamGia
-                            {
-                                id = reader.GetInt32(reader.GetOrdinal("id")),
-                                magiamgia = reader.GetString(reader.GetOrdinal("magiamgia")),
-                                mota = reader.GetString(reader.GetOrdinal("mota")),
-                                phantramgiamgia = Convert.ToSingle(reader["phantramgiamgia"]),
-                                ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
-                                ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
-                                idquydinhgiamgia = reader.GetInt32(reader.GetOrdinal("idquydinhgiamgia")),
-                                solansudungtoida = reader.GetInt32(reader.GetOrdinal("solansudungtoida")),
-                                solandasudung = reader.GetInt32(reader.GetOrdinal("solandasudung")),
-                            };
+                            MaGiamGia magiamgia = new MaGiamGia();
+                            magiamgia.id = Convert.ToInt32(reader["id"]);
+                            magiamgia.magiamgia = reader["magiamgia"].ToString();
+                            magiamgia.mota = reader["mota"].ToString();
+                            magiamgia.soluongdatphongtoithieu = Convert.ToInt32(reader["soluongdatphongtoithieu"]);
+                            magiamgia.tongtientoithieu = Convert.ToSingle(reader["tongtientoithieu"]);
+                            magiamgia.thoigiandatphong = Convert.ToSingle(reader["thoigiandatphong"]);
+                            magiamgia.phantramgiamgia = Convert.ToSingle(reader["phantramgiamgia"]);
+                            magiamgia.solansudungtoida = Convert.ToInt32(reader["solansudungtoida"]);
+                            magiamgia.solandasudung = Convert.ToInt32(reader["solandasudung"]);
+                            magiamgia.ngaybatdau = Convert.ToDateTime(reader["ngaybatdau"]);
+                            magiamgia.ngayketthuc = Convert.ToDateTime(reader["ngayketthuc"]);
 
                             magiamgiaList.Add(magiamgia);
                         }
@@ -51,43 +51,47 @@ namespace Service.Service
             return magiamgiaList;
         }
 
-        public void CapNhatMaGiamGia(MaGiamGia maGiamGia)
+        public void CapNhatMaGiamGia(MaGiamGia magiamgia)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
-                string query = "UPDATE MaGiamGia SET magiamgia = @MaGiamGia, mota = @MoTa, phantramgiamgia = @PhanTramGiamGia,solansudungtoida=@solansudungtoida,solandasudung=@solandasudung, ngaybatdau = @NgayBatDau, ngayketthuc = @NgayKetThuc, idquydinhgiamgia = @IDQuyDinhGiamGia WHERE id = @ID";
+                string query = "UPDATE MaGiamGia SET magiamgia = @magiamgia, mota = @mota, soluongdatphongtoithieu = @soluongdatphongtoithieu, tongtientoithieu = @tongtientoithieu, thoigiandatphong = @thoigiandatphong, phantramgiamgia = @phantramgiamgia, solansudungtoida = @solansudungtoida, solandasudung = @solandasudung, ngaybatdau = @ngaybatdau, ngayketthuc = @ngayketthuc WHERE id = @id";
 
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@MaGiamGia", maGiamGia.magiamgia);
-                command.Parameters.AddWithValue("@MoTa", maGiamGia.mota);
-                command.Parameters.AddWithValue("@PhanTramGiamGia", maGiamGia.phantramgiamgia);
-                command.Parameters.AddWithValue("@NgayBatDau", maGiamGia.ngaybatdau);
-                command.Parameters.AddWithValue("@NgayKetThuc", maGiamGia.ngayketthuc);
-                command.Parameters.AddWithValue("@IDQuyDinhGiamGia", maGiamGia.idquydinhgiamgia);
-                command.Parameters.AddWithValue("@solansudungtoida", maGiamGia.solansudungtoida);
-                command.Parameters.AddWithValue("@solandasudung", maGiamGia.solandasudung);
-                command.Parameters.AddWithValue("@ID", maGiamGia.id);
+                command.Parameters.AddWithValue("@id", magiamgia.id);
+                command.Parameters.AddWithValue("@magiamgia", magiamgia.magiamgia);
+                command.Parameters.AddWithValue("@mota", magiamgia.mota);
+                command.Parameters.AddWithValue("@soluongdatphongtoithieu", magiamgia.soluongdatphongtoithieu);
+                command.Parameters.AddWithValue("@tongtientoithieu", magiamgia.tongtientoithieu);
+                command.Parameters.AddWithValue("@thoigiandatphong", magiamgia.thoigiandatphong);
+                command.Parameters.AddWithValue("@phantramgiamgia", magiamgia.phantramgiamgia);
+                command.Parameters.AddWithValue("@solansudungtoida", magiamgia.solansudungtoida);
+                command.Parameters.AddWithValue("@solandasudung", magiamgia.solandasudung);
+                command.Parameters.AddWithValue("@ngaybatdau", magiamgia.ngaybatdau);
+                command.Parameters.AddWithValue("@ngayketthuc", magiamgia.ngayketthuc);
 
                 connection.Open();
                 command.ExecuteNonQuery();
             }
         }
 
-        public void ThemMaGiamGia(MaGiamGia maGiamGia)
+        public void ThemMaGiamGia(MaGiamGia magiamgia)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
-                string query = "INSERT INTO MaGiamGia (magiamgia, mota, phantramgiamgia, solansudungtoida, solandasudung, ngaybatdau, ngayketthuc, idquydinhgiamgia)" +
-                " VALUES (@MaGiamGia, @MoTa, @PhanTramGiamGia, @solansudungtoida, @solandasudung, @NgayBatDau, @NgayKetThuc, @IDQuyDinhGiamGia)";
+                string query = "INSERT INTO MaGiamGia (magiamgia, mota, soluongdatphongtoithieu, tongtientoithieu, thoigiandatphong, phantramgiamgia, solansudungtoida, solandasudung, ngaybatdau, ngayketthuc) VALUES (@magiamgia, @mota, @soluongdatphongtoithieu, @tongtientoithieu, @thoigiandatphong, @phantramgiamgia, @solansudungtoida, @solandasudung, @ngaybatdau, @ngayketthuc)";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@MaGiamGia", maGiamGia.magiamgia);
-                command.Parameters.AddWithValue("@MoTa", maGiamGia.mota);
-                command.Parameters.AddWithValue("@PhanTramGiamGia", maGiamGia.phantramgiamgia);
-                command.Parameters.AddWithValue("@NgayBatDau", maGiamGia.ngaybatdau);
-                command.Parameters.AddWithValue("@NgayKetThuc", maGiamGia.ngayketthuc);
-                command.Parameters.AddWithValue("@IDQuyDinhGiamGia", maGiamGia.idquydinhgiamgia);
-                command.Parameters.AddWithValue("@solansudungtoida", maGiamGia.solansudungtoida);
-                command.Parameters.AddWithValue("@solandasudung", maGiamGia.solandasudung);
+                command.Parameters.AddWithValue("@magiamgia", magiamgia.magiamgia);
+                command.Parameters.AddWithValue("@mota", magiamgia.mota);
+                command.Parameters.AddWithValue("@soluongdatphongtoithieu", magiamgia.soluongdatphongtoithieu);
+                command.Parameters.AddWithValue("@tongtientoithieu", magiamgia.tongtientoithieu);
+                command.Parameters.AddWithValue("@thoigiandatphong", magiamgia.thoigiandatphong);
+                command.Parameters.AddWithValue("@phantramgiamgia", magiamgia.phantramgiamgia);
+                command.Parameters.AddWithValue("@solansudungtoida", magiamgia.solansudungtoida);
+                command.Parameters.AddWithValue("@solandasudung", magiamgia.solandasudung);
+                command.Parameters.AddWithValue("@ngaybatdau", magiamgia.ngaybatdau);
+                command.Parameters.AddWithValue("@ngayketthuc", magiamgia.ngayketthuc);
+
                 connection.Open();
                 command.ExecuteNonQuery();
             }
@@ -124,12 +128,14 @@ namespace Service.Service
                                 id = reader.GetInt32(reader.GetOrdinal("id")),
                                 magiamgia = reader.GetString(reader.GetOrdinal("magiamgia")),
                                 mota = reader.GetString(reader.GetOrdinal("mota")),
+                                soluongdatphongtoithieu = reader.GetInt32(reader.GetOrdinal("soluongdatphongtoithieu")),
+                                tongtientoithieu = Convert.ToSingle(reader["tongtientoithieu"]),
+                                thoigiandatphong = Convert.ToSingle(reader["thoigiandatphong"]),
                                 phantramgiamgia = Convert.ToSingle(reader["phantramgiamgia"]),
-                                ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
-                                ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
-                                idquydinhgiamgia = reader.GetInt32(reader.GetOrdinal("idquydinhgiamgia")),
                                 solansudungtoida = reader.GetInt32(reader.GetOrdinal("solansudungtoida")),
                                 solandasudung = reader.GetInt32(reader.GetOrdinal("solandasudung")),
+                                ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
+                                ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
                             };
                             return maGiamGia;
                         }
@@ -141,41 +147,78 @@ namespace Service.Service
                 }
             }
         }
-        public MaGiamGia GetMaGiamGiaByIdQuyDinhGiamGia(int idquydinhgiamgia)
+        public MaGiamGia GetMaGiamGiasolandatphong(float soluongdatphongtoithieu)
         {
+            MaGiamGia magiamgia = null;
+
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "SELECT * FROM MaGiamGia WHERE idquydinhgiamgia = @idquydinhgiamgia";
+                string query = "SELECT * FROM MaGiamGia WHERE soluongdatphongtoithieu = @Soluongdatphongtoithieu";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@idquydinhgiamgia", idquydinhgiamgia);
+                    command.Parameters.AddWithValue("@Soluongdatphongtoithieu", soluongdatphongtoithieu);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            MaGiamGia maGiamGia = new MaGiamGia
+                            magiamgia = new MaGiamGia
                             {
                                 id = reader.GetInt32(reader.GetOrdinal("id")),
                                 magiamgia = reader.GetString(reader.GetOrdinal("magiamgia")),
                                 mota = reader.GetString(reader.GetOrdinal("mota")),
+                                soluongdatphongtoithieu = reader.GetInt32(reader.GetOrdinal("soluongdatphongtoithieu")),
+                                tongtientoithieu = Convert.ToSingle(reader["tongtientoithieu"]),
+                                thoigiandatphong = Convert.ToSingle(reader["thoigiandatphong"]),
                                 phantramgiamgia = Convert.ToSingle(reader["phantramgiamgia"]),
-                                ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
-                                ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
-                                idquydinhgiamgia = reader.GetInt32(reader.GetOrdinal("idquydinhgiamgia")),
                                 solansudungtoida = reader.GetInt32(reader.GetOrdinal("solansudungtoida")),
                                 solandasudung = reader.GetInt32(reader.GetOrdinal("solandasudung")),
+                                ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
+                                ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
                             };
-                            return maGiamGia;
-                        }
-                        else
-                        {
-                            return null;
                         }
                     }
                 }
             }
+
+            return magiamgia;
         }
+
+        /* public MaGiamGia GetMaGiamGiaByIdQuyDinhGiamGia(int idquydinhgiamgia)
+         {
+             using (SqlConnection connection = DBUtils.GetDBConnection())
+             {
+                 connection.Open();
+                 string query = "SELECT * FROM MaGiamGia WHERE idquydinhgiamgia = @idquydinhgiamgia";
+                 using (SqlCommand command = new SqlCommand(query, connection))
+                 {
+                     command.Parameters.AddWithValue("@idquydinhgiamgia", idquydinhgiamgia);
+                     using (SqlDataReader reader = command.ExecuteReader())
+                     {
+                         if (reader.Read())
+                         {
+                             MaGiamGia maGiamGia = new MaGiamGia
+                             {
+                                 id = reader.GetInt32(reader.GetOrdinal("id")),
+                                 magiamgia = reader.GetString(reader.GetOrdinal("magiamgia")),
+                                 mota = reader.GetString(reader.GetOrdinal("mota")),
+                                 phantramgiamgia = Convert.ToSingle(reader["phantramgiamgia"]),
+                                 ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
+                                 ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
+                                 idquydinhgiamgia = reader.GetInt32(reader.GetOrdinal("idquydinhgiamgia")),
+                                 solansudungtoida = reader.GetInt32(reader.GetOrdinal("solansudungtoida")),
+                                 solandasudung = reader.GetInt32(reader.GetOrdinal("solandasudung")),
+                             };
+                             return maGiamGia;
+                         }
+                         else
+                         {
+                             return null;
+                         }
+                     }
+                 }
+             }
+         }*/
         public MaGiamGia GetMaGiamGiaByMaGiamGia(string magiamgia)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
@@ -194,12 +237,14 @@ namespace Service.Service
                                 id = reader.GetInt32(reader.GetOrdinal("id")),
                                 magiamgia = reader.GetString(reader.GetOrdinal("magiamgia")),
                                 mota = reader.GetString(reader.GetOrdinal("mota")),
+                                soluongdatphongtoithieu = reader.GetInt32(reader.GetOrdinal("soluongdatphongtoithieu")),
+                                tongtientoithieu = Convert.ToSingle(reader["tongtientoithieu"]),
+                                thoigiandatphong = Convert.ToSingle(reader["thoigiandatphong"]),
                                 phantramgiamgia = Convert.ToSingle(reader["phantramgiamgia"]),
-                                ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
-                                ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
-                                idquydinhgiamgia = reader.GetInt32(reader.GetOrdinal("idquydinhgiamgia")),
                                 solansudungtoida = reader.GetInt32(reader.GetOrdinal("solansudungtoida")),
                                 solandasudung = reader.GetInt32(reader.GetOrdinal("solandasudung")),
+                                ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
+                                ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
                             };
                             return maGiamGia;
                         }

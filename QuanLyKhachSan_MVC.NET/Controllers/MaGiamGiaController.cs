@@ -7,12 +7,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 {
     public class MaGiamGiaController : Controller
     {
-        private readonly QuyDinhGiamGiaService quyDinhGiamGiaService;
         private readonly KhachSanService khachSanService;
         private readonly MaGiamGiaService maGiamGiaService;
-        public MaGiamGiaController(QuyDinhGiamGiaService quyDinhGiamGiaServices, KhachSanService khachSanServices, MaGiamGiaService maGiamGiaServices)
+        public MaGiamGiaController(KhachSanService khachSanServices, MaGiamGiaService maGiamGiaServices)
         {
-            quyDinhGiamGiaService = quyDinhGiamGiaServices;
             khachSanService = khachSanServices;
             maGiamGiaService = maGiamGiaServices;
         }
@@ -26,11 +24,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-                List<QuyDinhGiamGia> quyDinhGiamGias = quyDinhGiamGiaService.GetAllQuyDinhGia();
                 List<MaGiamGia> listmagiamgai = maGiamGiaService.GetAllMaGiamGia();
                 Modeldata modeldata = new Modeldata
                 {
-                    listquyDinhGiamGia = quyDinhGiamGias,
                     listmaGiamGia = listmagiamgai
                 };
                 return View(modeldata);

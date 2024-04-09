@@ -54,13 +54,13 @@
 				$li.children('a')[method](c.anchorClass);
 			},
 			toggleTouchAction = function ($menu) {
-				var msTouchAction = $menu.css('ms-touch-action');
-				var touchAction = $menu.css('touch-action');
+				var msTouchAction = $menu.css('ms-touch-Action');
+				var touchAction = $menu.css('touch-Action');
 				touchAction = touchAction || msTouchAction;
 				touchAction = (touchAction === 'pan-y') ? 'auto' : 'pan-y';
 				$menu.css({
-					'ms-touch-action': touchAction,
-					'touch-action': touchAction
+					'ms-touch-Action': touchAction,
+					'touch-Action': touchAction
 				});
 			},
 			getMenu = function ($el) {

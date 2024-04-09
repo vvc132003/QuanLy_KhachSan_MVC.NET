@@ -686,7 +686,7 @@
             $target = $(event.currentTarget),
             indexOffset, slideOffset, unevenOffset;
 
-        // If target is a link, prevent default action.
+        // If target is a link, prevent default Action.
         if($target.is('a')) {
             event.preventDefault();
         }
@@ -1436,16 +1436,16 @@
         _.initSlideEvents();
 
         _.$list.on('touchstart.slick mousedown.slick', {
-            action: 'start'
+            Action: 'start'
         }, _.swipeHandler);
         _.$list.on('touchmove.slick mousemove.slick', {
-            action: 'move'
+            Action: 'move'
         }, _.swipeHandler);
         _.$list.on('touchend.slick mouseup.slick', {
-            action: 'end'
+            Action: 'end'
         }, _.swipeHandler);
         _.$list.on('touchcancel.slick mouseleave.slick', {
-            action: 'end'
+            Action: 'end'
         }, _.swipeHandler);
 
         _.$list.on('click.slick', _.clickHandler);
@@ -2746,7 +2746,7 @@
                 .touchThreshold;
         }
 
-        switch (event.data.action) {
+        switch (event.data.Action) {
 
             case 'start':
                 _.swipeStart(event);

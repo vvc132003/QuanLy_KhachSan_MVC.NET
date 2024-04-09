@@ -34,7 +34,7 @@
                         <a>Phòng đang dọn dẹp</a>
                     </div>
                 </div>
-                <form style="padding: 20px 34px; text-align: right;" action="/Phong/Index" method="GET">
+                <form style="padding: 20px 34px; text-align: right;" Action="/Phong/Index" method="GET">
                     <input type="text"
                            placeholder="Nhập số phòng..." id="loaiphong" name="loaiphong">
                     <input type="submit" value="Tìm kiếm">
@@ -79,7 +79,7 @@
                                     <div class="context-menu">
                                         @if (phong.tinhtrangphong == "có khách")
                                         {
-                                            <a href="/ThuePhong/ChiTietThuePhong/?id=@phong.id">
+                                            <a href="/thuephong/chitietthuephong/?id=@phong.id">
                                                 <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
                                                 Thông tin thuê phòng
                                             </a>
@@ -90,44 +90,44 @@
                                         }
                                         else if (phong.tinhtrangphong == "còn trống")
                                         {
-                                            <a href="/ThuePhong/Index/@phong.id">
+                                            <a href="/thuephong/index/@phong.id">
                                                 <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-bed"></i>
                                                 Đặt phòng bình thường
                                             </a>
-                                            <a href="/ThuePhong/Index1">
+                                            <a href="/thuephong/index1">
                                                 <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-users"></i>
                                                 Đặt phòng theo đoàn
                                             </a>
-                                            <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
+                                            <a href="/phong/capnhattrangthaiphong/?idphong=@phong.id">
                                                 <i style="font-size: 20px; margin-right: 14px;color: #8B4513;" class="fas fa-wrench"></i>
                                                 Sửa phòng
                                             </a>
                                         }
                                         else if (phong.tinhtrangphong == "đã đặt")
                                         {
-                                            <a href="/NhanPhong/NhanPhongOnline/?id=@phong.id">
+                                            <a href="/nhanphong/nhannhongonline/?id=@phong.id">
                                                 <i style="font-size: 20px; margin-right: 14px" class="fas fa-check-circle"></i>
                                                 Check nhận phòng
                                             </a>
-                                            <a href="/HuyDatPhong/HuyDatPhong/?idphong=@phong.id">
+                                            <a href="/huydatphong/huydatphong/?idphong=@phong.id">
                                                 <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
                                                 Huỷ đặt phòng
                                             </a>
                                         }
                                         else if (phong.tinhtrangphong == "đang sửa chữa")
                                         {
-                                            <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
+                                            <a href="/phong/capnhattrangthaiphong/?idphong=@phong.id">
                                                 <i style="font-size: 20px; margin-right: 2px; color: blue;" class="fas fa-check"></i>
                                                 Hoàn tất sửa chữa
                                             </a>
                                         }
                                         else if (phong.tinhtrangphong == "chưa dọn")
                                         {
-                                            <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
+                                            <a href="/phong/capnhattrangthaiphong/?idphong=@phong.id">
                                                 <i style="font-size: 20px; margin-right: 10px; color: blue;" class="fas fa-check"></i>
                                                 Dọn xong
                                             </a>
-                                            <a href="/Phong/CapNhatTrangThaiPhong/?idphong=@phong.id">
+                                            <a href="/phong/capnhattrangthaiphong/?idphong=@phong.id">
                                                 <i style="font-size: 20px; margin-right: 10px" class="fas fa-wrench"></i>
                                                 Sửa phòng
                                             </a>
@@ -153,7 +153,7 @@
                 <div class="modal-body text-left">
                     <div class="text-bg-success p-2">Chuyển phòng</div>
                     <div class="border border-secondary-subtle" style="padding:10px 20px">
-                        <form method="post" action="/ChuyenPhong/ChuyenPhong">
+                        <form method="post" Action="/ChuyenPhong/ChuyenPhong">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-3">
@@ -204,7 +204,7 @@
                 <div class="modal-body text-left">
                     <div class="text-bg-success p-2">Thêm phòng</div>
                     <div class="border border-secondary-subtle" style="padding:10px 20px">
-                        <form method="post" action="/Phong/ThemPhong">
+                        <form method="post" Action="/Phong/ThemPhong">
                             <div class="row">
                                 <input type="hidden" class="form-control" value="@ViewData["idkhachsan"]" id="idkhachsan" name="idkhachsan" readonly>
                                 <input type="hidden" class="form-control" value="@tang.tang.id" id="idtang" name="idtang" readonly>
