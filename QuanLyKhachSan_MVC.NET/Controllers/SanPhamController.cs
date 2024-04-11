@@ -27,6 +27,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["tenchucvu"] = tenchucvu;
                 ViewData["idkhachsan"] = idkhachsan;
                 List<SanPham> sanphams = sanPhamService.GetAllSanPham();
+                List<KhachSan> khachSans = khachSanService.GetAllKhachSan();
                 List<Modeldata> modeldatalist = new List<Modeldata>();
                 foreach (var sanPham in sanphams)
                 {
@@ -38,7 +39,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     };
                     modeldatalist.Add(modeldata);
                 }
-                return View(modeldatalist);
+                return View(new Tuple<List<Modeldata>, List<KhachSan>>(modeldatalist, khachSans));
             }
             else
             {
@@ -53,10 +54,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 string hovaten = HttpContext.Session.GetString("hovaten");
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
-                sanPham.idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 sanPham.trangthai = "còn bán";
                 sanPhamService.ThemSanPham(sanPham);
-                return RedirectToAction("Index", "SanPham");
+                return RedirectToAction("index", "sanpham");
             }
             else
             {
@@ -72,7 +72,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = idnd;
                 ViewData["hovaten"] = hovaten;
                 sanPhamService.XoaSanPham(id);
-                return RedirectToAction("Index", "SanPham");
+                return RedirectToAction("index", "sanpham");
             }
             else
             {

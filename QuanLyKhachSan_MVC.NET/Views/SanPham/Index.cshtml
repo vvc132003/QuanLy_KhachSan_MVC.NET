@@ -1,4 +1,4 @@
-﻿@model List<Model.Models.Modeldata>
+﻿@model Tuple<List<Model.Models.Modeldata>, List<Model.Models.KhachSan>>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel='stylesheet'
@@ -52,10 +52,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (Model != null && Model.Count > 0)
+                                            @if (Model.Item1 != null && Model.Item1.Count > 0)
                                             {
                                                 int count = 1;
-                                                foreach (var modeldata in Model)
+                                                foreach (var modeldata in Model.Item1)
                                                 {
                                                     <tr id="row-@count">
                                                         <td>@count</td>
@@ -126,6 +126,22 @@
                         <div class="mb-3">
                             <label for="image" class="form-label">Ảnh:</label>
                             <input type="text" name="image" id="image" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="idkhachsan" class="form-label">Khách sạn:</label>
+                            <select id="idkhachsan" name="idkhachsan" class="form-control">
+                                @if (Model.Item2 != null && Model.Item2.Count > 0)
+                                {
+                                    foreach (var khachsan in Model.Item2)
+                                    {
+                                        <option value="@khachsan.id">@khachsan.tenkhachsan</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="" selected>Không có dữ liệu</option>
+                                }
+                            </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">
