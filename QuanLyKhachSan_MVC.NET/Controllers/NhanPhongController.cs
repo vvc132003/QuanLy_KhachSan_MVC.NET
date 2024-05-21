@@ -35,7 +35,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             return View();
         }
-        public IActionResult NhanPhongOnline(int id)
+        public IActionResult NhanPhongOnline(int idphong)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -45,7 +45,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-                DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThaiOnline(id);
+                DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThaiOnline(idphong);
                 // Inside your controller Action
                 List<Modeldata> yourModelList = new List<Modeldata>();
                 if (datPhong != null)

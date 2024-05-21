@@ -2,14 +2,14 @@
 <link href="/static/img/favicon.ico" rel="icon">
 <link href="/static/img/apple-favicon.png" rel="apple-touch-icon">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-<link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<link href="/static/vendor/animate/animate.min.css" rel="stylesheet">
-<link href="/static/vendor/slick/slick.css" rel="stylesheet">
-<link href="/static/vendor/slick/slick-theme.css" rel="stylesheet">
-<link href="/static/vendor/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-<link href="/static/css/hover-style.css" rel="stylesheet">
-<link href="/static/css/style.css" rel="stylesheet">
+<link href="~/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/css/animate.min.css" rel="stylesheet" />
+<link href="~/css/slick.css" rel="stylesheet" />
+<link href="~/css/slick-theme.css" rel="stylesheet" />
+<link href="~/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+<link href="~/css/hover-style.css" rel="stylesheet" />
+<link href="~/css/style.css" rel="stylesheet" />
 @Html.Partial("~/Views/layout/index.cshtml")
 <div id="booking">
     <div class="container">
@@ -20,17 +20,25 @@
             <div class="col-12">
                 <div class="booking-form">
                     <div id="success"></div>
-                    <form name="sentMessage" id="bookingForm" novalidate="novalidate">
-                        <input type="text" id="idphong" name="idphong" value="@Model.phong.id" class="form-control" />
+                    <form method="post" action="/ThuePhong/CheckInDatPhongOnline">
+                        <input type="hidden" id="idphong" name="idphong" value="@Model.phong.id" class="form-control" />
+                        <input type="hidden" id="idkhachsan" name="idkhachsan" value="@Model.phong.idkhachsan" class="form-control" />
                         <div class="form-row">
                             <div class="control-group col-md-6">
                                 <label>Họ và tên</label>
-                                <input type="text" class="form-control" id="hovaten" name="hovaten" value="@Model.khachhang.hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
+                                @if (Model.khachhang != null)
+                                {
+                                    <input type="text" class="form-control" id="hovaten" name="hovaten" value="@Model.khachhang.hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
+                                }
+                                else
+                                {
+                                <input type="text" class="form-control" id="hovaten" name="hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
+                                }
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group col-md-6">
                                 <label>Email</label>
-                                <input type="email" class="form-control" id="lname" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
+                                <input type="email" name="email" class="form-control" id="email" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>

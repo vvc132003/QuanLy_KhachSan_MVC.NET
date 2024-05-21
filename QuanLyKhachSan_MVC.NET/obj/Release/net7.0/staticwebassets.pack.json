@@ -1,0 +1,817 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\c3.min.css",
+      "PackagePath": "staticwebassets\\Content\\static\\c3.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\css\\hover-style.css",
+      "PackagePath": "staticwebassets\\Content\\static\\css\\hover-style.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\css\\style.css",
+      "PackagePath": "staticwebassets\\Content\\static\\css\\style.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\custom.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\custom.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\dangnhap.css",
+      "PackagePath": "staticwebassets\\Content\\static\\dangnhap.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\dashboard1.css",
+      "PackagePath": "staticwebassets\\Content\\static\\dashboard1.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\home.css",
+      "PackagePath": "staticwebassets\\Content\\static\\home.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\about\\about-1.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\about\\about-1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\about\\about-2.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\about\\about-2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\about\\about-3.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\about\\about-3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\amenities-bg.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\amenities-bg.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\apple-favicon.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\apple-favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\favicon.ico",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\air-conditioner-hover.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\air-conditioner-hover.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\air-conditioner.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\air-conditioner.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\air-conditioner.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\air-conditioner.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\bathtub-hover.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\bathtub-hover.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\bathtub.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\bathtub.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\bathtub.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\bathtub.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\call-hover.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\call-hover.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\call.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\call.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\call.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\call.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\kitchen-hover.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\kitchen-hover.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\kitchen.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\kitchen.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\kitchen.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\kitchen.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\minibar-hover.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\minibar-hover.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\minibar.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\minibar.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\minibar.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\minibar.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\shield-hover.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\shield-hover.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\shield.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\shield.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\shield.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\shield.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\shower-hover.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\shower-hover.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\shower.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\shower.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\shower.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\shower.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\television-hover.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\television-hover.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\television.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\television.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\television.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\television.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\towel-hover.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\towel-hover.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\towel.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\towel.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\towel.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\towel.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\wifi-connection-signal-symbol.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\wifi-connection-signal-symbol.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\wifi-hover.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\wifi-hover.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\icon\\wifi.png",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\icon\\wifi.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\logo.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\logo.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\room-slider\\room-1.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\room-slider\\room-1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\room-slider\\room-2.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\room-slider\\room-2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\room-slider\\room-3.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\room-slider\\room-3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\room-slider\\room-4.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\room-slider\\room-4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\room-slider\\room-5.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\room-slider\\room-5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\room-slider\\room-6.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\room-slider\\room-6.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\room\\room-1.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\room\\room-1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\room\\room-2.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\room\\room-2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\room\\room-3.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\room\\room-3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\room\\room-4.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\room\\room-4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\room\\room-5.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\room\\room-5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\slider\\header-slider-1.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\slider\\header-slider-1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\slider\\header-slider-2.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\slider\\header-slider-2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\img\\slider\\header-slider-3.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\img\\slider\\header-slider-3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\index.css",
+      "PackagePath": "staticwebassets\\Content\\static\\index.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\jquery-3.2.1.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\jquery-3.2.1.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\jquery.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\js\\booking.js",
+      "PackagePath": "staticwebassets\\Content\\static\\js\\booking.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\js\\contact.js",
+      "PackagePath": "staticwebassets\\Content\\static\\js\\contact.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\js\\jqBootstrapValidation.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\js\\jqBootstrapValidation.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\js\\main.js",
+      "PackagePath": "staticwebassets\\Content\\static\\js\\main.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\login\\css\\font-awesome.css",
+      "PackagePath": "staticwebassets\\Content\\static\\login\\css\\font-awesome.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\login\\css\\style.css",
+      "PackagePath": "staticwebassets\\Content\\static\\login\\css\\style.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\login\\fonts\\FontAwesome.otf",
+      "PackagePath": "staticwebassets\\Content\\static\\login\\fonts\\FontAwesome.otf"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\login\\fonts\\fontawesome-webfont.eot",
+      "PackagePath": "staticwebassets\\Content\\static\\login\\fonts\\fontawesome-webfont.eot"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\login\\fonts\\fontawesome-webfont.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\login\\fonts\\fontawesome-webfont.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\login\\fonts\\fontawesome-webfont.ttf",
+      "PackagePath": "staticwebassets\\Content\\static\\login\\fonts\\fontawesome-webfont.ttf"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\login\\fonts\\fontawesome-webfont.woff",
+      "PackagePath": "staticwebassets\\Content\\static\\login\\fonts\\fontawesome-webfont.woff"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\login\\fonts\\fontawesome-webfont.woff2",
+      "PackagePath": "staticwebassets\\Content\\static\\login\\fonts\\fontawesome-webfont.woff2"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\login\\images\\bg2.jpeg",
+      "PackagePath": "staticwebassets\\Content\\static\\login\\images\\bg2.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\logo-icon.png",
+      "PackagePath": "staticwebassets\\Content\\static\\logo-icon.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\logo-light-icon.png",
+      "PackagePath": "staticwebassets\\Content\\static\\logo-light-icon.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\logo-light-text.png",
+      "PackagePath": "staticwebassets\\Content\\static\\logo-light-text.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\logo-text.png",
+      "PackagePath": "staticwebassets\\Content\\static\\logo-text.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\morris.css",
+      "PackagePath": "staticwebassets\\Content\\static\\morris.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\style.css",
+      "PackagePath": "staticwebassets\\Content\\static\\style.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\animate\\animate.css",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\animate\\animate.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\animate\\animate.min.css",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\animate\\animate.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\bootstrap\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\bootstrap\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\bootstrap\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\bootstrap\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\bootstrap\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\bootstrap\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\bootstrap\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\bootstrap\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\easing\\easing.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\easing\\easing.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\easing\\easing.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\easing\\easing.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\font-awesome\\css\\font-awesome.css",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\font-awesome\\css\\font-awesome.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\font-awesome\\css\\font-awesome.min.css",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\font-awesome\\css\\font-awesome.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\font-awesome\\fonts\\FontAwesome.otf",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\font-awesome\\fonts\\FontAwesome.otf"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\font-awesome\\fonts\\fontawesome-webfont.eot",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\font-awesome\\fonts\\fontawesome-webfont.eot"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\font-awesome\\fonts\\fontawesome-webfont.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\font-awesome\\fonts\\fontawesome-webfont.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\font-awesome\\fonts\\fontawesome-webfont.ttf",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\font-awesome\\fonts\\fontawesome-webfont.ttf"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\font-awesome\\fonts\\fontawesome-webfont.woff",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\font-awesome\\fonts\\fontawesome-webfont.woff"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\font-awesome\\fonts\\fontawesome-webfont.woff2",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\font-awesome\\fonts\\fontawesome-webfont.woff2"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\jquery\\jquery-migrate.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\jquery\\jquery-migrate.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\jquery\\jquery.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\jquery\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\ajax-loader.gif",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\ajax-loader.gif"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\config.rb",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\config.rb"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\fonts\\slick.eot",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\fonts\\slick.eot"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\fonts\\slick.svg",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\fonts\\slick.svg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\fonts\\slick.ttf",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\fonts\\slick.ttf"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\fonts\\slick.woff",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\fonts\\slick.woff"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\slick-theme.css",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\slick-theme.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\slick-theme.less",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\slick-theme.less"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\slick-theme.scss",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\slick-theme.scss"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\slick.css",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\slick.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\slick.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\slick.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\slick.less",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\slick.less"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\slick.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\slick.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\slick\\slick.scss",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\slick\\slick.scss"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\stickyjs\\sticky.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\stickyjs\\sticky.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\superfish\\hoverIntent.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\superfish\\hoverIntent.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\superfish\\superfish.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\superfish\\superfish.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\superfish\\superfish.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\superfish\\superfish.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\tempusdominus\\css\\tempusdominus-bootstrap-4.css",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\tempusdominus\\css\\tempusdominus-bootstrap-4.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\tempusdominus\\css\\tempusdominus-bootstrap-4.min.css",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\tempusdominus\\css\\tempusdominus-bootstrap-4.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\tempusdominus\\js\\moment-timezone.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\tempusdominus\\js\\moment-timezone.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\tempusdominus\\js\\moment.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\tempusdominus\\js\\moment.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\tempusdominus\\js\\tempusdominus-bootstrap-4.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\tempusdominus\\js\\tempusdominus-bootstrap-4.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\tempusdominus\\js\\tempusdominus-bootstrap-4.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\tempusdominus\\js\\tempusdominus-bootstrap-4.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\wow\\wow.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\wow\\wow.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\vendor\\wow\\wow.min.js",
+      "PackagePath": "staticwebassets\\Content\\static\\vendor\\wow\\wow.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\animate.min.css",
+      "PackagePath": "staticwebassets\\css\\animate.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\c3.min.css",
+      "PackagePath": "staticwebassets\\css\\c3.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\dashboard1.css",
+      "PackagePath": "staticwebassets\\css\\dashboard1.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\font-awesome.min.css",
+      "PackagePath": "staticwebassets\\css\\font-awesome.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\home.css",
+      "PackagePath": "staticwebassets\\css\\home.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\hover-style.css",
+      "PackagePath": "staticwebassets\\css\\hover-style.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\morris.css",
+      "PackagePath": "staticwebassets\\css\\morris.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\slick-theme.css",
+      "PackagePath": "staticwebassets\\css\\slick-theme.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\slick.css",
+      "PackagePath": "staticwebassets\\css\\slick.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\style.css",
+      "PackagePath": "staticwebassets\\css\\style.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\tempusdominus-bootstrap-4.min.css",
+      "PackagePath": "staticwebassets\\css\\tempusdominus-bootstrap-4.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\js\\chat.js",
+      "PackagePath": "staticwebassets\\js\\chat.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\microsoft\\signalr\\dist\\browser\\signalr.js",
+      "PackagePath": "staticwebassets\\lib\\microsoft\\signalr\\dist\\browser\\signalr.js"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\lib\\microsoft\\signalr\\dist\\browser\\signalr.min.js",
+      "PackagePath": "staticwebassets\\lib\\microsoft\\signalr\\dist\\browser\\signalr.min.js"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.QuanLyKhachSan_MVC.NET.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.build.QuanLyKhachSan_MVC.NET.props",
+      "PackagePath": "build\\QuanLyKhachSan_MVC.NET.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.QuanLyKhachSan_MVC.NET.props",
+      "PackagePath": "buildMultiTargeting\\QuanLyKhachSan_MVC.NET.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.buildTransitive.QuanLyKhachSan_MVC.NET.props",
+      "PackagePath": "buildTransitive\\QuanLyKhachSan_MVC.NET.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

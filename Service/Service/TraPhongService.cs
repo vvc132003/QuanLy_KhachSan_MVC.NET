@@ -60,7 +60,7 @@ namespace Service
                             <h3>Khách sạn hotel</h3>
                             <p>Địa chỉ: TP.Huế</p>
                             <p>Điện thoại: 0373449865</p>
-                            <p>Website: chinh.com</p>
+                            <p>Website: sofwaremini.com</p>
                         </div>
                     </div>
                     <h4 style='margin-top: 20px; text-align: center;'>Hoá đơn thanh toán</h4>

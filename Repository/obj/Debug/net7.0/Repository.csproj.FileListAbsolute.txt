@@ -1,0 +1,15 @@
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\obj\Debug\net7.0\Repository.csproj.AssemblyReference.cache
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\obj\Debug\net7.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\obj\Debug\net7.0\Repository.AssemblyInfoInputs.cache
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\obj\Debug\net7.0\Repository.AssemblyInfo.cs
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\obj\Debug\net7.0\Repository.csproj.CoreCompileInputs.cache
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\bin\Debug\net7.0\Repository.deps.json
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\bin\Debug\net7.0\Repository.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\bin\Debug\net7.0\Repository.pdb
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\bin\Debug\net7.0\Model.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\bin\Debug\net7.0\Model.pdb
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\obj\Debug\net7.0\Repository.csproj.CopyComplete
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\obj\Debug\net7.0\Repository.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\obj\Debug\net7.0\refint\Repository.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\obj\Debug\net7.0\Repository.pdb
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\Repository\obj\Debug\net7.0\ref\Repository.dll

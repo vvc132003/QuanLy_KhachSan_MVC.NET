@@ -12,9 +12,9 @@ namespace ketnoicsdllan1
     {
         public static SqlConnection GetDBConnection()
         {
-            string datasource = @"Vo_Van_Chinh\SQLEXPRESS";
-            string database = "QuanLy_KhachSans";
-            string username = "sa";
+            string datasource = @"SQL8010.site4now.net";
+            string database = "db_aa8e2b_login";
+            string username = "db_aa8e2b_login_admin";
             string password = "chinh@2003";
             return DBSQLServerUtils.GetDBConnection(datasource, database, username, password);
         }

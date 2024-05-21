@@ -1,5 +1,4 @@
 ﻿@model Model.Models.Modeldata
-@using PagedList.Mvc;
 @using Auth0.ManagementApi.Paging;
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -9,11 +8,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-<link href="/static/morris.css" rel="stylesheet" />
-<link href="/static/c3.min.css" rel="stylesheet" />
-<link href="/static/home.css" rel="stylesheet" />
-<link href="/static/dashboard1.css" rel="stylesheet" />
-<link href="/static/style.css" rel="stylesheet" />
+<link href="~/content/static/morris.css" rel="stylesheet" />
+<link href="~/content/static/c3.min.css" rel="stylesheet" />
+<link href="~/content/static/style.css" rel="stylesheet" />
+<link href="~/content/static/dashboard1.css" rel="stylesheet" />
+<link href="~/content/static/home.css" rel="stylesheet" />
 <div class="skin-default-dark fixed-layout">
     <div id="main-wrapper">
         @Html.Partial("~/Views/layout/navbar.cshtml")

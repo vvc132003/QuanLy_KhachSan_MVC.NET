@@ -175,7 +175,15 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 lichSuThanhToan.trangthai = "đã thanh toán";
                 lichSuThanhToan.iddatphong = datphong.id;
                 lichSuThanhToan.idnhanvien = idnv;
-                lichSuThanhToanService.ThemLichSuThanhToan(lichSuThanhToan);
+                if (lichSuThanhToan.hinhthucthanhtoan == null)
+                {
+                    lichSuThanhToan.hinhthucthanhtoan = "";
+                    lichSuThanhToanService.ThemLichSuThanhToan(lichSuThanhToan);
+                }
+                else
+                {
+                    lichSuThanhToanService.ThemLichSuThanhToan(lichSuThanhToan);
+                }
                 /// thêm trả phòng
                 TraPhong traPhong = new TraPhong();
                 traPhong.ngaytra = DateTime.Now;

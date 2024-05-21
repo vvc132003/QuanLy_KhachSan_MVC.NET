@@ -138,12 +138,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         phong.tinhtrangphong = "có khách";
                         phongService.CapNhatPhong(phong);
                         int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
-                        MaGiamGia maGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
-                        if (maGiamgia != null)
+                        MaGiamGia guimamaGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
+                        if (guimamaGiamgia != null)
                         {
-                            if (maGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                            if (guimamaGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
                             {
-                                maGiamGiaService.GuiEmail(khachHang, maGiamgia.magiamgia);
+                                maGiamGiaService.GuiEmail(khachHang, guimamaGiamgia.magiamgia);
                             }
                             else
                             {
@@ -270,7 +270,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                         datPhong.idkhachhang = khachhangmoi.id;
                         datPhong.idthoigian = thoiGian.id;
-                        datPhong.idloaidatphong = 2;
+                        datPhong.idloaidatphong = 1;
                         datPhong.trangthai = "đã đặt";
                         datPhong.ngaydat = DateTime.Now;
                         datPhong.idphong = datPhong.idphong;
@@ -318,7 +318,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                         datPhong.idkhachhang = khachhangmoi.id;
                         datPhong.idthoigian = thoiGian.id;
-                        datPhong.idloaidatphong = 2;
+                        datPhong.idloaidatphong = 1;
                         datPhong.trangthai = "đã đặt online";
                         datPhong.ngaydat = DateTime.Now;
                         datPhong.idphong = datPhong.idphong;
@@ -441,12 +441,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             phong.tinhtrangphong = "có khách";
                             phongService.CapNhatPhong(phong);
                             int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
-                            MaGiamGia maGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
-                            if (maGiamgia != null)
+                            MaGiamGia guimaGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
+                            if (guimaGiamgia != null)
                             {
-                                if (maGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                                if (guimaGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
                                 {
-                                    maGiamGiaService.GuiEmail(khachHang, maGiamgia.magiamgia);
+                                    maGiamGiaService.GuiEmail(khachHang, guimaGiamgia.magiamgia);
                                 }
                                 else
                                 {
@@ -647,113 +647,125 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
-        public IActionResult DatPhongOnline(int id)
+
+        public IActionResult CheckInDatPhongOnline(KhachHang khachHang, DatPhong datPhong, string magiamgia, int idkhachsan)
         {
-            Phong phong = phongService.GetPhongID(id);
-            Modeldata yourModel = new Modeldata
+            /// kiểm tra xem khách hàng đã tồn tại hay chưa
+            KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
+            ThoiGian thoiGian = thoiGianService.GetThoiGian(idkhachsan);
+            if (khachHangTonTai != null)
             {
-                phong = phong,
-            };
-            return View(yourModel);
-        }
-        public IActionResult CheckInDatPhongOnline(KhachHang khachHang, DatPhong datPhong, string magiamgia)
-        {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
-            {
-                /// kiểm tra xem khách hàng đã tồn tại hay chưa
-                KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
-                ThoiGian thoiGian = thoiGianService.GetThoiGian(1);
-                if (khachHangTonTai != null)
+                datPhong.idthoigian = thoiGian.id;
+                /// id khách hàng
+                datPhong.idkhachhang = khachHangTonTai.id;
+                datPhong.idloaidatphong = 2;
+                datPhong.trangthai = "đã đặt online";
+                datPhong.ngaydat = DateTime.Now;
+                datPhong.idphong = datPhong.idphong;
+                TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
+                if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
                 {
-                    datPhong.idthoigian = thoiGian.id;
-                    /// id khách hàng
-                    datPhong.idkhachhang = khachHangTonTai.id;
-                    datPhong.idloaidatphong = 2;
-                    datPhong.trangthai = "đã đặt online";
-                    datPhong.ngaydat = DateTime.Now;
-                    datPhong.idphong = datPhong.idphong;
-                    TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
-                    if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
+                    datPhong.hinhthucthue = "Theo ngày";
+                }
+                else
+                {
+                    datPhong.hinhthucthue = "Theo giờ";
+                }
+                /// thực hiện thêm đặt phòng và lấy ra id đặt phòng mới tạo đó
+                int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
+                /// thực hiện thêm đặt phòng và lấy ra id đặt phòng mới tạo đó
+                Phong phong = phongService.GetPhongID(datPhong.idphong);
+                phong.tinhtrangphong = "đã đặt";
+                phongService.CapNhatPhong(phong);
+                datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
+                int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
+                MaGiamGia guimamaGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
+                if (guimamaGiamgia != null)
+                {
+                    if (guimamaGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
                     {
-                        datPhong.hinhthucthue = "Theo ngày";
-                    }
-                    else
-                    {
-                        datPhong.hinhthucthue = "Theo giờ";
-                    }
-                    /// thực hiện thêm đặt phòng và lấy ra id đặt phòng mới tạo đó
-                    int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
-                    /// thực hiện thêm đặt phòng và lấy ra id đặt phòng mới tạo đó
-                    Phong phong = phongService.GetPhongID(datPhong.idphong);
-                    phong.tinhtrangphong = "đã đặt";
-                    phongService.CapNhatPhong(phong);
-                    datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
-                    int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
-                    MaGiamGia maGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
-                    if (maGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
-                    {
-                        maGiamGiaService.GuiEmail(khachHang, maGiamgia.magiamgia);
-                        MaGiamGia capnhatsolandasudung = maGiamGiaService.GetMaGiamGiaById(maGiamgia.id);
-                        capnhatsolandasudung.solandasudung = capnhatsolandasudung.solandasudung + 1;
-                        maGiamGiaService.CapNhatMaGiamGia(capnhatsolandasudung);
+                        maGiamGiaService.GuiEmail(khachHang, guimamaGiamgia.magiamgia);
                     }
                     else
                     {
                         /// ko có mã giảm giá
                     }
-                    if (magiamgia != null)
-                    {
-                        MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
-                        SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
-                        suDungMaGiamGia.idmagiamgia = maGiamGia.id;
-                        suDungMaGiamGia.iddatphong = idDatPhongThemVao;
-                        suDungMaGiamGia.ngaysudung = DateTime.Now;
-                        dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
-                    }
-                    else
-                    {
-                        /// không áp dụng mã giảm giá
-                    }
                 }
-                /// nếu khách hàng không tồn tại
                 else
                 {
-                    /// khách hnagf không tông tại thì thực hiện thêm khách hàng mới
-                    khachHang.trangthai = "còn hoạt động";
-                    khachHangService.ThemKhachHang(khachHang);
-                    /// lấy id khách hnagf mới tạo từ cccd để thực hiện việc đặt phòng
-                    KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
-                    // id khách hàng
-                    datPhong.idkhachhang = khachhangmoi.id;
-                    datPhong.idthoigian = thoiGian.id;
-                    datPhong.idloaidatphong = 2;
-                    datPhong.trangthai = "đã đặt online";
-                    datPhong.ngaydat = DateTime.Now;
-                    datPhong.idphong = datPhong.idphong;
-                    TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
-                    if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
+                    //// null
+                }
+                if (magiamgia != null)
+                {
+                    MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
+                    if (maGiamGia.ngayketthuc.Year > DateTime.Now.Year ||
+                       (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month > DateTime.Now.Month) ||
+                       (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month == DateTime.Now.Month &&
+                       maGiamGia.ngayketthuc.Day > DateTime.Now.Day))
                     {
-                        datPhong.hinhthucthue = "Theo ngày";
+                        if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                        {
+                            SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                            suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                            suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                            suDungMaGiamGia.ngaysudung = DateTime.Now;
+                            dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                            /// cập nhật số lần sử dụng tăng lên 1
+                            maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
+                            maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                        }
+                        else
+                        {
+                            /// 
+                        }
                     }
                     else
                     {
-                        datPhong.hinhthucthue = "Theo giờ";
+                        // nulll
                     }
-                    /// thực hiện thêm đặt phòng và lấy ra id đặt phòng mới tạo đó
-                    datPhongService.ThemDatPhong(datPhong);
-                    /// lấy thoong tin phòng ra từ id phòng của id đặt phòng mới tạo để thực hiện việc cập nhật trạng thái phòng đó
-                    Phong phong = phongService.GetPhongID(datPhong.idphong);
-                    phong.tinhtrangphong = "đã đặt";
-                    phongService.CapNhatPhong(phong);
-                    datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
                 }
-                TempData["thuephongthanhcong"] = "";
-                return RedirectToAction("Index", "Phong");
+                else
+                {
+                    /// không áp dụng mã giảm giá
+                }
             }
+            /// nếu khách hàng không tồn tại
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                /// khách hàng không tông tại thì thực hiện thêm khách hàng mới
+                khachHang.trangthai = "còn hoạt động";
+                khachHang.tinh = "không có";
+                khachHang.phuong = "không có";
+                khachHang.huyen = "không có";
+                khachHangService.ThemKhachHang(khachHang);
+                /// lấy id khách hnagf mới tạo từ cccd để thực hiện việc đặt phòng
+                KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
+                // id khách hàng
+                datPhong.idkhachhang = khachhangmoi.id;
+                datPhong.idthoigian = thoiGian.id;
+                datPhong.idloaidatphong = 2;
+                datPhong.trangthai = "đã đặt online";
+                datPhong.ngaydat = DateTime.Now;
+                datPhong.idphong = datPhong.idphong;
+                TimeSpan sogio = datPhong.ngaydukientra - datPhong.ngaydat;
+                if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
+                {
+                    datPhong.hinhthucthue = "Theo ngày";
+                }
+                else
+                {
+                    datPhong.hinhthucthue = "Theo giờ";
+                }
+                /// thực hiện thêm đặt phòng và lấy ra id đặt phòng mới tạo đó
+                datPhongService.ThemDatPhong(datPhong);
+                /// lấy thoong tin phòng ra từ id phòng của id đặt phòng mới tạo để thực hiện việc cập nhật trạng thái phòng đó
+                Phong phong = phongService.GetPhongID(datPhong.idphong);
+                phong.tinhtrangphong = "đã đặt";
+                phongService.CapNhatPhong(phong);
+                datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
             }
+            TempData["thuephongthanhcong"] = "";
+            return RedirectToAction("index", "home");
         }
 
     }

@@ -1,0 +1,208 @@
+﻿
+.room-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 15px;
+    cursor: pointer;
+    float: left;
+    width: calc(100% - 120px); /* Đặt chiều rộng của danh sách phòng, trừ đi kích thước của tên tầng và margin */
+}
+
+.room-box {
+    position: relative;
+    width: 205px;
+    height: 190px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+
+    .room-box:hover {
+        background: #81a6b6;
+        color: #f9f9f9;
+    }
+
+.context-menu {
+    display: none;
+    position: absolute;
+    top: 20%;
+    left: 80%;
+    min-width: 220px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+    .context-menu a {
+        text-decoration: none;
+        color: black;
+        display: flex;
+    }
+
+        .context-menu a:hover {
+            color: red;
+        }
+
+.room-box:hover .context-menu {
+    display: block;
+}
+
+.room-box i {
+    font-size: 30px;
+}
+
+.student-info {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    min-width: 200px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.room-box:hover .student-info {
+    display: block;
+}
+
+#table {
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    display: inline-block;
+    margin: 10px;
+}
+
+
+.table {
+    background-color: #ffffff;
+}
+
+.cokhach {
+    background-color: #0171a3;
+}
+
+.controng {
+    background-color: #a8c4cf;
+}
+
+.dangsua {
+    background-color: #285665;
+}
+
+.dadat {
+    background-color: #35c3d7;
+}
+
+.chuadon {
+    background-color: #666666;
+}
+
+
+p {
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+.orange_color {
+    color: #ff5722 !important;
+}
+
+.orange_color2 {
+    color: #f44336 !important;
+}
+
+.red_color {
+    color: #e91e63 !important;
+}
+
+.purple_color2 {
+    color: #9c27b0 !important;
+}
+
+.blue2_color {
+    color: #03a9f4 !important;
+}
+
+.green_color {
+    color: #009688 !important;
+}
+/* CSS cho menu xổ xuống */
+.collapse {
+    display: none;
+    transition: display 1s ease-in-out;
+}
+
+    .collapse.show {
+        display: block;
+    }
+
+.text-center {
+    text-align: center !important;
+}
+
+.square {
+    width: 200px;
+    height: 40px;
+    text-align: center;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+    .square a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        display: block;
+        padding: 10px;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+
+.tang {
+    border: 1px solid #ccc;
+    color: white;
+    font-size: 20px;
+    width: 100px;
+    height: 190px;
+    padding: 80px 10px;
+    border-radius: 0px;
+    background: #0099CC;
+    float: left;
+    margin-right: 20px;
+    clear: both;
+}
+
+.table-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .table th, .table td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }

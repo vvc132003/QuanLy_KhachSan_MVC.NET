@@ -169,14 +169,19 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 Phong phong = phongService.GetPhongID(idphong);
                 Modeldata modeldata = new Modeldata
                 {
-                    khachhang = khachHang,
                     phong = phong,
+                    khachhang = khachHang,
                 };
                 return View(modeldata);
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                Phong phong = phongService.GetPhongID(idphong);
+                Modeldata modeldata = new Modeldata
+                {
+                    phong = phong,
+                };
+                return View(modeldata);
             }
         }
     }

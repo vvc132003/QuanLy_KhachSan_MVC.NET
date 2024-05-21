@@ -1,0 +1,111 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Model/1.0.0": {
+        "dependencies": {
+          "Auth0.ManagementApi": "7.25.1",
+          "PagedList.Mvc": "4.5.0"
+        },
+        "runtime": {
+          "Model.dll": {}
+        }
+      },
+      "Auth0.Core/7.25.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Auth0.Core.dll": {
+            "assemblyVersion": "7.25.1.0",
+            "fileVersion": "7.25.1.0"
+          }
+        }
+      },
+      "Auth0.ManagementApi/7.25.1": {
+        "dependencies": {
+          "Auth0.Core": "7.25.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Auth0.ManagementApi.dll": {
+            "assemblyVersion": "7.25.1.0",
+            "fileVersion": "7.25.1.0"
+          }
+        }
+      },
+      "Newtonsoft.Json/13.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.1.25517"
+          }
+        }
+      },
+      "PagedList/1.17.0": {
+        "runtime": {
+          "lib/net40/PagedList.dll": {
+            "assemblyVersion": "1.17.0.0",
+            "fileVersion": "1.17.0.0"
+          }
+        }
+      },
+      "PagedList.Mvc/4.5.0": {
+        "dependencies": {
+          "PagedList": "1.17.0"
+        },
+        "runtime": {
+          "lib/net40/PagedList.Mvc.dll": {
+            "assemblyVersion": "4.5.0.0",
+            "fileVersion": "4.5.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Auth0.Core/7.25.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ofcFvzU+xwqZosVNlxi+uFgljy2begWfOjnYvSrJek6g8pjMw8kcor+xshjcyWMn1OhsokpNdf8kfBg/kHy35g==",
+      "path": "auth0.core/7.25.1",
+      "hashPath": "auth0.core.7.25.1.nupkg.sha512"
+    },
+    "Auth0.ManagementApi/7.25.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-S0cRYN/vpi5epZ89bGFiNgU7Vi+wuq8YAaCotBsK5VAzXD6yiJgVcKZgZA6RozbWKP2a2X9tnUYu5qNzqVdmtw==",
+      "path": "auth0.managementapi/7.25.1",
+      "hashPath": "auth0.managementapi.7.25.1.nupkg.sha512"
+    },
+    "Newtonsoft.Json/13.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
+      "path": "newtonsoft.json/13.0.1",
+      "hashPath": "newtonsoft.json.13.0.1.nupkg.sha512"
+    },
+    "PagedList/1.17.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ou6F3WKXh49hOo0TxWM+SkIGuKllYPuPPvnSYOlQ1sTrtuEyuDUhYbSJd5Sdb06i/sWUJZTjiUecEs3Ht/Hx3g==",
+      "path": "pagedlist/1.17.0",
+      "hashPath": "pagedlist.1.17.0.nupkg.sha512"
+    },
+    "PagedList.Mvc/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-D0M4qW2g4a9cwG8ozIKUnJheCrm5GpFTceqUl63AXWaAVnTgk+TysZYUOGMsBRuzid8aF+/E8b0bXM6+90jiEw==",
+      "path": "pagedlist.mvc/4.5.0",
+      "hashPath": "pagedlist.mvc.4.5.0.nupkg.sha512"
+    }
+  }
+}

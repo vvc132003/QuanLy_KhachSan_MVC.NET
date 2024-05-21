@@ -1,0 +1,119 @@
+﻿.room-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.room-box {
+    width: 280px;
+    height: 250px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+
+.orange_color {
+    color: #ff5722 !important;
+}
+
+.orange_color2 {
+    color: #f44336 !important;
+}
+
+.red_color {
+    color: #e91e63 !important;
+}
+
+.purple_color2 {
+    color: #9c27b0 !important;
+}
+
+.blue2_color {
+    color: #03a9f4 !important;
+}
+
+.green_color {
+    color: #009688 !important;
+}
+/* CSS cho menu xổ xuống */
+.collapse {
+    display: none;
+    transition: display 1s ease-in-out;
+}
+
+    .collapse.show {
+        display: block;
+    }
+
+.text-center {
+    text-align: center !important;
+}
+
+    .room-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+#table {
+    position: relative;
+    width: 300px;
+    height: 160px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    display: inline-block;
+    margin: 10px;
+    transform: skew(-5deg);
+}
+
+    #table p {
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+
+    #table a {
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+        margin-bottom: 15px;
+        font-size: 16px;
+        transition: color 0.3s ease;
+    }
+
+        #table a:hover {
+            color: #f0f0f0;
+        }
+
+.nav {
+    display: flex;
+    gap: 15px;
+    position: absolute;
+    bottom: 20px;
+    left: 55%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 50%;
+}
+
+    .nav img {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        border: 2px solid #fff;
+        transition: border-color 0.3s ease;
+    }
+
+        .nav img:hover {
+            border-color: #ff9700;
+        }

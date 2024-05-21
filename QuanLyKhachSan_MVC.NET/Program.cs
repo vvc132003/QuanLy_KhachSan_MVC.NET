@@ -58,11 +58,11 @@ var app = builder.Build();
 app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseStaticFiles(new StaticFileOptions
+/*app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "Content/static")),
     RequestPath = "/static"
-});
+});*/
 app.UseRouting();
 
 app.UseAuthorization();
