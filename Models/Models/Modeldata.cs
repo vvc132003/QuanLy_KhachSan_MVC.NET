@@ -70,5 +70,12 @@ namespace Model.Models
         public NgayLe ngayLe { get; set; }
         public List<ChinhSachGia> chinhSachGialist { get; set; }
         public ChinhSachGia chinhSachGia { get; set; }
+        public ChuyenPhong chuyenPhong { get; set; }
+        public List<ChuyenPhong> listChuyenPhong { get; set; }
+        public IPagedList<ChuyenPhong> PagedTChuyenPhong { get; set; }
+        public HuyDatPhong huyDatPhong { get; set; }
+        public List<HuyDatPhong> listHuyDatPhong { get; set; }
+        public IPagedList<HuyDatPhong> PagedTHuyDatPhong { get; set; }
+
     }
 }

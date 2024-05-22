@@ -1,6 +1,7 @@
 ﻿using ketnoicsdllan1;
 using Model.Models;
 using QuanLyKhachSan_MVC.NET.Repository;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Service
@@ -26,6 +27,39 @@ namespace Service
                     command.ExecuteNonQuery();
                 }
             }
+        }
+        public List<LichSuThanhToan> GetAllLichSuThanhToanDescNgayThanhToan()
+        {
+            List<LichSuThanhToan> lichSuThanhToans = new List<LichSuThanhToan>();
+
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+
+                string selectQuery = "SELECT * FROM LichSuThanhToan ORDER BY ngaythanhtoan DESC";
+
+                using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            LichSuThanhToan lichSuThanhToan = new LichSuThanhToan();
+                            lichSuThanhToan.ngaythanhtoan = reader.GetDateTime("ngaythanhtoan");
+                            lichSuThanhToan.sotienthanhtoan = Convert.ToSingle(reader["sotienthanhtoan"]);
+                            lichSuThanhToan.hinhthucthanhtoan = reader.GetString("hinhthucthanhtoan");
+                            lichSuThanhToan.trangthai = reader.GetString("trangthai");
+                            lichSuThanhToan.phantramgiamgia = Convert.ToSingle(reader["phantramgiamgia"]);
+                            lichSuThanhToan.iddatphong = reader.GetInt32("iddatphong");
+                            lichSuThanhToan.idnhanvien = reader.GetInt32("idnhanvien");
+
+                            lichSuThanhToans.Add(lichSuThanhToan);
+                        }
+                    }
+                }
+            }
+
+            return lichSuThanhToans;
         }
         public List<LichSuThanhToan> GetLichSuThanhToan()
         {

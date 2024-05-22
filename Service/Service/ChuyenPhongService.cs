@@ -1,6 +1,7 @@
 ﻿using ketnoicsdllan1;
 using Model.Models;
 using QuanLyKhachSan_MVC.NET.Repository;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Service
@@ -25,6 +26,37 @@ namespace Service
                     command.ExecuteNonQuery();
                 }
             }
+        }
+        public List<ChuyenPhong> GetAllChuyenPhongDescNgayChuyen()
+        {
+            List<ChuyenPhong> chuyenPhongs = new List<ChuyenPhong>();
+
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+
+                string selectQuery = "SELECT * FROM ChuyenPhong ORDER BY ngaychuyen DESC";
+
+                using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ChuyenPhong chuyenPhong = new ChuyenPhong();
+                            chuyenPhong.ngaychuyen = reader.GetDateTime("ngaychuyen");
+                            chuyenPhong.lydo = reader.GetString("lydo");
+                            chuyenPhong.idkhachhang = reader.GetInt32("idkhachhang");
+                            chuyenPhong.idnhanvien = reader.GetInt32("idnhanvien");
+                            chuyenPhong.idphongcu = reader.GetInt32("idphongcu");
+                            chuyenPhong.idphongmoi = reader.GetInt32("idphongmoi");
+                            chuyenPhongs.Add(chuyenPhong);
+                        }
+                    }
+                }
+            }
+
+            return chuyenPhongs;
         }
     }
 }

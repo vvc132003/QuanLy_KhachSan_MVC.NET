@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model.Models;
+using PagedList;
 using Service;
 using Service.Service;
 
@@ -204,5 +205,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
+ 
     }
 }
