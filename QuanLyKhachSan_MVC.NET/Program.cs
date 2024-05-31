@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.ResponseCompression;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.FileProviders;
 using Model.Models;
 using Service;
 using Service.Service;
 using SignalRChat.Hubs;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<TangService>();
@@ -35,12 +39,38 @@ builder.Services.AddScoped<NguoiThamGiaService>();
 builder.Services.AddScoped<TinNhanService>();
 builder.Services.AddScoped<TinNhanIconService>();
 builder.Services.AddScoped<IconService>();
-builder.Services.AddScoped<NgayLeService>();
-builder.Services.AddScoped<ChinhSachGiaService>();
+builder.Services.AddScoped<GiamGiaNgayLeService>();
+
 
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+})
+      .AddCookie()
+      .AddGoogle(options =>
+      {
+          options.ClientId = "675174564412-1qjefhnl3fm17hsl35irv69fnecgf66b.apps.googleusercontent.com";
+          options.ClientSecret = "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";
+          options.CallbackPath = new PathString("/signin-google");
+          options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "sub");
+          options.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
+          options.ClaimActions.MapJsonKey(ClaimTypes.GivenName, "given_name");
+          options.ClaimActions.MapJsonKey(ClaimTypes.Surname, "family_name");
+          options.ClaimActions.MapJsonKey("urn:google:profile", "link");
+          options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
+          options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "userid");
+
+      });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AllowAnonymous", policy => policy.RequireAssertion(context => true));
+});
+builder.Services.AddHttpClient();
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -70,6 +100,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{Action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.UseResponseCompression();
 app.MapHub<ChatHub>("/chathub");
 app.Run();

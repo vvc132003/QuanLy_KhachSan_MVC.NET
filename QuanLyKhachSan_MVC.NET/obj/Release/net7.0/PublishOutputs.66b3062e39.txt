@@ -17,8 +17,7 @@ C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Re
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\ExcelNumberFormat.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Humanizer.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\MathNet.Numerics.dll
-C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\MessagePack.dll
-C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\MessagePack.Annotations.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.Google.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Build.dll
@@ -28,6 +27,7 @@ C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Re
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.CodeAnalysis.CSharp.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.CodeAnalysis.CSharp.Features.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.CodeAnalysis.Elfie.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.CodeAnalysis.Features.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.CodeAnalysis.Razor.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.CodeAnalysis.Scripting.dll
@@ -36,7 +36,6 @@ C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Re
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.DotNet.Scaffolding.Shared.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.IO.RecyclableMemoryStream.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.NET.StringTools.dll
-C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.VisualStudio.Debugger.Contracts.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\dotnet-aspnet-codegenerator-design.dll

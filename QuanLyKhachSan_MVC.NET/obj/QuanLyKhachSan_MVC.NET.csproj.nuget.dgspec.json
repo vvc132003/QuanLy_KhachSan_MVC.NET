@@ -130,9 +130,13 @@
               "target": "Package",
               "version": "[4.8.1.5350, )"
             },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[6.0.16, )"
+              "version": "[7.0.12, )"
             },
             "NPOI": {
               "target": "Package",

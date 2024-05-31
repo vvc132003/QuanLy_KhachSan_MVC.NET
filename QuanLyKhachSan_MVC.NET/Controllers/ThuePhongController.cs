@@ -24,9 +24,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly MaGiamGiaService maGiamGiaService;
         private readonly SuDungMaGiamGiaService dungMaGiamGiaService;
         private readonly SuDungMaGiamGiaService suDungMaGiamGiaService;
-        private readonly ChinhSachGiaService chinhSachGiaService;
-        private readonly NgayLeService ngayLeService;
-
+        private readonly LoaiDatPhongService loaiDatPhongService;
+        private readonly GiamGiaNgayLeService giamGiaNgayLeService;
         public ThuePhongController(DatPhongService datPhongServices,
             KhachHangService khachHangServices,
             PhongService phongServices,
@@ -37,8 +36,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             MaGiamGiaService maGiamGiaServices,
             SuDungMaGiamGiaService dungMaGiamGiaServices,
             SuDungMaGiamGiaService suDungMaGiamGiaServices,
-            ChinhSachGiaService chinhSachGiaService,
-            NgayLeService ngayLeService)
+            LoaiDatPhongService loaiDatPhongService, GiamGiaNgayLeService giamGiaNgayLeService)
         {
             datPhongService = datPhongServices;
             khachHangService = khachHangServices;
@@ -50,8 +48,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             maGiamGiaService = maGiamGiaServices;
             dungMaGiamGiaService = dungMaGiamGiaServices;
             suDungMaGiamGiaService = suDungMaGiamGiaServices;
-            this.chinhSachGiaService = chinhSachGiaService;
-            this.ngayLeService = ngayLeService;
+            this.loaiDatPhongService = loaiDatPhongService;
+            this.giamGiaNgayLeService = giamGiaNgayLeService;
         }
         public IActionResult Index(int id, int? sotrang)
         {
@@ -89,15 +87,24 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 Phong phong = phongService.GetPhongID(datPhong.idphong);
                 int idnd = HttpContext.Session.GetInt32("id").Value;
                 /// kiểm tra xem khách hàng đã tồn tại hay chưa
-                KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
+                KhachHang khachHangTonTai = khachHangService.GetKhachHangbyemail(khachHang.email);
                 ThoiGian thoiGian = thoiGianService.GetThoiGian(HttpContext.Session.GetInt32("idkhachsan").Value);
                 if (khachHangTonTai != null)
                 {
+                    khachHangTonTai = new KhachHang
+                    {
+                        cccd = khachHang.cccd,
+                        sodienthoai = khachHang.cccd,
+                        tinh = khachHang.tinh,
+                        huyen = khachHang.huyen,
+                        phuong = khachHang.phuong,
+                    };
+                    khachHangService.CapNhatKhachHang(khachHangTonTai);
                     if (nhanphong != null)
                     {
                         datPhong.idthoigian = thoiGian.id;
                         datPhong.idkhachhang = khachHangTonTai.id;
-                        datPhong.idloaidatphong = 2;
+                        datPhong.idloaidatphong = 1;
                         datPhong.trangthai = "đã đặt";
                         datPhong.ngaydat = DateTime.Now;
                         datPhong.idphong = datPhong.idphong;
@@ -192,7 +199,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     {
                         datPhong.idthoigian = thoiGian.id;
                         datPhong.idkhachhang = khachHangTonTai.id;
-                        datPhong.idloaidatphong = 2;
+                        datPhong.idloaidatphong = 1;
                         datPhong.trangthai = "đã đặt online";
                         datPhong.ngaydat = DateTime.Now;
                         datPhong.idphong = datPhong.idphong;
@@ -414,13 +421,22 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     foreach (int idphong in idphongs)
                     {
-                        KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
+                        KhachHang khachHangTonTai = khachHangService.GetKhachHangbyemail(khachHang.email);
                         ThoiGian thoiGian = thoiGianService.GetThoiGian(idkhachsan);
                         if (khachHangTonTai != null)
                         {
+                            khachHangTonTai = new KhachHang
+                            {
+                                cccd = khachHang.cccd,
+                                sodienthoai = khachHang.cccd,
+                                tinh = khachHang.tinh,
+                                huyen = khachHang.huyen,
+                                phuong = khachHang.phuong,
+                            };
+                            khachHangService.CapNhatKhachHang(khachHangTonTai);
                             datPhong.idthoigian = thoiGian.id;
                             datPhong.idkhachhang = khachHangTonTai.id;
-                            datPhong.idloaidatphong = 1;
+                            datPhong.idloaidatphong = 2;
                             datPhong.trangthai = "đã đặt";
                             datPhong.ngaydat = DateTime.Now;
                             datPhong.idphong = idphong;
@@ -506,7 +522,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                             datPhong.idthoigian = thoiGian.id;
                             datPhong.idkhachhang = khachhangmoi.id;
-                            datPhong.idloaidatphong = 1;
+                            datPhong.idloaidatphong = 2;
                             datPhong.trangthai = "đã đặt";
                             datPhong.ngaydat = DateTime.Now;
                             datPhong.idphong = idphong;
@@ -591,21 +607,15 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         }
                         /*                        GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
                         */
-                        NgayLe ngayLe = ngayLeService.GetNgayLesbyNgay();
-                        ChinhSachGia chinhSachGia = null;
-                        if (ngayLe != null)
-                        {
-                            chinhSachGia = chinhSachGiaService.GetChinhSachGiaByIdngayle(ngayLe.id);
-                        }
+                        GiamGiaNgayLe giamGiaNgayLe = giamGiaNgayLeService.GetGiamGiaNgayLeByNgayLe(DateTime.Today);
                         SuDungMaGiamGia sudunggiamGia = suDungMaGiamGiaService.GetSuDungMaGiamGiaByIddatphong(datphong.id);
                         MaGiamGia maGiamGia = null;
                         if (sudunggiamGia != null)
                         {
                             maGiamGia = maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia);
                         }
-                        if (maGiamGia != null)
+                        if (maGiamGia != null || giamGiaNgayLe != null)
                         {
-
                             Modeldata yourModel = new Modeldata
                             {
                                 listsanPham = listsanpham,
@@ -615,8 +625,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                 phong = phongs,
                                 magiamGia = maGiamGia,
                                 thoigian = thoiGian,
-                                ngayLe = ngayLe,
-                                chinhSachGia = chinhSachGia,
+                                giamGiaNgayle = giamGiaNgayLe,
                             };
                             listmodeldatas.Add(yourModel);
                         }
@@ -630,8 +639,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                 tongtienhueSanPham = tongtien,
                                 phong = phongs,
                                 thoigian = thoiGian,
-                                ngayLe = ngayLe,
-                                chinhSachGia = chinhSachGia,
+                                giamGiaNgayle = giamGiaNgayLe,
                             };
                             listmodeldatas.Add(yourModel);
                         }
@@ -651,10 +659,19 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         public IActionResult CheckInDatPhongOnline(KhachHang khachHang, DatPhong datPhong, string magiamgia, int idkhachsan)
         {
             /// kiểm tra xem khách hàng đã tồn tại hay chưa
-            KhachHang khachHangTonTai = khachHangService.GetKhachHangCCCD(khachHang.cccd);
+            KhachHang khachHangTonTai = khachHangService.GetKhachHangbyemail(khachHang.email);
             ThoiGian thoiGian = thoiGianService.GetThoiGian(idkhachsan);
             if (khachHangTonTai != null)
             {
+                khachHangTonTai = new KhachHang
+                {
+                    cccd = khachHang.cccd,
+                    sodienthoai = khachHang.cccd,
+                    tinh = khachHang.tinh,
+                    huyen = khachHang.huyen,
+                    phuong = khachHang.phuong,
+                };
+                khachHangService.CapNhatKhachHang(khachHangTonTai);
                 datPhong.idthoigian = thoiGian.id;
                 /// id khách hàng
                 datPhong.idkhachhang = khachHangTonTai.id;
@@ -767,7 +784,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             TempData["thuephongthanhcong"] = "";
             return RedirectToAction("index", "home");
         }
-        public IActionResult DanhSachThuePhong(int? sotrang)
+        public IActionResult DanhSachThuePhongTrucTiep(int? sotrang)
         {
             if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -788,6 +805,71 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     PagedTDatPhong = ipagelistdatphong,
                 };
                 return View(yourModel);
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
+        }
+        public IActionResult DanhSachThuePhongOnline(int? sotrang)
+        {
+            if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int idnv = HttpContext.Session.GetInt32("id").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                ViewData["id"] = idnv;
+                ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
+                List<DatPhong> listDatphong = datPhongService.GetAllDatPhongDatOnline();
+                int soluong = listDatphong.Count;
+                int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
+                int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
+                PagedList.IPagedList<DatPhong> ipagelistdatphong = listDatphong.ToPagedList(validPageNumber, pageSize);
+                Modeldata yourModel = new Modeldata
+                {
+                    PagedTDatPhong = ipagelistdatphong,
+                };
+                return View(yourModel);
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
+        }
+        public IActionResult ChiTietThuePhongS(int id)
+        {
+            if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int idnv = HttpContext.Session.GetInt32("id").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                ViewData["id"] = idnv;
+                ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
+                DatPhong datPhong = datPhongService.GetDatPhongByIDDatPhong(id);
+                KhachHang khachHang = khachHangService.GetKhachHangbyid(datPhong.idkhachhang);
+                List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datPhong.id);
+                LoaiDatPhong loaiDatPhong = loaiDatPhongService.GetLoaiDatPhongById(datPhong.idloaidatphong);
+                Phong phong = phongService.GetPhongID(datPhong.idphong);
+                List<Modeldata> listmodeldata = new List<Modeldata>();
+                foreach (var sanphams in listthueSanPham)
+                {
+                    SanPham sanpham = sanPhamService.GetSanPhamByID(sanphams.id);
+                    Modeldata modeldata = new Modeldata
+                    {
+                        datPhong = datPhong,
+                        khachhang = khachHang,
+                        listthueSanPham = listthueSanPham,
+                        sanPham = sanpham,
+                        loaiDatPhong = loaiDatPhong,
+                        phong = phong,
+                    };
+                    listmodeldata.Add(modeldata);
+                }
+                return View(listmodeldata);
             }
             else
             {

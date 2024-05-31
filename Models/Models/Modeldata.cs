@@ -1,8 +1,12 @@
 ﻿using PagedList;
+using QuanLyKhachSan_MVC.NET;
+
 namespace Model.Models
 {
     public class Modeldata
     {
+        public UserProfileViewModel userProfileViewModel { get; set; }
+
         public Tang tang { get; set; }
         public List<Tang> listtang { get; set; }
         public IPagedList<Tang> PagedTTang { get; set; }
@@ -66,10 +70,9 @@ namespace Model.Models
         public PhongKhachSan phongKhachSan { get; set; }
         public List<PhongKhachSan> listPhongKhachSan { get; set; }
         public IPagedList<PhongKhachSan> PagedPhongKhachSan { get; set; }
-        public List<NgayLe> listngayle { get; set; }
-        public NgayLe ngayLe { get; set; }
-        public List<ChinhSachGia> chinhSachGialist { get; set; }
-        public ChinhSachGia chinhSachGia { get; set; }
+      
+        public List<GiamGiaNgayLe> giamGiaNgayLelist { get; set; }
+        public GiamGiaNgayLe giamGiaNgayle { get; set; }
         public ChuyenPhong chuyenPhong { get; set; }
         public List<ChuyenPhong> listChuyenPhong { get; set; }
         public IPagedList<ChuyenPhong> PagedTChuyenPhong { get; set; }

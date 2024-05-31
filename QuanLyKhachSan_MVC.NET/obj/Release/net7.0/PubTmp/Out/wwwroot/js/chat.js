@@ -1,4 +1,4 @@
-﻿"use strict";
+﻿/*"use strict";
 var chatInitialized = false;
 function chat() {
     if (!chatInitialized) {
@@ -34,7 +34,72 @@ function chat() {
         chatInitialized = true;
     }
 }
-var chatInitializeds = false;
+var chatInitializeds = false;*/
+"use strict";
+var chatInitialized = false;
+var connection; // Declare connection globally
+
+function chat() {
+    if (!chatInitialized) {
+        connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+        document.getElementById("sendButton").disabled = true;
+        connection.on("ReceiveMessage", function (cuochoithoaiid, nhanvienguiid, noidung) {
+            var cuochoithoaiid = parseInt(document.getElementById("cuochoithoaiidinput").value);
+            displayMessages(cuochoithoaiid);
+            document.getElementById('messageInput').value = '';
+            callChatBot();
+        });
+        connection.start()
+            .then(function () {
+                document.getElementById("sendButton").disabled = false;
+            })
+            .catch(function (err) {
+                return console.error(err.toString());
+            });
+
+        document.getElementById("sendButton").addEventListener("click", function (event) {
+            sendMessage();
+            event.preventDefault();
+        });
+
+        // Add event listener for Enter key press
+        document.getElementById("messageInput").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                var cuochoithoaiid = parseInt(document.getElementById("cuochoithoaiidinput").value);
+                var nhanvienguiid = parseInt(document.getElementById("nhanvienguiidinput").value);
+                var noidung = document.getElementById("messageInput").value;
+                const likeButton = document.getElementById('likeButton');
+                const sendButton = document.getElementById('sendButton');
+                likeButton.style.display = 'inline-block';
+                sendButton.style.display = 'none';
+                connection.invoke("SendMessage", cuochoithoaiid, nhanvienguiid, noidung)
+                    .catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                event.preventDefault();
+            }
+        });
+
+        chatInitialized = true;
+    }
+}
+
+function sendMessage() {
+    var cuochoithoaiid = parseInt(document.getElementById("cuochoithoaiidinput").value);
+    var nhanvienguiid = parseInt(document.getElementById("nhanvienguiidinput").value);
+    var noidung = document.getElementById("messageInput").value;
+    const likeButton = document.getElementById('likeButton');
+    const sendButton = document.getElementById('sendButton');
+    likeButton.style.display = 'inline-block';
+    sendButton.style.display = 'none';
+    connection.invoke("SendMessage", cuochoithoaiid, nhanvienguiid, noidung)
+        .catch(function (err) {
+            return console.error(err.toString());
+        });
+}
+
+var chatInitializeds = false; // I'm not sure what this variable is for
+
 function chats() {
     if (!chatInitializeds) {
         var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();

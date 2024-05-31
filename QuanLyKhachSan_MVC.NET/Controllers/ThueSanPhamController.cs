@@ -15,7 +15,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             thueSanPhamService = thueSanPhamServices;
             sanPhamService = sanPhamServices;
         }
-        public IActionResult ThueSanPham(ThueSanPham thueSanPham, int id, int iddatphong, int idphong)
+        public IActionResult ThueSanPham(ThueSanPham thueSanPham, int idsp, int iddatphong, int idphong)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -25,12 +25,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-                SanPham sanpham = sanPhamService.GetSanPhamByID(id);
+                SanPham sanpham = sanPhamService.GetSanPhamByID(idsp);
                 thueSanPham.idnhanvien = idnv;
                 thueSanPham.soluong = 1;
-                thueSanPham.idsanpham = id;
+                thueSanPham.idsanpham = idsp;
                 thueSanPham.iddatphong = iddatphong;
-                ThueSanPham thueSanPhamididdatphong = thueSanPhamService.GetThueSanPhamByDatPhongAndSanPham(iddatphong, id);
+                ThueSanPham thueSanPhamididdatphong = thueSanPhamService.GetThueSanPhamByDatPhongAndSanPham(iddatphong, idsp);
                 if (thueSanPhamididdatphong != null)
                 {
                     if (sanpham.soluongcon > 1)

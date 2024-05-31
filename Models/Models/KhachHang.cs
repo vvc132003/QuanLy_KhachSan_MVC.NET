@@ -13,5 +13,6 @@
         public string taikhoan { get; set; }
         public string matkhau { get; set; }
         public string trangthai { get; set; }
+        public string idtaikhoangoogle { get; set; }
     }
 }

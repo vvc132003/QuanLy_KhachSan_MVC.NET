@@ -30,15 +30,26 @@
                                 {
                                     <input type="text" class="form-control" id="hovaten" name="hovaten" value="@Model.khachhang.hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
                                 }
+                                else if (@Model.userProfileViewModel.Name != null)
+                                {
+                                    <input type="text" class="form-control" id="hovaten" value="@Model.userProfileViewModel.Name" name="hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
+                                }
                                 else
                                 {
-                                <input type="text" class="form-control" id="hovaten" name="hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
+                                    <input type="text" class="form-control" id="hovaten" name="hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
                                 }
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group col-md-6">
                                 <label>Email</label>
-                                <input type="email" name="email" class="form-control" id="email" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
+                                @if (@Model.userProfileViewModel.Email != null)
+                                {
+                                    <input type="email" name="email" class="form-control" id="email" value="@Model.userProfileViewModel.Email" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
+                                }
+                                else
+                                {
+                                    <input type="email" name="email" class="form-control" id="email"  required="required" data-validation-required-message="Vui lòng nhập email(*)" />
+                                }
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>

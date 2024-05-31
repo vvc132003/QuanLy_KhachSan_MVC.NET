@@ -17,8 +17,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly ThoiGianService thoiGianService;
         private readonly MaGiamGiaService maGiamGiaService;
         private readonly KhachHangService khachHangService;
-        private readonly NgayLeService ngayLeService;
-        private readonly ChinhSachGiaService chinhSachGiaService;
+        private readonly GiamGiaNgayLeService giamGiaNgayLeService;
 
 
 
@@ -29,8 +28,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                   PhongService phongServices,
                                   SuDungMaGiamGiaService sugiamGiaServices,
                                   ThoiGianService thoiGianServices,
-                                  MaGiamGiaService maGiamGiaServices, KhachHangService khachHangServices,
-                                  NgayLeService ngayLeService, ChinhSachGiaService chinhSachGiaService)
+                                  MaGiamGiaService maGiamGiaServices, KhachHangService khachHangServices, GiamGiaNgayLeService giamGiaNgayLeService)
         {
             datPhongService = datPhongServices;
             thueSanPhamService = thueSanPhamServices;
@@ -41,8 +39,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             thoiGianService = thoiGianServices;
             maGiamGiaService = maGiamGiaServices;
             khachHangService = khachHangServices;
-            this.ngayLeService = ngayLeService;
-            this.chinhSachGiaService = chinhSachGiaService;
+            this.giamGiaNgayLeService = giamGiaNgayLeService;
         }
         public IActionResult TraPhongandLSThanhToan(LichSuThanhToan lichSuThanhToan, int idphong)
         {
@@ -63,7 +60,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 }
                 /*                ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
                 */
-                NgayLe ngayLe = ngayLeService.GetNgayLesbyNgay();
+                GiamGiaNgayLe giamGiaNgayLe = giamGiaNgayLeService.GetGiamGiaNgayLeByNgayLe(DateTime.Today);
                 float sotienthanhtoan = 0;
                 if (sudunggiamGia != null)
                 {
@@ -73,13 +70,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
-                        if (ngayLe != null)
+                        if (giamGiaNgayLe != null)
                         {
-                            ChinhSachGia chinhSachGia = chinhSachGiaService.GetChinhSachGiaByIdngayle(ngayLe.id);
                             // Đang trong thời gian thuê theo giờ
                             /*                            sotienthanhtoan = ((((phong.giatientheogio * chinhSachGia.dieuchinhgiaphong) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
                             */
-                            sotienthanhtoan = ((((phong.giatientheogio * (100 + chinhSachGia.dieuchinhgiaphong)) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * (100 - maGiamGia.phantramgiamgia) / 100;
+                            sotienthanhtoan = ((((phong.giatientheogio * (100 + giamGiaNgayLe.dieuchinhgiaphong)) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * (100 - maGiamGia.phantramgiamgia) / 100;
                         }
                         else
                         {
@@ -89,11 +85,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     }
                     else
                     {
-                        if (ngayLe != null)
+                        if (giamGiaNgayLe != null)
                         {
-                            ChinhSachGia chinhSachGia = chinhSachGiaService.GetChinhSachGiaByIdngayle(ngayLe.id);
                             // Đang thuê theo ngày
-                            sotienthanhtoan = ((((phong.giatientheongay * (100 + chinhSachGia.dieuchinhgiaphong)) / 100) * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * (100 - maGiamGia.phantramgiamgia) / 100;
+                            sotienthanhtoan = ((((phong.giatientheongay * (100 + giamGiaNgayLe.dieuchinhgiaphong)) / 100) * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * (100 - maGiamGia.phantramgiamgia) / 100;
                             /*                            sotienthanhtoan = ((((phong.giatientheongay * chinhSachGia.dieuchinhgiaphong) / 100) * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
                             */
                         }
@@ -108,11 +103,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     if (datphong.hinhthucthue == "Theo giờ")
                     {
-                        if (ngayLe != null)
+                        if (giamGiaNgayLe != null)
                         {
-                            ChinhSachGia chinhSachGia = chinhSachGiaService.GetChinhSachGiaByIdngayle(ngayLe.id);
                             // Đang trong thời gian thuê theo giờ
-                            sotienthanhtoan = (((phong.giatientheogio * (100 + chinhSachGia.dieuchinhgiaphong)) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
+                            sotienthanhtoan = (((phong.giatientheogio * (100 + giamGiaNgayLe.dieuchinhgiaphong)) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
                             /*                            sotienthanhtoan = (((phong.giatientheogio * chinhSachGia.dieuchinhgiaphong) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
                             */
                         }
@@ -124,11 +118,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     }
                     else
                     {
-                        if (ngayLe != null)
+                        if (giamGiaNgayLe != null)
                         {
-                            ChinhSachGia chinhSachGia = chinhSachGiaService.GetChinhSachGiaByIdngayle(ngayLe.id);
                             // Đang thuê theo ngày
-                            sotienthanhtoan = (((phong.giatientheongay * (100 + chinhSachGia.dieuchinhgiaphong)) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
+                            sotienthanhtoan = (((phong.giatientheongay * (100 + giamGiaNgayLe.dieuchinhgiaphong)) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
                             /*                            sotienthanhtoan = (((phong.giatientheongay * chinhSachGia.dieuchinhgiaphong) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
                             */
                         }
@@ -143,10 +136,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 float giatienphong = 0;
                 if (datphong.hinhthucthue == "Theo ngày")
                 {
-                    if (ngayLe != null)
+                    if (giamGiaNgayLe != null)
                     {
-                        ChinhSachGia chinhSachGia = chinhSachGiaService.GetChinhSachGiaByIdngayle(ngayLe.id);
-                        giatienphong = phong.giatientheongay + (phong.giatientheongay * chinhSachGia.dieuchinhgiaphong) / 100;
+                        giatienphong = phong.giatientheongay + (phong.giatientheongay * giamGiaNgayLe.dieuchinhgiaphong) / 100;
                         /*                        giatienphong = (phong.giatientheongay * chinhSachGia.dieuchinhgiaphong) / 100;
                         */
                     }
@@ -157,10 +149,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 }
                 else
                 {
-                    if (ngayLe != null)
+                    if (giamGiaNgayLe != null)
                     {
-                        ChinhSachGia chinhSachGia = chinhSachGiaService.GetChinhSachGiaByIdngayle(ngayLe.id);
-                        giatienphong = phong.giatientheogio + (phong.giatientheogio * chinhSachGia.dieuchinhgiaphong) / 100;
+                        giatienphong = phong.giatientheogio + (phong.giatientheogio * giamGiaNgayLe.dieuchinhgiaphong) / 100;
                         /*                        giatienphong = (phong.giatientheogio * chinhSachGia.dieuchinhgiaphong) / 100;
                         */
                     }
@@ -205,6 +196,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
- 
+
     }
 }

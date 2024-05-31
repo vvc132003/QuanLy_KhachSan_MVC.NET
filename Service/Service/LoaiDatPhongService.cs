@@ -32,6 +32,31 @@ namespace  Service
                 return loaiDatPhongs;
             }
         }
+        public LoaiDatPhong GetLoaiDatPhongById(int id)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                LoaiDatPhong loaiDatPhong = null;
+                connection.Open();
+                string query = "select * from LoaiDatPhong where id = @id";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            loaiDatPhong = new LoaiDatPhong()
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                loaidatphong = reader["loaidatphong"].ToString(),
+                            };
+                        }
+                    }
+                }
+                return loaiDatPhong;
+            }
+        }
 
         public void ThemLoaiDatPhong(LoaiDatPhong loaiDatPhong)
         {
