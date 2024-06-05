@@ -14,5 +14,7 @@
         public string matkhau { get; set; }
         public string trangthai { get; set; }
         public string idtaikhoangoogle { get; set; }
+        public string ConfirmationCode { get; set; }
+        public bool Confirmed { get; set; }
     }
 }
