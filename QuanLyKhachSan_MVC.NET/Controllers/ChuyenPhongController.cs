@@ -59,23 +59,30 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int idnv = HttpContext.Session.GetInt32("id").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
-                ViewData["id"] = idnv;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                List<ChuyenPhong> listchuyenPhong = chuyenPhongService.GetAllChuyenPhongDescNgayChuyen();
-                int soluong = listchuyenPhong.Count;
-                int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
-                int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
-                PagedList.IPagedList<ChuyenPhong> ipagelistchuyePhong = listchuyenPhong.ToPagedList(validPageNumber, pageSize);
-                Modeldata yourModel = new Modeldata
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    PagedTChuyenPhong = ipagelistchuyePhong,
-                };
-                return View(yourModel);
+                    int idnv = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    ViewData["id"] = idnv;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    List<ChuyenPhong> listchuyenPhong = chuyenPhongService.GetAllChuyenPhongDescNgayChuyen();
+                    int soluong = listchuyenPhong.Count;
+                    int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
+                    int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
+                    PagedList.IPagedList<ChuyenPhong> ipagelistchuyePhong = listchuyenPhong.ToPagedList(validPageNumber, pageSize);
+                    Modeldata yourModel = new Modeldata
+                    {
+                        PagedTChuyenPhong = ipagelistchuyePhong,
+                    };
+                    return View(yourModel);
+                }
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {

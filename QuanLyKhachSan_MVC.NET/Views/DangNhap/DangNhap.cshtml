@@ -1,6 +1,7 @@
 ﻿@model Model.Models.Modeldata
 <link href="~/content/static/login/css/style.css" rel="stylesheet" />
 <link href="~/content/static/login/css/font-awesome.css" rel="stylesheet" />
+@Html.Partial("~/Views/layout/logo.cshtml")
 <link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 <div class="login-form w3_form">
     <div class="login-title w3_title">
@@ -22,7 +23,7 @@
                         <option value="" selected>Không có dữ liệu</option>
                     }
                 </select> *@
-                <input type="text" placeholder="Tên đăng nhập" name="taikhoan" required="">
+                <input type="text" placeholder="Nhập tài khoản hoặc email" name="taikhoanoremail" required="">
                 <input type="password" placeholder="Mật kẩu" name="matkhau" required="">
                 <input type="submit" value="Đăng nhập">
             </form>

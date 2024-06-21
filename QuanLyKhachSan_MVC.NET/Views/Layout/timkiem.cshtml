@@ -1,5 +1,5 @@
 ﻿@model Model.Models.Modeldata
-<form method="post" Action="/Home/TimKiemKhachSan">
+<form method="get" action="/home/timkiemkhachsan">
     <div id="search">
         <div class="container">
             <div class="form-row">
@@ -7,8 +7,8 @@
                     <label>Thành phố hoặc tên khách sạn</label>
                     <div class="form-group">
                         <div class="input-group date" id="date-3" data-target-input="nearest">
-                            <input type="hidden" value="" id="idkhachsan" name="idkhachsan" class="form-control datetimepicker-input" />
-                            <input type="text" value="" id="tenkhachsan" name="tenkhachsan" class="form-control datetimepicker-input" />
+                            <input type="hidden" id="idkhachsan" name="idkhachsan" class="form-control datetimepicker-input" />
+                            <input type="text" id="tenkhachsan" name="tenkhachsan" class="form-control datetimepicker-input" />
                         </div>
                         <div id="suggest" style="display: none; position: absolute; background-color: #f8f9fa; border: 1px solid #ccc; z-index: 999; max-height: 200px; overflow-y: auto;"></div> <!-- Hiển thị gợi ý -->
                     </div>
@@ -106,7 +106,7 @@
     });
 </script>
 
-                    
+
 <style>
     /* CSS cho ô nhập liệu và gợi ý */
     #tenkhachsan {

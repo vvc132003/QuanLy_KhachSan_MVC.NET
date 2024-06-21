@@ -18,6 +18,8 @@ C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Re
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Humanizer.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\MathNet.Numerics.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.Google.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Build.dll
@@ -34,6 +36,15 @@ C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Re
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.CodeAnalysis.Workspaces.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.DiaSymReader.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.DotNet.Scaffolding.Shared.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.Http.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.Identity.Core.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.Logging.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.Options.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.Primitives.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.IO.RecyclableMemoryStream.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.NET.StringTools.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.dll
@@ -69,6 +80,7 @@ C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Re
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\System.Composition.TypedParts.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\System.Configuration.ConfigurationManager.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\System.Data.SqlClient.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\System.Diagnostics.DiagnosticSource.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\System.Drawing.Common.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\System.IO.Packaging.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\System.Reflection.MetadataLoadContext.dll

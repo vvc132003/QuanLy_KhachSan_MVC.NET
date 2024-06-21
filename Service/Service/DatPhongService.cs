@@ -185,6 +185,42 @@ namespace Service
                 }
             }
         }
+        public DatPhong GetDatPhongByIDpHONG(int idphong)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "select * from DatPhong where idphong = @idphong ";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idphong", idphong);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            DatPhong datPhong = new DatPhong
+                            {
+                                id = (int)reader["id"],
+                                idphong = (int)reader["idphong"],
+                                idloaidatphong = (int)reader["idloaidatphong"],
+                                idthoigian = (int)reader["idthoigian"],
+                                idkhachhang = (int)reader["idkhachhang"],
+                                trangthai = reader["trangthai"].ToString(),
+                                hinhthucthue = reader["hinhthucthue"].ToString(),
+                                ngaydat = (DateTime)reader["ngaydat"],
+                                ngaydukientra = (DateTime)reader["ngaydukientra"],
+                                tiendatcoc = Convert.ToSingle(reader["tiendatcoc"]),
+                            };
+                            return datPhong;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
         public DatPhong GetDatPhongByIDTrangThaiOnline(int idphong)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())

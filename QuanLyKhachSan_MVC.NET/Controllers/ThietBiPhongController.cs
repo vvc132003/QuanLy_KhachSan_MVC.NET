@@ -38,39 +38,46 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
-                int id = HttpContext.Session.GetInt32("id").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["id"] = id;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                ViewData["idkhachsan"] = idkhachsan;
-                List<ThietBiPhong> thietBiPhongs = thietBiPhongService.GetALLThietBiPhong();
-
-                if (thietBiPhongs.Any())
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    int soluong = thietBiPhongs.Count;
-                    int validPageNumber = sotrang ?? 1;
-                    int pageSize = Math.Max(soluong, 1);
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    ViewData["idkhachsan"] = idkhachsan;
+                    List<ThietBiPhong> thietBiPhongs = thietBiPhongService.GetALLThietBiPhong();
 
-                    PagedList.IPagedList<ThietBiPhong> pagedThietBiPhong = thietBiPhongs.ToPagedList(validPageNumber, pageSize);
-
-                    List<Phong> listphong = phongService.GetAllPhong();
-                    List<ThietBi> listthietbi = thetBiService.GetAllThietBi();
-
-                    Modeldata modeldata = new Modeldata
+                    if (thietBiPhongs.Any())
                     {
-                        PagedThietBiPhong = pagedThietBiPhong,
-                        listphong = listphong,
-                        listThietBi = listthietbi
-                    };
+                        int soluong = thietBiPhongs.Count;
+                        int validPageNumber = sotrang ?? 1;
+                        int pageSize = Math.Max(soluong, 1);
 
-                    return View(modeldata);
+                        PagedList.IPagedList<ThietBiPhong> pagedThietBiPhong = thietBiPhongs.ToPagedList(validPageNumber, pageSize);
+
+                        List<Phong> listphong = phongService.GetAllPhong();
+                        List<ThietBi> listthietbi = thetBiService.GetAllThietBi();
+
+                        Modeldata modeldata = new Modeldata
+                        {
+                            PagedThietBiPhong = pagedThietBiPhong,
+                            listphong = listphong,
+                            listThietBi = listthietbi
+                        };
+
+                        return View(modeldata);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Addthietbiphongs");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Addthietbiphongs");
+                    return RedirectToAction("dangnhap", "dangnhap");
                 }
             }
             else
@@ -83,22 +90,29 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
-                int id = HttpContext.Session.GetInt32("id").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["id"] = id;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                ViewData["idkhachsan"] = idkhachsan;
-                List<Phong> listphong = phongService.GetAllPhong();
-                List<ThietBi> listthietbi = thetBiService.GetAllThietBi();
-                Modeldata modeldata = new Modeldata
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    listphong = listphong,
-                    listThietBi = listthietbi
-                };
-                return View(modeldata);
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    ViewData["idkhachsan"] = idkhachsan;
+                    List<Phong> listphong = phongService.GetAllPhong();
+                    List<ThietBi> listthietbi = thetBiService.GetAllThietBi();
+                    Modeldata modeldata = new Modeldata
+                    {
+                        listphong = listphong,
+                        listThietBi = listthietbi
+                    };
+                    return View(modeldata);
+                }
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {

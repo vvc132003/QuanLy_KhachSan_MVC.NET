@@ -18,28 +18,35 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
-                int id = HttpContext.Session.GetInt32("id").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["id"] = id;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                ViewData["idkhachsan"] = idkhachsan;
-                List<SanPham> sanphams = sanPhamService.GetAllSanPham();
-                List<KhachSan> khachSans = khachSanService.GetAllKhachSan();
-                List<Modeldata> modeldatalist = new List<Modeldata>();
-                foreach (var sanPham in sanphams)
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    KhachSan khachSan = khachSanService.GetKhachSanById(sanPham.idkhachsan);
-                    Modeldata modeldata = new Modeldata
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    ViewData["idkhachsan"] = idkhachsan;
+                    List<SanPham> sanphams = sanPhamService.GetAllSanPham();
+                    List<KhachSan> khachSans = khachSanService.GetAllKhachSan();
+                    List<Modeldata> modeldatalist = new List<Modeldata>();
+                    foreach (var sanPham in sanphams)
                     {
-                        sanPham = sanPham,
-                        khachSan = khachSan,
-                    };
-                    modeldatalist.Add(modeldata);
+                        KhachSan khachSan = khachSanService.GetKhachSanById(sanPham.idkhachsan);
+                        Modeldata modeldata = new Modeldata
+                        {
+                            sanPham = sanPham,
+                            khachSan = khachSan,
+                        };
+                        modeldatalist.Add(modeldata);
+                    }
+                    return View(new Tuple<List<Modeldata>, List<KhachSan>>(modeldatalist, khachSans));
                 }
-                return View(new Tuple<List<Modeldata>, List<KhachSan>>(modeldatalist, khachSans));
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {

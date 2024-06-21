@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.FileProviders;
 using Model.Models;
@@ -18,7 +19,7 @@ builder.Services.AddScoped<ViTriBoPhanService>();
 builder.Services.AddScoped<NhanVienService>();
 builder.Services.AddScoped<LoaiDatPhongService>();
 builder.Services.AddScoped<DatPhongService>();
-builder.Services.AddScoped<KhachHangService>();
+/*builder.Services.AddScoped<KhachHangService>();*/
 builder.Services.AddScoped<NhanPhongService>();
 builder.Services.AddScoped<SanPhamService>();
 builder.Services.AddScoped<ThueSanPhamService>();
@@ -40,7 +41,9 @@ builder.Services.AddScoped<TinNhanService>();
 builder.Services.AddScoped<TinNhanIconService>();
 builder.Services.AddScoped<IconService>();
 builder.Services.AddScoped<GiamGiaNgayLeService>();
-
+// mã hoá mật khẩu
+builder.Services.AddScoped<IPasswordHasher<KhachHang>, PasswordHasher<KhachHang>>();
+builder.Services.AddScoped(sp => new KhachHangService(new PasswordHasher<KhachHang>()));
 
 
 // Add services to the container.

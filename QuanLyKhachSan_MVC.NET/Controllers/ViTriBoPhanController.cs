@@ -18,29 +18,36 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int idnv = HttpContext.Session.GetInt32("id").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["id"] = idnv;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                List<ViTriBoPhan> viTriBoPhans = viTriBoPhanService.GetAllViTriBoPhan();
-                List<BoPhan> boPhans = boPhanService.GetALLBoPhan();
-
-                if (viTriBoPhans != null && boPhans != null)
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    Modeldata modeldata = new Modeldata
+                    int idnv = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = idnv;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    List<ViTriBoPhan> viTriBoPhans = viTriBoPhanService.GetAllViTriBoPhan();
+                    List<BoPhan> boPhans = boPhanService.GetALLBoPhan();
+
+                    if (viTriBoPhans != null && boPhans != null)
                     {
-                        listviTriBoPhan = viTriBoPhans,
-                        listbophan = boPhans,
-                    };
-                    return View(modeldata);
+                        Modeldata modeldata = new Modeldata
+                        {
+                            listviTriBoPhan = viTriBoPhans,
+                            listbophan = boPhans,
+                        };
+                        return View(modeldata);
+                    }
+                    return View("Index");
                 }
-                return View("Index");
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {
-                               return RedirectToAction("dangnhap", "dangnhap");
+                return RedirectToAction("dangnhap", "dangnhap");
             }
         }
 

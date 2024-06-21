@@ -126,7 +126,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         NhanVien nhanVienthamgia = nhanVienService.GetNhanVienID(nguoithamgia.NhanVienThamGiaId);
                         if (nhanVienthamgia != null)
                         {
-                            if (nguoithamgia.NhanVienThamGiaId != id)
+                            if (nguoithamgia.NhanVienThamGiaId != id)   
                             {
                                 ten = nhanVienthamgia.hovaten;
                                 break;

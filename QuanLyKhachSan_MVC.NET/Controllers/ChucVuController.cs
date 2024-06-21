@@ -17,23 +17,30 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int id = HttpContext.Session.GetInt32("id").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["id"] = id;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                List<ChucVu> chucVus = chucVuService.GetAllChucVu();
-                List<Modeldata> modellisst = new List<Modeldata>();
-                foreach (var chucVu in chucVus)
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    Modeldata modeldata = new Modeldata
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    List<ChucVu> chucVus = chucVuService.GetAllChucVu();
+                    List<Modeldata> modellisst = new List<Modeldata>();
+                    foreach (var chucVu in chucVus)
                     {
-                        chucVu = chucVu,
-                    };
-                    modellisst.Add(modeldata);
+                        Modeldata modeldata = new Modeldata
+                        {
+                            chucVu = chucVu,
+                        };
+                        modellisst.Add(modeldata);
+                    }
+                    return View(modellisst);
                 }
-                return View(modellisst);
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {

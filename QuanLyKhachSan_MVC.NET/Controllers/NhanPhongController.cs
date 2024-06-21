@@ -39,24 +39,32 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int idnv = HttpContext.Session.GetInt32("id").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["id"] = idnv;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThaiOnline(idphong);
-                // Inside your controller Action
-                List<Modeldata> yourModelList = new List<Modeldata>();
-                if (datPhong != null)
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    Modeldata yourModel = new Modeldata
+                    int idnv = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = idnv;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThaiOnline(idphong);
+                    List<Modeldata> yourModelList = new List<Modeldata>();
+                    if (datPhong != null)
                     {
-                        datPhong = datPhong,
-                    };
-                    yourModelList.Add(yourModel);
+                        KhachHang khachHang = khachHangService.GetKhachHangbyid(datPhong.idkhachhang);
+                        Modeldata yourModel = new Modeldata
+                        {
+                            datPhong = datPhong,
+                            khachhang = khachHang,
+                        };
+                        yourModelList.Add(yourModel);
+                    }
+                    return View(yourModelList);
                 }
-                return View(yourModelList);
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {
@@ -67,29 +75,36 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int idnv = HttpContext.Session.GetInt32("id").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["id"] = idnv;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThaiOnline(idphong);
-                if (datPhong != null && datPhong.cccd == cccd)
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    nhanPhong.idnhanvien = idnv;
-                    nhanPhong.iddatphong = datPhong.id;
-                    nhanPhong.ngaynhanphong = DateTime.Now;
-                    nhanPhongService.ThemNhanPhong(nhanPhong);
-                    Phong phong = phongService.GetPhongID(idphong);
-                    phong.tinhtrangphong = "có khách";
-                    phongService.CapNhatPhong(phong);
-                    datPhong.trangthai = "đã đặt";
-                    datPhongService.UpdateDatPhong(datPhong);
-                    return RedirectToAction("Index", "Phong");
+                    int idnv = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = idnv;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThaiOnline(idphong);
+                    if (datPhong != null && datPhong.cccd == cccd)
+                    {
+                        nhanPhong.idnhanvien = idnv;
+                        nhanPhong.iddatphong = datPhong.id;
+                        nhanPhong.ngaynhanphong = DateTime.Now;
+                        nhanPhongService.ThemNhanPhong(nhanPhong);
+                        Phong phong = phongService.GetPhongID(idphong);
+                        phong.tinhtrangphong = "có khách";
+                        phongService.CapNhatPhong(phong);
+                        datPhong.trangthai = "đã đặt";
+                        datPhongService.UpdateDatPhong(datPhong);
+                        return RedirectToAction("Index", "Phong");
+                    }
+                    else
+                    {
+                        return RedirectToAction("NhanPhongOnline", "NhanPhong", new { id = idphong });
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("NhanPhongOnline", "NhanPhong", new { id = idphong });
+                    return RedirectToAction("dangnhap", "dangnhap");
                 }
             }
             else

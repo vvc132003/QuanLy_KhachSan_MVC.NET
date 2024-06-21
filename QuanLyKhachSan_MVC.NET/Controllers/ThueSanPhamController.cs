@@ -60,7 +60,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         Console.WriteLine("Sản phẩm này đã hết");
                     }
                 }
-                return RedirectToAction("chitietthuephong", "thuephong", new { id = idphong });
+                return RedirectToAction("chitietthuephong", "thuephong", new { idphong = idphong });
             }
             else
             {
@@ -84,7 +84,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         sanpham.soluongcon += 1;
                         sanPhamService.CapNhatSanPham(sanpham);
                         thueSanPhamService.XoaThueSanPham(id);
-                        return RedirectToAction("chitietthuephong", "thuephong", new { id = idphong });
+                        return RedirectToAction("chitietthuephong", "thuephong", new { idphong = idphong });
                     }
                     else if (thueSanPham.soluong > 1)
                     {
@@ -93,10 +93,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         thueSanPham.soluong -= 1;
                         thueSanPham.thanhtien = thueSanPham.soluong * sanpham.giaban;
                         thueSanPhamService.CapNhatThueSanPham(thueSanPham);
-                        return RedirectToAction("chitietthuephong", "thuephong", new { id = idphong });
+                        return RedirectToAction("chitietthuephong", "thuephong", new { idphong = idphong });
                     }
                 }
-                return RedirectToAction("chitietthuephong", "thuephong", new { id = idphong });
+                return RedirectToAction("chitietthuephong", "thuephong", new { idphong = idphong });
             }
             else
             {
@@ -125,7 +125,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     Console.WriteLine("Sản phẩm này đã hết");
                 }
-                return RedirectToAction("chitietthuephong", "thuephong", new { id = idphong });
+                return RedirectToAction("chitietthuephong", "thuephong", new { idphong = idphong });
             }
             else
             {

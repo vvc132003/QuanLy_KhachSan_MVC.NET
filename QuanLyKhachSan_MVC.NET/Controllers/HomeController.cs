@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using Service;
+using System.Security.Claims;
+using QuanLyKhachSan_MVC.NET.Areas.Login.Modelss;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
@@ -8,11 +13,13 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
     {
         private readonly PhongService phongService;
         private readonly KhachSanService khachSanService;
+        private readonly KhachHangService khachHangService;
 
-        public HomeController(PhongService phongServices, KhachSanService khachSanServices)
+        public HomeController(PhongService phongServices, KhachSanService khachSanServices, KhachHangService khachHangService)
         {
             phongService = phongServices;
             khachSanService = khachSanServices;
+            this.khachHangService = khachHangService;
         }
         public IActionResult AddNhanVien()
         {
@@ -22,18 +29,116 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             return View();
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-        public IActionResult TimKiemKhachSan(int idkhachsan, string loaiphong, int songuoi)
-        {
-            List<Phong> phonglisst = phongService.GetAllPhongTrangThaiandidksloaiphongsonguoi(idkhachsan, loaiphong, songuoi);
-            Modeldata modeldata = new Modeldata()
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                listphong = phonglisst,
-            };
-            return View(modeldata);
+                int id = HttpContext.Session.GetInt32("id").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                KhachHang khachHang = khachHangService.GetKhachHangbyid(id);
+                Modeldata modeldata = new Modeldata
+                {
+                    khachhang = khachHang,
+                };
+                return View(modeldata);
+            }
+            else
+            {
+                var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                if (result != null && result.Succeeded)
+                {
+                    var name = result.Principal.FindFirstValue(ClaimTypes.Name);
+                    var email = result.Principal.FindFirstValue(ClaimTypes.Email);
+                    var profileLink = result.Principal.FindFirstValue("urn:google:profile");
+                    var userId = result.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+                    var userProfileViewModel = new UserProfileViewModel
+                    {
+                        Name = name,
+                        Email = email,
+                        ProfileLink = profileLink,
+                        UserId = userId
+                    };
+                    Modeldata modeldata = new Modeldata
+                    {
+                        userProfileViewModel = userProfileViewModel
+                    };
+                    return View(modeldata);
+                }
+                else
+                {
+                    return View();
+                }
+            }
+        }
+        public async Task<IActionResult> TimKiemKhachSan(int idkhachsan, string loaiphong, int songuoi)
+        {
+            if (idkhachsan != 0 && loaiphong != null && songuoi != 0)
+            {
+                List<Phong> phonglisst = phongService.GetAllPhongByidKhachSanndlaoiphongandsonguoi(idkhachsan, loaiphong, songuoi);
+                if (phonglisst != null)
+                {
+                    KhachSan khachSan = khachSanService.GetKhachSanById(idkhachsan);
+                    if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+                    {
+                        int id = HttpContext.Session.GetInt32("id").Value;
+                        string hovaten = HttpContext.Session.GetString("hovaten");
+                        ViewData["id"] = id;
+                        ViewData["hovaten"] = hovaten;
+                        KhachHang khachHang = khachHangService.GetKhachHangbyid(id);
+                        Modeldata modeldata = new Modeldata
+                        {
+                            khachhang = khachHang,
+                            listphong = phonglisst,
+                            khachSan = khachSan,
+                        };
+                        return View(modeldata);
+                    }
+                    else
+                    {
+                        var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                        if (result != null && result.Succeeded)
+                        {
+                            var name = result.Principal.FindFirstValue(ClaimTypes.Name);
+                            var email = result.Principal.FindFirstValue(ClaimTypes.Email);
+                            var profileLink = result.Principal.FindFirstValue("urn:google:profile");
+                            var userId = result.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+                            var userProfileViewModel = new UserProfileViewModel
+                            {
+                                Name = name,
+                                Email = email,
+                                ProfileLink = profileLink,
+                                UserId = userId
+                            };
+                            Modeldata modeldata = new Modeldata
+                            {
+                                userProfileViewModel = userProfileViewModel,
+                                listphong = phonglisst,
+                                khachSan = khachSan,
+                            };
+                            return View(modeldata);
+                        }
+                        else
+                        {
+                            Modeldata modeldata = new Modeldata
+                            {
+                                listphong = phonglisst,
+                                khachSan = khachSan,
+                            };
+                            return View(modeldata);
+                        }
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("", "home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("", "home");
+            }
         }
         public IActionResult GetAllKhachSan()
         {

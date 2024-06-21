@@ -1,0 +1,145 @@
+﻿@model Model.Models.Modeldata
+<link href="/static/img/favicon.ico" rel="icon">
+<link href="/static/img/apple-favicon.png" rel="apple-touch-icon">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+<link href="~/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/css/animate.min.css" rel="stylesheet" />
+<link href="~/css/slick.css" rel="stylesheet" />
+<link href="~/css/slick-theme.css" rel="stylesheet" />
+<link href="~/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+<link href="~/css/hover-style.css" rel="stylesheet" />
+<link href="~/css/style.css" rel="stylesheet" />
+@Html.Partial("~/Views/layout/index.cshtml")
+<div id="booking">
+    <div class="container">
+        <div class="section-header">
+            <h2>Đặt phòng</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="booking-form">
+                    <div id="success">
+                        @if (Model.phong.tinhtrangphong == "có khách" || Model.phong.tinhtrangphong == "đã đặt")
+                        {
+                            <p style="color:red; font-size:14px; font-weight:600;">Phòng đang có khách, vui lòng quay lại sau: @Model.datPhong.ngaydukientra.ToString("dd/MM/yyyy HH:mm").</p>
+                        }
+                        else if (Model.phong.tinhtrangphong == "còn trống")
+                        {
+                            <p style="font-size:14px; font-weight:600;">Xin chào bạn đến với khách sạn chúng tôi.</p>
+                        }
+                        else
+                        {
+                            <p style="color:red; font-size:14px; font-weight:600;">Phòng không sử dụng, vui lòng quay lại sau.</p>
+                        }
+                    </div>
+                    @if (!string.IsNullOrEmpty(ViewData["thongbaothuephongonline"] as string))
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <p>@ViewData["thongbaothuephongonline"]</p>
+                        </div>
+                    }
+                    <br />
+                    <form method="post" action="/ThuePhong/CheckInDatPhongOnline">
+                        <input type="hidden" id="idphong" name="idphong" value="@Model.phong.id" class="form-control" />
+                        <input type="hidden" id="idkhachsan" name="idkhachsan" value="@Model.phong.idkhachsan" class="form-control" />
+                        <div class="form-row">
+                            <div class="control-group col-md-6">
+                                <label>Họ và tên</label>
+                                @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
+                                {
+                                    <input type="text" class="form-control" id="hovaten" name="hovaten" value="@Model.khachhang.hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
+                                }
+                                else if (!string.IsNullOrEmpty(Model.userProfileViewModel?.Name))
+                                {
+                                    <input type="text" class="form-control" id="hovaten" name="hovaten" value="@Model.userProfileViewModel.Name" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control" id="hovaten" name="hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
+                                }
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group col-md-6">
+                                <label>Email</label>
+                                @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
+                                {
+                                    <input type="email" name="email" class="form-control" id="email" value="@Model.khachhang.email" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
+                                }
+                                else if (!string.IsNullOrEmpty(Model.userProfileViewModel?.Name))
+                                {
+                                    <input type="email" name="email" class="form-control" id="email" value="@Model.userProfileViewModel.Email" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
+                                }
+                                else
+                                {
+                                    <input type="email" name="email" class="form-control" id="email" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
+                                }
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="control-group col-md-6">
+                                <label>Số điện thoại</label>
+                                @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
+                                {
+                                    <input type="text" class="form-control" id="sodienthoai" value="@Model.khachhang.sodienthoai" name="sodienthoai" required="required" data-validation-required-message="Vui lòng nhập số điện thoại" />
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control" id="sodienthoai" name="sodienthoai" required="required" data-validation-required-message="Vui lòng nhập số điện thoại" />
+                                }
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group col-md-6">
+                                <label>CCCD</label>
+                                @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
+                                {
+                                    <input type="text" class="form-control" id="cccd" value="@Model.khachhang.cccd" name="cccd" required="required" data-validation-required-message="Vui lòng nhập cccd (*)" />
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control" id="cccd" name="cccd" required="required" data-validation-required-message="Vui lòng nhập cccd (*)" />
+                                }
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="control-group col-md-6">
+                                <label>Ngày dự kiến trả phòng</label>
+                                <input type="datetime" class="form-control datetimepicker-input" id="date-1" name="ngaydukientra" data-toggle="datetimepicker" data-target="#date-1" required="required" data-validation-required-message="Vui lòng nhập ngày dự kiến trả" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group col-md-6">
+                                <label>Mã giảm giá (Nếu có)</label>
+                                <input type="text" class="form-control datetimepicker-input" id="magiamgia" name="magiamgia" data-toggle="datetimepicker" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Yêu cầu</label>
+                            <input type="text" class="form-control" id="request" required="required" data-validation-required-message="Vui lòng nhập yêu cầu" />
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="button"><button type="submit" id="bookingButton">Đặt phòng</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Views/layout/footer.cshtml")
+<script src="~/content/static/vendor/jquery/jquery.min.js"></script>
+<script src="~/content/static/vendor/jquery/jquery-migrate.min.js"></script>
+<script src="~/content/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/content/static/vendor/easing/easing.min.js"></script>
+<script src="~/content/static/vendor/stickyjs/sticky.js"></script>
+<script src="~/content/static/vendor/superfish/hoverIntent.js"></script>
+<script src="~/content/static/vendor/superfish/superfish.min.js"></script>
+<script src="~/content/static/vendor/wow/wow.min.js"></script>
+<script src="~/content/static/vendor/slick/slick.min.js"></script>
+<script src="~/content/static/vendor/tempusdominus/js/moment.min.js"></script>
+<script src="~/content/static/vendor/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/content/static/vendor/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="~/content/static/js/booking.js"></script>
+<script src="~/content/static/js/jqBootstrapValidation.min.js"></script>
+<script src="~/content/static/js/main.js"></script>

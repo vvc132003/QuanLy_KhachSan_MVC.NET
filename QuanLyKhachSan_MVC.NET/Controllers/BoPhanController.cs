@@ -19,25 +19,32 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int id = HttpContext.Session.GetInt32("id").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["id"] = id;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                List<BoPhan> boPhans = boPhanService.GetALLBoPhan();
-                List<Modeldata> modeldataList = new List<Modeldata>();
-                foreach (var boPhan in boPhans)
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    List<NhanVien> nhanViens = nhanVienService.GetallNhanVientheoidbophan(boPhan.id);
-                    Modeldata modeldata = new Modeldata
+                    int? id = HttpContext.Session.GetInt32("id");
+                    string? hovaten = HttpContext.Session.GetString("hovaten");
+                    string? tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    List<BoPhan> boPhans = boPhanService.GetALLBoPhan();
+                    List<Modeldata> modeldataList = new List<Modeldata>();
+                    foreach (var boPhan in boPhans)
                     {
-                        boPhan = boPhan,
-                        listnhanVien = nhanViens,
-                    };
-                    modeldataList.Add(modeldata);
+                        List<NhanVien> nhanViens = nhanVienService.GetallNhanVientheoidbophan(boPhan.id);
+                        Modeldata modeldata = new Modeldata
+                        {
+                            boPhan = boPhan,
+                            listnhanVien = nhanViens,
+                        };
+                        modeldataList.Add(modeldata);
+                    }
+                    return View(modeldataList);
                 }
-                return View(modeldataList);
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {

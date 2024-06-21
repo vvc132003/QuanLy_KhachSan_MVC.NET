@@ -15,18 +15,25 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int id = HttpContext.Session.GetInt32("id").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["id"] = id;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                List<ThietBi> listthietbi = thietBiService.GetAllThietBi();
-                Modeldata modeldata = new Modeldata
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    listThietBi = listthietbi,
-                };
-                return View(modeldata);
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    List<ThietBi> listthietbi = thietBiService.GetAllThietBi();
+                    Modeldata modeldata = new Modeldata
+                    {
+                        listThietBi = listthietbi,
+                    };
+                    return View(modeldata);
+                }
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {

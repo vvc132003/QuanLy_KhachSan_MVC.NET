@@ -313,6 +313,10 @@
       "PackagePath": "staticwebassets\\Content\\static\\logo-text.png"
     },
     {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\logoks.jpg",
+      "PackagePath": "staticwebassets\\Content\\static\\logoks.jpg"
+    },
+    {
       "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\morris.css",
       "PackagePath": "staticwebassets\\Content\\static\\morris.css"
     },

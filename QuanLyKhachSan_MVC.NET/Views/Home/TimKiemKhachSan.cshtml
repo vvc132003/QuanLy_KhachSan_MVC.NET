@@ -2,7 +2,7 @@
 <link href="/static/img/favicon.ico" rel="icon">
 <link href="/static/img/apple-favicon.png" rel="apple-touch-icon">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-<
+@Html.Partial("~/Views/layout/logo.cshtml")
 <link href="~/css/bootstrap.min.css" rel="stylesheet" />
 <link href="~/css/font-awesome.min.css" rel="stylesheet" />
 <link href="~/css/animate.min.css" rel="stylesheet" />
@@ -15,10 +15,10 @@
 <div id="rooms">
     <div class="container">
         <div class="section-header">
-            <h2>Our Rooms</h2>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in mi libero. Quisque convallis, enim at venenatis tincidunt.
-            </p>
+            <h2>@Model.khachSan.tenkhachsan</h2>
+            @*  <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in mi libero. Quisque convallis, enim at venenatis tincidunt.
+            </p> *@
         </div>
         <div class="row">
             @if (Model.listphong != null && Model.listphong.Count > 0)
@@ -30,7 +30,7 @@
                             <div class="col-md-3">
                                 <div class="room-img">
                                     <div class="box12">
-                                        <img src="/static/img/room/room-4.jpg">
+                                        <img src="~/content/static/img/room/room-4.jpg" />
                                         <div class="box-content">
                                             <h3 class="title">Silver Double</h3>
                                             <ul class="icon">
@@ -66,7 +66,7 @@
                                 <div class="room-rate">
                                     <h3>From</h3>
                                     <h1>@string.Format("{0:N0} VNĐ", @phong.giatientheogio)<span>/Mỗi giờ</span></h1>
-                                    <a href="/phong/sophong/?idphong=@phong.id">Đặt phòng</a>
+                                    <a href="/phong/datphongonline/?idphong=@phong.id">Đặt phòng</a>
                                 </div>
                             </div>
                         </div>
@@ -87,20 +87,20 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="port-slider">
-                            <div><img src="/static/img/room-slider/room-1.jpg"></div>
-                            <div><img src="/static/img/room-slider/room-2.jpg"></div>
-                            <div><img src="/static/img/room-slider/room-3.jpg"></div>
-                            <div><img src="/static/img/room-slider/room-4.jpg"></div>
-                            <div><img src="/static/img/room-slider/room-5.jpg"></div>
-                            <div><img src="/static/img/room-slider/room-6.jpg"></div>
+                            <div><img src="~/content/static/img/room-slider/room-1.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-2.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-3.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-4.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-5.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-6.jpg" /></div>
                         </div>
                         <div class="port-slider-nav">
-                            <div><img src="/static/img/room-slider/room-1.jpg"></div>
-                            <div><img src="/static/img/room-slider/room-2.jpg"></div>
-                            <div><img src="/static/img/room-slider/room-3.jpg"></div>
-                            <div><img src="/static/img/room-slider/room-4.jpg"></div>
-                            <div><img src="/static/img/room-slider/room-5.jpg"></div>
-                            <div><img src="/static/img/room-slider/room-6.jpg"></div>
+                            <div><img src="~/content/static/img/room-slider/room-1.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-2.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-3.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-4.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-5.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-6.jpg" /></div>
                         </div>
                     </div>
                     <div class="col-12">
@@ -118,18 +118,18 @@
     </div>
 </div>
 @Html.Partial("~/Views/layout/footer.cshtml")
-<script src="/static/vendor/jquery/jquery.min.js"></script>
-<script src="/static/vendor/jquery/jquery-migrate.min.js"></script>
-<script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/static/vendor/easing/easing.min.js"></script>
-<script src="/static/vendor/stickyjs/sticky.js"></script>
-<script src="/static/vendor/superfish/hoverIntent.js"></script>
-<script src="/static/vendor/superfish/superfish.min.js"></script>
-<script src="/static/vendor/wow/wow.min.js"></script>
-<script src="/static/vendor/slick/slick.min.js"></script>
-<script src="/static/vendor/tempusdominus/js/moment.min.js"></script>
-<script src="/static/vendor/tempusdominus/js/moment-timezone.min.js"></script>
-<script src="/static/vendor/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-<script src="/static/js/booking.js"></script>
-<script src="/static/js/jqBootstrapValidation.min.js"></script>
-<script src="/static/js/main.js"></script>
+<script src="~/content/static/vendor/jquery/jquery.min.js"></script>
+<script src="~/content/static/vendor/jquery/jquery-migrate.min.js"></script>
+<script src="~/content/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/content/static/vendor/easing/easing.min.js"></script>
+<script src="~/content/static/vendor/stickyjs/sticky.js"></script>
+<script src="~/content/static/vendor/superfish/hoverIntent.js"></script>
+<script src="~/content/static/vendor/superfish/superfish.min.js"></script>
+<script src="~/content/static/vendor/wow/wow.min.js"></script>
+<script src="~/content/static/vendor/slick/slick.min.js"></script>
+<script src="~/content/static/vendor/tempusdominus/js/moment.min.js"></script>
+<script src="~/content/static/vendor/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/content/static/vendor/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="~/content/static/js/booking.js"></script>
+<script src="~/content/static/js/jqBootstrapValidation.min.js"></script>
+<script src="~/content/static/js/main.js"></script>

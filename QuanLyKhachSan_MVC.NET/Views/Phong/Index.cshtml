@@ -8,6 +8,7 @@
 <link href="~/content/static/c3.min.css" rel="stylesheet" />
 <link href="~/content/static/style.css" rel="stylesheet" />
 <link href="~/content/static/dashboard1.css" rel="stylesheet" />
+@Html.Partial("~/Views/layout/logo.cshtml")
 <link href="~/content/static/home.css" rel="stylesheet" />
 <div class="skin-default-dark fixed-layout">
     <div id="main-wrapper">
@@ -77,7 +78,7 @@
                                     <div class="context-menu">
                                         @if (phong.tinhtrangphong == "có khách")
                                         {
-                                            <a href="/thuephong/chitietthuephong/?id=@phong.id">
+                                            <a href="/thuephong/chitietthuephong/?idphong=@phong.id">
                                                 <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
                                                 Thông tin thuê phòng
                                             </a>
@@ -88,11 +89,11 @@
                                         }
                                         else if (phong.tinhtrangphong == "còn trống")
                                         {
-                                            <a href="/thuephong/index/@phong.id">
+                                            <a href="/thuephong/datphongdon/?idphong=@phong.id">
                                                 <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-bed"></i>
                                                 Đặt phòng bình thường
                                             </a>
-                                            <a href="/thuephong/index1">
+                                            <a href="/thuephong/datphongdoan">
                                                 <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-users"></i>
                                                 Đặt phòng theo đoàn
                                             </a>

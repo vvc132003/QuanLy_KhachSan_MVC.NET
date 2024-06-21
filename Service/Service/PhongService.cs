@@ -215,6 +215,68 @@ namespace Service
                 return phongs;
             }
         }
+
+
+        public List<Phong> GetAllPhongByidKhachSanndlaoiphongandsonguoi(int idkhachsan, string loaiphong, int songuoi)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<Phong> phongs = new List<Phong>();
+                connection.Open();
+
+                // Xây dựng câu truy vấn dựa trên các điều kiện
+                string query = "SELECT * FROM Phong WHERE idkhachsan = @idkhachsan";
+
+                // Thêm điều kiện loại phòng nếu được chỉ định
+                if (!string.IsNullOrEmpty(loaiphong))
+                {
+                    query += " AND loaiphong = @loaiphong";
+                }
+
+                // Thêm điều kiện số người nếu được chỉ định
+                if (songuoi > 0)
+                {
+                    query += " AND songuoi = @songuoi";
+                }
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
+
+                    // Thêm các tham số cho loại phòng và số người nếu chúng được chỉ định
+                    if (!string.IsNullOrEmpty(loaiphong))
+                    {
+                        command.Parameters.AddWithValue("@loaiphong", loaiphong);
+                    }
+                    if (songuoi > 0)
+                    {
+                        command.Parameters.AddWithValue("@songuoi", songuoi);
+                    }
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Phong phong = new Phong()
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                sophong = Convert.ToInt32(reader["sophong"]),
+                                songuoi = Convert.ToInt32(reader["songuoi"]),
+                                loaiphong = reader["loaiphong"].ToString(),
+                                tinhtrangphong = reader["tinhtrangphong"].ToString(),
+                                idtang = Convert.ToInt32(reader["idtang"]),
+                                giatientheogio = Convert.ToSingle(reader["giatientheogio"]),
+                                giatientheongay = Convert.ToSingle(reader["giatientheongay"]),
+                                idkhachsan = Convert.ToInt32(reader["idkhachsan"]),
+                            };
+                            phongs.Add(phong);
+                        }
+                    }
+                }
+                return phongs;
+            }
+        }
+
         public List<Phong> GetAllPhongIDTang(int idtang, int idkhachsan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())

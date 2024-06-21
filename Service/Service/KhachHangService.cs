@@ -1,4 +1,6 @@
-﻿using ketnoicsdllan1;
+﻿using Auth0.ManagementApi.Models;
+using ketnoicsdllan1;
+using Microsoft.AspNetCore.Identity;
 using Model.Models;
 using QuanLyKhachSan_MVC.NET.Repository;
 using System.Data.SqlClient;
@@ -7,6 +9,23 @@ namespace Service
 {
     public class KhachHangService : KhachHangRepository
     {
+
+        private readonly PasswordHasher<KhachHang> _passwordHasher;
+        public KhachHangService(PasswordHasher<KhachHang> passwordHasher)
+        {
+            _passwordHasher = passwordHasher;
+        }
+
+        public string HashPassword(string password)
+        {
+            return _passwordHasher.HashPassword(null,password);
+        }
+
+      
+        public PasswordVerificationResult VerifyPassword(string hashedPassword, string providedPassword)
+        {
+            return _passwordHasher.VerifyHashedPassword(null, hashedPassword, providedPassword);
+        }
 
 
         public List<KhachHang> GetAllKhachHang()
@@ -35,6 +54,8 @@ namespace Service
                                 taikhoan = reader["taikhoan"].ToString(),
                                 matkhau = reader["matkhau"].ToString(),
                                 trangthai = reader["trangthai"].ToString(),
+                                idtaikhoangoogle = reader["idtaikhoangoogle"].ToString(),
+
                             };
                             listKhachHang.Add(khachHang);
                         }
@@ -107,6 +128,8 @@ namespace Service
                                 taikhoan = reader["taikhoan"].ToString(),
                                 matkhau = reader["matkhau"].ToString(),
                                 trangthai = reader["trangthai"].ToString(),
+                                idtaikhoangoogle = reader["idtaikhoangoogle"].ToString(),
+
                             };
                             return KhachHangs;
                         }
@@ -323,6 +346,47 @@ namespace Service
                 }
             }
         }
+
+
+        public KhachHang GetKhachHangDangNhaps(string taikhoanoremail)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "select * from KhachHang where taikhoan = @taikhoanoremail or email = @taikhoanoremail";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@taikhoanoremail", taikhoanoremail);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            KhachHang KhachHangs = new KhachHang
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                hovaten = reader["hovaten"].ToString(),
+                                sodienthoai = reader["sodienthoai"].ToString(),
+                                email = reader["email"].ToString(),
+                                cccd = reader["cccd"].ToString(),
+                                tinh = reader["tinh"].ToString(),
+                                huyen = reader["huyen"].ToString(),
+                                phuong = reader["phuong"].ToString(),
+                                taikhoan = reader["taikhoan"].ToString(),
+                                matkhau = reader["matkhau"].ToString(),
+                                trangthai = reader["trangthai"].ToString(),
+                            };
+                            return KhachHangs;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
+
         public KhachHang GetKhachHangTaiKhoan(string taikhoan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())

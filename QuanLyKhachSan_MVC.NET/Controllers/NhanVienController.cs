@@ -17,8 +17,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly ViTriBoPhanService viTriBoPhanService;
         private readonly HopDongLaoDongService hopDongLaoDongService;
         private readonly KhachSanService khachSanService;
-
-        public NhanVienController(NhanVienService nhanVienServices, ChucVuService chucVuServices, BoPhanService boPhanServices, ViTriBoPhanService viTriBoPhanServices, HopDongLaoDongService hopDongLaoDongServices, KhachSanService khachSanServices)
+        private readonly KhachHangService khachHangService;
+        public NhanVienController(NhanVienService nhanVienServices,
+            ChucVuService chucVuServices,
+            BoPhanService boPhanServices,
+            ViTriBoPhanService viTriBoPhanServices,
+            HopDongLaoDongService hopDongLaoDongServices,
+            KhachSanService khachSanServices,
+            KhachHangService khachHangService)
         {
             nhanVienService = nhanVienServices;
             chucVuService = chucVuServices;
@@ -26,31 +32,38 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             viTriBoPhanService = viTriBoPhanServices;
             hopDongLaoDongService = hopDongLaoDongServices;
             khachSanService = khachSanServices;
+            this.khachHangService = khachHangService;
         }
         public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null && HttpContext.Session.GetString("tenchucvu") != null)
             {
-                int id = HttpContext.Session.GetInt32("id").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["id"] = id;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                List<NhanVien> nhanViens = nhanVienService.GetAllNhanVien();
-                List<Modeldata> modeldatalist = new List<Modeldata>();
-                foreach (var nhanvien in nhanViens)
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    KhachSan khachSan = khachSanService.GetKhachSanById(nhanvien.idkhachsan);
-                    Modeldata modeldata = new Modeldata
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    List<NhanVien> nhanViens = nhanVienService.GetAllNhanVien();
+                    List<Modeldata> modeldatalist = new List<Modeldata>();
+                    foreach (var nhanvien in nhanViens)
                     {
-                        nhanVien = nhanvien,
-                        khachSan = khachSan,
-
-                    };
-                    modeldatalist.Add(modeldata);
+                        KhachSan khachSan = khachSanService.GetKhachSanById(nhanvien.idkhachsan);
+                        Modeldata modeldata = new Modeldata
+                        {
+                            nhanVien = nhanvien,
+                            khachSan = khachSan,
+                        };
+                        modeldatalist.Add(modeldata);
+                    }
+                    return View(modeldatalist);
                 }
-                return View(modeldatalist);
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {
@@ -61,30 +74,37 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
-                int id = HttpContext.Session.GetInt32("id").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["id"] = id;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                ViewData["idkhachsan"] = idkhachsan;
-                List<ViTriBoPhan> viTriBoPhans = viTriBoPhanService.GetAllViTriBoPhan();
-                List<BoPhan> boPhans = boPhanService.GetALLBoPhan();
-                List<ChucVu> chucVus = chucVuService.GetAllChucVu();
-                List<KhachSan> listkhachsan = khachSanService.GetAllKhachSan();
-                if (viTriBoPhans != null && boPhans != null && chucVus != null)
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    Modeldata modeldata = new Modeldata
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    ViewData["idkhachsan"] = idkhachsan;
+                    List<ViTriBoPhan> viTriBoPhans = viTriBoPhanService.GetAllViTriBoPhan();
+                    List<BoPhan> boPhans = boPhanService.GetALLBoPhan();
+                    List<ChucVu> chucVus = chucVuService.GetAllChucVu();
+                    List<KhachSan> listkhachsan = khachSanService.GetAllKhachSan();
+                    if (viTriBoPhans != null && boPhans != null && chucVus != null)
                     {
-                        listviTriBoPhan = viTriBoPhans,
-                        listbophan = boPhans,
-                        listchucVu = chucVus,
-                        listKhachSan = listkhachsan
-                    };
-                    return View(modeldata);
+                        Modeldata modeldata = new Modeldata
+                        {
+                            listviTriBoPhan = viTriBoPhans,
+                            listbophan = boPhans,
+                            listchucVu = chucVus,
+                            listKhachSan = listkhachsan
+                        };
+                        return View(modeldata);
+                    }
+                    return View("Index");
                 }
-                return View("Index");
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {
@@ -102,6 +122,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
+                string mahoamatkhau = khachHangService.HashPassword(nhanVien.matkhau);
+                nhanVien.matkhau = mahoamatkhau;
                 nhanVien.solanvipham = 0;
                 nhanVien.trangthai = "Đang hoạt động";
                 int idnhanvien = nhanVienService.ThemNhanVien(nhanVien);

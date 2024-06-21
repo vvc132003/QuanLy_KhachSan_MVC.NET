@@ -104,6 +104,51 @@ namespace  Service
                 }
             }
         }
+
+        public NhanVien CheckThongTinDangNhaps(string taikhoan)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string CheckThongTinDangNhap = "SELECT NhanVien.*, ChucVu.*, KhachSan.* FROM NhanVien LEFT JOIN ChucVu ON NhanVien.idchucvu = ChucVu.id  LEFT JOIN KhachSan ON NhanVien.idkhachsan = KhachSan.id  WHERE NhanVien.taikhoan = @taikhoan";
+                using (SqlCommand command = new SqlCommand(CheckThongTinDangNhap, connection))
+                {
+                    command.Parameters.AddWithValue("@taikhoan", taikhoan);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            NhanVien nhanVien = new NhanVien()
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                hovaten = reader["hovaten"].ToString(),
+                                sodienthoai = reader["sodienthoai"].ToString(),
+                                tinh = reader["tinh"].ToString(),
+                                huyen = reader["huyen"].ToString(),
+                                phuong = reader["phuong"].ToString(),
+                                taikhoan = reader["taikhoan"].ToString(),
+                                matkhau = reader["matkhau"].ToString(),
+                                trangthai = reader["trangthai"].ToString(),
+                                tenchucvu = reader["tenchucvu"].ToString(),
+                                solanvipham = (int)reader["solanvipham"],
+                                cccd = reader["cccd"].ToString(),
+                                gioitinh = reader["gioitinh"].ToString(),
+                                image = reader["image"].ToString(),
+                                idchucvu = (int)reader["idchucvu"],
+                                idvitribophan = (int)reader["idvitribophan"],
+                                idbophan = (int)reader["idbophan"],
+                                idkhachsan = (int)reader["idkhachsan"],
+                            };
+                            return nhanVien;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
         public void CapNhatNhanVien(NhanVien nhanVien)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())

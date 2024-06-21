@@ -3,6 +3,10 @@ using NPOI.SS.Formula.Functions;
 using Model.Models;
 using Service;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using QuanLyKhachSan_MVC.NET.Areas.Login.Controllers;
+using System.Security.Claims;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
@@ -68,6 +72,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     modeldataList.Add(modeldata);
                     return View(modeldataList);
                 }
+
             }
             else
             {
@@ -79,29 +84,36 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null &&
                 HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int id = HttpContext.Session.GetInt32("id").Value;
-                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["idkhachsan"] = idkhachsan;
-                ViewData["id"] = id;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                List<LichSuThanhToan> lichsuthanhtoanlisst = lichSuThanhToanService.GetLichSuThanhToan();
-                List<float> doanhThuData = lichsuthanhtoanlisst.Select(item => item.sotienthanhtoan).ToList();
-                List<int> months = lichsuthanhtoanlisst.Select(item => item.ngaythanhtoan.Month).ToList();
-                ViewData["months"] = months;
-                ViewData["doanhThuData"] = doanhThuData;
-                List<Modeldata> modeldatalist = new List<Modeldata>();
-                foreach (var lichSuThanhToan in lichsuthanhtoanlisst)
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    Modeldata modeldata = new Modeldata
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["idkhachsan"] = idkhachsan;
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    List<LichSuThanhToan> lichsuthanhtoanlisst = lichSuThanhToanService.GetLichSuThanhToan();
+                    List<float> doanhThuData = lichsuthanhtoanlisst.Select(item => item.sotienthanhtoan).ToList();
+                    List<int> months = lichsuthanhtoanlisst.Select(item => item.ngaythanhtoan.Month).ToList();
+                    ViewData["months"] = months;
+                    ViewData["doanhThuData"] = doanhThuData;
+                    List<Modeldata> modeldatalist = new List<Modeldata>();
+                    foreach (var lichSuThanhToan in lichsuthanhtoanlisst)
                     {
-                        lichSuThanhToan = lichSuThanhToan,
-                    };
-                    modeldatalist.Add(modeldata);
+                        Modeldata modeldata = new Modeldata
+                        {
+                            lichSuThanhToan = lichSuThanhToan,
+                        };
+                        modeldatalist.Add(modeldata);
+                    }
+                    return View(modeldatalist);
                 }
-                return View(modeldatalist);
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {
@@ -157,8 +169,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
-        public IActionResult SoPhong(int idphong)
+        public async Task<IActionResult> DatPhongOnline(int idphong)
         {
+            Phong phong = phongService.GetPhongID(idphong);
+            DatPhong datPhong = datPhongService.GetDatPhongByIDpHONG(idphong);
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
@@ -166,22 +180,47 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 KhachHang khachHang = khachHangService.GetKhachHangbyid(id);
-                Phong phong = phongService.GetPhongID(idphong);
                 Modeldata modeldata = new Modeldata
                 {
                     phong = phong,
                     khachhang = khachHang,
+                    datPhong = datPhong,
                 };
                 return View(modeldata);
             }
             else
             {
-                Phong phong = phongService.GetPhongID(idphong);
-                Modeldata modeldata = new Modeldata
+                var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                if (result != null && result.Succeeded)
                 {
-                    phong = phong,
-                };
-                return View(modeldata);
+                    var name = result.Principal.FindFirstValue(ClaimTypes.Name);
+                    var email = result.Principal.FindFirstValue(ClaimTypes.Email);
+                    var profileLink = result.Principal.FindFirstValue("urn:google:profile");
+                    var userId = result.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+                    var userProfileViewModel = new UserProfileViewModel
+                    {
+                        Name = name,
+                        Email = email,
+                        ProfileLink = profileLink,
+                        UserId = userId
+                    };
+                    Modeldata modeldata = new Modeldata
+                    {
+                        phong = phong,
+                        userProfileViewModel = userProfileViewModel,
+                        datPhong = datPhong,
+                    };
+                    return View(modeldata);
+                }
+                else
+                {
+                    Modeldata modeldata = new Modeldata
+                    {
+                        phong = phong,
+                        datPhong = datPhong,
+                    };
+                    return View(modeldata);
+                }
             }
         }
     }

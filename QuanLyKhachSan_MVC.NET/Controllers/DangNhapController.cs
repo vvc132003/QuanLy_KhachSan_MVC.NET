@@ -6,6 +6,8 @@ using Model.Models;
 using Service;
 using System.Security.Claims;
 using QuanLyKhachSan_MVC.NET.Areas.Login.Controllers;
+using Auth0.ManagementApi.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
@@ -31,42 +33,62 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             };
             return View(yourModel);
         }
-        public IActionResult DangNhapVaoHeThong(string taikhoan, string matkhau)
+        public IActionResult DangNhapVaoHeThong(string taikhoanoremail, string matkhau)
         {
-            NhanVien luudangnhap = nhanVienService.CheckThongTinDangNhap(matkhau, taikhoan);
-            KhachHang khachHang = khachHangService.GetKhachHangDangNhap(taikhoan, matkhau);
-            if (luudangnhap != null)
+            NhanVien nhanVien = nhanVienService.CheckThongTinDangNhaps(taikhoanoremail);
+            KhachHang khachHang = khachHangService.GetKhachHangDangNhaps(taikhoanoremail);
+            if (nhanVien != null)
             {
-                if (luudangnhap.tenchucvu == "Quản lý")
+                var checkmatkhau = khachHangService.VerifyPassword(nhanVien.matkhau, matkhau);
+                if (checkmatkhau == PasswordVerificationResult.Success)
                 {
-                    HttpContext.Session.SetInt32("id", luudangnhap.id);
-                    HttpContext.Session.SetString("taikhoan", luudangnhap.taikhoan);
-                    HttpContext.Session.SetString("hovaten", luudangnhap.hovaten);
-                    HttpContext.Session.SetString("tenchucvu", luudangnhap.tenchucvu);
-                    HttpContext.Session.SetInt32("idkhachsan", luudangnhap.idkhachsan);
-                    return RedirectToAction("home", "phong");
+                    if (nhanVien.tenchucvu == "Quản lý")
+                    {
+                        HttpContext.Session.SetInt32("id", nhanVien.id);
+                        HttpContext.Session.SetString("taikhoan", nhanVien.taikhoan);
+                        HttpContext.Session.SetString("hovaten", nhanVien.hovaten);
+                        HttpContext.Session.SetString("tenchucvu", nhanVien.tenchucvu);
+                        HttpContext.Session.SetInt32("idkhachsan", nhanVien.idkhachsan);
+                        return RedirectToAction("home", "phong");
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetInt32("id", nhanVien.id);
+                        HttpContext.Session.SetString("taikhoan", nhanVien.taikhoan);
+                        HttpContext.Session.SetString("hovaten", nhanVien.hovaten);
+                        HttpContext.Session.SetString("tenchucvu", nhanVien.tenchucvu);
+                        HttpContext.Session.SetInt32("idkhachsan", nhanVien.idkhachsan);
+                        return RedirectToAction("index", "phong");
+
+                    }
                 }
                 else
                 {
-                    HttpContext.Session.SetInt32("id", luudangnhap.id);
-                    HttpContext.Session.SetString("taikhoan", luudangnhap.taikhoan);
-                    HttpContext.Session.SetString("hovaten", luudangnhap.hovaten);
-                    HttpContext.Session.SetString("tenchucvu", luudangnhap.tenchucvu);
-                    HttpContext.Session.SetInt32("idkhachsan", luudangnhap.idkhachsan);
-                    return RedirectToAction("index", "phong");
+                    return RedirectToAction("dangnhap", "dangnhap");
                 }
             }
             else if (khachHang != null)
             {
-                HttpContext.Session.SetInt32("id", khachHang.id);
-                HttpContext.Session.SetString("hovaten", khachHang.hovaten);
-                return RedirectToAction("index", "home");
+                var result = khachHangService.VerifyPassword(khachHang.matkhau, matkhau);
+                if (result == PasswordVerificationResult.Success)
+                {
+                    HttpContext.Session.SetInt32("id", khachHang.id);
+                    HttpContext.Session.SetString("hovaten", khachHang.hovaten);
+                    return RedirectToAction("index", "home");
+                }
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
+
+
+
         /* public IActionResult DangNhaps(string taikhoan, string matkhau)
          {
              NhanVien luudangnhap = nhanVienService.GetNhanVienDangNhap(matkhau, taikhoan);
@@ -84,6 +106,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                                 return RedirectToAction("dangnhap", "dangnhap");
              }
          }*/
+
+
+
         public IActionResult DangXuat()
         {
             HttpContext.Session.Clear();
@@ -128,7 +153,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 else if (checkemail.email == email)
                 {
                     checkemail.idtaikhoangoogle = idtaikhoangoogle;
-                    khachHangService.CapNhatKhachHang(checkemail);  
+                    khachHangService.CapNhatKhachHang(checkemail);
                     return RedirectToAction("index", "DangNhap");
                 }
                 // Redirect to the Logins action

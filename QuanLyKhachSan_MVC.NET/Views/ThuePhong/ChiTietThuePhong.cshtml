@@ -8,6 +8,7 @@
 <link href="/static/c3.min.css" rel="stylesheet" />
 <link href="/static/dashboard1.css" rel="stylesheet" />
 <link href="/static/style.css" rel="stylesheet" /> *@
+@Html.Partial("~/Views/layout/logo.cshtml")
 
 <link href="~/css/morris.css" rel="stylesheet" />
 <link href="~/css/c3.min.css" rel="stylesheet" />
@@ -237,7 +238,7 @@
                                                     <td>@string.Format("{0:N0} VNĐ", @sanpham.giaban)</td>
                                                     <td><img src="@sanpham.image" width="50px" height="50px" alt=""></td>
                                                     <td>
-                                                        <a href="/ThueSanPham/ThueSanPham?id=@sanpham.id&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
+                                                        <a href="/ThueSanPham/ThueSanPham?idsp=@sanpham.id&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
                                                             <i class="fas fa-plus"></i>
                                                         </a>
                                                     </td>
