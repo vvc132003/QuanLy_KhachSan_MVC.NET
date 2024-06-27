@@ -18,8 +18,6 @@
         public int solanvipham { get; set; }
         public string image { get; set; }
         public int idchucvu { get; set; }
-        public int idvitribophan { get; set; }
-        public int idbophan { get; set; }
         public int idkhachsan { get; set; }
     }
 }

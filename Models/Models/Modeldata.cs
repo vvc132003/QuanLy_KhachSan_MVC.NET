@@ -14,21 +14,15 @@ namespace Model.Models
         public List<Phong> listphong { get; set; }
         public List<Phong> listphongtrangthai { get; set; }
         public IPagedList<Phong> PagedTPhong { get; set; }
-        public BoPhan boPhan { get; set; }
-        public List<BoPhan> listbophan { get; set; }
-        public IPagedList<BoPhan> PagedTBoPhan { get; set; }
+       
         public ChucVu chucVu { get; set; }
         public List<ChucVu> listchucVu { get; set; }
         public IPagedList<ChucVu> PagedTChucVu { get; set; }
-        public ViTriBoPhan viTriBoPhan { get; set; }
-        public List<ViTriBoPhan> listviTriBoPhan { get; set; }
-        public IPagedList<ViTriBoPhan> PagedTViTriBoPhan { get; set; }
+       
         public NhanVien nhanVien { get; set; }
         public List<NhanVien> listnhanVien { get; set; }
         public IPagedList<NhanVien> PagedTNhanVien { get; set; }
-        public LoaiDatPhong loaiDatPhong { get; set; }
-        public List<LoaiDatPhong> listloaiDatPhong { get; set; }
-        public IPagedList<LoaiDatPhong> PagedTLoaiDatPhong { get; set; }
+      
         public DatPhong datPhong { get; set; }
         public List<DatPhong> listdatPhong { get; set; }
         public IPagedList<DatPhong> PagedTDatPhong { get; set; }
@@ -42,9 +36,7 @@ namespace Model.Models
         public List<ThueSanPham> listthueSanPham { get; set; }
         public IPagedList<ThueSanPham> PagedTThueSanPham { get; set; }
         public float tongtienhueSanPham { get; set; }
-        public TraPhong traphong { get; set; }
-        public List<TraPhong> listtraphong { get; set; }
-        public IPagedList<TraPhong> PagedTTraPhong { get; set; }
+ 
         public LichSuThanhToan lichSuThanhToan { get; set; }
         public List<LichSuThanhToan> listlichSuThanhToan { get; set; }
         public IPagedList<LichSuThanhToan> PagedTLichSuThanhToan { get; set; }

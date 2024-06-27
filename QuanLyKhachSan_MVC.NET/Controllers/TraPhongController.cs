@@ -10,7 +10,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
     {
         private readonly DatPhongService datPhongService;
         private readonly ThueSanPhamService thueSanPhamService;
-        private readonly TraPhongService traPhongService;
         private readonly LichSuThanhToanService lichSuThanhToanService;
         private readonly PhongService phongService;
         private readonly SuDungMaGiamGiaService sugiamGiaService;
@@ -23,7 +22,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 
         public TraPhongController(DatPhongService datPhongServices,
                                   ThueSanPhamService thueSanPhamServices,
-                                  TraPhongService traPhongServices,
+                                 
                                   LichSuThanhToanService lichSuThanhToanServices,
                                   PhongService phongServices,
                                   SuDungMaGiamGiaService sugiamGiaServices,
@@ -32,7 +31,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             datPhongService = datPhongServices;
             thueSanPhamService = thueSanPhamServices;
-            traPhongService = traPhongServices;
+            
             lichSuThanhToanService = lichSuThanhToanServices;
             phongService = phongServices;
             sugiamGiaService = sugiamGiaServices;
@@ -160,7 +159,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         giatienphong = phong.giatientheogio;
                     }
                 }
-                traPhongService.GuiEmailThanhToan(khachHang, giatienphong, lichSuThanhToan.phantramgiamgia, phong.sophong, datphong.ngaydat, listthueSanPham, sotienthanhtoan);
+                lichSuThanhToanService.GuiEmailThanhToan(khachHang, giatienphong, lichSuThanhToan.phantramgiamgia, phong.sophong, datphong.ngaydat, listthueSanPham, sotienthanhtoan);
                 /// thêm lịch sử thanh toán
                 lichSuThanhToan.ngaythanhtoan = DateTime.Now;
                 lichSuThanhToan.sotienthanhtoan = sotienthanhtoan;
@@ -176,12 +175,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     lichSuThanhToanService.ThemLichSuThanhToan(lichSuThanhToan);
                 }
-                /// thêm trả phòng
-                TraPhong traPhong = new TraPhong();
-                traPhong.ngaytra = DateTime.Now;
-                traPhong.idnhanvien = idnv;
-                traPhong.iddatphong = datphong.id;
-                traPhongService.ThemTraPhong(traPhong);
+                
                 /// cập nhật trạng thái của phòng 
                 phong.tinhtrangphong = "chưa dọn";
                 phongService.CapNhatPhong(phong);

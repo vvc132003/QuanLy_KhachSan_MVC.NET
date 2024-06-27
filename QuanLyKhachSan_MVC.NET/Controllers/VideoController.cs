@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Model.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
@@ -9,10 +10,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 {
     public class VideoController : Controller
     {
-        private readonly HttpClient _httpClient;
-        private readonly string _apiKey;
+       /* private readonly HttpClient _httpClient;
+        private readonly string _apiKey;*/
+        private static ImageModel _uploadedImage;
 
-        public VideoController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+   /*     public VideoController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.BaseAddress = new Uri("https://www.googleapis.com/youtube/v3/");
@@ -40,7 +42,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 
                         ViewBag.Title = title;
                         ViewBag.Description = description;
-                        ViewBag.VideoId = videoId; 
+                        ViewBag.VideoId = videoId;
 
                         return View();
                     }
@@ -61,6 +63,37 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewBag.ErrorMessage = $"An error occurred: {ex.Message}";
                 return View("Error");
             }
+        }*/
+        [HttpPost]
+        public IActionResult UploadImage(IFormFile file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                var model = new ImageModel();
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    model.ImageData = ms.ToArray();
+                    model.ContentType = file.ContentType;
+                }
+                _uploadedImage = model; // Lưu vào biến tĩnh
+            }
+            return RedirectToAction(nameof(Video));
+        }
+
+        public IActionResult ViewImage()
+        {
+            if (_uploadedImage == null)
+            {
+                return NotFound();
+            }
+
+            return File(_uploadedImage.ImageData, _uploadedImage.ContentType);
+        }
+        public IActionResult Video()
+        {
+            ViewData["ImageAvailable"] = _uploadedImage != null;
+            return View();
         }
     }
 }

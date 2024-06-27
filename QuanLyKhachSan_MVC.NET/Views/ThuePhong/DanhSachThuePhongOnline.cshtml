@@ -1,4 +1,4 @@
-﻿@model Model.Models.Modeldata
+﻿@model List<Model.Models.Modeldata>
 @using Auth0.ManagementApi.Paging;
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -48,6 +48,7 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Khách hàng</th>
                                                 <th>Ngày đặt</th>
                                                 <th>Ngày dự kiến trả</th>
                                                 <th>Tiền đặt cọc</th>
@@ -57,20 +58,22 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (Model.PagedTDatPhong != null && Model.PagedTDatPhong.Count > 0)
+                                            @if (Model != null && Model.Count > 0)
                                             {
                                                 int count = 1;
-                                                foreach (var datphongs in Model.PagedTDatPhong)
+                                                foreach (var modeldata in Model)
                                                 {
+                                                    var datPhong = modeldata.PagedTDatPhong.First();
                                                     <tr id="row-@count">
                                                         <td>@count</td>
-                                                        <td>@datphongs.ngaydat.ToString("dd/MM/yyyy")</td>
-                                                        <td>@datphongs.ngaydukientra.ToString("dd/MM/yyyy")</td>
-                                                        <td>@string.Format("{0:N0} VNĐ", datphongs.tiendatcoc)</td>
-                                                        <td>@datphongs.trangthai</td>
-                                                        <td>@datphongs.hinhthucthue</td>
+                                                        <td>@modeldata.khachhang.hovaten</td>
+                                                        <td>@datPhong.ngaydat.ToString("dd/MM/yyyy")</td>
+                                                        <td>@datPhong.ngaydukientra.ToString("dd/MM/yyyy")</td>
+                                                        <td>@string.Format("{0:N0} VNĐ", datPhong.tiendatcoc)</td>
+                                                        <td>@datPhong.trangthai</td>
+                                                        <td>@datPhong.hinhthucthue</td>
                                                         <td>
-                                                            <a href="@datphongs.id" class="btn btn-warning" title="Chi tiết ">
+                                                            <a href="/thuephong/chitietthuephongs/?iddatphong=@datPhong.id" class="btn btn-warning" title="Chi tiết ">
                                                                 <i class="fas fa-info-circle"></i>
                                                             </a>
                                                         </td>

@@ -10,7 +10,7 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.Diagnostics;
 
-namespace  Service
+namespace Service
 {
     public class NhanVienService : NhanVienRepository
     {
@@ -45,8 +45,7 @@ namespace  Service
                                 gioitinh = reader["gioitinh"].ToString(),
                                 image = reader["image"].ToString(),
                                 idchucvu = (int)reader["idchucvu"],
-                                idvitribophan = (int)reader["idvitribophan"],
-                                idbophan = (int)reader["idbophan"],
+
                                 idkhachsan = (int)reader["idkhachsan"],
                             };
                             return nhanVien;
@@ -90,8 +89,7 @@ namespace  Service
                                 gioitinh = reader["gioitinh"].ToString(),
                                 image = reader["image"].ToString(),
                                 idchucvu = (int)reader["idchucvu"],
-                                idvitribophan = (int)reader["idvitribophan"],
-                                idbophan = (int)reader["idbophan"],
+
                                 idkhachsan = (int)reader["idkhachsan"],
                             };
                             return nhanVien;
@@ -135,8 +133,7 @@ namespace  Service
                                 gioitinh = reader["gioitinh"].ToString(),
                                 image = reader["image"].ToString(),
                                 idchucvu = (int)reader["idchucvu"],
-                                idvitribophan = (int)reader["idvitribophan"],
-                                idbophan = (int)reader["idbophan"],
+
                                 idkhachsan = (int)reader["idkhachsan"],
                             };
                             return nhanVien;
@@ -185,8 +182,7 @@ namespace  Service
                     command.Parameters.AddWithValue("@ngaysinh", nhanVien.ngaysinh);
                     command.Parameters.AddWithValue("@image", nhanVien.image);
                     command.Parameters.AddWithValue("@idchucvu", nhanVien.idchucvu);
-                    command.Parameters.AddWithValue("@idvitribophan", nhanVien.idvitribophan);
-                    command.Parameters.AddWithValue("@idbophan", nhanVien.idbophan);
+
                     command.Parameters.AddWithValue("@id", nhanVien.id);
                     command.ExecuteNonQuery();
                 }
@@ -224,8 +220,7 @@ namespace  Service
                                 gioitinh = reader["gioitinh"].ToString(),
                                 image = reader["image"].ToString(),
                                 idchucvu = (int)reader["idchucvu"],
-                                idvitribophan = (int)reader["idvitribophan"],
-                                idbophan = (int)reader["idbophan"],
+
                                 idkhachsan = (int)reader["idkhachsan"]
 
                             };
@@ -266,8 +261,7 @@ namespace  Service
                                 gioitinh = reader["gioitinh"].ToString(),
                                 image = reader["image"].ToString(),
                                 idchucvu = (int)reader["idchucvu"],
-                                idvitribophan = (int)reader["idvitribophan"],
-                                idbophan = (int)reader["idbophan"]
+
                             };
                             return nhanVien;
                         }
@@ -308,8 +302,7 @@ namespace  Service
                                 gioitinh = reader["gioitinh"].ToString(),
                                 image = reader["image"].ToString(),
                                 idchucvu = (int)reader["idchucvu"],
-                                idvitribophan = (int)reader["idvitribophan"],
-                                idbophan = (int)reader["idbophan"]
+
                             };
                             return nhanVien;
                         }
@@ -328,10 +321,10 @@ namespace  Service
             {
                 connection.Open();
                 string insertQuery = "INSERT INTO NhanVien (hovaten, sodienthoai, tinh, huyen, phuong, taikhoan," +
-                                       " matkhau, trangthai, solanvipham,cccd,gioitinh,ngaysinh, image, idchucvu, idvitribophan, idbophan,idkhachsan) " +
-                                        " VALUES (@hovaten, @sodienthoai, @tinh, @huyen, @phuong, @taikhoan, @matkhau, " +
-                                       " @trangthai, @solanvipham, @cccd, @gioitinh, @ngaysinh, @image, @idchucvu, @idvitribophan, @idbophan,@idkhachsan) " +
-                                        " SELECT SCOPE_IDENTITY();";
+                     " matkhau, trangthai, solanvipham, cccd, gioitinh, ngaysinh, image, idchucvu, idkhachsan) " +
+                     "VALUES (@hovaten, @sodienthoai, @tinh, @huyen, @phuong, @taikhoan, @matkhau, " +
+                     "@trangthai, @solanvipham, @cccd, @gioitinh, @ngaysinh, @image, @idchucvu, @idkhachsan) " +
+                     "SELECT SCOPE_IDENTITY();";
                 using (SqlCommand command = new SqlCommand(insertQuery, connection))
                 {
                     command.Parameters.AddWithValue("@hovaten", nhanVien.hovaten);
@@ -348,8 +341,6 @@ namespace  Service
                     command.Parameters.AddWithValue("@ngaysinh", nhanVien.ngaysinh);
                     command.Parameters.AddWithValue("@image", nhanVien.image);
                     command.Parameters.AddWithValue("@idchucvu", nhanVien.idchucvu);
-                    command.Parameters.AddWithValue("@idvitribophan", nhanVien.idvitribophan);
-                    command.Parameters.AddWithValue("@idbophan", nhanVien.idbophan);
                     command.Parameters.AddWithValue("@idkhachsan", nhanVien.idkhachsan);
                     idnhanvienthemvao = Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -400,8 +391,7 @@ namespace  Service
                                 gioitinh = reader["gioitinh"].ToString(),
                                 image = reader["image"].ToString(),
                                 idchucvu = (int)reader["idchucvu"],
-                                idvitribophan = (int)reader["idvitribophan"],
-                                idbophan = (int)reader["idbophan"]
+
                             };
                             nhanViens.Add(nhanVien);
                         }
@@ -414,7 +404,7 @@ namespace  Service
         public void Xuatexcel()
         {
             List<NhanVien> nhanViens = GetAllNhanVien();
-            string filePath = "C:\\Users\\vvc13\\OneDrive\\Documents\\nhanViens.xlsx";
+            string filePath = "nhanViens.xlsx";
             IWorkbook workbook = new XSSFWorkbook();
             ISheet worksheet = workbook.CreateSheet("Danh sách nhân viên");
             IRow headerRow = worksheet.CreateRow(0);
@@ -427,8 +417,7 @@ namespace  Service
             headerRow.CreateCell(6).SetCellValue("Giới tính");
             headerRow.CreateCell(7).SetCellValue("Ngày sinh");
             headerRow.CreateCell(8).SetCellValue("Chức vụ");
-            headerRow.CreateCell(9).SetCellValue("Bộ phận");
-            headerRow.CreateCell(10).SetCellValue("Vị trí bộ phận");
+
             headerRow.CreateCell(11).SetCellValue("Trạng thái");
             int rowIndex = 1;
             foreach (var nhanVien in nhanViens)
@@ -443,8 +432,7 @@ namespace  Service
                 dataRow.CreateCell(6).SetCellValue(nhanVien.gioitinh);
                 dataRow.CreateCell(7).SetCellValue(nhanVien.ngaysinh.ToString("yyyy-MM-dd"));
                 dataRow.CreateCell(8).SetCellValue(nhanVien.idchucvu);
-                dataRow.CreateCell(9).SetCellValue(nhanVien.idbophan);
-                dataRow.CreateCell(10).SetCellValue(nhanVien.idvitribophan);
+
                 dataRow.CreateCell(11).SetCellValue(nhanVien.trangthai);
                 rowIndex++;
             }

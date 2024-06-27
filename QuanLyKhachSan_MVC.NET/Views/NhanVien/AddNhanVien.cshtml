@@ -20,7 +20,7 @@
                 <div class="card">
                     <div class="row">
                         <div class="col-12">
-                            <div class="text-bg-success p-2">Thông tin nhân viên</div>
+                            <div class="text-bg-success p-2">Thêm nhân viên</div>
                             <div class="border border-secondary-subtle" style="padding:10px 20px">
                                 <form Action="/NhanVien/AddNhanVienn" method="POST">
                                     <div class="row">
@@ -112,38 +112,6 @@
                                                 </select>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="idbophan" class="form-label">Bộ phận:</label>
-                                                <select id="idbophan" name="idbophan" class="form-control">
-                                                    @if (Model.listbophan != null && Model.listbophan.Count > 0)
-                                                    {
-                                                        foreach (var bophan in Model.listbophan)
-                                                        {
-                                                            <option value="@bophan.id">@bophan.tenbophan</option>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="" selected>Không có dữ liệu</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="idvitribophan" class="form-label">Vị trí bộ phận:</label>
-                                                <select id="idvitribophan" name="idvitribophan" class="form-control">
-                                                    @if (Model.listviTriBoPhan != null && Model.listviTriBoPhan.Count > 0)
-                                                    {
-                                                        foreach (var viTriBoPhan in Model.listviTriBoPhan)
-                                                        {
-                                                            <option value="@viTriBoPhan.id">@viTriBoPhan.tenvitri</option>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="" selected>Không có dữ liệu</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
                                                 <label for="idkhachsan" class="form-label">Khách sạn:</label>
                                                 <select id="idkhachsan" name="idkhachsan" class="form-control">
                                                     @if (Model.listKhachSan != null && Model.listKhachSan.Count > 0)
@@ -162,7 +130,10 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary btn-lg">Thêm nhân viên</button>
+                                        <button type="submit" class="btn btn-primary btn-lg">
+                                            <i class="fas fa-plus"></i>
+                                             Thêm nhân viên
+                                        </button>
                                     </div>
                                 </form>
                             </div>

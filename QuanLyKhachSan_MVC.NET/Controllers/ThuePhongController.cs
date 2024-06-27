@@ -24,7 +24,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly MaGiamGiaService maGiamGiaService;
         private readonly SuDungMaGiamGiaService dungMaGiamGiaService;
         private readonly SuDungMaGiamGiaService suDungMaGiamGiaService;
-        private readonly LoaiDatPhongService loaiDatPhongService;
         private readonly GiamGiaNgayLeService giamGiaNgayLeService;
         public ThuePhongController(DatPhongService datPhongServices,
             KhachHangService khachHangServices,
@@ -36,7 +35,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             MaGiamGiaService maGiamGiaServices,
             SuDungMaGiamGiaService dungMaGiamGiaServices,
             SuDungMaGiamGiaService suDungMaGiamGiaServices,
-            LoaiDatPhongService loaiDatPhongService, GiamGiaNgayLeService giamGiaNgayLeService)
+            GiamGiaNgayLeService giamGiaNgayLeService)
         {
             datPhongService = datPhongServices;
             khachHangService = khachHangServices;
@@ -48,7 +47,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             maGiamGiaService = maGiamGiaServices;
             dungMaGiamGiaService = dungMaGiamGiaServices;
             suDungMaGiamGiaService = suDungMaGiamGiaServices;
-            this.loaiDatPhongService = loaiDatPhongService;
             this.giamGiaNgayLeService = giamGiaNgayLeService;
         }
         public IActionResult DatPhongDon(int idphong, int? sotrang)
@@ -105,7 +103,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         {
                             datPhong.idthoigian = thoiGian.id;
                             datPhong.idkhachhang = khachHangTonTai.id;
-                            datPhong.idloaidatphong = 1;
+                            datPhong.loaidatphong = "đặt phòng đơn";
                             datPhong.trangthai = "đã đặt";
                             datPhong.ngaydat = DateTime.Now;
                             datPhong.idphong = datPhong.idphong;
@@ -165,30 +163,37 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             if (magiamgia != null)
                             {
                                 MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
-                                if (maGiamGia.ngayketthuc.Year > DateTime.Now.Year ||
-                                   (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month > DateTime.Now.Month) ||
-                                   (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month == DateTime.Now.Month &&
-                                   maGiamGia.ngayketthuc.Day > DateTime.Now.Day))
+                                if (maGiamGia != null)
                                 {
-                                    if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                    if (maGiamGia.ngayketthuc.Year > DateTime.Now.Year ||
+                                       (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month > DateTime.Now.Month) ||
+                                       (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month == DateTime.Now.Month &&
+                                       maGiamGia.ngayketthuc.Day > DateTime.Now.Day))
                                     {
-                                        SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
-                                        suDungMaGiamGia.idmagiamgia = maGiamGia.id;
-                                        suDungMaGiamGia.iddatphong = idDatPhongThemVao;
-                                        suDungMaGiamGia.ngaysudung = DateTime.Now;
-                                        dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
-                                        /// cập nhật số lần sử dụng tăng lên 1
-                                        maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
-                                        maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                                        if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                        {
+                                            SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                                            suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                                            suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                                            suDungMaGiamGia.ngaysudung = DateTime.Now;
+                                            dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                                            /// cập nhật số lần sử dụng tăng lên 1
+                                            maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
+                                            maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                                        }
+                                        else
+                                        {
+                                            /// 
+                                        }
                                     }
                                     else
                                     {
-                                        /// 
+                                        // nulll
                                     }
                                 }
                                 else
                                 {
-                                    // nulll
+                                    // null
                                 }
                             }
                             else
@@ -200,7 +205,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         {
                             datPhong.idthoigian = thoiGian.id;
                             datPhong.idkhachhang = khachHangTonTai.id;
-                            datPhong.idloaidatphong = 1;
+                            datPhong.loaidatphong = "đặt phòng đơn";
                             datPhong.trangthai = "đã đặt online";
                             datPhong.ngaydat = DateTime.Now;
                             datPhong.idphong = datPhong.idphong;
@@ -236,30 +241,37 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             if (magiamgia != null)
                             {
                                 MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
-                                if (maGiamGia.ngayketthuc.Year > DateTime.Now.Year ||
+                                if (maGiamGia != null)
+                                {
+                                    if (maGiamGia.ngayketthuc.Year > DateTime.Now.Year ||
                                    (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month > DateTime.Now.Month) ||
                                    (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month == DateTime.Now.Month &&
                                    maGiamGia.ngayketthuc.Day > DateTime.Now.Day))
-                                {
-                                    if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
                                     {
-                                        SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
-                                        suDungMaGiamGia.idmagiamgia = maGiamGia.id;
-                                        suDungMaGiamGia.iddatphong = idDatPhongThemVao;
-                                        suDungMaGiamGia.ngaysudung = DateTime.Now;
-                                        dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
-                                        /// cập nhật số lần sử dụng tăng lên 1
-                                        maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
-                                        maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                                        if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                        {
+                                            SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                                            suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                                            suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                                            suDungMaGiamGia.ngaysudung = DateTime.Now;
+                                            dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                                            /// cập nhật số lần sử dụng tăng lên 1
+                                            maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
+                                            maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                                        }
+                                        else
+                                        {
+                                            /// 
+                                        }
                                     }
                                     else
                                     {
-                                        /// 
+                                        // nulll
                                     }
                                 }
                                 else
                                 {
-                                    // nulll
+                                    // null
                                 }
                             }
                             else
@@ -278,7 +290,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                             datPhong.idkhachhang = khachhangmoi.id;
                             datPhong.idthoigian = thoiGian.id;
-                            datPhong.idloaidatphong = 1;
+                            datPhong.loaidatphong = "đặt phòng đơn";
                             datPhong.trangthai = "đã đặt";
                             datPhong.ngaydat = DateTime.Now;
                             datPhong.idphong = datPhong.idphong;
@@ -326,7 +338,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                             datPhong.idkhachhang = khachhangmoi.id;
                             datPhong.idthoigian = thoiGian.id;
-                            datPhong.idloaidatphong = 1;
+                            datPhong.loaidatphong = "đặt phòng đơn";
                             datPhong.trangthai = "đã đặt online";
                             datPhong.ngaydat = DateTime.Now;
                             datPhong.idphong = datPhong.idphong;
@@ -440,7 +452,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             khachHangService.CapNhatKhachHang(khachHangTonTai);
                             datPhong.idthoigian = thoiGian.id;
                             datPhong.idkhachhang = khachHangTonTai.id;
-                            datPhong.idloaidatphong = 2;
+                            datPhong.loaidatphong = "đặt phòng theo đoàn";
                             datPhong.trangthai = "đã đặt";
                             datPhong.ngaydat = DateTime.Now;
                             datPhong.idphong = idphong;
@@ -526,7 +538,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             KhachHang khachhangmoi = khachHangService.GetKhachHangCCCD(khachHang.cccd);
                             datPhong.idthoigian = thoiGian.id;
                             datPhong.idkhachhang = khachhangmoi.id;
-                            datPhong.idloaidatphong = 2;
+                            datPhong.loaidatphong = "đặt phòng theo đoàn";
                             datPhong.trangthai = "đã đặt";
                             datPhong.ngaydat = DateTime.Now;
                             datPhong.idphong = idphong;
@@ -677,7 +689,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     datPhong.idthoigian = thoiGian.id;
                     /// id khách hàng
                     datPhong.idkhachhang = khachHangTonTai.id;
-                    datPhong.idloaidatphong = 2;
+                    datPhong.loaidatphong = "đặt phòng đơn";
                     datPhong.trangthai = "đã đặt online";
                     datPhong.ngaydat = DateTime.Now;
                     datPhong.idphong = datPhong.idphong;
@@ -717,30 +729,37 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     if (magiamgia != null)
                     {
                         MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
-                        if (maGiamGia.ngayketthuc.Year > DateTime.Now.Year ||
+                        if (maGiamGia != null)
+                        {
+                            if (maGiamGia.ngayketthuc.Year > DateTime.Now.Year ||
                            (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month > DateTime.Now.Month) ||
                            (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month == DateTime.Now.Month &&
                            maGiamGia.ngayketthuc.Day > DateTime.Now.Day))
-                        {
-                            if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
                             {
-                                SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
-                                suDungMaGiamGia.idmagiamgia = maGiamGia.id;
-                                suDungMaGiamGia.iddatphong = idDatPhongThemVao;
-                                suDungMaGiamGia.ngaysudung = DateTime.Now;
-                                dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
-                                /// cập nhật số lần sử dụng tăng lên 1
-                                maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
-                                maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                                if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                {
+                                    SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                                    suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                                    suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                                    suDungMaGiamGia.ngaysudung = DateTime.Now;
+                                    dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                                    /// cập nhật số lần sử dụng tăng lên 1
+                                    maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
+                                    maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                                }
+                                else
+                                {
+                                    /// 
+                                }
                             }
                             else
                             {
-                                /// 
+                                // nulll
                             }
                         }
                         else
                         {
-                            // nulll
+                            // null
                         }
                     }
                     else
@@ -762,7 +781,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     // id khách hàng
                     datPhong.idkhachhang = khachhangmoi.id;
                     datPhong.idthoigian = thoiGian.id;
-                    datPhong.idloaidatphong = 2;
+                    datPhong.loaidatphong = "đặt phòng đơn";
                     datPhong.trangthai = "đã đặt online";
                     datPhong.ngaydat = DateTime.Now;
                     datPhong.idphong = datPhong.idphong;
@@ -810,11 +829,18 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
                     int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
                     PagedList.IPagedList<DatPhong> ipagelistdatphong = listDatphong.ToPagedList(validPageNumber, pageSize);
-                    Modeldata yourModel = new Modeldata
+                    List<Modeldata> modeldatalist = new List<Modeldata>();
+                    foreach (var datphong in ipagelistdatphong)
                     {
-                        PagedTDatPhong = ipagelistdatphong,
-                    };
-                    return View(yourModel);
+                        KhachHang khachHang = khachHangService.GetKhachHangbyid(datphong.idkhachhang);
+                        Modeldata yourModel = new Modeldata
+                        {
+                            PagedTDatPhong = new List<DatPhong> { datphong }.ToPagedList(1, 1),
+                            khachhang = khachHang,
+                        };
+                        modeldatalist.Add(yourModel);
+                    }
+                    return View(modeldatalist);
                 }
                 else
                 {
@@ -844,11 +870,18 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
                     int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
                     PagedList.IPagedList<DatPhong> ipagelistdatphong = listDatphong.ToPagedList(validPageNumber, pageSize);
-                    Modeldata yourModel = new Modeldata
+                    List<Modeldata> modeldatalist = new List<Modeldata>();
+                    foreach (var datphong in ipagelistdatphong)
                     {
-                        PagedTDatPhong = ipagelistdatphong,
-                    };
-                    return View(yourModel);
+                        KhachHang khachHang = khachHangService.GetKhachHangbyid(datphong.idkhachhang);
+                        Modeldata yourModel = new Modeldata
+                        {
+                            PagedTDatPhong = new List<DatPhong> { datphong }.ToPagedList(1, 1),
+                            khachhang = khachHang,
+                        };
+                        modeldatalist.Add(yourModel);
+                    }
+                    return View(modeldatalist);
                 }
                 else
                 {
@@ -860,7 +893,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
-        public IActionResult ChiTietThuePhongS(int id)
+        public IActionResult ChiTietThuePhongS(int iddatphong)
         {
             if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -873,10 +906,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     ViewData["id"] = idnv;
                     ViewData["hovaten"] = hovaten;
                     ViewData["tenchucvu"] = tenchucvu;
-                    DatPhong datPhong = datPhongService.GetDatPhongByIDDatPhong(id);
+                    DatPhong datPhong = datPhongService.GetDatPhongByIDDatPhong(iddatphong);
                     KhachHang khachHang = khachHangService.GetKhachHangbyid(datPhong.idkhachhang);
                     List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datPhong.id);
-                    LoaiDatPhong loaiDatPhong = loaiDatPhongService.GetLoaiDatPhongById(datPhong.idloaidatphong);
                     Phong phong = phongService.GetPhongID(datPhong.idphong);
                     List<Modeldata> listmodeldata = new List<Modeldata>();
                     foreach (var sanphams in listthueSanPham)
@@ -888,7 +920,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             khachhang = khachHang,
                             listthueSanPham = listthueSanPham,
                             sanPham = sanpham,
-                            loaiDatPhong = loaiDatPhong,
                             phong = phong,
                         };
                         listmodeldata.Add(modeldata);

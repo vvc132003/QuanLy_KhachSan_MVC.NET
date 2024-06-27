@@ -8,7 +8,7 @@
         public float tiendatcoc { get; set; }
         public string trangthai { get; set; }
         public string hinhthucthue { get; set; }
-        public int idloaidatphong { get; set; }
+        public string loaidatphong { get; set; }
         public int idkhachhang { get; set; }
         public string hovaten { get; set; }
         public string cccd { get; set; }

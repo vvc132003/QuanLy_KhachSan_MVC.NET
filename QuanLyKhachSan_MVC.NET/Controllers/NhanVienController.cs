@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using System.Drawing;
+using PagedList;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
@@ -13,28 +14,25 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
     {
         private readonly NhanVienService nhanVienService;
         private readonly ChucVuService chucVuService;
-        private readonly BoPhanService boPhanService;
-        private readonly ViTriBoPhanService viTriBoPhanService;
+
         private readonly HopDongLaoDongService hopDongLaoDongService;
         private readonly KhachSanService khachSanService;
         private readonly KhachHangService khachHangService;
         public NhanVienController(NhanVienService nhanVienServices,
             ChucVuService chucVuServices,
-            BoPhanService boPhanServices,
-            ViTriBoPhanService viTriBoPhanServices,
+
             HopDongLaoDongService hopDongLaoDongServices,
             KhachSanService khachSanServices,
             KhachHangService khachHangService)
         {
             nhanVienService = nhanVienServices;
             chucVuService = chucVuServices;
-            boPhanService = boPhanServices;
-            viTriBoPhanService = viTriBoPhanServices;
+
             hopDongLaoDongService = hopDongLaoDongServices;
             khachSanService = khachSanServices;
             this.khachHangService = khachHangService;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? sotrang)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null && HttpContext.Session.GetString("tenchucvu") != null)
             {
@@ -47,14 +45,20 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     ViewData["hovaten"] = hovaten;
                     ViewData["tenchucvu"] = tenchucvu;
                     List<NhanVien> nhanViens = nhanVienService.GetAllNhanVien();
+                    int soluong = nhanViens.Count;
+                    int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
+                    int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
+                    IPagedList<NhanVien> ipagenhanViens = nhanViens.ToPagedList(validPageNumber, pageSize);
                     List<Modeldata> modeldatalist = new List<Modeldata>();
-                    foreach (var nhanvien in nhanViens)
+                    foreach (var nhanvien in ipagenhanViens)
                     {
                         KhachSan khachSan = khachSanService.GetKhachSanById(nhanvien.idkhachsan);
+                        ChucVu chucVu = chucVuService.GetChucVuID(nhanvien.idchucvu);
                         Modeldata modeldata = new Modeldata
                         {
-                            nhanVien = nhanvien,
+                            PagedTNhanVien = new List<NhanVien> { nhanvien }.ToPagedList(1, 1),
                             khachSan = khachSan,
+                            chucVu = chucVu,
                         };
                         modeldatalist.Add(modeldata);
                     }
@@ -70,6 +74,41 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
+        /*  public IActionResult Index(int? sotrang)
+          {
+              if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null && HttpContext.Session.GetString("tenchucvu") != null)
+              {
+                  if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
+                  {
+                      int id = HttpContext.Session.GetInt32("id").Value;
+                      string hovaten = HttpContext.Session.GetString("hovaten");
+                      string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                      ViewData["id"] = id;
+                      ViewData["hovaten"] = hovaten;
+                      ViewData["tenchucvu"] = tenchucvu;
+                      List<NhanVien> nhanViens = nhanVienService.GetAllNhanVien();
+                      int soluong = nhanViens.Count;
+                      int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
+                      int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
+                      IPagedList<NhanVien> ipagenhanViens = nhanViens.ToPagedList(validPageNumber, pageSize);
+
+                      Modeldata modeldata = new Modeldata
+                      {
+                          PagedTNhanVien = ipagenhanViens,
+
+                      };
+                      return View(modeldata);
+                  }
+                  else
+                  {
+                      return RedirectToAction("dangnhap", "dangnhap");
+                  }
+              }
+              else
+              {
+                  return RedirectToAction("dangnhap", "dangnhap");
+              }
+          }*/
         public IActionResult AddNhanVien()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
@@ -84,22 +123,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     ViewData["hovaten"] = hovaten;
                     ViewData["tenchucvu"] = tenchucvu;
                     ViewData["idkhachsan"] = idkhachsan;
-                    List<ViTriBoPhan> viTriBoPhans = viTriBoPhanService.GetAllViTriBoPhan();
-                    List<BoPhan> boPhans = boPhanService.GetALLBoPhan();
                     List<ChucVu> chucVus = chucVuService.GetAllChucVu();
                     List<KhachSan> listkhachsan = khachSanService.GetAllKhachSan();
-                    if (viTriBoPhans != null && boPhans != null && chucVus != null)
+                    Modeldata modeldata = new Modeldata
                     {
-                        Modeldata modeldata = new Modeldata
-                        {
-                            listviTriBoPhan = viTriBoPhans,
-                            listbophan = boPhans,
-                            listchucVu = chucVus,
-                            listKhachSan = listkhachsan
-                        };
-                        return View(modeldata);
-                    }
-                    return View("Index");
+                        listchucVu = chucVus,
+                        listKhachSan = listkhachsan
+                    };
+                    return View(modeldata);
                 }
                 else
                 {

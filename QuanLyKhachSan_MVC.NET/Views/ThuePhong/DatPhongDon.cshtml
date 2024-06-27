@@ -74,11 +74,14 @@
                                             <input type="number" class="form-control" id="tiendatcoc" name="tiendatcoc" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="magiamgia" class="form-label">Mã giảm giá:</label>
-                                            <input type="number" class="form-control" id="magiamgia" name="magiamgia">
+                                            <label for="magiamgia" class="form-label">Mã giảm giá <span style="color:red;">(Nếu có)</span>:</label>
+                                            <input type="text" class="form-control" id="magiamgia" name="magiamgia">
                                         </div>
-                                        <label for="nhanphong" class="form-label">Giao phòng:</label>
-                                        <input type="checkbox" id="nhanphong" name="nhanphong" value="nhanphong">
+                                        <p style="color:red; display: inline-block; font-weight:100;" class="thongbao"></p>
+                                        <div class="mb-3">
+                                            <label for="nhanphong" class="form-label">Giao phòng:</label>
+                                            <input type="checkbox" id="nhanphong" name="nhanphong" value="nhanphong">
+                                        </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="table-responsive">
@@ -264,3 +267,33 @@
         });
     </script>
 }
+
+
+<script>
+    $(document).ready(function () {
+        function checkAndUpdateCart() {
+            var magiamgia = $('#magiamgia').val();
+            if (magiamgia === '') {
+                $('.thongbao').text("");
+            } else {
+                $.ajax({
+                    url: '/MaGiamGia/Duocgiamgia',
+                    method: 'GET',
+                    data: { magiamgia: magiamgia },
+                    success: function (response) {
+                        if (response.duocgiamgia != null) {
+                            $('.thongbao').text("");
+                        } else {
+                            $('.thongbao').text("Mã giảm giá không tồn tại");
+                        }
+                        checkAndUpdateCart();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        }
+        $('#magiamgia').on('input', checkAndUpdateCart);
+    });
+</script>

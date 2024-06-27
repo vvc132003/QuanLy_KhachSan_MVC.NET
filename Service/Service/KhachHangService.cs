@@ -18,13 +18,21 @@ namespace Service
 
         public string HashPassword(string password)
         {
-            return _passwordHasher.HashPassword(null,password);
+            return _passwordHasher.HashPassword(null, password);
         }
 
-      
+
         public PasswordVerificationResult VerifyPassword(string hashedPassword, string providedPassword)
         {
-            return _passwordHasher.VerifyHashedPassword(null, hashedPassword, providedPassword);
+            try
+            {
+                return _passwordHasher.VerifyHashedPassword(null, hashedPassword, providedPassword);
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine($"x pass: {ex.Message}");
+                return PasswordVerificationResult.Failed;
+            }
         }
 
 

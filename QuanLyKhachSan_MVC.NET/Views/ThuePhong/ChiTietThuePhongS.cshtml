@@ -27,9 +27,9 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="text-bg-success p-2">Khách hàng</div>
+                                    <hr />
                                     <p>Họ tên khách hàng: @Model[0].khachhang.hovaten</p>
                                     <p>Phòng: @Model[0].phong.sophong</p>
-                                    <p>Loại đặt phòng: @Model[0].loaiDatPhong.loaidatphong</p>
                                     <p>Loại phòng: @Model[0].phong.loaiphong</p>
                                     <p>Số người: @Model[0].phong.songuoi</p>
                                     <hr />
@@ -46,13 +46,22 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var thueSanPham in Model[0].listthueSanPham)
+                                            @if (Model[0].listthueSanPham != null && Model[0].listthueSanPham.Count > 0)
+                                            {
+                                                @foreach (var item in Model[0].listthueSanPham)
+                                                {
+                                                    <tr>
+                                                        <td>@item.soluong</td>
+                                                        <td>@string.Format("{0:N0} VNĐ", item.thanhtien)</td>
+                                                        <td>@item.tensanpham</td>
+                                                        <td><img src="@item.image" width="50px" height="50px" alt=""></td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
                                             {
                                                 <tr>
-                                                    <td>@thueSanPham.soluong</td>
-                                                    <td>@string.Format("{0:N0} VNĐ", @thueSanPham.thanhtien)</td>
-                                                    <td>@thueSanPham.tensanpham</td>
-                                                    <td><img src="@thueSanPham.image" width="50px" height="50px" alt=""></td>
+                                                    <td colspan="4">Không có sản phẩm thuê.</td>
                                                 </tr>
                                             }
                                         </tbody>

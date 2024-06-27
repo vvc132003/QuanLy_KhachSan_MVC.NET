@@ -9,10 +9,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
     {
         private readonly KhachSanService khachSanService;
         private readonly MaGiamGiaService maGiamGiaService;
-        public MaGiamGiaController(KhachSanService khachSanServices, MaGiamGiaService maGiamGiaServices)
+        private readonly KhachHangService khachHangService;
+        public MaGiamGiaController(KhachSanService khachSanServices, MaGiamGiaService maGiamGiaServices, KhachHangService khachHangService)
         {
             khachSanService = khachSanServices;
             maGiamGiaService = maGiamGiaServices;
+            this.khachHangService = khachHangService;
         }
         public IActionResult Index()
         {
@@ -57,6 +59,34 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             {
                 return RedirectToAction("dangnhap", "dangnhap");
             }
+        }
+        public IActionResult DuocGiamGia(string magiamgia)
+        {
+            if (magiamgia != null)
+            {
+                MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaByMaGiamGia(magiamgia);
+                if (maGiamGia != null)
+                {
+                    if (DateTime.Now.Date <= maGiamGia.ngayketthuc.Date)
+                    {
+                        if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                        {
+                            return Json(new { duocgiamgia = maGiamGia });
+                        }
+                    }
+                }
+            }
+            return Ok();
+        }
+        public IActionResult GetMaGiamGia(int id)
+        {
+            MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaById(id);
+            return Json(maGiamGia);
+        }
+        public IActionResult UpdateMaGiamGia(MaGiamGia maGiamGias)
+        {
+            maGiamGiaService.CapNhatMaGiamGia(maGiamGias);
+            return RedirectToAction("", "magiamgia");
         }
     }
 }

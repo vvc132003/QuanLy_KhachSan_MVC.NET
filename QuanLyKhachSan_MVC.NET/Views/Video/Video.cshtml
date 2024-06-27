@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Upload Image";
+}
+
+<h1>Upload Image</h1>
+
+<form action="/video/UploadImage" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label>Image</label>
+        <input type="file" name="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+@if (Model != null)
+{
+    <h2>Uploaded Image</h2>
+    <img src="@Url.Action("ViewImage", "Images")" alt="Uploaded Image" />
+}

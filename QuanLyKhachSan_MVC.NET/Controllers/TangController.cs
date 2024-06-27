@@ -18,36 +18,31 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
+
+                int id = HttpContext.Session.GetInt32("id").Value;
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
+                ViewData["idkhachsan"] = idkhachsan;
+                List<Tang> tangs = tangService.GetAllTang();
+                List<KhachSan> listkhachsan = khachSanService.GetAllKhachSan();
+                List<Modeldata> modelDataList = new List<Modeldata>();
+                foreach (var tang in tangs)
                 {
-                    int id = HttpContext.Session.GetInt32("id").Value;
-                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
-                    string hovaten = HttpContext.Session.GetString("hovaten");
-                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                    ViewData["id"] = id;
-                    ViewData["hovaten"] = hovaten;
-                    ViewData["tenchucvu"] = tenchucvu;
-                    ViewData["idkhachsan"] = idkhachsan;
-                    List<Tang> tangs = tangService.GetAllTang();
-                    List<KhachSan> listkhachsan = khachSanService.GetAllKhachSan();
-                    List<Modeldata> modelDataList = new List<Modeldata>();
-                    foreach (var tang in tangs)
+                    KhachSan khachSan = khachSanService.GetKhachSanById(tang.idkhachsan);
+                    Modeldata modeldata = new Modeldata
                     {
-                        KhachSan khachSan = khachSanService.GetKhachSanById(tang.idkhachsan);
-                        Modeldata modeldata = new Modeldata
-                        {
-                            tang = tang,
-                            listKhachSan = listkhachsan,
-                            khachSan = khachSan,
-                        };
-                        modelDataList.Add(modeldata);
-                    }
-                    return View(modelDataList);
+                        tang = tang,
+                        listKhachSan = listkhachsan,
+                        khachSan = khachSan,
+                    };
+                    modelDataList.Add(modeldata);
                 }
-                else
-                {
-                    return RedirectToAction("dangnhap", "dangnhap");
-                }
+                return View(modelDataList);
+
             }
             else
             {

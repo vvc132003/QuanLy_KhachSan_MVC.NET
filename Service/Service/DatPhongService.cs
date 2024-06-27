@@ -34,7 +34,7 @@ namespace Service
                                 ngaydat = (DateTime)reader["ngaydat"],
                                 ngaydukientra = (DateTime)reader["ngaydukientra"],
                                 tiendatcoc = Convert.ToSingle(reader["tiendatcoc"]),
-                                idloaidatphong = (int)reader["idloaidatphong"],
+                                loaidatphong = reader["loaidatphong"].ToString(),
                                 idthoigian = (int)reader["idthoigian"],
                             };
                             datPhongs.Add(datPhong);
@@ -67,7 +67,7 @@ namespace Service
                                 ngaydat = (DateTime)reader["ngaydat"],
                                 ngaydukientra = (DateTime)reader["ngaydukientra"],
                                 tiendatcoc = Convert.ToSingle(reader["tiendatcoc"]),
-                                idloaidatphong = (int)reader["idloaidatphong"],
+                                loaidatphong = reader["loaidatphong"].ToString(),
                                 idthoigian = (int)reader["idthoigian"],
                             };
                             datPhongs.Add(datPhong);
@@ -102,7 +102,7 @@ namespace Service
                                 ngaydat = (DateTime)reader["ngaydat"],
                                 ngaydukientra = (DateTime)reader["ngaydukientra"],
                                 tiendatcoc = Convert.ToSingle(reader["tiendatcoc"]),
-                                idloaidatphong = (int)reader["idloaidatphong"],
+                                loaidatphong = reader["loaidatphong"].ToString(),
                                 idthoigian = (int)reader["idthoigian"],
                             };
                             datPhongs.Add(datPhong);
@@ -130,7 +130,7 @@ namespace Service
                             {
                                 id = (int)reader["id"],
                                 idphong = (int)reader["idphong"],
-                                idloaidatphong = (int)reader["idloaidatphong"],
+                                loaidatphong = reader["loaidatphong"].ToString(),
                                 idthoigian = (int)reader["idthoigian"],
                                 idkhachhang = (int)reader["idkhachhang"],
                                 trangthai = reader["trangthai"].ToString(),
@@ -166,7 +166,7 @@ namespace Service
                             {
                                 id = (int)reader["id"],
                                 idphong = (int)reader["idphong"],
-                                idloaidatphong = (int)reader["idloaidatphong"],
+                                loaidatphong = reader["loaidatphong"].ToString(),
                                 idthoigian = (int)reader["idthoigian"],
                                 idkhachhang = (int)reader["idkhachhang"],
                                 trangthai = reader["trangthai"].ToString(),
@@ -202,7 +202,7 @@ namespace Service
                             {
                                 id = (int)reader["id"],
                                 idphong = (int)reader["idphong"],
-                                idloaidatphong = (int)reader["idloaidatphong"],
+                                loaidatphong = reader["loaidatphong"].ToString(),
                                 idthoigian = (int)reader["idthoigian"],
                                 idkhachhang = (int)reader["idkhachhang"],
                                 trangthai = reader["trangthai"].ToString(),
@@ -245,7 +245,7 @@ namespace Service
                                 ngaydat = (DateTime)reader["ngaydat"],
                                 ngaydukientra = (DateTime)reader["ngaydukientra"],
                                 tiendatcoc = Convert.ToSingle(reader["tiendatcoc"]),
-                                idloaidatphong = (int)reader["idloaidatphong"],
+                                loaidatphong = reader["loaidatphong"].ToString(),
                                 idthoigian = (int)reader["idthoigian"],
                                 cccd = reader["cccd"].ToString(),
                             };
@@ -283,8 +283,8 @@ namespace Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string query = "INSERT INTO DatPhong (ngaydat, ngaydukientra, tiendatcoc, trangthai,hinhthucthue, idloaidatphong, idkhachhang, idphong,idthoigian) " +
-                               "VALUES (@ngaydat, @ngaydukientra, @tiendatcoc, @trangthai,@hinhthucthue, @idloaidatphong, @idkhachhang, @idphong,@idthoigian)" +
+                string query = "INSERT INTO DatPhong (ngaydat, ngaydukientra, tiendatcoc, trangthai,hinhthucthue, loaidatphong, idkhachhang, idphong,idthoigian) " +
+                               "VALUES (@ngaydat, @ngaydukientra, @tiendatcoc, @trangthai,@hinhthucthue, @loaidatphong, @idkhachhang, @idphong,@idthoigian)" +
                                "SELECT SCOPE_IDENTITY();";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@ngaydat", datPhong.ngaydat);
@@ -292,7 +292,7 @@ namespace Service
                 command.Parameters.AddWithValue("@tiendatcoc", datPhong.tiendatcoc);
                 command.Parameters.AddWithValue("@trangthai", datPhong.trangthai);
                 command.Parameters.AddWithValue("@hinhthucthue", datPhong.hinhthucthue);
-                command.Parameters.AddWithValue("@idloaidatphong", datPhong.idloaidatphong);
+                command.Parameters.AddWithValue("@loaidatphong", datPhong.loaidatphong);
                 command.Parameters.AddWithValue("@idkhachhang", datPhong.idkhachhang);
                 command.Parameters.AddWithValue("@idphong", datPhong.idphong);
                 command.Parameters.AddWithValue("@idthoigian", datPhong.idthoigian);
@@ -307,7 +307,7 @@ namespace Service
             {
                 connection.Open();
                 string updateQuery = "UPDATE DatPhong SET ngaydat = @ngaydat, ngaydukientra = @ngaydukientra, " +
-                                   "tiendatcoc = @tiendatcoc, trangthai = @trangthai, hinhthucthue = @hinhthucthue, idloaidatphong=@idloaidatphong," +
+                                   "tiendatcoc = @tiendatcoc, trangthai = @trangthai, hinhthucthue = @hinhthucthue, loaidatphong=@loaidatphong," +
                                    " idkhachhang=@idkhachhang, idphong=@idphong, idthoigian = @idthoigian " +
                                    " WHERE id = @id";
                 SqlCommand command = new SqlCommand(updateQuery, connection);
@@ -316,7 +316,7 @@ namespace Service
                 command.Parameters.AddWithValue("@tiendatcoc", datPhong.tiendatcoc);
                 command.Parameters.AddWithValue("@trangthai", datPhong.trangthai);
                 command.Parameters.AddWithValue("@hinhthucthue", datPhong.hinhthucthue);
-                command.Parameters.AddWithValue("@idloaidatphong", datPhong.idloaidatphong);
+                command.Parameters.AddWithValue("@loaidatphong", datPhong.loaidatphong);
                 command.Parameters.AddWithValue("@idkhachhang", datPhong.idkhachhang);
                 command.Parameters.AddWithValue("@idphong", datPhong.idphong);
                 command.Parameters.AddWithValue("@idthoigian", datPhong.idthoigian);

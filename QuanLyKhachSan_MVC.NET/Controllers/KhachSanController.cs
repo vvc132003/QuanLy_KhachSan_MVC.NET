@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model.Models;
+using PagedList;
 using Service;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
@@ -11,7 +12,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         {
             khachSanService = khachSanServices;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? sotrang)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -24,9 +25,13 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     ViewData["hovaten"] = hovaten;
                     ViewData["tenchucvu"] = tenchucvu;
                     List<KhachSan> khachsanlist = khachSanService.GetAllKhachSan();
+                    int soluong = khachsanlist.Count;
+                    int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
+                    int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
+                    PagedList.IPagedList<KhachSan> ipageKhachsan = khachsanlist.ToPagedList(validPageNumber, pageSize);
                     Modeldata modeldata = new Modeldata()
                     {
-                        listKhachSan = khachsanlist,
+                        PagedTKhachSan = ipageKhachsan,
                     };
                     return View(modeldata);
                 }
