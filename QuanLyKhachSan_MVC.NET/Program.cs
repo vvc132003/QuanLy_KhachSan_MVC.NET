@@ -47,6 +47,8 @@ builder.Services.AddScoped<TinNhanService>();
 builder.Services.AddScoped<TinNhanIconService>();
 builder.Services.AddScoped<IconService>();
 builder.Services.AddScoped<GiamGiaNgayLeService>();
+builder.Services.AddScoped<LikesService>();
+
 // mã hoá mật khẩu
 builder.Services.AddScoped<IPasswordHasher<KhachHang>, PasswordHasher<KhachHang>>();
 builder.Services.AddScoped(sp => new KhachHangService(new PasswordHasher<KhachHang>()));

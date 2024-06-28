@@ -127,6 +127,46 @@
         </div>
     </div>
 </div>
+<div id="likesSummary">
+    Likes: <span id="totalLikes"></span>
+    <button id="likeButton">Like</button>
+</div>
+<style>
+
+    #likesSummary {
+        border: 1px solid #ccc;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        margin: 0 auto; /* Center the container */
+        text-align: center;
+    }
+
+    #totalLikes {
+        font-weight: bold;
+        color: #333;
+    }
+
+    #likeButton {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+        #likeButton:hover {
+            background-color: #45a049;
+        }
+</style>
 @Html.Partial("~/Views/layout/footer.cshtml")
 <script src="~/content/static/vendor/jquery/jquery.min.js"></script>
 <script src="~/content/static/vendor/jquery/jquery-migrate.min.js"></script>
@@ -143,3 +183,37 @@
 <script src="~/content/static/js/booking.js"></script>
 <script src="~/content/static/js/jqBootstrapValidation.min.js"></script>
 <script src="~/content/static/js/main.js"></script>
+
+<script>
+    $(document).ready(function () {
+        function loadLikesCount() {
+            $.ajax({
+                type: "GET",
+                url: "/Likes/CountLikeByIdPhong",
+                data: { idphong: @Model.phong.id },
+                success: function (result) {
+                    $("#totalLikes").text(result.sumlikesidphong);
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        loadLikesCount();
+
+        $("#likeButton").click(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Likes/LikesPhong",
+                data: { idphong: @Model.phong.id },
+                success: function () {
+                    loadLikesCount();
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>

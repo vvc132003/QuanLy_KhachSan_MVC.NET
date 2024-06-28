@@ -169,6 +169,44 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
+
+
+
+        public IActionResult UpdateNhanVien(int idnhanvien)
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
+                {
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    ViewData["idkhachsan"] = idkhachsan;
+                    List<ChucVu> chucVus = chucVuService.GetAllChucVu();
+                    List<KhachSan> listkhachsan = khachSanService.GetAllKhachSan();
+                    NhanVien nhanVien = nhanVienService.GetNhanVienID(idnhanvien);
+                    Modeldata modeldata = new Modeldata
+                    {
+                        listchucVu = chucVus,
+                        listKhachSan = listkhachsan,
+                        nhanVien = nhanVien
+                    };
+                    return View(modeldata);
+                }
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
+        }
         public IActionResult XuatEclcel()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)

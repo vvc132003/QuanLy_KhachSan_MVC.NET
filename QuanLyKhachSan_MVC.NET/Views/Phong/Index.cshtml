@@ -337,3 +337,14 @@
         });
     </script>
 }
+@if (TempData["nhanphongthanhcong"] != null)
+{
+    <script>
+        Swal.fire({
+            position: "top-right",
+            title: 'Nhận Phòng thành công!',
+            icon: 'success',
+            showConfirmButton: false,
+        });
+    </script>
+}

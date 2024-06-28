@@ -802,12 +802,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     phongService.CapNhatPhong(phong);
                     datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
                 }
-                TempData["thuephongthanhcong"] = "";
                 return RedirectToAction("index", "home");
             }
             else
             {
-                ViewData["thongbaothuephongonline"] = "Không thể nhận phòng. Vui lòng thử lại.";
                 return RedirectToAction("datphongonline", "phong", new { idphong = datPhong.idphong });
             }
         }
