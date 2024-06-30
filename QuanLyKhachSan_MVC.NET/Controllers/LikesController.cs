@@ -16,7 +16,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             return View();
         }
 
-        public IActionResult LikesPhong(int idphong)
+        public IActionResult LikesPhong(int idphong, string icon)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -30,24 +30,51 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     Likes likes = new Likes();
                     likes.idkhachhang = id;
                     likes.idphong = idphong;
-                    likes.icons = "❤️";
+                    likes.icons = icon;
                     likesService.InsertLike(likes);
                     return Ok();
                 }
                 else
                 {
+                    Likes likes = likesService.GetIconsLikedByIDkHACHhNAGbyidPhong(idphong, id);
+                    if (likes != null)
+                    {
+                        likes.icons = icon;
+                        likesService.CapNhatLike(likes);
+                        return Ok();
+                    }
                     return Ok();
                 }
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                string thongbao = "vui lòng đăng nhập trước khi like !";
+                return Json(new { thongbao });
             }
         }
         public IActionResult CountLikeByIdPhong(int idphong)
         {
             int sumlikesidphong = likesService.CountLikesByIdPhong(idphong);
-            return Json(new { sumlikesidphong });
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int id = HttpContext.Session.GetInt32("id").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                Likes likes = likesService.GetIconsLikedByIDkHACHhNAG(id);
+                if (likes != null)
+                {
+                    return Json(new { sumlikesidphong, icon = likes.icons });
+                }
+                else
+                {
+                    return Json(new { sumlikesidphong, icon = "" });
+                }
+            }
+            else
+            {
+                return Json(new { sumlikesidphong });
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 <link href="/static/img/favicon.ico" rel="icon">
 <link href="/static/img/apple-favicon.png" rel="apple-touch-icon">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link href="~/css/bootstrap.min.css" rel="stylesheet" />
 <link href="~/css/font-awesome.min.css" rel="stylesheet" />
 <link href="~/css/animate.min.css" rel="stylesheet" />
@@ -127,12 +128,21 @@
         </div>
     </div>
 </div>
-<div id="likesSummary">
-    Likes: <span id="totalLikes"></span>
-    <button id="likeButton">Like</button>
+<div id="likesSummary" class="likes-container">
+    <div class="likes-count">
+        <span id="totalLikes">0</span> <i id="likeIcon" class="icon" style="display: block;"></i>
+    </div>
+    <div class="reaction-icons">
+        <i class="far fa-thumbs-up icon" data-reaction="like" data-icon="far fa-thumbs-up"></i>
+        <i class="fas fa-heart icon" data-reaction="love" data-icon="fas fa-heart"></i>
+        <i class="far fa-laugh icon" data-reaction="haha" data-icon="far fa-laugh"></i>
+        <i class="far fa-surprise icon" data-reaction="wow" data-icon="far fa-surprise"></i>
+        <i class="far fa-sad-tear icon" data-reaction="sad" data-icon="far fa-sad-tear"></i>
+        <i class="far fa-angry icon" data-reaction="angry" data-icon="far fa-angry"></i>
+    </div>
+    <p id="thongbao"></p>
 </div>
 <style>
-
     #likesSummary {
         border: 1px solid #ccc;
         background-color: #fff;
@@ -142,30 +152,52 @@
         margin: 0 auto; /* Center the container */
         text-align: center;
     }
-
-    #totalLikes {
-        font-weight: bold;
-        color: #333;
-    }
-
-    #likeButton {
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px 20px;
+    .likes-container {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
         text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin-top: 10px;
-        cursor: pointer;
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
+        max-width: 300px;
+        position: relative;
     }
 
-        #likeButton:hover {
-            background-color: #45a049;
+    .likes-count {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+
+    .reaction-icons {
+        display: none;
+        position: absolute;
+        top: 0%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .icon {
+        font-size: 30px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+        .icon:hover {
+            transform: scale(1.2);
         }
+
+    .likes-count:hover + .reaction-icons,
+    .reaction-icons:hover {
+        display: flex;
+    }
 </style>
 @Html.Partial("~/Views/layout/footer.cshtml")
 <script src="~/content/static/vendor/jquery/jquery.min.js"></script>
@@ -193,6 +225,7 @@
                 data: { idphong: @Model.phong.id },
                 success: function (result) {
                     $("#totalLikes").text(result.sumlikesidphong);
+                    $("#likeIcon").html('<i class="' + result.icon + ' icon"></i>');
                 },
                 error: function (error) {
                     console.error(error);
@@ -202,13 +235,17 @@
 
         loadLikesCount();
 
-        $("#likeButton").click(function () {
+        $(".icon").click(function () {
+            var reaction = $(this).data("icon");
             $.ajax({
                 type: "GET",
                 url: "/Likes/LikesPhong",
-                data: { idphong: @Model.phong.id },
-                success: function () {
+                data: { idphong: @Model.phong.id, icon: reaction },
+                success: function (data) {
                     loadLikesCount();
+                    if (data.thongbao != null) {
+                        $("#thongbao").text(data.thongbao);
+                    }
                 },
                 error: function (error) {
                     console.error(error);

@@ -137,6 +137,62 @@ namespace Service.Service
                 }
             }
         }
+        public Likes GetIconsLikedByIDkHACHhNAG(int idkhachhang)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "SELECT id, idphong, idkhachhang, thoigianlike, icons FROM Likes WHERE idkhachhang = @idkhachhang";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idkhachhang", idkhachhang);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Likes like = new Likes();
+                            like.id = Convert.ToInt32(reader["id"]);
+                            like.idphong = Convert.ToInt32(reader["idphong"]);
+                            like.idkhachhang = Convert.ToInt32(reader["idkhachhang"]);
+                            like.thoigianlike = Convert.ToDateTime(reader["thoigianlike"]);
+                            like.icons = reader["icons"].ToString();
+
+                            return like;
+                        }
+                        return null;
+                    }
+                }
+            }
+        }
+        public Likes GetIconsLikedByIDkHACHhNAGbyidPhong(int idphong, int idkhachhang)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "SELECT id, idphong, idkhachhang, thoigianlike, icons FROM Likes WHERE idkhachhang = @idkhachhang and idphong=@idphong ";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idkhachhang", idkhachhang);
+                    command.Parameters.AddWithValue("@idphong", idphong);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Likes like = new Likes();
+                            like.id = Convert.ToInt32(reader["id"]);
+                            like.idphong = Convert.ToInt32(reader["idphong"]);
+                            like.idkhachhang = Convert.ToInt32(reader["idkhachhang"]);
+                            like.thoigianlike = Convert.ToDateTime(reader["thoigianlike"]);
+                            like.icons = reader["icons"].ToString();
+
+                            return like;
+                        }
+                        return null;
+                    }
+                }
+            }
+        }
 
         public void InsertLike(Likes like)
         {

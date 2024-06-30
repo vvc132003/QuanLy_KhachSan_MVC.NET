@@ -85,7 +85,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddSession(options =>
 {
     // phiên làm việc khi không có hoạt động nào từ người dùng
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.IdleTimeout = TimeSpan.FromMinutes(5);
     // Thuộc tính này được đặt là true, điều này đảm bảo rằng cookie session chỉ có thể được truy cập bởi HTTP
     // và không thể được truy cập thông qua JavaScript.
     // Điều này giúp bảo vệ cookie chống lại các cuộc tấn công Cross-Site Scripting (XSS).
