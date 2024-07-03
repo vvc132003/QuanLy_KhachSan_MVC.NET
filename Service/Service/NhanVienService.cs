@@ -273,6 +273,47 @@ namespace Service
                 }
             }
         }
+        public NhanVien Checkcccdnhanvien(string cccd)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+                string query = "select * from NhanVien where cccd = @cccd";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@cccd", cccd);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            NhanVien nhanVien = new NhanVien
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                hovaten = reader["hovaten"].ToString(),
+                                sodienthoai = reader["sodienthoai"].ToString(),
+                                tinh = reader["tinh"].ToString(),
+                                huyen = reader["huyen"].ToString(),
+                                phuong = reader["phuong"].ToString(),
+                                taikhoan = reader["taikhoan"].ToString(),
+                                matkhau = reader["matkhau"].ToString(),
+                                trangthai = reader["trangthai"].ToString(),
+                                solanvipham = (int)reader["solanvipham"],
+                                cccd = reader["cccd"].ToString(),
+                                gioitinh = reader["gioitinh"].ToString(),
+                                image = reader["image"].ToString(),
+                                idchucvu = (int)reader["idchucvu"],
+
+                            };
+                            return nhanVien;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
         public NhanVien NhanVienTonTai(string taikhoan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())

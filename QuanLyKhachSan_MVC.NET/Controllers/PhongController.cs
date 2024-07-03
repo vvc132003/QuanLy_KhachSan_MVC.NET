@@ -79,6 +79,20 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
+        public IActionResult KhachHangbyiddatPhong(int idphong)
+        {
+            DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThai(idphong);
+            if (datPhong == null)
+            {
+                return Ok();
+            }
+            KhachHang khachHang = khachHangService.GetKhachHangbyid(datPhong.idkhachhang);
+            if (khachHang == null)
+            {
+                return Ok();
+            }
+            return Json(new { khachHang });
+        }
         public IActionResult Home()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null &&

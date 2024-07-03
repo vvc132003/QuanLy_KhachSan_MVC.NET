@@ -105,10 +105,27 @@ CREATE TABLE Likes
     FOREIGN KEY (idphong) REFERENCES Phong(id),
     FOREIGN KEY (idkhachhang) REFERENCES KhachHang(id)
 );
-select * from Likes
-INSERT INTO Likes (idphong, idkhachhang, icons)
-VALUES (1, 3, N'❤️');
-SELECT count(idkhachhang) AS TotalLikes FROM Likes WHERE idphong = 1
+select * from DatPhong
+
+CREATE TABLE BinhLuan (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    idkhachhang INT,
+    noidung TEXT,
+    thoigianbinhluan DATETIME DEFAULT GETDATE(),
+	trangthai nvarchar(100),
+	idphong INT,    
+	FOREIGN KEY (idphong) REFERENCES Phong(id),
+    FOREIGN KEY (idkhachhang) REFERENCES KhachHang(id)
+);
+select * from BinhLuan
+
+
+INSERT INTO BinhLuan (idkhachhang, noidung, trangthai, idphong)
+VALUES (1, N'Đánh giá tuyệt vời cho căn phòng này!', N'Đã duyệt', 3);
+INSERT INTO BinhLuan (idkhachhang, noidung, trangthai, idphong)
+VALUES (2, N'Đánh giá tuyệt vời cho căn phòng này!', N'Đã duyệt', 3);
+INSERT INTO BinhLuan (idkhachhang, noidung, trangthai, idphong)
+VALUES (3, N'Đánh giá tuyệt vời cho căn phòng này!', N'Đã duyệt', 3);
 
 create table ChucVu
 (

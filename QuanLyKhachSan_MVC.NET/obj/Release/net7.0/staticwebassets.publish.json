@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "RkiGVIkSv5i4DASVZQFIhtJQYOkNFH4rwFokcjLMOQ0=",
+  "Hash": "IIVIMhMHFL0lQ/3oYgWK+mxp2qNp6+Kk6+KhqFxYwJo=",
   "Source": "QuanLyKhachSan_MVC.NET",
   "BasePath": "_content/QuanLyKhachSan_MVC.NET",
   "Mode": "Default",
@@ -1290,6 +1290,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Content\\static\\logo-icon.png"
+    },
+    {
+      "Identity": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\logoks.jpg",
+      "SourceId": "QuanLyKhachSan_MVC.NET",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\",
+      "BasePath": "_content/QuanLyKhachSan_MVC.NET",
+      "RelativePath": "Content/static/logoks.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Content\\static\\logoks.jpg"
     },
     {
       "Identity": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Content\\static\\logo-light-icon.png",

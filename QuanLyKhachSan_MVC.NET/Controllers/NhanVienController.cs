@@ -157,12 +157,23 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 nhanVien.matkhau = mahoamatkhau;
                 nhanVien.solanvipham = 0;
                 nhanVien.trangthai = "Đang hoạt động";
-                int idnhanvien = nhanVienService.ThemNhanVien(nhanVien);
-                hopDongLaoDong.idnhanvien = idnhanvien;
-                hopDongLaoDong.ngaybatdau = DateTime.Now;
-                hopDongLaoDongService.ThemHopDongLaoDong(hopDongLaoDong);
+                NhanVien checkcccdtontai = nhanVienService.Checkcccdnhanvien(nhanVien.cccd);
+                if (checkcccdtontai != null)
+                {
+                    if (checkcccdtontai.cccd != nhanVien.cccd)
+                    {
+                        int idnhanvien = nhanVienService.ThemNhanVien(nhanVien);
+                        hopDongLaoDong.idnhanvien = idnhanvien;
+                        hopDongLaoDong.ngaybatdau = DateTime.Now;
+                        hopDongLaoDongService.ThemHopDongLaoDong(hopDongLaoDong);
+                    }
+                    else
+                    {
+                        return RedirectToAction("addnhanvien", "nhanvien");
+                    }
+                }
                 TempData["themthanhcong"] = "";
-                return RedirectToAction("Index", "NhanVien");
+                return RedirectToAction("", "nhanvien");
             }
             else
             {
@@ -264,6 +275,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 // Xử lý lỗi và trả về thông điệp lỗi
                 return Content($"Lỗi không nhận dạng được khuôn mặt: {e.Message}");
             }
+        }
+        public IActionResult Checkcccdnhanvien(string cccd)
+        {
+            NhanVien nhanVien = nhanVienService.Checkcccdnhanvien(cccd);
+            return Json(new { cccdcheck = nhanVien });
         }
     }
 }

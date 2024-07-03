@@ -18,9 +18,26 @@
         <div class="page-wrapper">
             <div class="container-fluid">
                 <div class="card">
+                    <br />
+                    <ul class="nav justify-content-end">
+                        @*  <li class="nav-item">
+                        <a class="nav-link btn btn-success me-2" href="/NhanVien/XuatEclcel">
+                        <i class="fas fa-file-excel"></i>
+                        Xuất excel
+                        </a>
+                        </li> *@
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary me-2" href="/nhanvien/">
+                                <i class="fas fa-arrow-left"></i>
+                                Quay lại
+                            </a>
+                        </li>
+                    </ul>
+                    <br />
                     <div class="row">
                         <div class="col-12">
-                            <div class="text-bg-success p-2">Thêm nhân viên</div>
+                            @*                             <div class="text-bg-success p-2">Thêm nhân viên</div>
+                            *@
                             <div class="border border-secondary-subtle" style="padding:10px 20px">
                                 <form Action="/NhanVien/AddNhanVienn" method="POST">
                                     <div class="row">
@@ -86,6 +103,7 @@
                                             <div class="mb-3">
                                                 <label for="cccd" class="form-label">CCCD:</label>
                                                 <input type="text" class="form-control" id="cccd" name="cccd" required>
+                                                <p id="thongbao" style="color:red;"></p>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="ngaysinh" class="form-label">Ngày sinh:</label>
@@ -226,3 +244,31 @@
         });
     </script>
 }
+
+<script>
+    document.getElementById('cccd').addEventListener('input', function () {
+        var cccdInput = this.value.trim();
+        var thongBaoElement = document.getElementById('thongbao');
+
+        if (cccdInput.length === 9 || cccdInput.length === 12) {
+            $.ajax({
+                type: "GET",
+                url: "/nhanvien/checkcccdnhanvien",
+                data: { cccd: cccdInput },
+                success: function (data) {
+                    if (data.cccdcheck == null) {
+                        thongBaoElement.textContent = '';
+                    } else {
+                        thongBaoElement.textContent = 'CCCD đã tồn tại.';
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        } else {
+            thongBaoElement.textContent = 'CCCD không hợp lệ.';
+            thongBaoElement.classList.add('error');
+        }
+    });
+</script>

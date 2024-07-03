@@ -18,9 +18,26 @@
         <div class="page-wrapper">
             <div class="container-fluid">
                 <div class="card">
+                    <br />
+                    <ul class="nav justify-content-end">
+                        @*  <li class="nav-item">
+                        <a class="nav-link btn btn-success me-2" href="/NhanVien/XuatEclcel">
+                        <i class="fas fa-file-excel"></i>
+                        Xuất excel
+                        </a>
+                        </li> *@
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary me-2" href="/nhanvien/">
+                                <i class="fas fa-arrow-left"></i>
+                                Quay lại
+                            </a>
+                        </li>
+                    </ul>
+                    <br />
                     <div class="row">
                         <div class="col-12">
-                            <div class="text-bg-success p-2">Cập nhật nhân viên</div>
+                            @*                             <div class="text-bg-success p-2">Cập nhật nhân viên</div>
+                            *@
                             <div class="border border-secondary-subtle" style="padding:10px 20px">
                                 @if (Model.nhanVien != null)
                                 {

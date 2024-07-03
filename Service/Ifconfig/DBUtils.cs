@@ -12,7 +12,7 @@ namespace ketnoicsdllan1
     {
         public static SqlConnection GetDBConnection()
         {
-            string datasource = @"LAPCN-CHINHVV\SQLEXPRESS";
+            string datasource = @"LAPCN-ChinhVV\SQLEXPRESS";
             string database = "QuanLyKhachSan";
             string username = "sa";
             string password = "chinh@2003";

@@ -24,7 +24,7 @@
                     <div class="col-12">
                         <div class="card">
                             <br />
-                            <ul class="nav justify-content-center">
+                            <ul class="nav justify-content-end">
                                 <li class="nav-item">
                                     <a class="nav-link btn btn-success me-2" href="/NhanVien/XuatEclcel">
                                         <i class="fas fa-file-excel"></i>
@@ -71,7 +71,14 @@
                                                         <td>@nhanvien.solanvipham</td>
                                                         <td>@nhanvien.cccd</td>
                                                         <td>
-                                                            <p style="background-color: #5eda73;color: #000;padding: 10px 10px;border-radius: 10%;">@modeldata.chucVu.tenchucvu</p>
+                                                            @if (modeldata.chucVu.tenchucvu.Equals("Quản lý"))
+                                                            {
+                                                                <p style="background-color: red;color: #ffff;padding: 10px 10px;border-radius: 10%;">@modeldata.chucVu.tenchucvu</p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p style="background-color: #5eda73;color: #000;padding: 10px 10px;border-radius: 10%;">@modeldata.chucVu.tenchucvu</p>
+                                                            }
                                                         </td>
                                                         <td>@modeldata.khachSan.tenkhachsan</td>
                                                         <td>
@@ -79,12 +86,17 @@
                                                         </td>
                                                         <td>@nhanvien.trangthai</td>
                                                         <td>
-                                                            <a href="/Tang/XoaTang/@nhanvien.id" class="btn btn-danger" title="Xoá">
-                                                                <i class="fas fa-times-circle"></i>
-                                                            </a>
-                                                            <a href="/nhanvien/updatenhanvien/?idnhanvien=@nhanvien.id" class="btn btn-warning" title="Cập nhật">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
+                                                            @if (modeldata.chucVu.tenchucvu.Equals("Quản lý"))
+                                                            { }
+                                                            else
+                                                            {
+                                                                <a href="/Tang/XoaTang/@nhanvien.id" class="btn btn-danger" title="Xoá">
+                                                                    <i class="fas fa-times-circle"></i>
+                                                                </a>
+                                                                <a href="/nhanvien/updatenhanvien/?idnhanvien=@nhanvien.id" class="btn btn-warning" title="Cập nhật">
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                </a>
+                                                            }
                                                         </td>
                                                     </tr>
                                                     count++;
@@ -122,7 +134,7 @@
             "info": false,
             "autoWidth": false,
             "responsive": true,
-            "pageLength": 15,
+            "pageLength": 7,
             "lengthMenu": [5, 10, 25, 50, 100],
             "language": {
                 "paginate": {

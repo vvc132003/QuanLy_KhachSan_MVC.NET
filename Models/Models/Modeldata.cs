@@ -10,19 +10,24 @@ namespace Model.Models
         public Tang tang { get; set; }
         public List<Tang> listtang { get; set; }
         public IPagedList<Tang> PagedTTang { get; set; }
+        public Likes likes { get; set; }
+        public List<Likes> listLikes { get; set; }
+        public IPagedList<Likes> PagedTLikes { get; set; }
         public Phong phong { get; set; }
         public List<Phong> listphong { get; set; }
         public List<Phong> listphongtrangthai { get; set; }
         public IPagedList<Phong> PagedTPhong { get; set; }
-       
+        public BinhLuan binhLuan { get; set; }
+        public List<BinhLuan> listBinhLuan { get; set; }
+        public IPagedList<BinhLuan> PagedBinhLuan { get; set; }
         public ChucVu chucVu { get; set; }
         public List<ChucVu> listchucVu { get; set; }
         public IPagedList<ChucVu> PagedTChucVu { get; set; }
-       
+
         public NhanVien nhanVien { get; set; }
         public List<NhanVien> listnhanVien { get; set; }
         public IPagedList<NhanVien> PagedTNhanVien { get; set; }
-      
+
         public DatPhong datPhong { get; set; }
         public List<DatPhong> listdatPhong { get; set; }
         public IPagedList<DatPhong> PagedTDatPhong { get; set; }
@@ -36,7 +41,7 @@ namespace Model.Models
         public List<ThueSanPham> listthueSanPham { get; set; }
         public IPagedList<ThueSanPham> PagedTThueSanPham { get; set; }
         public float tongtienhueSanPham { get; set; }
- 
+
         public LichSuThanhToan lichSuThanhToan { get; set; }
         public List<LichSuThanhToan> listlichSuThanhToan { get; set; }
         public IPagedList<LichSuThanhToan> PagedTLichSuThanhToan { get; set; }
@@ -62,7 +67,7 @@ namespace Model.Models
         public PhongKhachSan phongKhachSan { get; set; }
         public List<PhongKhachSan> listPhongKhachSan { get; set; }
         public IPagedList<PhongKhachSan> PagedPhongKhachSan { get; set; }
-      
+
         public List<GiamGiaNgayLe> giamGiaNgayLelist { get; set; }
         public GiamGiaNgayLe giamGiaNgayle { get; set; }
         public ChuyenPhong chuyenPhong { get; set; }
