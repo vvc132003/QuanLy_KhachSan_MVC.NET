@@ -134,6 +134,7 @@
         </div>
     </div>
 </div>
+
 <div id="likesSummary" class="likes-container">
     <div class="likes-count">
         <span id="totalLikes">0</span> <i id="likeIcon" class="icon" style="display: block;"></i>
@@ -149,114 +150,168 @@
     <p id="thongbao" style="color:red;"></p>
 </div>
 <hr />
-<div class="comment-container" style="padding: 100px;">
+<div class="comment-container" style="padding: 10px;max-width: 90%;margin: auto;">
     <div class="alert alert-success" style="display:none;">
     </div>
-    <div class="comment-form">
-        <div>
-            @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
-            {
-                <label for="comment">@Model.khachhang.hovaten:</label>
-            }
-            else
-            {
-                <label for="comment">Your Comment:</label>  
-            }
-            <textarea id="comment" name="comment" rows="4" required></textarea>
-        </div>
-        <button id="add-comment-btn">Gửi</button>
+    <div class="comment-input">
+        <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+        <textarea id="main-input" class="inputnoidung" placeholder="Viết bình luận..."></textarea>
+        <button id="add-comment-btn" type="submit">Gửi</button>
+    </div>
+
+    <div class="comments-list" id="comments-list">
+        <!-- Bình luận sẽ được tải lên đây bởi AJAX -->
     </div>
 </div>
+
+
+
+
 <style>
-    .comment {
+    .comment-input {
         display: flex;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        align-items: center;
         margin-bottom: 20px;
-        padding: 15px;
-    }
-
-    .avatar {
-        width: 60px;
-        height: 60px;
-        overflow: hidden;
-        border-radius: 50%;
-        margin-right: 15px;
-    }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-    .comment-content {
-        flex-grow: 1;
-    }
-
-    .comment-meta {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
-    }
-
-    .username {
-        font-weight: bold;
-        color: #333;
-    }
-
-    .timestamp {
-        color: #666;
-    }
-
-    .comment-text {
-        color: #333;
-        line-height: 1.6;
-    }
-
-    .comment-form {
-        background-color: #fff;
+        background: white;
+        padding: 10px;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        padding: 15px;
-        margin-top: 20px;
     }
 
-        .comment-form h2 {
-            margin-bottom: 10px;
+        .comment-input .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
         }
 
-        .comment-form label {
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .comment-form input[type="text"],
-        .comment-form textarea {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
+        .comment-input textarea {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            resize: none;
+            font-size: 14px;
         }
 
-        .comment-form textarea {
-            resize: vertical;
-        }
-
-        .comment-form button {
-            background-color: #4CAF50;
+        .comment-input button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
             color: white;
-            padding: 10px 15px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-            .comment-form button:hover {
-                background-color: #45a049;
+            .comment-input button:hover {
+                background-color: #0056b3;
             }
+
+    .comments-list .comment {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 15px;
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .comments-list .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .comments-list .comment-body {
+        flex: 1;
+    }
+
+    .comments-list .comment-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    .comments-list .username {
+        font-weight: bold;
+        margin-right: 10px;
+        font-size: 14px;
+    }
+
+    .comments-list .time {
+        color: #888;
+        font-size: 12px;
+    }
+
+    .comments-list .comment-text {
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .comments-list .comment-actions button {
+        margin-right: 10px;
+        background: none;
+        border: none;
+        color: #007bff;
+        cursor: pointer;
+        font-size: 14px;
+        transition: color 0.3s;
+    }
+
+        .comments-list .comment-actions button:hover {
+            color: #0056b3;
+        }
+
+    .reply-input {
+        display: none;
+        margin-left: 50px;
+        margin-top: 10px;
+    }
+
+    .replies-list {
+        margin-left: 50px;
+        margin-top: 10px;
+    }
+
+        .replies-list .comment {
+            margin-bottom: 10px;
+        }
+
+    .reply-input .avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .reply-input textarea {
+        flex: 1;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        resize: none;
+        font-size: 14px;
+    }
+
+    .reply-input button {
+        margin-left: 10px;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .reply-input button:hover {
+            background-color: #0056b3;
+        }
+
 
     #likesSummary {
         border: 1px solid #ccc;
@@ -331,6 +386,191 @@
 <script src="~/content/static/js/booking.js"></script>
 <script src="~/content/static/js/jqBootstrapValidation.min.js"></script>
 <script src="~/content/static/js/main.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Hàm gọi AJAX để lấy bình luận
+        function loadComments() {
+            $.ajax({
+                url: '/binhluan/BinhLuanss/',
+                data: { idphong: @((Model.phong != null) ? Model.phong.id : "") },
+                success: function (data) {
+                    var commentsHtml = '';
+                    data.forEach(function (modeldata) {
+                        if (modeldata.binhLuan.parent_comment_id == 0) {
+                            // Hiển thị bình luận gốc
+                            commentsHtml += `
+                                        <div class="container-comments" style="padding: 10px 20px;border: 1px solid #ccc;border-radius: 10px;">
+                                                <div class="comment">
+                                                <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+                                                <div class="comment-body">
+                                                    <div class="comment-header">
+                                                        ${modeldata.binhLuan.loainguoithamgia === 'khachhang' ?
+                                    `<span class="username">${modeldata.khachhang.hovaten}</span>` :
+                                    `<span class="username">${modeldata.nhanVien.hovaten}</span>`}
+                                                <span class="time">${formatTime(modeldata.binhLuan.thoigianbinhluan)}</span>
+                                                            </div>
+                                                    <p class="comment-text">${modeldata.binhLuan.noidung}</p>
+                                                    <div class="comment-actions">
+                                                        <button class="reply">Trả lời</button>
+                                                        <button id="thich" data-binhluan-id="${modeldata.binhLuan.id}" class="like">Thích <span>(${modeldata.binhLuan.thich})</span></button>
+                                                            <button id="khongthich" data-binhluan-id="${modeldata.binhLuan.id}" class="dislike">Không thích <span>(${modeldata.binhLuan.khongthich})</span></button>
+                                                    </div>
+                                                    <div class="reply-input" style="display: none;">
+                                                        <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+                                                        <textarea class="inputnoidung-reply" placeholder="Viết bình luận trả lời..."></textarea>
+                                                        <input type="hidden" class="parent_comment_id" value="${modeldata.binhLuan.id}" />
+                                                        <button class="add-comment-reply-btn" type="submit">Gửi</button>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+
+                            // Hiển thị danh sách bình luận trả lời
+                            commentsHtml += '<div class="replies-list">';
+                            modeldata.listBinhLuan.forEach(function (reply) {
+                                if (reply.trangthai === "Đã duyệt") {
+                                    commentsHtml += `
+                                            <div class="comment reply">
+                                                <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+                                                <div class="comment-body">
+                                                    <div class="comment-header">
+                                                        <span class="username">${reply.hovaten}</span>
+                                                         <span class="time">${formatTime(reply.thoigianbinhluan)}</span>
+                                                            </div>
+                                                    <p class="comment-text">${reply.noidung}</p>
+                                                    <div class="comment-actions">
+                                                        <button class="reply">Trả lời</button>
+                                                        <button id="thich" data-binhluan-id="${reply.id}" class="like">Thích <span>(${reply.thich})</span></button>
+                                                            <button id="khongthich" data-binhluan-id="${reply.id}" class="dislike">Không thích <span>(${reply.khongthich})</span></button>
+                                                    </div>
+                                                    <div class="reply-input" style="display: none;">
+                                                        <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+                                                        <textarea class="inputnoidung-reply" placeholder="Viết bình luận trả lời..."></textarea>
+                                                        <input type="hidden" class="parent_comment_id" value="${reply.id}" />
+                                                        <button class="add-comment-reply-btn" type="submit">Gửi</button>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+                                }
+                            });
+                            commentsHtml += '</div>';
+                            commentsHtml += '</div>';
+                            commentsHtml += '<br>';
+
+                        }
+                    });
+
+                    $('#comments-list').html(commentsHtml);
+                },
+                error: function (error) {
+                    console.log('Error fetching comments:', error);
+                }
+            });
+        }
+        function formatTime(timestamp) {
+            let date = new Date(timestamp);
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+
+            // Formatting hours and minutes to ensure they are two digits
+            let formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+            return formattedTime;
+        }
+
+        // Gọi hàm loadComments với idphong
+        loadComments();
+
+        // Gắn sự kiện click cho nút reply sử dụng event delegation
+        $('#comments-list').on('click', '.reply', function () {
+            const replyInput = $(this).closest('.comment-body').find('.reply-input');
+            replyInput.toggle();
+        });
+
+        // Gắn sự kiện click cho nút gửi bình luận chính
+        $("#add-comment-btn").click(function () {
+            var inputnoidung = $("#main-input").val();
+            $.ajax({
+                type: "POST",
+                url: "/binhluan/addbinhluan",
+                data: { idphong: @((Model.phong != null) ? Model.phong.id : ""), noidung: inputnoidung },
+                success: function (data) {
+                    $("#main-input").val('');
+                    if (data.success) {
+                        // Hiển thị thông báo thành công
+                        $('.alert-success').text(data.message).show();
+                        // Sau 5 giây tự động ẩn thông báo
+                        setTimeout(function () {
+                            $('.alert-success').fadeOut('fast');
+                        }, 5000);
+                        loadComments(); // Tải lại bình luận
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        });
+
+
+        $('#comments-list').on('click', '#thich', function () {
+            var idbinhluan = $(this).data('binhluan-id');
+            $.ajax({
+                type: "POST",
+                url: "/binhluan/ThichBinhLuan",
+                data: { idbinhluan: idbinhluan },
+                success: function (data) {
+                    loadComments();
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        $('#comments-list').on('click', '#khongthich', function () {
+            var idbinhluan = $(this).data('binhluan-id');
+            $.ajax({
+                type: "POST",
+                url: "/binhluan/KhongThichBinhLuan",
+                data: { idbinhluan: idbinhluan },
+                success: function (data) {
+                    loadComments();
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        });
+
+
+        // Gắn sự kiện click cho nút gửi bình luận trả lời sử dụng event delegation
+        $('#comments-list').on('click', '.add-comment-reply-btn', function () {
+            var inputnoidung = $(this).siblings('.inputnoidung-reply').val();
+            var parent_comment_id = $(this).siblings('.parent_comment_id').val();
+            $.ajax({
+                type: "POST",
+                url: "/binhluan/addbinhluans",
+                data: { idphong: @((Model.phong != null) ? Model.phong.id : ""), noidung: inputnoidung, parent_comment_id: parent_comment_id },
+                success: function (data) {
+                    if (data.success) {
+                        // Hiển thị thông báo thành công
+                        $('.alert-success').text(data.message).show();
+                        // Sau 5 giây tự động ẩn thông báo
+                        setTimeout(function () {
+                            $('.alert-success').fadeOut('fast');
+                        }, 5000);
+                        loadComments(); // Tải lại bình luận
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function () {
@@ -371,65 +611,3 @@
     });
 </script>
 
-<script>
-    $(document).ready(function () {
-        function loadComments() {
-            $.ajax({
-                url: "/binhluan/GetBinhLuanByIdPhong",
-                data: { idphong: @((Model.phong != null) ? Model.phong.id : "") },
-                type: 'GET',
-                success: function (data) {
-                    data.forEach(function (item) {
-                        var commentHtml = '<div class="comment">' +
-                            '<div class="avatar">' +
-                            '<img src="avatar.jpg" alt="Avatar">' +
-                            '</div>' +
-                            '<div class="comment-content">' +
-                            '<div class="comment-meta">' +
-                            '<span class="username">' + item.khachHang.hovaten + '</span>' +
-                            '<span class="timestamp">' + formatDate(item.binhLuan.thoigianbinhluan) + '</span>' +
-                            '</div>' +
-                            '<p class="comment-text">' + item.binhLuan.noidung + '</p>' +
-                            '</div>' +
-                            '</div>';
-                        $('.comment-container').prepend(commentHtml);
-                        // $('.comment-container').append(commentHtml); // Thêm bình luận mới vào .comment-container
-                    });
-                },
-                error: function (error) {
-                    console.log('Error:', error);
-                }
-            });
-        }
-        loadComments();
-        // Hàm format thời gian
-        function formatDate(dateStr) {
-            var date = new Date(dateStr);
-            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
-        }
-
-        $("#add-comment-btn").click(function () {
-            var comment = $("#comment").val();
-            $.ajax({
-                type: "POST",
-                url: "/binhluan/addbinhluan",
-                data: { idphong: @((Model.phong != null) ? Model.phong.id : ""), noidung: comment },
-                success: function (data) {
-                    $("#comment").val('');
-                    if (data.success) {
-                        // Hiển thị thông báo thành công
-                        $('.alert-success').text(data.message).show();
-                        // Sau 5 giây tự động ẩn thông báo
-                        setTimeout(function () {
-                            $('.alert-success').fadeOut('fast');
-                        }, 5000);
-                    }
-                },
-                error: function (error) {
-                    console.error(error);
-                }
-            });
-        });
-    });
-
-</script>

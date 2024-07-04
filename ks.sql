@@ -109,23 +109,23 @@ select * from DatPhong
 
 CREATE TABLE BinhLuan (
     id INT IDENTITY(1,1) PRIMARY KEY,
-    idkhachhang INT,
-    noidung TEXT,
+    idnguoithamgia INT,
+	loainguoithamgia nVARCHAR(10) CHECK (loainguoithamgia IN ('khachhang', 'nhanvien')) NOT NULL,
+    noidung NVARCHAR(MAX),
     thoigianbinhluan DATETIME DEFAULT GETDATE(),
 	trangthai nvarchar(100),
-	idphong INT,    
+	idphong INT, 
+	parent_comment_id INT DEFAULT 0, 
+	thich INT DEFAULT 0, 
+	khongthich INT DEFAULT 0,  
 	FOREIGN KEY (idphong) REFERENCES Phong(id),
-    FOREIGN KEY (idkhachhang) REFERENCES KhachHang(id)
 );
+
 select * from BinhLuan
+select * from nhanvien
+select * from khachhang
+drop table BinhLuan
 
-
-INSERT INTO BinhLuan (idkhachhang, noidung, trangthai, idphong)
-VALUES (1, N'Đánh giá tuyệt vời cho căn phòng này!', N'Đã duyệt', 3);
-INSERT INTO BinhLuan (idkhachhang, noidung, trangthai, idphong)
-VALUES (2, N'Đánh giá tuyệt vời cho căn phòng này!', N'Đã duyệt', 3);
-INSERT INTO BinhLuan (idkhachhang, noidung, trangthai, idphong)
-VALUES (3, N'Đánh giá tuyệt vời cho căn phòng này!', N'Đã duyệt', 3);
 
 create table ChucVu
 (
@@ -390,3 +390,4 @@ create table ThueSanPham
     foreign key(idnhanvien) references NhanVien(id),
     foreign key(iddatphong) references DatPhong(id)
 );
+

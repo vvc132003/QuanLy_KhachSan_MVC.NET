@@ -77,5 +77,6 @@ namespace Model.Models
         public List<HuyDatPhong> listHuyDatPhong { get; set; }
         public IPagedList<HuyDatPhong> PagedTHuyDatPhong { get; set; }
 
+       
     }
 }

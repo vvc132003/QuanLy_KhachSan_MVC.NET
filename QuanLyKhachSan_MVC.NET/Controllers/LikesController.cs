@@ -68,7 +68,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 string hovaten = HttpContext.Session.GetString("hovaten");
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
+
+                // Kiểm tra xem người dùng đã like phòng này chưa
                 bool isLiked = likesService.CheckIfLiked(id, idphong);
+
+                // Nếu chưa like, thêm mới
                 if (!isLiked)
                 {
                     Likes likes = new Likes();
@@ -79,25 +83,31 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 }
                 else
                 {
-                    Likes likes = likesService.GetIconsLikedByIDkHACHhNAGbyidPhong(idphong, id);
-                    if (likes != null)
+                    // Nếu đã like, cập nhật hoặc xóa
+                    Likes existingLike = likesService.GetIconsLikedByIDkHACHhNAGbyidPhong(idphong, id);
+                    if (existingLike != null)
                     {
-                        if (likes.icons.Equals(icon))
+                        // Nếu icon đã được chọn trước đó, xóa like
+                        if (existingLike.icons.Equals(icon))
                         {
-                            likesService.DeleteLike(likes.id);
+                            likesService.DeleteLike(existingLike.id);
                         }
                         else
                         {
-                            likes.icons = icon;
-                            likesService.CapNhatLike(likes);
+                            // Nếu icon khác, cập nhật lại icon
+                            existingLike.icons = icon;
+                            likesService.CapNhatLike(existingLike);
                         }
                     }
                 }
+
+                // Trả về kết quả thành công
                 return Ok();
             }
             else
             {
-                string thongbao = "";
+                // Nếu không đăng nhập, trả về thông báo lỗi
+                string thongbao = "Bạn cần đăng nhập để thực hiện thao tác này.";
                 return Json(new { thongbao });
             }
         }

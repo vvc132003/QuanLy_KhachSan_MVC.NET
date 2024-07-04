@@ -9,10 +9,17 @@ namespace Model.Models
     public class BinhLuan
     {
         public int id { get; set; }
-        public int idkhachhang { get; set; }
+        public int idnguoithamgia { get; set; }
+        public string loainguoithamgia { get; set; }
         public string noidung { get; set; }
         public DateTime thoigianbinhluan { get; set; }
         public string trangthai { get; set; }
         public int idphong { get; set; }
+        public int parent_comment_id { get; set; }
+        public int thich { get; set; }
+        public int khongthich { get; set; }
+
+        public string hovaten { get; set; }
+
     }
 }

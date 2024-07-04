@@ -60,7 +60,14 @@
                                                     var binhluan = modeldata.PagedBinhLuan.First();
                                                     <tr id="row-@count">
                                                         <td>@count</td>
-                                                        <td>@modeldata.khachhang.hovaten</td>
+                                                        @if (binhluan.loainguoithamgia.Equals("khachhang"))
+                                                        {
+                                                            <td>@modeldata.khachhang.hovaten</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>@modeldata.nhanVien.hovaten</td>
+                                                        }
                                                         <td class="large-cell">@binhluan.noidung</td>
                                                         <td>@binhluan.thoigianbinhluan.ToString("dd/MM/yyyy")</td>
                                                         <td>

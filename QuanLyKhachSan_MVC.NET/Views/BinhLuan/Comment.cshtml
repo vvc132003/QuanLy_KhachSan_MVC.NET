@@ -1,0 +1,290 @@
+﻿@model Model.Models.Modeldata
+<div class="comment-container" style="padding: 40px; max-width: 800px; margin: auto; background: #f5f5f5; border-radius: 8px;">
+    <div class="comment-input">
+        <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+        <textarea placeholder="Viết bình luận..."></textarea>
+        <button type="submit">Gửi</button>
+    </div>
+    <div class="comments-list">
+        <!-- tin nhắn gốc -->
+        <div class="comment">
+            <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+            <div class="comment-body">
+                <div class="comment-header">
+                    <span class="username">Tên Người Dùng</span>
+                    <span class="time">2 giờ trước</span>
+                </div>
+                <p class="comment-text">Đây là nội dung bình luận.</p>
+                <div class="comment-actions">
+                    <button class="reply">Trả lời</button>
+                    <button class="like">Thích</button>
+                    <button class="dislike">Không thích</button>
+                </div>
+                <div class="reply-input">
+                    <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+                    <textarea placeholder="Viết bình luận trả lời..."></textarea>
+                    <button type="submit">Gửi</button>
+                </div>
+            </div>
+        </div>
+        <div class="replies-list">
+            <!-- tin nhắn trả lời -->
+            <div class="comment">
+                <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+                <div class="comment-body">
+                    <div class="comment-header">
+                        <span class="username">Tên Người Dùng</span>
+                        <span class="time">1 giờ trước</span>
+                    </div>
+                    <p class="comment-text">Đây là nội dung bình luận trả lời.</p>
+                    <div class="comment-actions">
+                        <button class="reply">Trả lời</button>
+                        <button class="like">Thích</button>
+                        <button class="dislike">Không thích</button>
+                    </div>
+                    <div class="reply-input">
+                        <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+                        <textarea placeholder="Viết bình luận trả lời..."></textarea>
+                        <button type="submit">Gửi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .comment-input {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+        .comment-input .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .comment-input textarea {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: none;
+            font-size: 14px;
+        }
+
+        .comment-input button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            .comment-input button:hover {
+                background-color: #0056b3;
+            }
+
+    .comments-list .comment {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 15px;
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .comments-list .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .comments-list .comment-body {
+        flex: 1;
+    }
+
+    .comments-list .comment-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    .comments-list .username {
+        font-weight: bold;
+        margin-right: 10px;
+        font-size: 14px;
+    }
+
+    .comments-list .time {
+        color: #888;
+        font-size: 12px;
+    }
+
+    .comments-list .comment-text {
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .comments-list .comment-actions button {
+        margin-right: 10px;
+        background: none;
+        border: none;
+        color: #007bff;
+        cursor: pointer;
+        font-size: 14px;
+        transition: color 0.3s;
+    }
+
+        .comments-list .comment-actions button:hover {
+            color: #0056b3;
+        }
+
+    .reply-input {
+        display: none;
+        margin-left: 50px;
+        margin-top: 10px;
+    }
+
+    .replies-list {
+        margin-left: 50px;
+        margin-top: 10px;
+    }
+
+        .replies-list .comment {
+            margin-bottom: 10px;
+        }
+
+    .reply-input .avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .reply-input textarea {
+        flex: 1;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        resize: none;
+        font-size: 14px;
+    }
+
+    .reply-input button {
+        margin-left: 10px;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .reply-input button:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Thực hiện yêu cầu AJAX khi tài liệu đã được tải
+        fetch('/binhluan/BinhLuans?idphong=' + 1)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Xử lý và hiển thị dữ liệu trả về
+                data.forEach(item => {
+                    // Xây dựng HTML cho bình luận gốc
+                    let commentHtml = buildCommentHtml(item.binhLuan, item.nhanVien, item.khachHang);
+                    // Thêm bình luận gốc vào danh sách bình luận
+                    document.querySelector('.comments-list').insertAdjacentHTML('beforeend', commentHtml);
+
+                    // Xử lý các câu trả lời
+                    item.listBinhLuan.forEach(reply => {
+                        let replyHtml = buildCommentHtml(reply, reply.nhanVien, reply.khachHang);
+                        // Thêm câu trả lời vào danh sách câu trả lời tương ứng
+                        let replyContainer = document.createElement('div');
+                        replyContainer.classList.add('replies-list'); // Định dạng danh sách câu trả lời
+                        replyContainer.innerHTML = replyHtml;
+                        document.querySelector('.comments-list').appendChild(replyContainer);
+                    });
+                });
+            })
+            .catch(error => {
+                console.error('Đã xảy ra lỗi khi gửi yêu cầu AJAX:', error);
+            });
+    });
+
+    // Hàm xây dựng HTML cho mỗi bình luận hoặc câu trả lời
+    function buildCommentHtml(comment, nhanVien, khachHang) {
+        let username = '';
+        if (comment.loainguoithamgia === 'nhanvien' && nhanVien) {
+            username = nhanVien.hovaten;
+        } else if (comment.loainguoithamgia === 'khachhang' && khachHang) {
+            username = khachHang.hovaten;
+        }
+
+        let commentHtml = `
+            <div class="comment">
+                <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+                <div class="comment-body">
+                    <div class="comment-header">
+                        <span class="username">${username}</span>
+                        <span class="time">${formatTime(comment.thoigianbinhluan)}</span>
+                    </div>
+                    <p class="comment-text">${comment.noidung}</p>
+                    <div class="comment-actions">
+                        <button class="reply">Trả lời</button>
+                        <button class="like">Thích</button>
+                        <button class="dislike">Không thích</button>
+                    </div>
+                    <div class="reply-input">
+                        <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+                        <textarea placeholder="Viết bình luận trả lời..."></textarea>
+                        <button type="submit">Gửi</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        return commentHtml;
+    }
+
+    // Hàm định dạng thời gian (nếu cần)
+    function formatTime(time) {
+        // Viết hàm định dạng thời gian ở đây nếu cần
+        return time; // Ví dụ đơn giản, trả về thời gian nguyên thủy
+    }
+
+
+</script>
+
+
+<script>
+    document.querySelectorAll('.reply').forEach(button => {
+        button.addEventListener('click', () => {
+            const replyInput = button.parentElement.nextElementSibling;
+            replyInput.style.display = replyInput.style.display === 'none' || !replyInput.style.display ? 'flex' : 'none';
+        });
+    });
+</script>
