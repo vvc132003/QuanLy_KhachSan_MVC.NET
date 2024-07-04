@@ -157,14 +157,12 @@ namespace Service
                                        tinh = @tinh,
                                        huyen = @huyen,
                                        phuong = @phuong,
-                                       taikhoan = @taikhoan,
-                                       matkhau = @matkhau,
-                                       trangthai = @trangthai,
                                        solanvipham = @solanvipham,
                                        cccd = @cccd,
                                        gioitinh = @gioitinh,
                                        ngaysinh = @ngaysinh,
-                                       image = @image
+                                       idchucvu=@idchucvu,
+                                       idkhachsan=@idkhachsan
                                        WHERE id = @id";
                 using (SqlCommand command = new SqlCommand(updateQuery, connection))
                 {
@@ -173,15 +171,12 @@ namespace Service
                     command.Parameters.AddWithValue("@tinh", nhanVien.tinh);
                     command.Parameters.AddWithValue("@huyen", nhanVien.huyen);
                     command.Parameters.AddWithValue("@phuong", nhanVien.phuong);
-                    command.Parameters.AddWithValue("@taikhoan", nhanVien.taikhoan);
-                    command.Parameters.AddWithValue("@matkhau", nhanVien.matkhau);
-                    command.Parameters.AddWithValue("@trangthai", nhanVien.trangthai);
                     command.Parameters.AddWithValue("@solanvipham", nhanVien.solanvipham);
                     command.Parameters.AddWithValue("@cccd", nhanVien.cccd);
                     command.Parameters.AddWithValue("@gioitinh", nhanVien.gioitinh);
                     command.Parameters.AddWithValue("@ngaysinh", nhanVien.ngaysinh);
-                    command.Parameters.AddWithValue("@image", nhanVien.image);
                     command.Parameters.AddWithValue("@idchucvu", nhanVien.idchucvu);
+                    command.Parameters.AddWithValue("@idkhachsan", nhanVien.idkhachsan);
 
                     command.Parameters.AddWithValue("@id", nhanVien.id);
                     command.ExecuteNonQuery();

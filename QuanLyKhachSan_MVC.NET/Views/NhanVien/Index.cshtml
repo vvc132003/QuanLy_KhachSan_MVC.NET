@@ -128,23 +128,26 @@
     $(document).ready(function () {
         $('#example').DataTable({
             "paging": true,
-            "lengthChange": true,
+            "lengthChange": false,
             "searching": true,
-            "ordering": true,
+            "ordering": false,
             "info": false,
             "autoWidth": false,
             "responsive": true,
-            "pageLength": 7,
+            "pageLength": 10,
             "lengthMenu": [5, 10, 25, 50, 100],
             "language": {
                 "paginate": {
                     "next": '<i class="fas fa-chevron-right"></i>',
                     "previous": '<i class="fas fa-chevron-left"></i>'
-                }
+                },
+                "search": "Tìm kiếm:",
             }
         });
     });
 </script>
+
+
 
 @if (TempData["themthanhcong"] != null)
 {

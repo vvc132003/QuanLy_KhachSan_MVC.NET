@@ -158,106 +158,126 @@
         </div>
     </div>
 </div>
-@foreach (var phong in Model[0].listphong)
+@if (Model != null && Model.Count > 0)
 {
-    <div class="modal fade" id="exampleModal@(phong.id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-         data-bs-backdrop="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                </div>
-                <div class="modal-body text-left">
-                    <div class="text-bg-success p-2">Chuyển phòng</div>
-                    <div class="border border-secondary-subtle" style="padding:10px 20px">
-                        <form method="post" Action="/ChuyenPhong/ChuyenPhong">
-                            <div class="row">
-                                <div class="col-6">
+
+    @foreach (var phong in Model[0].listphong)
+    {
+        <div class="modal fade" id="exampleModal@(phong.id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+             data-bs-backdrop="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <div class="modal-body text-left">
+                        <div class="text-bg-success p-2">Chuyển phòng</div>
+                        <div class="border border-secondary-subtle" style="padding:10px 20px">
+                            <form method="post" Action="/ChuyenPhong/ChuyenPhong">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="idphongcu" class="form-label">Phòng cũ:</label>
+                                            <select id="idphongcu" name="idphongcu" class="form-control">
+                                                <option readonly value="@phong.id">@phong.sophong</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="idphongmoi" class="form-label">Phòng mới:</label>
+                                            <select id="idphongmoi" name="idphongmoi" class="form-control">
+                                                <option value="">Chọn phòng mới</option>
+                                                @foreach (var phongs in Model[0].listphongtrangthai)
+                                                {
+                                                    <option value="@phongs.id">@phongs.sophong</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="mb-3">
-                                        <label for="idphongcu" class="form-label">Phòng cũ:</label>
-                                        <select id="idphongcu" name="idphongcu" class="form-control">
-                                            <option readonly value="@phong.id">@phong.sophong</option>
-                                        </select>
+                                        <label for="lydo" class="form-label">Lý do:</label>
+                                        <input type="text" class="form-control" id="lydo" name="lydo">
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="mb-3">
-                                        <label for="idphongmoi" class="form-label">Phòng mới:</label>
-                                        <select id="idphongmoi" name="idphongmoi" class="form-control">
-                                            <option value="">Chọn phòng mới</option>
-                                            @foreach (var phongs in Model[0].listphongtrangthai)
-                                            {
-                                                <option value="@phongs.id">@phongs.sophong</option>
-                                            }
-                                        </select>
-                                    </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">
+                                        Huỷ
+                                    </button>
+                                    <input type="submit" value="Chuyển phòng" class="btn btn-primary custom-button" />
                                 </div>
-                                <div class="mb-3">
-                                    <label for="lydo" class="form-label">Lý do:</label>
-                                    <input type="text" class="form-control" id="lydo" name="lydo">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">
-                                    Huỷ
-                                </button>
-                                <input type="submit" value="Chuyển phòng" class="btn btn-primary custom-button" />
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 }
-@foreach (var tang in Model)
+else
 {
-    <div class="modal fade" id="exampleModaltang@(tang.tang.id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-         data-bs-backdrop="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                </div>
-                <div class="modal-body text-left">
-                    <div class="text-bg-success p-2">Thêm phòng</div>
-                    <div class="border border-secondary-subtle" style="padding:10px 20px">
-                        <form method="post" Action="/Phong/ThemPhong">
-                            <div class="row">
-                                <input type="hidden" class="form-control" value="@ViewData["idkhachsan"]" id="idkhachsan" name="idkhachsan" readonly>
-                                <input type="hidden" class="form-control" value="@tang.tang.id" id="idtang" name="idtang" readonly>
-                                <div class="mb-3">
-                                    <label for="songuoi" class="form-label">Số người :</label>
-                                    <input type="text" class="form-control" id="songuoi" name="songuoi">
+
+    <p>Null</p>
+
+}
+@if (Model != null && Model.Count > 0)
+{
+
+    @foreach (var tang in Model)
+    {
+        <div class="modal fade" id="exampleModaltang@(tang.tang.id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+             data-bs-backdrop="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <div class="modal-body text-left">
+                        <div class="text-bg-success p-2">Thêm phòng</div>
+                        <div class="border border-secondary-subtle" style="padding:10px 20px">
+                            <form method="post" Action="/Phong/ThemPhong">
+                                <div class="row">
+                                    <input type="hidden" class="form-control" value="@ViewData["idkhachsan"]" id="idkhachsan" name="idkhachsan" readonly>
+                                    <input type="hidden" class="form-control" value="@tang.tang.id" id="idtang" name="idtang" readonly>
+                                    <div class="mb-3">
+                                        <label for="songuoi" class="form-label">Số người :</label>
+                                        <input type="text" class="form-control" id="songuoi" name="songuoi">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="sophong" class="form-label">Số phòng :</label>
+                                        <input type="number" class="form-control" id="sophong" name="sophong">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="loaiphong" class="form-label">Loại phòng :</label>
+                                        <input type="text" class="form-control" id="loaiphong" name="loaiphong">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="giatientheogio" class="form-label">Gía tiền theo giờ :</label>
+                                        <input type="text" class="form-control" id="giatientheogio" name="giatientheogio">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="giatientheongay" class="form-label">Gía tiền theo ngày:</label>
+                                        <input type="text" class="form-control" id="giatientheongay" name="giatientheongay">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="soluongmuonthem" class="form-label">Số lượng phòng muốn thêm:</label>
+                                        <input type="text" class="form-control" id="soluongmuonthem" value="1" name="soluongmuonthem">
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="sophong" class="form-label">Số phòng :</label>
-                                    <input type="number" class="form-control" id="sophong" name="sophong">
+                                <div class="modal-footer">
+                                    <input type="submit" value="Thêm phòng" class="btn btn-primary custom-button" />
                                 </div>
-                                <div class="mb-3">
-                                    <label for="loaiphong" class="form-label">Loại phòng :</label>
-                                    <input type="text" class="form-control" id="loaiphong" name="loaiphong">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="giatientheogio" class="form-label">Gía tiền theo giờ :</label>
-                                    <input type="text" class="form-control" id="giatientheogio" name="giatientheogio">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="giatientheongay" class="form-label">Gía tiền theo ngày:</label>
-                                    <input type="text" class="form-control" id="giatientheongay" name="giatientheongay">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="soluongmuonthem" class="form-label">Số lượng phòng muốn thêm:</label>
-                                    <input type="text" class="form-control" id="soluongmuonthem" value="1" name="soluongmuonthem">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="submit" value="Thêm phòng" class="btn btn-primary custom-button" />
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
+}
+else
+{
+
+    <p>Null</p>
+
 }
 <style>
     .modal-backdrop {

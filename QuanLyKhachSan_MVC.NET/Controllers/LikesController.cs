@@ -135,5 +135,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return Json(new { sumlikesidphong });
             }
         }
+        public IActionResult Deletelikes(int idlikes)
+        {
+            likesService.DeleteLike(idlikes);
+            return RedirectToAction("", "likes");
+        }
     }
 }

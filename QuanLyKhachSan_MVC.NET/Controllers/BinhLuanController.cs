@@ -12,11 +12,13 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly BinhLuanService binhLuanService;
         private readonly KhachHangService khachHangService;
         private readonly NhanVienService nhanVienService;
-        public BinhLuanController(BinhLuanService binhLuanService, KhachHangService khachHangService, NhanVienService nhanVienService)
+        private readonly PhongService phongService;
+        public BinhLuanController(BinhLuanService binhLuanService, KhachHangService khachHangService, NhanVienService nhanVienService, PhongService phongService)
         {
             this.binhLuanService = binhLuanService;
             this.khachHangService = khachHangService;
             this.nhanVienService = nhanVienService;
+            this.phongService = phongService;
         }
 
         public IActionResult GetBinhLuanByIdPhong(int idphong)
@@ -158,6 +160,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     List<Modeldata> modeldatalist = new List<Modeldata>();
                     foreach (var binhLuan in ipagebinhluan)
                     {
+                        Phong phong = phongService.GetPhongID(binhLuan.idphong);
                         KhachHang khachHang = null;
                         NhanVien nhanVien = null;
                         if (binhLuan.loainguoithamgia.Equals("khachhang"))
@@ -173,6 +176,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             PagedBinhLuan = new List<BinhLuan> { binhLuan }.ToPagedList(1, 1),
                             khachhang = khachHang,
                             nhanVien = nhanVien,
+                            phong = phong,
                         };
                         modeldatalist.Add(modeldata);
                     }

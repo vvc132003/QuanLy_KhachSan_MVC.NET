@@ -157,22 +157,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 nhanVien.matkhau = mahoamatkhau;
                 nhanVien.solanvipham = 0;
                 nhanVien.trangthai = "Đang hoạt động";
-                NhanVien checkcccdtontai = nhanVienService.Checkcccdnhanvien(nhanVien.cccd);
-                if (checkcccdtontai != null)
-                {
-                    if (checkcccdtontai.cccd != nhanVien.cccd)
-                    {
-                        int idnhanvien = nhanVienService.ThemNhanVien(nhanVien);
-                        hopDongLaoDong.idnhanvien = idnhanvien;
-                        hopDongLaoDong.ngaybatdau = DateTime.Now;
-                        hopDongLaoDongService.ThemHopDongLaoDong(hopDongLaoDong);
-                    }
-                    else
-                    {
-                        return RedirectToAction("addnhanvien", "nhanvien");
-                    }
-                }
-                TempData["themthanhcong"] = "";
+                int idnhanvien = nhanVienService.ThemNhanVien(nhanVien);
+                hopDongLaoDong.idnhanvien = idnhanvien;
+                hopDongLaoDong.ngaybatdau = DateTime.Now;
+                hopDongLaoDongService.ThemHopDongLaoDong(hopDongLaoDong);
                 return RedirectToAction("", "nhanvien");
             }
             else
@@ -218,6 +206,28 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
+
+
+        public IActionResult UpdateNhanVienn(NhanVien nhanVien)
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int id = HttpContext.Session.GetInt32("id").Value;
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
+                nhanVienService.CapNhatNhanVien(nhanVien);
+                return RedirectToAction("", "nhanvien");
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
+        }
+
         public IActionResult XuatEclcel()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
