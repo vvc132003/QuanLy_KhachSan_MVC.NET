@@ -76,7 +76,8 @@ namespace Model.Models
         public HuyDatPhong huyDatPhong { get; set; }
         public List<HuyDatPhong> listHuyDatPhong { get; set; }
         public IPagedList<HuyDatPhong> PagedTHuyDatPhong { get; set; }
+        public int TotalRentedQuantity { get; set; }
 
-       
+
     }
 }

@@ -135,6 +135,39 @@ namespace Service
             }
         }
 
+
+        public List<ThueSanPham> GetAllThueSanPhamIDSanPham(int idsanpham)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<ThueSanPham> thueSanPhams = new List<ThueSanPham>();
+                connection.Open();
+                string sql = "SELECT * FROM ThueSanPham where idsanpham = @idsanpham ";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@idsanpham", idsanpham);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ThueSanPham thueSanPham = new ThueSanPham()
+                            {
+                                id = (int)reader["id"],
+                                soluong = (int)reader["soluong"],
+                                idsanpham = (int)reader["idsanpham"],
+                                idnhanvien = (int)reader["idnhanvien"],
+                                iddatphong = (int)reader["iddatphong"],
+                                thanhtien = Convert.ToSingle(reader["thanhtien"]),
+                            };
+                            thueSanPhams.Add(thueSanPham);
+
+                        }
+                    }
+                }
+                return thueSanPhams;
+            }
+        }
+
         public ThueSanPham GetThueSanPhamBYID(int id)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())

@@ -58,5 +58,36 @@ namespace Service
 
             return chuyenPhongs;
         }
+        public List<ChuyenPhong> GetAllChuyenPhong()
+        {
+            List<ChuyenPhong> chuyenPhongs = new List<ChuyenPhong>();
+
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+
+                string selectQuery = "SELECT * FROM ChuyenPhong ";
+
+                using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ChuyenPhong chuyenPhong = new ChuyenPhong();
+                            chuyenPhong.ngaychuyen = reader.GetDateTime("ngaychuyen");
+                            chuyenPhong.lydo = reader.GetString("lydo");
+                            chuyenPhong.idkhachhang = reader.GetInt32("idkhachhang");
+                            chuyenPhong.idnhanvien = reader.GetInt32("idnhanvien");
+                            chuyenPhong.idphongcu = reader.GetInt32("idphongcu");
+                            chuyenPhong.idphongmoi = reader.GetInt32("idphongmoi");
+                            chuyenPhongs.Add(chuyenPhong);
+                        }
+                    }
+                }
+            }
+
+            return chuyenPhongs;
+        }
     }
 }

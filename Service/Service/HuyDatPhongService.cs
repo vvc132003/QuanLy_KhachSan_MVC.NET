@@ -54,5 +54,35 @@ namespace Service
 
             return huyDatPhongs;
         }
+        public List<HuyDatPhong> GetAllHuyDatPhong()
+        {
+            List<HuyDatPhong> huyDatPhongs = new List<HuyDatPhong>();
+
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+
+                string selectQuery = "SELECT * FROM HuyDatPhong ";
+
+                using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            HuyDatPhong huyDatPhong = new HuyDatPhong();
+                            huyDatPhong.ngayhuy = reader.GetDateTime("ngayhuy");
+                            huyDatPhong.lydo = reader.GetString("lydo");
+                            huyDatPhong.iddatphong = reader.GetInt32("iddatphong");
+                            huyDatPhong.idnhanvien = reader.GetInt32("idnhanvien");
+
+                            huyDatPhongs.Add(huyDatPhong);
+                        }
+                    }
+                }
+            }
+
+            return huyDatPhongs;
+        }
     }
 }

@@ -571,7 +571,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
-        public IActionResult ChiTietThuePhong(int idphong)
+        public IActionResult ChiTietThuePhong(int idphong, int? sotrang)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -584,6 +584,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["tenchucvu"] = tenchucvu;
                 List<DatPhong> listdatPhongs = datPhongService.GetAllDatPhongByID(idphong);
                 List<SanPham> listsanpham = sanPhamService.GetAllSanPhamIDKhachSan(idkhachsan);
+                const int PageSize = 10; // Số lượng phòng trên mỗi trang
+                int pageNumber = sotrang ?? 1; // Trang hiện tại, mặc định là trang 1
+                PagedList.IPagedList<SanPham> PagedTSanPham = listsanpham.ToPagedList(pageNumber, PageSize);
                 Phong phongs = phongService.GetPhongID(idphong);
                 List<Modeldata> listmodeldatas = new List<Modeldata>();
                 if (listdatPhongs != null && listdatPhongs.Any())
@@ -634,7 +637,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         {
                             Modeldata yourModel = new Modeldata
                             {
-                                listsanPham = listsanpham,
+                                PagedTSanPham = PagedTSanPham,
                                 datPhong = datphong,
                                 listthueSanPham = listthueSanPham,
                                 tongtienhueSanPham = tongtien,
@@ -649,7 +652,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         {
                             Modeldata yourModel = new Modeldata
                             {
-                                listsanPham = listsanpham,
+                                PagedTSanPham = PagedTSanPham,
                                 datPhong = datphong,
                                 listthueSanPham = listthueSanPham,
                                 tongtienhueSanPham = tongtien,

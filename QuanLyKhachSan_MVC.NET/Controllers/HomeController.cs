@@ -23,6 +23,9 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly BinhLuanService binhLuanService;
         private readonly SanPhamService sanPhamService;
         private readonly ThueSanPhamService thueSanPhamService;
+        private readonly DatPhongService datPhongService;
+        private readonly HuyDatPhongService huyDatPhongService;
+        private readonly ChuyenPhongService chuyenPhongService;
         public HomeController(PhongService phongServices,
             KhachSanService khachSanServices,
             KhachHangService khachHangService,
@@ -30,7 +33,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             LikesService likesService,
             BinhLuanService binhLuanService,
             SanPhamService sanPhamService,
-            ThueSanPhamService thueSanPhamService)
+            ThueSanPhamService thueSanPhamService,
+            DatPhongService datPhongService, HuyDatPhongService huyDatPhongService, ChuyenPhongService chuyenPhongService)
         {
             phongService = phongServices;
             khachSanService = khachSanServices;
@@ -40,7 +44,74 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             this.likesService = likesService;
             this.binhLuanService = binhLuanService;
             this.thueSanPhamService = thueSanPhamService;
+            this.datPhongService = datPhongService;
+            this.huyDatPhongService = huyDatPhongService;
+            this.chuyenPhongService = chuyenPhongService;
         }
+
+
+
+        public IActionResult SoLuongHopDong()
+        {
+            List<DatPhong> datPhongs = datPhongService.GetAllDatPhongDat();
+            var datphong = datPhongs
+                .GroupBy(dp => dp.ngaydat.Month)
+                .Select(g => new
+                {
+                    Month = g.Key,
+                    Count = g.Count()
+                })
+                .OrderBy(x => x.Month)
+                .ToList();
+            List<HuyDatPhong> huyDatPhongs = huyDatPhongService.GetAllHuyDatPhong();
+            var huydatphong = huyDatPhongs
+                .GroupBy(hdp => hdp.ngayhuy.Month)
+                .Select(h => new
+                {
+                    Month = h.Key,
+                    Count = h.Count()
+                })
+                .OrderBy(x => x.Month)
+                .ToList();
+            List<ChuyenPhong> chuyenPhongs = chuyenPhongService.GetAllChuyenPhong();
+            var chuyenphong = chuyenPhongs
+               .GroupBy(cp => cp.ngaychuyen.Month)
+               .Select(c => new
+               {
+                   Month = c.Key,
+                   Count = c.Count()
+               })
+               .OrderBy(x => x.Month)
+               .ToList();
+            var item = new
+            {
+                datphong = datphong,
+                huydatphong = huydatphong,
+                chuyenphong = chuyenphong
+            };
+            return Json(item);
+        }
+
+        public IActionResult TongThueSanPham()
+        {
+            List<SanPham> sanPhams = sanPhamService.GetAllSanPham();
+            Dictionary<int, int> sanPhamThueTong = new Dictionary<int, int>();
+
+            foreach (var sanpham in sanPhams)
+            {
+                List<ThueSanPham> thueSanPhams = thueSanPhamService.GetAllThueSanPhamIDSanPham(sanpham.id);
+                int totalRentedQuantity = thueSanPhams.Sum(soluong => soluong.soluong);
+                SanPham sanPham = sanPhamService.GetSanPhamByID(sanpham.id);
+                sanPhamThueTong[sanPham.id] = totalRentedQuantity;
+            }
+
+            return Json(sanPhamThueTong);
+        }
+
+
+
+
+
         public IActionResult ThongKe()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null &&
@@ -69,8 +140,21 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["tonglikes"] = tonglikes;
                 ViewData["tongbinhluan"] = tongbinhluan;
                 ViewData["tongsanpham"] = tongsanpham;
-
-                return View();
+                List<Modeldata> modeldatalist = new List<Modeldata>();
+                foreach (var sanpham in sanPhams)
+                {
+                    List<ThueSanPham> thueSanPhams = thueSanPhamService.GetAllThueSanPhamIDSanPham(sanpham.id);
+                    int totalRentedQuantity = thueSanPhams.Sum(soluong => soluong.soluong);
+                    KhachSan khachSan = khachSanService.GetKhachSanById(sanpham.idkhachsan);
+                    Modeldata modeldata = new Modeldata()
+                    {
+                        sanPham = sanpham,
+                        khachSan = khachSan,
+                        TotalRentedQuantity = totalRentedQuantity
+                    };
+                    modeldatalist.Add(modeldata);
+                }
+                return View(modeldatalist);
             }
             else
             {
