@@ -10,19 +10,6 @@
         <h2 class="login-header w3_header">Đăng nhập</h2>
         <div class="w3l_grid">
             <form class="login-container" Action="/DangNhap/DangNhapVaoHeThong" method="post">
-                @* <select id="idkhachsan" name="idkhachsan" class="form-control">
-                    @if (Model.listKhachSan != null && Model.listKhachSan.Count > 0)
-                    {
-                        foreach (var khachsan in Model.listKhachSan)
-                        {
-                            <option value="@khachsan.id">@khachsan.tenkhachsan</option>
-                        }
-                    }
-                    else
-                    {
-                        <option value="" selected>Không có dữ liệu</option>
-                    }
-                </select> *@
                 <input type="text" placeholder="Nhập tài khoản hoặc email" name="taikhoanoremail" required="">
                 <input type="password" placeholder="Mật kẩu" name="matkhau" required="">
                 <input type="submit" value="Đăng nhập">

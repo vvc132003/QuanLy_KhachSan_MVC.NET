@@ -1,9 +1,12 @@
 ﻿using Emgu.CV.Face;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using PagedList;
 using Service;
 using Service.Service;
+using System.Security.Claims;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
@@ -96,11 +99,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         }
 
 
-        public IActionResult AddBinhLuan(int idphong, string noidung)
+        public async Task<IActionResult> AddBinhLuan(int idphong, string noidung)
         {
+            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            BinhLuan binhLuan = new BinhLuan();
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                BinhLuan binhLuan = new BinhLuan();
                 binhLuan.idphong = idphong;
                 binhLuan.idnguoithamgia = (int)HttpContext.Session.GetInt32("id");
                 binhLuan.loainguoithamgia = "khachhang";
@@ -112,16 +116,33 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 binhLuanService.InsertBinhLuan(binhLuan);
                 return Json(new { success = true, message = "Bình luận của bạn đã được gửi thành công. Đợi Admin duyệt bình luận của bạn!" });
             }
+            else if (result != null && result.Succeeded)
+            {
+                var userId = result.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+                KhachHang khachHang = khachHangService.GetKhachHangbyidtaikhoangoogle(userId);
+                binhLuan.idphong = idphong;
+                binhLuan.idnguoithamgia = khachHang.id;
+                binhLuan.loainguoithamgia = "khachhang";
+                binhLuan.noidung = noidung;
+                binhLuan.trangthai = "Chưa duyệt";
+                binhLuan.parent_comment_id = 0;
+                binhLuan.thich = 0;
+                binhLuan.khongthich = 0;
+                binhLuanService.InsertBinhLuan(binhLuan);
+                return Json(new { success = true, message = "Bình luận của bạn đã được gửi thành công. Đợi Admin duyệt bình luận của bạn!" });
+            }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                string thongbao = "Bạn cần đăng nhập để thực hiện thao tác này.";
+                return Json(new { thongbao });
             }
         }
-        public IActionResult AddBinhLuans(int idphong, string noidung, int parent_comment_id)
+        public async Task<IActionResult> AddBinhLuans(int idphong, string noidung, int parent_comment_id)
         {
+            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            BinhLuan binhLuan = new BinhLuan();
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                BinhLuan binhLuan = new BinhLuan();
                 binhLuan.idphong = idphong;
                 binhLuan.idnguoithamgia = (int)HttpContext.Session.GetInt32("id");
                 binhLuan.loainguoithamgia = "khachhang";
@@ -133,9 +154,25 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 binhLuanService.InsertBinhLuan(binhLuan);
                 return Json(new { success = true, message = "Bình luận của bạn đã được gửi thành công. Đợi Admin duyệt bình luận của bạn!" });
             }
+            else if (result != null && result.Succeeded)
+            {
+                var userId = result.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+                KhachHang khachHang = khachHangService.GetKhachHangbyidtaikhoangoogle(userId);
+                binhLuan.idphong = idphong;
+                binhLuan.idnguoithamgia = khachHang.id;
+                binhLuan.loainguoithamgia = "khachhang";
+                binhLuan.noidung = noidung;
+                binhLuan.trangthai = "Chưa duyệt";
+                binhLuan.parent_comment_id = parent_comment_id;
+                binhLuan.thich = 0;
+                binhLuan.khongthich = 0;
+                binhLuanService.InsertBinhLuan(binhLuan);
+                return Json(new { success = true, message = "Bình luận của bạn đã được gửi thành công. Đợi Admin duyệt bình luận của bạn!" });
+            }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                string thongbao = "Bạn cần đăng nhập để thực hiện thao tác này.";
+                return Json(new { thongbao });
             }
         }
         public IActionResult Index(int? sotrang)
@@ -233,8 +270,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         public IActionResult KhongThichBinhLuan(int idbinhluan)
         {
             BinhLuan binhLuan = binhLuanService.GetBinhLuanById(idbinhluan);
-            binhLuan.khongthich
-                += 1;
+            binhLuan.khongthich += 1;
             binhLuanService.UpdateBinhLuan(binhLuan);
             return Ok();
         }

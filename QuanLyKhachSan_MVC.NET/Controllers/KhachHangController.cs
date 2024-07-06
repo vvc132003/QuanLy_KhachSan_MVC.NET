@@ -42,6 +42,8 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     if (khachhangtontai != null)
                     {
                         // Cập nhật thông tin khách hàng đã tồn tại
+                        string mahoamatkhau = khachHangService.HashPassword(khachHang.matkhau);
+                        khachhangtontai.matkhau = mahoamatkhau;
                         khachhangtontai.hovaten = khachHang.hovaten;
                         khachhangtontai.sodienthoai = khachHang.sodienthoai;
                         khachhangtontai.email = khachHang.email;

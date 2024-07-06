@@ -529,6 +529,10 @@
       "PackagePath": "staticwebassets\\css\\hover-style.css"
     },
     {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\kaiadmin.css",
+      "PackagePath": "staticwebassets\\css\\kaiadmin.css"
+    },
+    {
       "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\morris.css",
       "PackagePath": "staticwebassets\\css\\morris.css"
     },

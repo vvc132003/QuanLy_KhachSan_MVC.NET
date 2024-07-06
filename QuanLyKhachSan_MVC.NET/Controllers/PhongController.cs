@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using QuanLyKhachSan_MVC.NET.Areas.Login.Controllers;
 using System.Security.Claims;
+using Service.Service;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
@@ -18,7 +19,15 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly DatPhongService datPhongService;
         private readonly KhachHangService khachHangService;
         private readonly LichSuThanhToanService lichSuThanhToanService;
-        public PhongController(PhongService phongServices, TangService tangServices, ThoiGianService thoiGianServices, DatPhongService datPhongServices, KhachHangService khachHangService, LichSuThanhToanService lichSuThanhToanService)
+        private readonly LikesService likesService;
+        private readonly BinhLuanService binhLuanService;
+        private readonly SanPhamService sanPhamService;
+        private readonly ThueSanPhamService thueSanPhamService;
+        public PhongController(PhongService phongServices,
+            TangService tangServices, ThoiGianService thoiGianServices,
+            DatPhongService datPhongServices, KhachHangService khachHangService,
+            LichSuThanhToanService lichSuThanhToanService, LikesService likesService, BinhLuanService binhLuanService, SanPhamService sanPhamService,
+            ThueSanPhamService thueSanPhamService)
         {
             phongService = phongServices;
             tangService = tangServices;
@@ -26,6 +35,10 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             datPhongService = datPhongServices;
             this.khachHangService = khachHangService;
             this.lichSuThanhToanService = lichSuThanhToanService;
+            this.likesService = likesService;
+            this.binhLuanService = binhLuanService;
+            this.sanPhamService = sanPhamService;
+            this.thueSanPhamService = thueSanPhamService;
         }
         public IActionResult Index(string loaiphong)
         {
@@ -134,6 +147,45 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
+
+        public IActionResult Home1()
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null &&
+               HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int id = HttpContext.Session.GetInt32("id").Value;
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                ViewData["idkhachsan"] = idkhachsan;
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                ViewData["tenchucvu"] = tenchucvu;
+                List<LichSuThanhToan> lichSuThanhToans = lichSuThanhToanService.GetLichSuThanhToan();
+                float tongDoanhThu = lichSuThanhToans.Sum(lichSu => lichSu.sotienthanhtoan);
+                List<KhachHang> khachHangs = khachHangService.GetAllKhachHang();
+                int tongsoluongkhachhang = khachHangs.Count();
+                List<Likes> likes = likesService.GetAllLikes();
+                int tonglikes = likes.Count();
+                List<BinhLuan> binhLuans = binhLuanService.GetAllBinhLuans();
+                int tongbinhluan = binhLuans.Count();
+                List<SanPham> sanPhams = sanPhamService.GetAllSanPham();
+                int tongsanpham = sanPhams.Count();
+                ViewData["tongDoanhThu"] = tongDoanhThu;
+                ViewData["tongSoLuongKhachHang"] = tongsoluongkhachhang;
+                ViewData["tonglikes"] = tonglikes;
+                ViewData["tongbinhluan"] = tongbinhluan;
+                ViewData["tongsanpham"] = tongsanpham;
+
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
+        }
+        
+
 
         public IActionResult CapNhatTrangThaiPhong(int idphong)
         {

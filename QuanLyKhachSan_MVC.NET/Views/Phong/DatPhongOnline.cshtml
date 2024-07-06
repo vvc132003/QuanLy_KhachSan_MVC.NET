@@ -153,8 +153,17 @@
 <div class="comment-container" style="padding: 10px;max-width: 90%;margin: auto;">
     <div class="alert alert-success" style="display:none;">
     </div>
+    <div class="alert alert-login " style="display:none;">
+    </div>
     <div class="comment-input">
-        <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
+        @if (ViewData["hovaten"] != null)
+        {
+            <img src="" alt="@ViewData["hovaten"]" class="avatar">
+        }
+        else
+        {
+            <img src="" alt="" class="avatar">
+        }
         <textarea id="main-input" class="inputnoidung" placeholder="Viết bình luận..."></textarea>
         <button id="add-comment-btn" type="submit">Gửi</button>
     </div>
@@ -165,9 +174,54 @@
 </div>
 
 
-
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Đăng nhập</h1>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <input type="text" class="form-control taikhoanoremail" placeholder="Nhập tài khoản hoặc email" name="taikhoanoremail" required="">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control matkhau" placeholder="Mật kẩu" name="matkhau" required="">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                <button type="button" id="loginsss" class="btn btn-primary">Đăng nhập</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <style>
+    .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+</style>
+<style>
+    .alert-success {
+        background-color: #d4edda; /* Màu nền xanh lá cây nhạt */
+        border-color: #c3e6cb; /* Màu viền */
+        color: #155724; /* Màu chữ */
+        padding: 10px;
+        display: none;
+        margin-top: 10px;
+    }
+
+    .alert-login {
+        background-color: #f8d7da; /* Màu nền đỏ nhạt */
+        border-color: #f5c6cb; /* Màu viền */
+        color: #721c24; /* Màu chữ */
+        padding: 10px;
+        display: none;
+        margin-top: 10px;
+    }
+
     /* Nút "Xem thêm" */
     .btn-view-more-replies,
     .btn-view-more-repliess {
@@ -394,6 +448,7 @@
     }
 </style>
 @Html.Partial("~/Views/layout/footer.cshtml")
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="~/content/static/vendor/jquery/jquery.min.js"></script>
 <script src="~/content/static/vendor/jquery/jquery-migrate.min.js"></script>
 <script src="~/content/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -424,30 +479,30 @@
                         if (modeldata.binhLuan.parent_comment_id == 0) {
                             // Hiển thị bình luận gốc
                             commentsHtml += `
-                                                    <div class="container-comments" style="padding: 10px 20px;border: 1px solid #ccc;border-radius: 10px;">
-                                                            <div class="comment">
-                                                            <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
-                                                            <div class="comment-body">
-                                                                <div class="comment-header">
-                                                                    ${modeldata.binhLuan.loainguoithamgia === 'khachhang' ?
-                                    `<span class="username">${modeldata.khachhang.hovaten}</span>` :
-                                    `<span class="username">${modeldata.nhanVien.hovaten}</span>`}
-                                                            <span class="time">${formatTime(modeldata.binhLuan.thoigianbinhluan)}</span>
-                                                                        </div>
-                                                                <p class="comment-text">${modeldata.binhLuan.noidung}</p>
-                                                                <div class="comment-actions">
-                                                                    <button class="reply">Trả lời</button>
-                                                                    <button id="thich" data-binhluan-id="${modeldata.binhLuan.id}" class="like">Thích <span>(${modeldata.binhLuan.thich})</span></button>
-                                                                        <button id="khongthich" data-binhluan-id="${modeldata.binhLuan.id}" class="dislike">Không thích <span>(${modeldata.binhLuan.khongthich})</span></button>
-                                                                </div>
-                                                                <div class="reply-input" style="display: none;">
-                                                                    <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
-                                                                    <textarea class="inputnoidung-reply" placeholder="Viết bình luận trả lời..."></textarea>
-                                                                    <input type="hidden" class="parent_comment_id" value="${modeldata.binhLuan.id}" />
-                                                                    <button class="add-comment-reply-btn" type="submit">Gửi</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>`;
+                                                                                        <div class="container-comments" style="padding: 10px 20px;border: 1px solid #ccc;border-radius: 10px;">
+                                                                                                <div class="comment">
+                                                                                                <img src="" alt="" class="avatar">
+                                                                                                <div class="comment-body">
+                                                                                                    <div class="comment-header">
+                                                                                                        ${modeldata.binhLuan.loainguoithamgia === 'khachhang' ?
+                                                                                                        `<span class="username">${modeldata.khachhang.hovaten}</span>` :
+                                                                                                        `<span class="username">${modeldata.nhanVien.hovaten}</span>`}
+                                                                                                <span class="time">${formatTime(modeldata.binhLuan.thoigianbinhluan)}</span>
+                                                                                                            </div>
+                                                                                                    <p class="comment-text">${modeldata.binhLuan.noidung}</p>
+                                                                                                    <div class="comment-actions">
+                                                                                                        <button class="reply">Trả lời</button>
+                                                                                                        <button id="thich" data-binhluan-id="${modeldata.binhLuan.id}" class="like">Thích <span>(${modeldata.binhLuan.thich})</span></button>
+                                                                                                            <button id="khongthich" data-binhluan-id="${modeldata.binhLuan.id}" class="dislike">Không thích <span>(${modeldata.binhLuan.khongthich})</span></button>
+                                                                                                    </div>
+                                                                                                    <div class="reply-input" style="display: none;">
+                                                                                                        <img src="" alt="" class="avatar">
+                                                                                                        <textarea class="inputnoidung-reply" placeholder="Viết bình luận trả lời..."></textarea>
+                                                                                                        <input type="hidden" class="parent_comment_id" value="${modeldata.binhLuan.id}" />
+                                                                                                        <button class="add-comment-reply-btn" type="submit">Gửi</button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>`;
 
                             // Hiển thị danh sách bình luận trả lời
                             commentsHtml += '<div class="replies-list">';
@@ -457,41 +512,41 @@
                                     replyCount++;
                                     if (replyCount <= soluonghienthi) {
                                         commentsHtml += `
-                                                        <div class="comment reply">
-                                                            <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
-                                                            <div class="comment-body">
-                                                                <div class="comment-header">
-                                                                    <span class="username">${reply.hovaten}</span>
-                                                                    <span class="time">${formatTime(reply.thoigianbinhluan)}</span>
-                                                                </div>
-                                                                <p class="comment-text">${reply.noidung}</p>
-                                                                <div class="comment-actions">
-                                                                    <button class="reply">Trả lời</button>
-                                                                    <button id="thich" data-binhluan-id="${reply.id}" class="like">Thích <span>(${reply.thich})</span></button>
-                                                                    <button id="khongthich" data-binhluan-id="${reply.id}" class="dislike">Không thích <span>(${reply.khongthich})</span></button>
-                                                                </div>
-                                                                <div class="reply-input" style="display: none;">
-                                                                    <img src="user-avatar.jpg" alt="User Avatar" class="avatar">
-                                                                    <textarea class="inputnoidung-reply" placeholder="Viết bình luận trả lời..."></textarea>
-                                                                    <input type="hidden" class="parent_comment_id" value="${reply.id}" />
-                                                                    <button class="add-comment-reply-btn" type="submit">Gửi</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>`;
+                                                                                            <div class="comment reply">
+                                                                                                <img src="" alt="${reply.hovaten}" class="avatar">
+                                                                                                <div class="comment-body">
+                                                                                                    <div class="comment-header">
+                                                                                                        <span class="username">${reply.hovaten}</span>
+                                                                                                        <span class="time">${formatTime(reply.thoigianbinhluan)}</span>
+                                                                                                    </div>
+                                                                                                    <p class="comment-text">${reply.noidung}</p>
+                                                                                                    <div class="comment-actions">
+                                                                                                        <button class="reply">Trả lời</button>
+                                                                                                        <button id="thich" data-binhluan-id="${reply.id}" class="like">Thích <span>(${reply.thich})</span></button>
+                                                                                                        <button id="khongthich" data-binhluan-id="${reply.id}" class="dislike">Không thích <span>(${reply.khongthich})</span></button>
+                                                                                                    </div>
+                                                                                                    <div class="reply-input" style="display: none;">
+                                                                                                        <img src="" alt="" class="avatar">
+                                                                                                        <textarea class="inputnoidung-reply" placeholder="Viết bình luận trả lời..."></textarea>
+                                                                                                        <input type="hidden" class="parent_comment_id" value="${reply.id}" />
+                                                                                                        <button class="add-comment-reply-btn" type="submit">Gửi</button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>`;
                                     }
                                 }
                             });
 
                             if (replyCount > soluonghienthi) {
                                 commentsHtml += `
-                                                <div class="view-more-replies">
-                                                    <button class="btn-view-more-replies">Xem thêm</button>
-                                                </div>`;
+                                                                                    <div class="view-more-replies">
+                                                                                        <button class="btn-view-more-replies">Xem thêm</button>
+                                                                                    </div>`;
                             } else if (replyCount > 0) {
                                 commentsHtml += `
-                                                    <div class="view-more-replies">
-                                                       <button class="btn-view-more-repliess">Ẩn bớt</button>
-                                                    </div>`;
+                                                                                        <div class="view-more-replies">
+                                                                                           <button class="btn-view-more-repliess">Ẩn bớt</button>
+                                                                                        </div>`;
                             }
                             commentsHtml += '</div>';
                             commentsHtml += '</div>';
@@ -558,6 +613,9 @@
                             $('.alert-success').fadeOut('fast');
                         }, 5000);
                         loadComments(soluonghienthi); // Tải lại bình luận
+                    } else if (data.thongbao != null) {
+                        $('.alert-login').text(data.thongbao).show();
+                        $(".alert-login").html('Vui lòng ' + '<a data-bs-toggle="modal" data-bs-target="#exampleModal">Đăng nhập</a>' + ' trước khi bình luận !');
                     }
                 },
                 error: function (error) {
@@ -566,7 +624,7 @@
             });
         });
 
-
+        /// thích bình luận
         $('#comments-list').on('click', '#thich', function () {
             var idbinhluan = $(this).data('binhluan-id');
             $.ajax({
@@ -582,6 +640,7 @@
             });
         });
 
+        // l=không thích bin hf luận
         $('#comments-list').on('click', '#khongthich', function () {
             var idbinhluan = $(this).data('binhluan-id');
             $.ajax({
@@ -607,6 +666,7 @@
                 url: "/binhluan/addbinhluans",
                 data: { idphong: @((Model.phong != null) ? Model.phong.id : ""), noidung: inputnoidung, parent_comment_id: parent_comment_id },
                 success: function (data) {
+                    $("#main-input").val('');
                     if (data.success) {
                         // Hiển thị thông báo thành công
                         $('.alert-success').text(data.message).show();
@@ -615,6 +675,9 @@
                             $('.alert-success').fadeOut('fast');
                         }, 5000);
                         loadComments(soluonghienthi); // Tải lại bình luận
+                    } else if (data.thongbao != null) {
+                        $('.alert-login').text(data.thongbao).show();
+                        $(".alert-login").html('Vui lòng ' + '<a data-bs-toggle="modal" data-bs-target="#exampleModal">Đăng nhập</a>' + ' trước khi bình luận !');
                     }
                 },
                 error: function (error) {
@@ -622,11 +685,6 @@
                 }
             });
         });
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
         function loadLikesCount() {
             $.ajax({
                 type: "GET",
@@ -661,6 +719,29 @@
                 }
             });
         });
+        $('#loginsss').click(function () {
+            var taikhoanoremail = $('#exampleModal').find('.taikhoanoremail').val();
+            var matkhau = $('#exampleModal').find('.matkhau').val();
+            $.ajax({
+                type: 'POST',
+                url: '/dangnhap/DangNhapVaoHeThongs',
+                data: { taikhoanoremail: taikhoanoremail, matkhau: matkhau },
+                success: function (response) {
+                    if (response.success) {
+                        loadComments(soluonghienthi);
+                        loadLikesCount();
+                        $('.alert-login').hide();
+                        $('#exampleModal').modal('hide');
+                    } else {
+                        alert('Đăng nhập thất bại! Vui lòng kiểm tra lại tài khoản và mật khẩu.');
+                    }
+                },
+                error: function (error) {
+                    console.error('Lỗi đăng nhập:', error);
+                    alert('Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại sau.');
+                }
+            });
+        });
+
     });
 </script>
-

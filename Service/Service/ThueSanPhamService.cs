@@ -5,10 +5,43 @@ using Model.Models;
 using QuanLyKhachSan_MVC.NET.Repository;
 using System.Data.SqlClient;
 
-namespace  Service
+namespace Service
 {
     public class ThueSanPhamService : ThueSanPhamRepository
     {
+        public List<ThueSanPham> GetAllThueSanPham()
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<ThueSanPham> thueSanPhams = new List<ThueSanPham>();
+                connection.Open();
+                string sql = "SELECT * FROM ThueSanPham ";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ThueSanPham thueSanPham = new ThueSanPham()
+                            {
+                                id = (int)reader["id"],
+                                soluong = (int)reader["soluong"],
+                                idsanpham = (int)reader["idsanpham"],
+                                idnhanvien = (int)reader["idnhanvien"],
+                                iddatphong = (int)reader["iddatphong"],
+                                thanhtien = Convert.ToSingle(reader["thanhtien"]),
+                            };
+                            thueSanPhams.Add(thueSanPham);
+                        }
+                    }
+                }
+                return thueSanPhams;
+            }
+        }
+
+
+
+
         public ThueSanPham GetThueSanPhamByDatPhongAndSanPham(int iddatphong, int idsanpham)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
@@ -77,8 +110,9 @@ namespace  Service
                     command.Parameters.AddWithValue("@iddatphong", iddatphong);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-/*                        float tongtien = 0;
-*/                        while (reader.Read())
+                        /*                        float tongtien = 0;
+                        */
+                        while (reader.Read())
                         {
                             ThueSanPham thueSanPham = new ThueSanPham()
                             {
@@ -92,8 +126,9 @@ namespace  Service
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
                             };
                             thueSanPhams.Add(thueSanPham);
-/*                            tongtien += thueSanPham.thanhtien;
-*/                        }
+                            /*                            tongtien += thueSanPham.thanhtien;
+                            */
+                        }
                     }
                 }
                 return thueSanPhams;
