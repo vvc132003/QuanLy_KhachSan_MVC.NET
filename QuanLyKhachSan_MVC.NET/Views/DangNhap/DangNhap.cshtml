@@ -11,7 +11,9 @@
         <div class="w3l_grid">
             <form class="login-container" Action="/DangNhap/DangNhapVaoHeThong" method="post">
                 <input type="text" placeholder="Nhập tài khoản hoặc email" name="taikhoanoremail" required="">
-                <input type="password" placeholder="Mật kẩu" name="matkhau" required="">
+                <input type="password" class="matkhau" placeholder="Mật kẩu" name="matkhau" required="">
+                <input type="checkbox" id="checkmatkhau" onchange="togglePasswordVisibility()"> Xem mật khẩu
+                <br />
                 <input type="submit" value="Đăng nhập">
             </form>
             <div class="second-section w3_section">
@@ -41,3 +43,17 @@
         </div>
     </div>
 </div>
+<script>
+    function togglePasswordVisibility() {
+        var matkhauInputs = document.getElementsByClassName('matkhau');
+        var checkbox = document.getElementById('checkmatkhau');
+
+        for (var i = 0; i < matkhauInputs.length; i++) {
+            if (checkbox.checked) {
+                matkhauInputs[i].type = 'text';
+            } else {
+                matkhauInputs[i].type = 'password';
+            }
+        }
+    }
+</script>

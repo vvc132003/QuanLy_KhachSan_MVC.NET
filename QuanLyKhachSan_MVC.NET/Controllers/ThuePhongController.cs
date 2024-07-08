@@ -88,21 +88,21 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     Phong phong = phongService.GetPhongID(datPhong.idphong);
                     int idnd = HttpContext.Session.GetInt32("id").Value;
                     /// kiểm tra xem khách hàng đã tồn tại hay chưa
-                    KhachHang khachHangTonTai = khachHangService.GetKhachHangbyemail(khachHang.email);
+                    KhachHang khachHangByEmail  = khachHangService.GetKhachHangbyemail(khachHang.email);
                     ThoiGian thoiGian = thoiGianService.GetThoiGian(HttpContext.Session.GetInt32("idkhachsan").Value);
-                    if (khachHangTonTai != null)
+                    if (khachHangByEmail  != null)
                     {
 
-                        khachHangTonTai.cccd = khachHang.cccd;
-                        khachHangTonTai.sodienthoai = khachHang.cccd;
-                        khachHangTonTai.tinh = khachHang.tinh;
-                        khachHangTonTai.huyen = khachHang.huyen;
-                        khachHangTonTai.phuong = khachHang.phuong;
-                        khachHangService.CapNhatKhachHang(khachHangTonTai);
+                        khachHangByEmail .cccd = khachHang.cccd;
+                        khachHangByEmail .sodienthoai = khachHang.cccd;
+                        khachHangByEmail .tinh = khachHang.tinh;
+                        khachHangByEmail .huyen = khachHang.huyen;
+                        khachHangByEmail .phuong = khachHang.phuong;
+                        khachHangService.CapNhatKhachHang(khachHangByEmail );
                         if (nhanphong != null)
                         {
                             datPhong.idthoigian = thoiGian.id;
-                            datPhong.idkhachhang = khachHangTonTai.id;
+                            datPhong.idkhachhang = khachHangByEmail .id;
                             datPhong.loaidatphong = "đặt phòng đơn";
                             datPhong.trangthai = "đã đặt";
                             datPhong.ngaydat = DateTime.Now;
@@ -143,7 +143,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             nhanPhongService.ThemNhanPhong(nhanPhong);
                             phong.tinhtrangphong = "có khách";
                             phongService.CapNhatPhong(phong);
-                            int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
+                            int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangByEmail .id);
                             MaGiamGia guimamaGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
                             if (guimamaGiamgia != null)
                             {
@@ -204,7 +204,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         else
                         {
                             datPhong.idthoigian = thoiGian.id;
-                            datPhong.idkhachhang = khachHangTonTai.id;
+                            datPhong.idkhachhang = khachHangByEmail .id;
                             datPhong.loaidatphong = "đặt phòng đơn";
                             datPhong.trangthai = "đã đặt online";
                             datPhong.ngaydat = DateTime.Now;
@@ -221,7 +221,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             int idDatPhongThemVao = datPhongService.ThemDatPhong(datPhong);
                             phong.tinhtrangphong = "đã đặt";
                             phongService.CapNhatPhong(phong);
-                            int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
+                            int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangByEmail .id);
                             MaGiamGia maGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
                             if (maGiamgia != null)
                             {
@@ -440,18 +440,18 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     foreach (int idphong in idphongs)
                     {
-                        KhachHang khachHangTonTai = khachHangService.GetKhachHangbyemail(khachHang.email);
+                        KhachHang khachHangByEmail  = khachHangService.GetKhachHangbyemail(khachHang.email);
                         ThoiGian thoiGian = thoiGianService.GetThoiGian(idkhachsan);
-                        if (khachHangTonTai != null)
+                        if (khachHangByEmail  != null)
                         {
-                            khachHangTonTai.cccd = khachHang.cccd;
-                            khachHangTonTai.sodienthoai = khachHang.cccd;
-                            khachHangTonTai.tinh = khachHang.tinh;
-                            khachHangTonTai.huyen = khachHang.huyen;
-                            khachHangTonTai.phuong = khachHang.phuong;
-                            khachHangService.CapNhatKhachHang(khachHangTonTai);
+                            khachHangByEmail .cccd = khachHang.cccd;
+                            khachHangByEmail .sodienthoai = khachHang.cccd;
+                            khachHangByEmail .tinh = khachHang.tinh;
+                            khachHangByEmail .huyen = khachHang.huyen;
+                            khachHangByEmail .phuong = khachHang.phuong;
+                            khachHangService.CapNhatKhachHang(khachHangByEmail );
                             datPhong.idthoigian = thoiGian.id;
-                            datPhong.idkhachhang = khachHangTonTai.id;
+                            datPhong.idkhachhang = khachHangByEmail .id;
                             datPhong.loaidatphong = "đặt phòng theo đoàn";
                             datPhong.trangthai = "đã đặt";
                             datPhong.ngaydat = DateTime.Now;
@@ -472,7 +472,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                             Phong phong = phongService.GetPhongID(idphong);
                             phong.tinhtrangphong = "có khách";
                             phongService.CapNhatPhong(phong);
-                            int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
+                            int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangByEmail .id);
                             MaGiamGia guimaGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
                             if (guimaGiamgia != null)
                             {
@@ -681,17 +681,17 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             if (checktinhtrangphong.tinhtrangphong == "còn trống")
             {
                 /// kiểm tra xem khách hàng đã tồn tại hay chưa
-                KhachHang khachHangTonTai = khachHangService.GetKhachHangbyemail(khachHang.email);
+                KhachHang khachHangByEmail  = khachHangService.GetKhachHangbyemail(khachHang.email);
                 ThoiGian thoiGian = thoiGianService.GetThoiGian(idkhachsan);
-                if (khachHangTonTai != null)
+                if (khachHangByEmail  != null)
                 {
-                    khachHangTonTai.cccd = khachHang.cccd;
-                    khachHangTonTai.sodienthoai = khachHang.cccd;
+                    khachHangByEmail .cccd = khachHang.cccd;
+                    khachHangByEmail .sodienthoai = khachHang.cccd;
 
-                    khachHangService.CapNhatKhachHang(khachHangTonTai);
+                    khachHangService.CapNhatKhachHang(khachHangByEmail );
                     datPhong.idthoigian = thoiGian.id;
                     /// id khách hàng
-                    datPhong.idkhachhang = khachHangTonTai.id;
+                    datPhong.idkhachhang = khachHangByEmail .id;
                     datPhong.loaidatphong = "đặt phòng đơn";
                     datPhong.trangthai = "đã đặt online";
                     datPhong.ngaydat = DateTime.Now;
@@ -712,7 +712,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     phong.tinhtrangphong = "đã đặt";
                     phongService.CapNhatPhong(phong);
                     datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
-                    int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangTonTai.id);
+                    int soluongdatphongtoithieu = datPhongService.GetDatPhongCountByKhachHangId(khachHangByEmail .id);
                     MaGiamGia guimamaGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
                     if (guimamaGiamgia != null)
                     {

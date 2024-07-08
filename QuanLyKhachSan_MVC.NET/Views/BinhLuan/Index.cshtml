@@ -26,6 +26,12 @@
                             <br />
                             <ul class="nav justify-content-end">
                                 <li class="nav-item">
+                                    <a class="nav-link btn btn-danger me-2" id="deletebinhluan">
+                                        <i class="fas fa-trash"></i>
+                                        Xoá
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link btn btn-success me-2" href="/NhanVien/XuatEclcel">
                                         <i class="fas fa-file-excel"></i>
                                         Xuất excel
@@ -40,9 +46,17 @@
                             </ul>
                             <div class="card-body">
                                 <div class="table-responsive">
+                                    <div class="alert alert-login " style="display:none;">
+                                    </div>
+                                    <div class="alert alert-success" style="display: none;">
+                                        Bình luận đã được xoá thành công.
+                                    </div>
                                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
+                                                <th>
+                                                    <input type="checkbox" class="iddeletebinhluan" name="iddeletebinhluan">
+                                                </th>
                                                 <th>ID</th>
                                                 <th>Người tham gia</th>
                                                 <th>Nội dung bình luận</th>
@@ -62,6 +76,9 @@
                                                 {
                                                     var binhluan = modeldata.PagedBinhLuan.First();
                                                     <tr id="row-@count">
+                                                        <td>
+                                                            <input type="checkbox" class="idbinhluan" name="idbinhluan" data-comment-id="@binhluan.id">
+                                                        </td>
                                                         <td>@count</td>
                                                         @if (binhluan.loainguoithamgia.Equals("khachhang"))
                                                         {
@@ -90,7 +107,7 @@
                                                                 <p style="color: yellow;padding: 10px 10px;border-radius: 10%;">@binhluan.trangthai</p>
                                                             }
                                                         </td>
-                                                       
+
                                                         <td>
                                                             @if (binhluan.trangthai.Equals("Đã duyệt"))
                                                             { }
@@ -126,6 +143,23 @@
     </div>
 </div>
 <style>
+    .alert-success {
+        background-color: #d4edda; /* Màu nền xanh lá cây nhạt */
+        border-color: #c3e6cb; /* Màu viền */
+        color: #155724; /* Màu chữ */
+        padding: 10px;
+        display: none;
+        margin-top: 10px;
+    }
+
+    .alert-login {
+        background-color: #f8d7da; /* Màu nền đỏ nhạt */
+        border-color: #f5c6cb; /* Màu viền */
+        color: #721c24; /* Màu chữ */
+        padding: 10px;
+        display: none;
+        margin-top: 10px;
+    }
     /* Định dạng cho ô nội dung bình luận lớn hơn và có độ rộng tối đa */
     .large-cell {
         font-size: 16px; /* Kích thước chữ lớn hơn */
@@ -136,7 +170,7 @@
         white-space: nowrap; /* Ngăn không cho các từ xuống dòng */
     }
 </style>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -151,7 +185,7 @@
             "info": false,
             "autoWidth": false,
             "responsive": true,
-            "pageLength": 10,
+            "pageLength": 8,
             "lengthMenu": [5, 10, 25, 50, 100],
             "language": {
                 "paginate": {
@@ -189,3 +223,44 @@
         });
     </script>
 }
+
+<script>
+    $(document).ready(function () {
+        $('#deletebinhluan').on('click', function (e) {
+            e.preventDefault();
+
+            var selectedIds = [];
+            $('input.idbinhluan:checked').each(function () {
+                selectedIds.push($(this).data('comment-id'));
+            });
+
+            $.ajax({
+                url: '/binhluan/DeleteBinhLuan',
+                type: 'POST',
+                data: JSON.stringify(selectedIds),
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result.error) {
+                        $('.alert-login').text(result.message).show();
+                        setTimeout(function () {
+                            $('.alert-login').fadeOut('fast');
+                        }, 5000);
+                    } else {
+                        location.reload();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error deleting comment:', error);
+                    alert('Đã xảy ra lỗi khi xoá bình luận.');
+                }
+            });
+        });
+
+        if ('@TempData["xoabinhluan"]' === "success") {
+            $('.alert-success').show();
+            setTimeout(function () {
+                $('.alert-success').fadeOut('fast');
+            }, 5000);
+        }
+    });
+</script>

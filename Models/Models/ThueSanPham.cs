@@ -10,5 +10,6 @@
         public string image { get; set; }
         public int idnhanvien { get; set; }
         public int iddatphong { get; set; }
+        public DateTime ngaythue { get; set; }
     }
 }

@@ -8,9 +8,11 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
     public class KhachSanController : Controller
     {
         private readonly KhachSanService khachSanService;
-        public KhachSanController(KhachSanService khachSanServices)
+        private readonly ThoiGianService thoiGianService;
+        public KhachSanController(KhachSanService khachSanServices, ThoiGianService thoiGianService)
         {
             khachSanService = khachSanServices;
+            this.thoiGianService = thoiGianService;
         }
         public IActionResult Index(int? sotrang)
         {
@@ -29,11 +31,18 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
                     int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
                     PagedList.IPagedList<KhachSan> ipageKhachsan = khachsanlist.ToPagedList(validPageNumber, pageSize);
-                    Modeldata modeldata = new Modeldata()
+                    List<Modeldata> modeldatas = new List<Modeldata>();
+                    foreach (var khachsan in ipageKhachsan)
                     {
-                        PagedTKhachSan = ipageKhachsan,
-                    };
-                    return View(modeldata);
+                        ThoiGian thoiGian = thoiGianService.GetThoiGian(khachsan.id);
+                        Modeldata modeldata = new Modeldata()
+                        {
+                            PagedTKhachSan = new List<KhachSan> { khachsan }.ToPagedList(1, 1),
+                            thoigian = thoiGian,
+                        };
+                        modeldatas.Add(modeldata);
+                    }
+                    return View(modeldatas);
                 }
                 else
                 {
@@ -45,12 +54,26 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
-        public IActionResult ThemKhachSan(KhachSan khachSan)
+        public IActionResult ThemKhachSan(KhachSan khachSan, ThoiGian thoiGian)
         {
-            khachSan.sosao = 0;
-            khachSanService.ThemKhachSan(khachSan);
-            TempData["themthanhcong"] = "";
-            return RedirectToAction("Index", "KhachSan");
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int id = HttpContext.Session.GetInt32("id").Value;
+                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                ViewData["id"] = id;
+                ViewData["idkhachsan"] = idkhachsan;
+                thoiGian.idkhachsan = idkhachsan;
+                khachSan.sosao = 0;
+                khachSanService.ThemKhachSan(khachSan);
+                thoiGian.idkhachsan = idkhachsan;
+                thoiGianService.ThemThoiGian(thoiGian);
+                TempData["themthanhcong"] = "";
+                return RedirectToAction("Index", "KhachSan");
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
         }
     }
 }

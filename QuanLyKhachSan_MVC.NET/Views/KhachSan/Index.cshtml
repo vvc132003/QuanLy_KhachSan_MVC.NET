@@ -1,4 +1,4 @@
-﻿@model Model.Models.Modeldata
+﻿@model List<Model.Models.Modeldata>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel='stylesheet'
@@ -50,29 +50,48 @@
                                                 <th>Số điện thoại</th>
                                                 <th>Giấy phép kinh doanh</th>
                                                 <th>Ngày thành lập</th>
+                                                <th>Thời gian check_In</th>
+                                                <th>% Phụ thu check_In</th>
+                                                <th>Thời gian check_Out</th>
+                                                <th>% Phụ thu check_Out</th>
                                                 <th>Thao tác</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (Model.PagedTKhachSan != null && Model.PagedTKhachSan.Count > 0)
+                                            @if (Model != null && Model.Count > 0)
                                             {
                                                 int count = 1;
-                                                foreach (var khachsan in Model.PagedTKhachSan)
+                                                foreach (var modeldata in Model)
                                                 {
+                                                    var khachSan = modeldata.PagedTKhachSan.First();
                                                     <tr id="row-@count">
                                                         <td>@count</td>
-                                                        <td>@khachsan.tenkhachsan</td>
-                                                        <td>@khachsan.sosao</td>
-                                                        <td>@khachsan.diachi</td>
-                                                        <td>@khachsan.email</td>
-                                                        <td>@khachsan.sodienthoai</td>
-                                                        <td>@khachsan.giayphepkinhdoanh</td>
-                                                        <td>@khachsan.ngaythanhlap</td>
+                                                        <td>@khachSan.tenkhachsan</td>
+                                                        <td>@khachSan.sosao</td>
+                                                        <td>@khachSan.diachi</td>
+                                                        <td>@khachSan.email</td>
+                                                        <td>@khachSan.sodienthoai</td>
+                                                        <td>@khachSan.giayphepkinhdoanh</td>
+                                                        <td>@khachSan.ngaythanhlap.ToString("dd/MM/yyyy")</td>
+                                                        @if (modeldata.thoigian != null)
+                                                        {
+                                                            <td>@modeldata.thoigian.thoigiannhanphong.ToString("hh\\:mm")</td>
+                                                            <td>@modeldata.thoigian.phuthunhanphong</td>
+                                                            <td>@modeldata.thoigian.thoigianra.ToString("hh\\:mm")</td>
+                                                            <td>@modeldata.thoigian.phuthutraphong</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>Rỗng</td>
+                                                            <td>Rỗng</td>
+                                                            <td>Rỗng</td>
+                                                            <td>Rỗng</td>
+                                                        }
                                                         <td>
-                                                            <a href="/Tang//@khachsan.id" class="btn btn-danger" title="Xoá">
+                                                            <a href="/Tang//@khachSan.id" class="btn btn-danger" title="Xoá">
                                                                 <i class="fas fa-times-circle"></i>
                                                             </a>
-                                                            <a href="/KyLuat//@khachsan.id" class="btn btn-warning" title="Cập nhât">
+                                                            <a href="/KyLuat//@khachSan.id" class="btn btn-warning" title="Cập nhât">
                                                                 <i class="fas fa-check-circle"></i>
                                                             </a>
                                                         </td>
@@ -142,6 +161,26 @@
                         <div class="mb-3">
                             <label for="ngaythanhlap" class="form-label">Ngày thành lập:</label>
                             <input type="datetime-local" name="ngaythanhlap" id="ngaythanhlap" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="thoigiannhanphong" class="form-label">Thời gian checkIn:</label>
+                            <input type="time" name="thoigiannhanphong" id="thoigiannhanphong" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="phuthunhanphong" class="form-label">% Phụ thu checkIn:</label>
+                            <input type="number" name="phuthunhanphong" id="phuthunhanphong" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="thoigianra" class="form-label">Thời gian checkOut:</label>
+                            <input type="time" name="thoigianra" id="thoigianra" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="phuthutraphong" class="form-label">% Phụ thu checkOut:</label>
+                            <input type="number" name="phuthutraphong" id="phuthutraphong" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="mota" class="form-label">Mô tả:</label>
+                            <input type="text" name="mota" id="mota" class="form-control" />
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">

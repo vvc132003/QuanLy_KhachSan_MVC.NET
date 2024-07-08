@@ -78,6 +78,7 @@ namespace Model.Models
         public IPagedList<HuyDatPhong> PagedTHuyDatPhong { get; set; }
         public int TotalRentedQuantity { get; set; }
 
+        public float Tongdoanhthutungthang { get; set; }
 
     }
 }

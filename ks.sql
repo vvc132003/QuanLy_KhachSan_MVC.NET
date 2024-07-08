@@ -1,6 +1,6 @@
 ﻿create database QuanLyKhachSan;
 use QuanLyKhachSan
-
+select * from thuesanpham
 create table KhachSan
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -105,7 +105,6 @@ CREATE TABLE Likes
     FOREIGN KEY (idphong) REFERENCES Phong(id),
     FOREIGN KEY (idkhachhang) REFERENCES KhachHang(id)
 );
-select * from DatPhong
 
 CREATE TABLE BinhLuan (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -121,10 +120,6 @@ CREATE TABLE BinhLuan (
 	FOREIGN KEY (idphong) REFERENCES Phong(id),
 );
 
-select * from BinhLuan
-select * from nhanvien
-select * from khachhang
-drop table BinhLuan
 
 
 create table ChucVu
@@ -134,8 +129,7 @@ create table ChucVu
 );
 INSERT INTO ChucVu (tenchucvu)
 VALUES (N'Quản lý'),
-       (N'Nhân viên lễ tân'),
-       (N'Nhân viên buồng phòng');
+       (N'Nhân viên')
 
 
 create table NhanVien 
@@ -163,7 +157,6 @@ INSERT INTO NhanVien (hovaten, sodienthoai, tinh, huyen, phuong, taikhoan, matkh
 VALUES 
     (N'Võ Văn Chính', '0373449865', N'Quảng Trị', N'Triệu Phong', N'Triệu Đại', N'admin', 'AQAAAAIAAYagAAAAEAmxUAJDJ7mQ4uYsWq2JxL9y9d7lRRIpzCA1Rp9M3lDJh1oFRGvIXyx0wE6iy9WVeQ==', N'Hoạt động', 0, null, '123456789', 'Nam', '2003-03-01', 1, 1);
 
-	select * from NhanVien
 CREATE TABLE CuocHoiThoai (
     id INT IDENTITY(1,1) PRIMARY KEY,
     tieude NVARCHAR(40),
@@ -386,6 +379,7 @@ create table ThueSanPham
     idsanpham int null,
     idnhanvien int null,
     iddatphong int null,
+	ngaythue DATETIME DEFAULT GETDATE(),
     foreign key(idsanpham) references SanPham(id),
     foreign key(idnhanvien) references NhanVien(id),
     foreign key(iddatphong) references DatPhong(id)

@@ -239,7 +239,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
                 nhanVienService.Xuatexcel();
-                return RedirectToAction("Index", "NhanVien");
+                return RedirectToAction("index", "nhanvien");
             }
             else
             {

@@ -14,17 +14,38 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 
         public IActionResult Index()
         {
-            List<GiamGiaNgayLe> giamGiaNgayLes = giamGiaNgayLeService.GetAllGiamGiaNgayLe();
-            List<Modeldata> modeldatas = new List<Modeldata>();
-            foreach (var giamgiangayle in giamGiaNgayLes)
+            if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                Modeldata modeldata = new Modeldata()
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    giamGiaNgayle = giamgiangayle,
-                };
-                modeldatas.Add(modeldata);
+                    int idnv = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    ViewData["id"] = idnv;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    List<GiamGiaNgayLe> giamGiaNgayLes = giamGiaNgayLeService.GetAllGiamGiaNgayLe();
+                    List<Modeldata> modeldatas = new List<Modeldata>();
+                    foreach (var giamgiangayle in giamGiaNgayLes)
+                    {
+                        Modeldata modeldata = new Modeldata()
+                        {
+                            giamGiaNgayle = giamgiangayle,
+                        };
+                        modeldatas.Add(modeldata);
+                    }
+                    return View(modeldatas);
+                }
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
-            return View(modeldatas);
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
         }
     }
 }

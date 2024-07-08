@@ -99,6 +99,51 @@ namespace Service
 
             return lichSuThanhToanList;
         }
+
+        public List<LichSuThanhToan> GetLichSuThanhToanYear(int year)
+        {
+            List<LichSuThanhToan> lichSuThanhToanList = new List<LichSuThanhToan>();
+
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+
+                string query = "SELECT MONTH(ngaythanhtoan) as month, SUM(sotienthanhtoan) as total " +
+                               "FROM LichSuThanhToan " +
+                               "WHERE YEAR(ngaythanhtoan) = @Year " +  
+                               "GROUP BY MONTH(ngaythanhtoan) " +
+                               "ORDER BY MONTH(ngaythanhtoan)";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Year", year); // Add parameter for year
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int month = Convert.ToInt32(reader["month"]);
+                            float total = Convert.ToSingle(reader["total"]);
+                            // Create a DateTime object for the month and year (assuming day as 1)
+                            DateTime date = new DateTime(year, month, 1);
+
+                            LichSuThanhToan lichSuThanhToan = new LichSuThanhToan
+                            {
+                                ngaythanhtoan = date,
+                                sotienthanhtoan = total,
+                            };
+
+                            lichSuThanhToanList.Add(lichSuThanhToan);
+                        }
+                    }
+                }
+            }
+
+            return lichSuThanhToanList;
+        }
+
+
+
         private static int GenerateRandomInvoiceNumber()
         {
             // Generate a random invoice number between 1 and 1000 (adjust as needed)

@@ -20,6 +20,7 @@
                         <select id="tinh" name="tinh" class="form-control">
                             <option value="" selected>Chọn tỉnh thành</option>
                         </select>
+                        <input type="text" placeholder="Số điện thoại" name="sodienthoai" required="">
                     </div>
                     <div class="col-6">
                         <select id="huyen" name="huyen" class="form-control">
@@ -29,10 +30,12 @@
                             <option value="" selected>Chọn phường xã</option>
                         </select>
                         <input type="text" placeholder="Tài khoản" name="taikhoan" required="">
-                        <input type="password" placeholder="Mật kẩu" name="matkhau" required="">
+                        <input type="password" class="matkhau" placeholder="Mật kẩu" name="matkhau" required="">
+                        <input type="password" class="matkhau" placeholder="Nhập lại mật kẩu" name="checkmatkhau" required="">
+                        <input type="checkbox" id="checkmatkhau" onchange="togglePasswordVisibility()"> Xem mật khẩu
                     </div>
-                    <input type="text" placeholder="Số điện thoại" name="sodienthoai" required="">
                 </div>
+                <br />
                 <input type="submit" value="Đăng ký">
             </form>
             <div class="second-section w3_section">
@@ -114,5 +117,19 @@
                 }
             }
         };
+    }
+</script>
+<script>
+    function togglePasswordVisibility() {
+        var matkhauInputs = document.getElementsByClassName('matkhau');
+        var checkbox = document.getElementById('checkmatkhau');
+
+        for (var i = 0; i < matkhauInputs.length; i++) {
+            if (checkbox.checked) {
+                matkhauInputs[i].type = 'text';
+            } else {
+                matkhauInputs[i].type = 'password';
+            }
+        }
     }
 </script>

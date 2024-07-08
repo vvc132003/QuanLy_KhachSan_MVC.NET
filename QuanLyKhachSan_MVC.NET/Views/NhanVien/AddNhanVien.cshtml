@@ -79,8 +79,20 @@
                                             <div class="mb-3">
                                                 <label for="matkhau" class="form-label">
                                                     Mật khẩu:
-                                                </label> <input type="password" class="form-control" id="matkhau" name="matkhau">
+                                                </label>
+                                                <input type="password" class="form-control" id="matkhau" name="matkhau">
                                             </div>
+                                            <input type="checkbox" id="checkmatkhau" onchange="togglePasswordVisibility()"> Xem mật khẩu
+                                        </div>
+                                        <style>
+                                            #checkmatkhau {
+                                                transform: scale(1.5); /* Increase the size */
+                                                /* Optional styles for appearance */
+                                                margin-right: 10px; /* Adds space to the right */
+                                            }
+
+                                        </style>
+                                        <div class="col-6">
                                             <div class="mb-3">
                                                 <label for="gioitinh" class="form-label">Gioi tính:</label>
                                                 <select id="gioitinh" name="gioitinh" class="form-control">
@@ -88,8 +100,6 @@
                                                     <option value="Nữ" selected>Nữ</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-6">
                                             <div class="mb-3">
                                                 <label for="loaihopdong" class="form-label">
                                                     Loại hợp đồng:
@@ -271,4 +281,15 @@
             thongBaoElement.classList.add('error');
         }
     });
+</script>
+<script>
+    function togglePasswordVisibility() {
+        var matkhauInputs = document.getElementById('matkhau');
+        var checkbox = document.getElementById('checkmatkhau');
+        if (checkbox.checked) {
+            matkhauInputs.type = 'text';
+        } else {
+            matkhauInputs.type = 'password';
+        }
+    }
 </script>

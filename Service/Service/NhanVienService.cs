@@ -309,7 +309,7 @@ namespace Service
                 }
             }
         }
-        public NhanVien NhanVienTonTai(string taikhoan)
+        public NhanVien NhanVienByTaiKhoan(string taikhoan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
@@ -476,7 +476,30 @@ namespace Service
             {
                 workbook.Write(file);
             }
-            GuiEmail(filePath);
+            string emailnguoigui = "vvc132003@gmail.com";
+            string matkhau = "bzcaumaekzuvwlia";
+            string emailnguoinhan = "vvc132003@gmail.com";
+            using (MailMessage message = new MailMessage(emailnguoigui, emailnguoinhan))
+            {
+                message.Subject = "Gửi file excel nhân viên thành công";
+                Attachment attachment = new Attachment(filePath);
+                message.Attachments.Add(attachment);
+
+                using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtpClient.UseDefaultCredentials = false;
+                    smtpClient.Credentials = new NetworkCredential(emailnguoigui, matkhau);
+                    smtpClient.EnableSsl = true;
+                    smtpClient.Send(message);
+                }
+                attachment.Dispose();
+                /*                File.Delete(filePath);
+                */
+            }
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = filePath;
+            startInfo.UseShellExecute = true;
+            Process.Start(startInfo);
         }
         public void GuiEmail(string filePath)
         {

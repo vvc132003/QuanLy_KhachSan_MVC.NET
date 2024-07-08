@@ -30,6 +30,8 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 iddatphong = (int)reader["iddatphong"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
+                                ngaythue = (DateTime)reader["ngayThue"]
+
                             };
                             thueSanPhams.Add(thueSanPham);
                         }
@@ -39,6 +41,39 @@ namespace Service
             }
         }
 
+        public List<ThueSanPham> GetThueSanPhamByDate(DateTime startDate, DateTime endDate)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<ThueSanPham> thueSanPhams = new List<ThueSanPham>();
+                connection.Open();
+                string sql = "SELECT * FROM ThueSanPham WHERE ngayThue >= @startDate AND ngayThue <= @endDate";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@startDate", startDate);
+                    command.Parameters.AddWithValue("@endDate", endDate);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ThueSanPham thueSanPham = new ThueSanPham()
+                            {
+                                id = (int)reader["id"],
+                                soluong = (int)reader["soluong"],
+                                idsanpham = (int)reader["idsanpham"],
+                                idnhanvien = (int)reader["idnhanvien"],
+                                iddatphong = (int)reader["iddatphong"],
+                                thanhtien = Convert.ToSingle(reader["thanhtien"]),
+                                ngaythue = (DateTime)reader["ngayThue"]
+                            };
+                            thueSanPhams.Add(thueSanPham);
+                        }
+                    }
+                }
+                return thueSanPhams;
+            }
+        }
 
 
 
@@ -64,6 +99,7 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
                                 iddatphong = (int)reader["iddatphong"],
+                                ngaythue = (DateTime)reader["ngayThue"]
 
                             };
                             return thueSanPham;
@@ -124,10 +160,9 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 iddatphong = (int)reader["iddatphong"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
+                                ngaythue = (DateTime)reader["ngayThue"]
                             };
                             thueSanPhams.Add(thueSanPham);
-                            /*                            tongtien += thueSanPham.thanhtien;
-                            */
                         }
                     }
                 }
@@ -158,6 +193,8 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 iddatphong = (int)reader["iddatphong"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
+                                ngaythue = (DateTime)reader["ngayThue"]
+
                             };
                             thueSanPhams.Add(thueSanPham);
 
@@ -189,6 +226,8 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
                                 iddatphong = (int)reader["iddatphong"],
+                                ngaythue = (DateTime)reader["ngayThue"]
+
                             };
                             return thueSanPham;
                         }

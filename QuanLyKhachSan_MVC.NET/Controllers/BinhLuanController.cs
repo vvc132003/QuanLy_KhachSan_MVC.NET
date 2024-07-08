@@ -274,5 +274,24 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             binhLuanService.UpdateBinhLuan(binhLuan);
             return Ok();
         }
+
+        public IActionResult DeleteBinhLuan([FromBody] List<int> idbinhluan)
+        {
+            if (idbinhluan != null && idbinhluan.Any())
+            {
+                foreach (int id in idbinhluan)
+                {
+                    binhLuanService.DeleteBinhLuan(id);
+                }
+                TempData["xoabinhluan"] = "success";
+                return Json(new { error = false });
+            }
+            else
+            {
+                return Json(new { error = true, message = "Vui lòng chọn bình luận để xoá!" });
+            }
+        }
+
+
     }
 }

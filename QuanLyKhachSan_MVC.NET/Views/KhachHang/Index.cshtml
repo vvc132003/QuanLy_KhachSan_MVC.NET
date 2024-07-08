@@ -27,6 +27,12 @@
                             <br />
                             <ul class="nav justify-content-end">
                                 <li class="nav-item">
+                                    <a class="nav-link btn btn-danger me-2" style="color:white;" id="deletebinhluan">
+                                        <i class="fas fa-trash"></i>
+                                        Xoá
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link btn btn-success me-2" href="#">
                                         <i class="fas fa-file-excel"></i> Xuất excel
                                     </a>
@@ -102,9 +108,9 @@
     $(document).ready(function () {
         $('#example').DataTable({
             "paging": true,
-            "lengthChange": true,
-            "searching": false,
-            "ordering": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
             "info": false,
             "autoWidth": false,
             "responsive": true,
@@ -114,7 +120,8 @@
                 "paginate": {
                     "next": '<i class="fas fa-chevron-right"></i>',
                     "previous": '<i class="fas fa-chevron-left"></i>'
-                }
+                },
+                "search": "Tìm kiếm:",
             }
         });
     });

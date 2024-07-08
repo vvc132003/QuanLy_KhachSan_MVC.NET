@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ILBT+GajHoH5KCfX7eDMCFB7vDOC+FerfGHWkW/5a5M=",
+  "Hash": "AmkQssh68OgUDp8sHdK7/H9G7+ui2pDWIzsFVss7gcw=",
   "Source": "QuanLyKhachSan_MVC.NET",
   "BasePath": "_content/QuanLyKhachSan_MVC.NET",
   "Mode": "Default",
@@ -2259,6 +2259,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\hover-style.css"
+    },
+    {
+      "Identity": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\kaiadmin.css",
+      "SourceId": "QuanLyKhachSan_MVC.NET",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\",
+      "BasePath": "_content/QuanLyKhachSan_MVC.NET",
+      "RelativePath": "css/kaiadmin.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\kaiadmin.css"
     },
     {
       "Identity": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\morris.css",
