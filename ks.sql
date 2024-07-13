@@ -365,6 +365,20 @@ create table GiamGiaNgayLe
 	dieuchinhgiasanpham DECIMAL(18, 2)
 );
 
+create table LoaiDichVu
+(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+	tenloaidichvu nvarchar(255) null,
+	idkhachsan int null,
+    FOREIGN KEY (idkhachsan) REFERENCES KhachSan(id)
+)
+
+INSERT INTO LoaiDichVu (tenloaidichvu, idkhachsan) VALUES (N'Dịch vụ giặt là', 1);
+INSERT INTO LoaiDichVu (tenloaidichvu, idkhachsan) VALUES (N'Dịch vụ đưa đón sân bay', 1);
+INSERT INTO LoaiDichVu (tenloaidichvu, idkhachsan) VALUES (N'Dịch vụ ăn uống', 1);
+INSERT INTO LoaiDichVu (tenloaidichvu, idkhachsan) VALUES (N'Dịch vụ spa', 1);
+INSERT INTO LoaiDichVu (tenloaidichvu, idkhachsan) VALUES (N'Dịch vụ phòng', 1);
+
 
 create table SanPham
 (
@@ -375,14 +389,10 @@ create table SanPham
     soluongcon int null,
     trangthai nvarchar(255) null,
     image text null,
-	idkhachsan int null,
-    FOREIGN KEY (idkhachsan) REFERENCES KhachSan(id)
+	idloaidichvu int null,
+    FOREIGN KEY (idloaidichvu) REFERENCES LoaiDichVu(id)
 );
-INSERT INTO SanPham (tensanpham, mota, giaban, soluongcon, trangthai, image, idkhachsan)
-VALUES
-(N'Gà quay', N'Description for Product A', 25000, 100, N'còn bán', 'https://i-giadinh.vnecdn.net/2022/02/11/Buoc-8-8-4440-1644565411.jpg', 1),
-(N'Mì xào lòng bò', N'Description for Product B',30000, 100, N'còn bán', 'https://cdn.tgdd.vn/2021/03/CookRecipe/Avatar/mi-xao-trung-rau-cu-nam-thumbnail.jpg', 1),
-(N'Coca', N'Description for Product C', 18000, 120, N'còn bán', 'https://songseafoodgrill.vn/wp-content/uploads/2022/03/Coca-2.png', 1);
+
 create table ThueSanPham
 (
     id INT IDENTITY(1,1) PRIMARY KEY,

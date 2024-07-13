@@ -213,11 +213,9 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
             if (startDate.HasValue && endDate.HasValue && idkhachsan > 0)
             {
                 List<Phong> phongs = phongService.GetAllPhongIDKhachSan(idkhachsan);
-
                 foreach (var phong in phongs)
                 {
                     List<DatPhong> datPhongs = datPhongService.GetAllDatPhongbyidphong(phong.id);
-
                     foreach (var datPhong in datPhongs)
                     {
                         List<ThueSanPham> thueSanPhamsForPhong = thueSanPhamService.GetThueSanPhamByDatebyidddatphong(startDate.Value, endDate.Value, datPhong.id);

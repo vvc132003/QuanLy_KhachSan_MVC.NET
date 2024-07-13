@@ -57,13 +57,13 @@
                                         </tbody>
                                     </table>
                                     <hr />
-                                    <div class="text-bg-success p-2">Sản phẩm được thuê</div>
+                                    <div class="text-bg-success p-2">Dịch vụ thuê</div>
                                     <table class="table">
                                         <thead>
                                             <tr>
                                                 <th>Số lượng thuê</th>
                                                 <th>Thành tiền</th>
-                                                <th>Tên Sản phẩm</th>
+                                                <th>Tên dịch vụ</th>
                                                 <th>Ảnh</th>
                                                 <th>Thao tác</th>
                                             </tr>
@@ -219,33 +219,37 @@
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="text-bg-success p-2">Sản phẩm</div>
+                                    <div class="text-bg-success p-2">Dịch vụ</div>
+                                    <br />
+                                    <ul class="nav justify-content-end">
+                                        <li class="nav-item">
+                                            <select id="idloaidichvu" name="idloaidichvu" class="form-control">
+                                                @if (Model[0].loaiDichVus != null && Model[0].loaiDichVus.Count > 0)
+                                                {
+                                                    <option>Loại dịch vụ</option>
+                                                    foreach (var loaiDichVu in Model[0].loaiDichVus)
+                                                    {
+                                                        <option value="@loaiDichVu.id">@loaiDichVu.tenloaidichvu</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <option value="" selected>Không có dữ liệu</option>
+                                                }
+                                            </select>
+                                        </li>
+                                    </ul>
                                     <br />
                                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Tên sản phẩm</th>
-                                                <th>Số lượng còn</th>
+                                                <th>Tên dịch vụ</th>
                                                 <th>Gía bán</th>
                                                 <th>Ảnh</th>
                                                 <th>Thao tác</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var sanpham in Model[0].PagedTSanPham)
-                                            {
-                                                <tr>
-                                                    <td>@sanpham.tensanpham</td>
-                                                    <td>@sanpham.soluongcon</td>
-                                                    <td>@string.Format("{0:N0} VNĐ", @sanpham.giaban)</td>
-                                                    <td><img src="@sanpham.image" width="50px" height="50px" alt=""></td>
-                                                    <td>
-                                                        <a href="/admin/ThueSanPham/ThueSanPham?idsp=@sanpham.id&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
-                                                            <i class="fas fa-plus"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            }
                                         </tbody>
                                     </table>
                                 </div>
@@ -321,24 +325,46 @@
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
+    console.log("id phòng: @Model[0].datPhong.idphong");
+    console.log("id đặt phòng: @Model[0].datPhong.id");
+
     $(document).ready(function () {
-        $('#example').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": true,
-            "ordering": false,
-            "info": false,
-            "autoWidth": false,
-            "responsive": true,
-            "pageLength": 10,
-            "lengthMenu": [5, 10, 25, 50, 100],
-            "language": {
-                "paginate": {
-                    "next": '<i class="fas fa-chevron-right"></i>',
-                    "previous": '<i class="fas fa-chevron-left"></i>'
+      
+        function Dasachsanpham(idloaidichvu) {
+            $.ajax({
+                url: '/admin/ThuePhong/Dasachsanpham',
+                method: 'GET',
+                data: { idloaidichvu: idloaidichvu },
+                success: function (data) {
+                    console.log(data.pagedTSanPham);
+
+                    $('#example tbody').empty();
+                    data.pagedTSanPham.forEach(function (item) {
+                        var productHtml = `
+                                <tr>
+                                    <td>${item.tensanpham}</td>
+                                    <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
+                                    <td><img src="${item.image}" width="50px" height="50px" alt=""></td>
+                                    <td>
+                                        <a href="/admin/ThueSanPham/ThueSanPham?idsp=${item.id}&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
+                                            <i class="fas fa-plus"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            `;
+                        $('#example tbody').append(productHtml);
+                    });
                 },
-                "search": "Tìm kiếm:",
-            }
+                error: function (err) {
+                    console.error('Error fetching products:', err);
+                }
+            });
+        }
+
+        Dasachsanpham();
+        $('#idloaidichvu').change(function () {
+            var idloaidichvu = $(this).val(); // Get selected value
+            Dasachsanpham(idloaidichvu); // Call Dasachsanpham function with selected idloaidichvu
         });
     });
 </script>

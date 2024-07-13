@@ -1,0 +1,166 @@
+﻿@model List<Model.Models.Modeldata>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+<link href="~/content/static/morris.css" rel="stylesheet" />
+<link href="~/content/static/c3.min.css" rel="stylesheet" />
+<link href="~/content/static/style.css" rel="stylesheet" />
+<link href="~/content/static/dashboard1.css" rel="stylesheet" />
+<link href="~/content/static/home.css" rel="stylesheet" />
+<link href="~/css/site.css" rel="stylesheet" />
+@await Html.PartialAsync("~/Areas/admin/Views/layout/logo.cshtml")
+
+<div class="skin-default-dark fixed-layout">
+    <div id="main-wrapper">
+        @await Html.PartialAsync("~/Areas/admin/Views/layout/navbar.cshtml")
+        @await Html.PartialAsync("~/Areas/admin/Views/layout/header.cshtml")
+        <br />
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <br />
+                            <ul class="nav justify-content-end">
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-success me-2" href="/NhanVien/XuatEclcel">
+                                        <i class="fas fa-file-excel"></i>
+                                        Xuất excel
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-primary me-2" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <i class="fas fa-plus"></i>
+                                        Thêm loại dịch vụ
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Loại dịch vụ</th>
+                                                <th>Khách sạn</th>
+                                                <th>Thao tác</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                int count = 1;
+                                                foreach (var modeldata in Model)
+                                                {
+                                                    <tr id="row-@count">
+                                                        <td>@count</td>
+                                                        <td>@modeldata.loaiDichVu.tenloaidichvu</td>
+                                                        <td>@modeldata.khachSan.tenkhachsan</td>
+                                                        <td>
+                                                            <a href="" class="btn btn-danger" title="Xoá">
+                                                                <i class="fas fa-times-circle"></i>
+                                                            </a>
+                                                            <a href="" class="btn btn-warning" title="Cập nhật">
+                                                                <i class="fas fa-check-circle"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    count++;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="12">Không có nhân viên nào!</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     data-bs-backdrop="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-left">
+                <div class="text-bg-success p-2">Thêm loại dịch vụ</div>
+                <div class="border border-secondary-subtle" style="padding:10px 20px">
+                    <form method="post" Action="/admin/loaidichvu/themloaidichvu">
+                        <div class="mb-3">
+                            <label for="tenloaidichvu" class="form-label">Loại dịch vụ:</label>
+                            <input type="text" name="tenloaidichvu" id="tenloaidichvu" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="idkhachsan" class="form-label">Khách sạn:</label>
+                            <select id="idkhachsan" name="idkhachsan" class="form-control">
+                                @if (Model[0].listKhachSan != null && Model[0].listKhachSan.Count > 0)
+                                {
+                                    foreach (var khachsan in Model[0].listKhachSan)
+                                    {
+                                        <option value="@khachsan.id">@khachsan.tenkhachsan</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="" selected>Không có dữ liệu</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">
+                                Huỷ
+                            </button>
+                            <button type="submit" class="btn btn-primary custom-button">
+                                <i class="fas fa-save"></i> Lưu
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
+            "info": false,
+            "autoWidth": false,
+            "responsive": true,
+            "pageLength": 10,
+            "lengthMenu": [5, 10, 25, 50, 100],
+            "language": {
+                "paginate": {
+                    "next": '<i class="fas fa-chevron-right"></i>',
+                    "previous": '<i class="fas fa-chevron-left"></i>'
+                },
+                "search": "Tìm kiếm:",
+            }
+        });
+    });
+</script>
+

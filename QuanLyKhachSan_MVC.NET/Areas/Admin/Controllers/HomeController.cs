@@ -85,12 +85,12 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 {
                     List<ThueSanPham> thueSanPhams = thueSanPhamService.GetAllThueSanPhamIDSanPham(sanpham.id);
                     int totalRentedQuantity = thueSanPhams.Sum(soluong => soluong.soluong);
-                    KhachSan khachSan = khachSanService.GetKhachSanById(sanpham.idkhachsan);
-                    Modeldata modeldata = new Modeldata()
+/*                    KhachSan khachSan = khachSanService.GetKhachSanById(sanpham.idkhachsan);
+*/                    Modeldata modeldata = new Modeldata()
                     {
                         sanPham = sanpham,
-                        khachSan = khachSan,
-                        TotalRentedQuantity = totalRentedQuantity,
+/*                        khachSan = khachSan,
+*/                        TotalRentedQuantity = totalRentedQuantity,
                     };
                     modeldatalist.Add(modeldata);
                 }

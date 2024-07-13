@@ -1,4 +1,4 @@
-﻿@model Tuple<List<Model.Models.Modeldata>, List<Model.Models.KhachSan>>
+﻿@model Tuple<List<Model.Models.Modeldata>, List<Model.Models.LoaiDichVu>>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel='stylesheet'
@@ -44,10 +44,11 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Khách sạn</th>
                                                 <th>Tên sản phẩm</th>
                                                 <th>Mô tả</th>
                                                 <th>Gía bán</th>
-                                                <th>Khách sạn</th>
+                                                <th>Loại dịch vụ</th>
                                                 <th>Số lượng còn</th>
                                                 <th>Ảnh</th>
                                                 <th>Trạng thái</th>
@@ -63,10 +64,11 @@
                                                     var sanPham = modeldata.PagedTSanPham.First();
                                                     <tr id="row-@count">
                                                         <td>@count</td>
+                                                        <td>@modeldata.khachSan.tenkhachsan</td>
                                                         <td>@sanPham.tensanpham</td>
                                                         <td>@sanPham.mota</td>
                                                         <td>@string.Format("{0:N0} VNĐ", @sanPham.giaban)</td>
-                                                        <td>@modeldata.khachSan.tenkhachsan</td>
+                                                        <td>@modeldata.loaiDichVu.tenloaidichvu</td>
                                                         <td>@sanPham.soluongcon</td>
                                                         <td>
                                                             <img src="@sanPham.image" width="50px" height="50px" alt="">
@@ -132,13 +134,13 @@
                             <input type="text" name="image" id="image" class="form-control" />
                         </div>
                         <div class="mb-3">
-                            <label for="idkhachsan" class="form-label">Khách sạn:</label>
-                            <select id="idkhachsan" name="idkhachsan" class="form-control">
+                            <label for="idloaidichvu" class="form-label">Khách sạn:</label>
+                            <select id="idloaidichvu" name="idloaidichvu" class="form-control">
                                 @if (Model.Item2 != null && Model.Item2.Count > 0)
                                 {
-                                    foreach (var khachSan in Model.Item2)
+                                    foreach (var loaiDichVu in Model.Item2)
                                     {
-                                        <option value="@khachSan.id">@khachSan.tenkhachsan</option>
+                                        <option value="@loaiDichVu.id">@loaiDichVu.tenloaidichvu</option>
                                     }
                                 }
                                 else

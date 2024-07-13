@@ -89,6 +89,10 @@ namespace Model.Models
         public IPagedList<LikesBinhLuan> likesBinhLuanspage { get; set; }
 
 
+        public LoaiDichVu loaiDichVu { get; set; }
+        public List<LoaiDichVu> loaiDichVus { get; set; }
+        public IPagedList<LoaiDichVu> loaiDichVuspage { get; set; }
+
         public int TotalRentedQuantity { get; set; }
 
         public float Tongdoanhthutungthang { get; set; }

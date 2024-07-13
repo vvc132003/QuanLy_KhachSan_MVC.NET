@@ -44,6 +44,44 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             this.thueSanPhamService = thueSanPhamService;
             this.khachSanService = khachSanService;
         }
+        public IActionResult DanhSachPhong()
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
+                {
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    List<Phong> phongList = phongService.GetAllPhong();
+                    List<Modeldata> modeldatas = new List<Modeldata>();
+                    foreach (var phong in phongList)
+                    {
+                        KhachSan khachSan = khachSanService.GetKhachSanById(phong.idkhachsan);
+                        Tang tang = tangService.GetTangID(phong.idtang);
+                        Modeldata modeldata = new Modeldata()
+                        {
+                            phong = phong,
+                            khachSan = khachSan,
+                            tang = tang,
+                        };
+                        modeldatas.Add(modeldata);
+                    }
+                    return View(modeldatas);
+                }
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
+        }
         public IActionResult Index(string loaiphong)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
@@ -57,10 +95,10 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
 
-
                 List<Phong> soluongphongtrangthai = phongService.GetAllPhongByIdKhachSan(idkhachsan);
                 foreach (var phong in soluongphongtrangthai)
                 {
+
                     if (phong.tinhtrangphong.Equals("còn trống"))
                     {
                         int slphongtrong = soluongphongtrangthai.Count;

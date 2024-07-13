@@ -2,6 +2,7 @@
 using Model.Models;
 using PagedList;
 using Service;
+using Service.Service;
 
 namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
 {
@@ -10,11 +11,13 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
     {
         private readonly SanPhamService sanPhamService;
         private readonly KhachSanService khachSanService;
+        private readonly LoaiDichDichVuService loaiDichDichVuService;
 
-        public SanPhamController(SanPhamService sanPhamServices, KhachSanService khachSanService)
+        public SanPhamController(SanPhamService sanPhamServices, KhachSanService khachSanService, LoaiDichDichVuService loaiDichDichVuService)
         {
             sanPhamService = sanPhamServices;
             this.khachSanService = khachSanService;
+            this.loaiDichDichVuService = loaiDichDichVuService;
         }
         public IActionResult Index(int? sotrang)
         {
@@ -35,19 +38,21 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
                     int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
                     PagedList.IPagedList<SanPham> ipagesanPhams = sanphams.ToPagedList(validPageNumber, pageSize);
-                    List<KhachSan> khachSans = khachSanService.GetAllKhachSan();
+                    List<LoaiDichVu> loaiDichVus = loaiDichDichVuService.LayTatCaLoaiDichVu();
                     List<Modeldata> modeldatalist = new List<Modeldata>();
                     foreach (var sanPham in ipagesanPhams)
                     {
-                        KhachSan khachSan = khachSanService.GetKhachSanById(sanPham.idkhachsan);
+                        LoaiDichVu loaiDichVu = loaiDichDichVuService.GetLoaiDichVuById(sanPham.idloaidichvu);
+                        KhachSan khachSan = khachSanService.GetKhachSanById(loaiDichVu.idkhachsan);
                         Modeldata modeldata = new Modeldata
                         {
                             PagedTSanPham = new List<SanPham> { sanPham }.ToPagedList(1, 1),
+                            loaiDichVu = loaiDichVu,
                             khachSan = khachSan,
                         };
                         modeldatalist.Add(modeldata);
                     }
-                    return View(new Tuple<List<Modeldata>, List<KhachSan>>(modeldatalist, khachSans));
+                    return View(new Tuple<List<Modeldata>, List<LoaiDichVu>>(modeldatalist, loaiDichVus));
                 }
                 else
                 {

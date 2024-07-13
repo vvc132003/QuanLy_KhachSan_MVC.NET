@@ -50,7 +50,7 @@ namespace Service
                                 image = reader["image"].ToString(),
                                 trangthai = reader["trangthai"].ToString(),
                                 giaban = Convert.ToSingle(reader["giaban"]),
-                                idkhachsan = (int)reader["idkhachsan"],
+                                idloaidichvu = (int)reader["idloaidichvu"],
 
                             };
                             sanPhams.Add(sanPham);
@@ -60,16 +60,16 @@ namespace Service
                 return sanPhams;
             }
         }
-        public List<SanPham> GetAllSanPhamIDKhachSan(int idkhachsan)
+        public List<SanPham> GetAllSanPhamIDLoaidichvu(int idloaidichvu)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 List<SanPham> sanPhams = new List<SanPham>();
                 connection.Open();
-                string sql = "SELECT * FROM SanPham where idkhachsan=@idkhachsan ";
+                string sql = "SELECT * FROM SanPham where idloaidichvu=@idloaidichvu ";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue("@idkhachsan", idkhachsan);
+                    command.Parameters.AddWithValue("@idloaidichvu", idloaidichvu);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -131,8 +131,8 @@ namespace Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string sql = "INSERT INTO SanPham (tensanpham, mota,giaban , soluongcon, image, trangthai,idkhachsan) " +
-                                     " VALUES (@tensanpham, @mota,@giaban,  @soluongcon, @image, @trangthai,@idkhachsan)";
+                string sql = "INSERT INTO SanPham (tensanpham, mota,giaban , soluongcon, image, trangthai,idloaidichvu) " +
+                                     " VALUES (@tensanpham, @mota,@giaban,  @soluongcon, @image, @trangthai,@idloaidichvu)";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@tensanpham", sanPham.tensanpham);
@@ -141,7 +141,7 @@ namespace Service
                     command.Parameters.AddWithValue("@soluongcon", sanPham.soluongcon);
                     command.Parameters.AddWithValue("@image", sanPham.image);
                     command.Parameters.AddWithValue("@trangthai", sanPham.trangthai);
-                    command.Parameters.AddWithValue("@idkhachsan", sanPham.idkhachsan);
+                    command.Parameters.AddWithValue("@idloaidichvu", sanPham.idloaidichvu);
                     command.ExecuteNonQuery();
                 }
             }

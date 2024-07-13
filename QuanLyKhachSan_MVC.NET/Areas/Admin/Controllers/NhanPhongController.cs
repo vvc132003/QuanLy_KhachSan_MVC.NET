@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using Service;
+using Service.Service;
 
 namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
 {
@@ -14,7 +15,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
         private readonly SanPhamService sanPhamService;
         private readonly ThueSanPhamService thueSanPhamService;
         private readonly ThoiGianService thoiGianService;
-
+        private readonly LoaiDichDichVuService loaiDichDichVuService;
 
         public NhanPhongController(DatPhongService datPhongServices,
             KhachHangService khachHangServices,
@@ -22,6 +23,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             NhanPhongService nhanPhongServices,
             SanPhamService sanPhamServices,
             ThueSanPhamService thueSanPhamServices,
+            LoaiDichDichVuService loaiDichDichVuService,
             ThoiGianService thoiGianServices)
         {
             datPhongService = datPhongServices;
@@ -31,6 +33,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             sanPhamService = sanPhamServices;
             thueSanPhamService = thueSanPhamServices;
             thoiGianService = thoiGianServices;
+            this.loaiDichDichVuService = loaiDichDichVuService;
         }
         public IActionResult Index()
         {
@@ -50,12 +53,14 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThaiOnline(idphong);
                 KhachHang khachHang = khachHangService.GetKhachHangbyid(datPhong.idkhachhang);
-                List<SanPham> sanPhams = sanPhamService.GetAllSanPhamIDKhachSan(idkhachsan);
+                List<SanPham> sanPhams = sanPhamService.GetAllSanPham();
+                List<LoaiDichVu> loaiDichVus = loaiDichDichVuService.LayTatCaLoaiDichVu();
                 Modeldata modeldata = new Modeldata
                 {
                     datPhong = datPhong,
                     khachhang = khachHang,
                     listsanPham = sanPhams,
+                    loaiDichVus = loaiDichVus,
                 };
                 return View(modeldata);
             }
