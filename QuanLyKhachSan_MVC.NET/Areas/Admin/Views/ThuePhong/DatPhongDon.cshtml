@@ -1,0 +1,303 @@
+﻿@model Model.Models.Modeldata
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<link rel='stylesheet'
+      href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+<link href="~/css/home.css" rel="stylesheet" />
+<link href="~/css/morris.css" rel="stylesheet" />
+<link href="~/css/c3.min.css" rel="stylesheet" />
+<link href="~/css/dashboard1.css" rel="stylesheet" />
+@await Html.PartialAsync("~/Areas/admin/Views/layout/logo.cshtml")
+<link href="~/css/site.css" rel="stylesheet" />
+<div class="skin-default-dark fixed-layout">
+    <div id="main-wrapper">
+        @await Html.PartialAsync("~/Areas/admin/Views/layout/navbar.cshtml")
+        @await Html.PartialAsync("~/Areas/admin/Views/layout/header.cshtml")
+        <br />
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="row">
+                        @*                         <div class="fs-2 text-center">Thuê phòng</div>
+                        *@                        <div class="border border-secondary-subtle" style="padding:10px 20px">
+                            <form Action="/admin/ThuePhong/ThemThuePhong" method="POST">
+                                <input type="hidden" id="idphong" name="idphong" value="@Model.phong.id" class="form-control" />
+                                <input type="hidden" id="idnhanvien" name="idnhanvien" value="@ViewData["id"]" class="form-control" />
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="hovaten" class="form-label">
+                                                Họ tên khách hàng:
+                                            </label>
+                                            <input type="text" class="form-control" id="hovaten" name="hovaten">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="sodienthoai" class="form-label">
+                                                Số điện thoại:
+                                            </label> <input type="text" class="form-control" id="sodienthoai" name="sodienthoai">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="tinh" class="form-label">Tỉnh:</label>
+                                            <select id="tinh" name="tinh" class="form-control">
+                                                <option value="" selected>Chọn tỉnh thành</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="huyen" class="form-label">Quận/huyện:</label>
+                                            <select id="huyen" name="huyen" class="form-control">
+                                                <option value="" selected>Chọn quận huyện</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="phuong" class="form-label">Phường/xã:</label>
+                                            <select id="phuong" name="phuong" class="form-control">
+                                                <option value="" selected>Chọn phường xã</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">
+                                                Email:
+                                            </label> <input type="text" class="form-control" id="email" name="email">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="cccd" class="form-label">CCCD:</label>
+                                            <input type="text" class="form-control" id="cccd" name="cccd" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="ngaydukientra" class="form-label">Ngày dự kiến trả:</label>
+                                            <input type="datetime-local" class="form-control" id="ngaydukientra" name="ngaydukientra" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="tiendatcoc" class="form-label">Tiền đặt cọc:</label>
+                                            <input type="number" class="form-control" id="tiendatcoc" name="tiendatcoc" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="magiamgia" class="form-label">Mã giảm giá <span style="color:red;">(Nếu có)</span>:</label>
+                                            <input type="text" class="form-control" id="magiamgia" name="magiamgia">
+                                        </div>
+                                        <p style="color:red; display: inline-block; font-weight:100;" class="thongbao"></p>
+                                        <div class="mb-3">
+                                            <label for="nhanphong" class="form-label">Giao phòng:</label>
+                                            <input type="checkbox" id="nhanphong" name="nhanphong" value="nhanphong">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="table-responsive">
+                                            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sản phẩm</th>
+                                                        <th>Gía bán</th>
+                                                        <th>Ảnh</th>
+                                                        <th>Chọn</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var sanpham in Model.PagedTSanPham)
+                                                    {
+                                                        <tr>
+                                                            <td>@sanpham.tensanpham</td>
+                                                            <td>@string.Format("{0:N0} VNĐ", @sanpham.giaban)</td>
+                                                            <td><img src="@sanpham.image" width="50px" height="50px" alt=""></td>
+                                                            <td>
+                                                                <input type="checkbox" class="idsanpham" name="idsanpham" value="@sanpham.id">
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="nav-link btn btn-primary me-2" href="/phong/">
+                                        <i class="fas fa-arrow-left"></i>
+                                        Quay lại
+                                    </a>
+                                    <button type="submit" class="btn btn-primary btn-lg" id="btnLuu" disabled>
+                                        <i class="fas fa-save"></i> Lưu
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+<script src="/static/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
+            "info": false,
+            "autoWidth": false,
+            "responsive": true,
+            "pageLength": 10,
+            "lengthMenu": [5, 10, 25, 50, 100],
+            "language": {
+                "paginate": {
+                    "next": '<i class="fas fa-chevron-right"></i>',
+                    "previous": '<i class="fas fa-chevron-left"></i>'
+                },
+                "search": "Tìm kiếm:",
+            }
+        });
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    var citis = document.getElementById("tinh");
+    var districts = document.getElementById("huyen");
+    var wards = document.getElementById("phuong");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            var opt = document.createElement('option');
+            opt.value = x.Name;
+            opt.text = x.Name;
+            opt.setAttribute('data-id', x.Id);
+            citis.options.add(opt);
+        }
+        citis.onchange = function () {
+            districts.length = 1;
+            wards.length = 1;
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
+
+                for (const k of result[0].Districts) {
+                    var opt = document.createElement('option');
+                    opt.value = k.Name;
+                    opt.text = k.Name;
+                    opt.setAttribute('data-id', k.Id);
+                    districts.options.add(opt);
+                }
+            }
+        };
+        districts.onchange = function () {
+            wards.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
+
+                for (const w of dataWards) {
+                    var opt = document.createElement('option');
+                    opt.value = w.Name;
+                    opt.text = w.Name;
+                    opt.setAttribute('data-id', w.Id);
+                    wards.options.add(opt);
+                }
+            }
+        };
+    }
+</script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const nhanphongCheckbox = document.getElementById('nhanphong');
+        const idsanphamCheckboxes = document.querySelectorAll('.idsanpham');
+        nhanphongCheckbox.addEventListener('change', function () {
+            if (nhanphongCheckbox.checked) {
+                idsanphamCheckboxes.forEach(function (checkbox) {
+                    checkbox.disabled = false;
+                });
+            } else {
+                idsanphamCheckboxes.forEach(function (checkbox) {
+                    checkbox.disabled = true;
+                });
+            }
+        });
+        if (nhanphongCheckbox.checked) {
+            idsanphamCheckboxes.forEach(function (checkbox) {
+                checkbox.disabled = false;
+            });
+        } else {
+            idsanphamCheckboxes.forEach(function (checkbox) {
+                checkbox.disabled = true;
+            });
+        }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const tiendatcocInput = document.getElementById('tiendatcoc');
+        const btnLuu = document.getElementById('btnLuu');
+        tiendatcocInput.addEventListener('input', function () {
+            if (tiendatcocInput.value.trim() !== '') {
+                btnLuu.disabled = false;
+            } else {
+                btnLuu.disabled = true;
+            }
+        });
+    });
+</script>
+
+@if (TempData["xoathanhcong"] != null)
+{
+    <script>
+        Swal.fire({
+            position: "top-right",
+            title: 'Xoá tầng thành công!',
+            icon: "success",
+            showConfirmButton: false,
+        });
+    </script>
+}
+
+
+<script>
+    $(document).ready(function () {
+        function checkAndUpdateCart() {
+            var magiamgia = $('#magiamgia').val();
+            if (magiamgia === '') {
+                $('.thongbao').text("");
+            } else {
+                $.ajax({
+                    url: '/MaGiamGia/Duocgiamgia',
+                    method: 'GET',
+                    data: { magiamgia: magiamgia },
+                    success: function (response) {
+                        if (response.duocgiamgia != null) {
+                            $('.thongbao').text("");
+                        } else {
+                            $('.thongbao').text("Mã giảm giá không tồn tại");
+                        }
+                        checkAndUpdateCart();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        }
+        $('#magiamgia').on('input', checkAndUpdateCart);
+    });
+</script>

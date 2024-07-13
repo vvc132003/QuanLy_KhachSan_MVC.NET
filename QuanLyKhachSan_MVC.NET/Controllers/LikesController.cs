@@ -21,48 +21,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             this.khachHangService = khachHangService;
             this.phongService = phongService;
         }
-        public IActionResult Index(int? sotrang)
-        {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null && HttpContext.Session.GetString("tenchucvu") != null)
-            {
-                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
-                {
-                    int id = HttpContext.Session.GetInt32("id").Value;
-                    string hovaten = HttpContext.Session.GetString("hovaten");
-                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                    ViewData["id"] = id;
-                    ViewData["hovaten"] = hovaten;
-                    ViewData["tenchucvu"] = tenchucvu;
-                    List<Likes> likes = likesService.GetAllLikes();
-                    int soluong = likes.Count;
-                    int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
-                    int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
-                    IPagedList<Likes> ipagelikes = likes.ToPagedList(validPageNumber, pageSize);
-                    List<Modeldata> modeldatalist = new List<Modeldata>();
-                    foreach (var like in ipagelikes)
-                    {
-                        KhachHang khachHang = khachHangService.GetKhachHangbyid(like.idkhachhang);
-                        Phong phong = phongService.GetPhongID(like.idphong);
-                        Modeldata modeldata = new Modeldata
-                        {
-                            PagedTLikes = new List<Likes> { like }.ToPagedList(1, 1),
-                            khachhang = khachHang,
-                            phong = phong,
-                        };
-                        modeldatalist.Add(modeldata);
-                    }
-                    return View(modeldatalist);
-                }
-                else
-                {
-                    return RedirectToAction("dangnhap", "dangnhap");
-                }
-            }
-            else
-            {
-                return RedirectToAction("dangnhap", "dangnhap");
-            }
-        }
 
         public async Task<IActionResult> LikesPhong(int idphong, string icon)
         {

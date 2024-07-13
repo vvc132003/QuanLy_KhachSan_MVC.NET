@@ -20,17 +20,17 @@
                 @if (ViewData["tenchucvu"] != null && ViewData["tenchucvu"].ToString() == "Quản lý")
                 {
                     <li>
-                        <a class="waves-effect waves-dark" href="/khachsan/">
+                        <a class="waves-effect waves-dark" href="/admin/khachsan/">
                             <i class="fas fa-home orange_color"></i><span class="hide-menu">Khách sạn</span>
                         </a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="/tang/" aria-expanded="false">
+                        <a class="waves-effect waves-dark" href="/admin/tang/" aria-expanded="false">
                             <i class="fas fa-briefcase" style="color:#06ff00;"></i><span class="hide-menu">Tầng</span>
                         </a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="/phong/" aria-expanded="false">
+                        <a class="waves-effect waves-dark" href="/admin/phong/" aria-expanded="false">
                             <i class="fas fa-door-open " style="color:#00a1ff;"></i><span class="hide-menu">Phòng</span>
                         </a>
                     </li>
@@ -41,17 +41,17 @@
                         </a>
                         <ul class="collapse list-unstyled" id="apps">
                             <li>
-                                <a class="waves-effect waves-dark" href="/sanpham/" aria-expanded="false">
+                                <a class="waves-effect waves-dark" href="/admin/sanpham/" aria-expanded="false">
                                     <i class="fas fa-shopping-bag purple_color2"></i><span class="hide-menu">Sản phẩm</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="waves-effect waves-dark" href="/thietbi/" aria-expanded="false">
+                                <a class="waves-effect waves-dark" href="/admin/thietbi/" aria-expanded="false">
                                     <i class="fas fa-desktop purple_color"></i><span class="hide-menu">Thiết bị</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="waves-effect waves-dark" href="/thietbiphong/" aria-expanded="false">
+                                <a class="waves-effect waves-dark" href="/admin/thietbiphong/" aria-expanded="false">
                                     <i class="fas fa-desktop purple_color"></i><span class="hide-menu">Thiết bị phòng</span>
                                 </a>
                             </li>
@@ -63,7 +63,7 @@
                 </a>
                 </li> *@
                     <li>
-                        <a class="waves-effect waves-dark" href="/khachhang/" aria-expanded="false">
+                        <a class="waves-effect waves-dark" href="/admin/khachhang/" aria-expanded="false">
                             <i class="fas fa-user " style="color:yellow;"></i><span class="hide-menu">Khách hàng</span>
                         </a>
                     </li>
@@ -79,12 +79,12 @@
                         </a>
                         </li> *@
                             <li>
-                                <a class="waves-effect waves-dark" href="/magiamgia/" aria-expanded="false">
+                                <a class="waves-effect waves-dark" href="/admin/magiamgia/" aria-expanded="false">
                                     <i class="fas fa-percent red_color"></i><span class="hide-menu">Mã giảm giá</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="waves-effect waves-dark" href="/GiamGiaNgayLe/" aria-expanded="false">
+                                <a class="waves-effect waves-dark" href="/admin/GiamGiaNgayLe/" aria-expanded="false">
                                     <i class="fas fa-money-bill-wave red_color"></i><span class="hide-menu">Giảm giá ngày lễ</span>
                                 </a>
                             </li>
@@ -97,12 +97,12 @@
                         </a>
                         <ul class="collapse list-unstyled" id="apps">
                             <li>
-                                <a class="waves-effect waves-dark" href="/chucvu/" aria-expanded="false">
+                                <a class="waves-effect waves-dark" href="/admin/chucvu/" aria-expanded="false">
                                     <i class="fas fa-briefcase red_color"></i><span class="hide-menu">Chức vụ</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="waves-effect waves-dark" href="/nhanvien/" aria-expanded="false">
+                                <a class="waves-effect waves-dark" href="/admin/nhanvien/" aria-expanded="false">
                                     <i class="fas fa-users" style="color: yellow !important;"></i><span class="hide-menu">Nhân viên</span>
                                 </a>
                             </li>
@@ -119,12 +119,12 @@
                         </ul>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="/likes/" aria-expanded="false">
+                        <a class="waves-effect waves-dark" href="/admin/likes/" aria-expanded="false">
                             <i class="fas fa-thumbs-up" style="color:blue;"></i><span class="hide-menu">Thích</span>
                         </a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="/binhluan/" aria-expanded="false">
+                        <a class="waves-effect waves-dark" href="/admin/binhluan/" aria-expanded="false">
                             <i class="fas fa-comment" style="color:green;"></i><span class="hide-menu">Bình luận</span>
                         </a>
                     </li>
@@ -135,34 +135,34 @@
                         </a>
                         <ul class="collapse list-unstyled" id="apps">
                             <li>
-                                <a href="/thuephong/danhsachthuephongtructiep">
+                                <a href="/admin/thuephong/danhsachthuephongtructiep">
                                     <i class="fas fa-file-alt blue2_color"></i> <span>Hợp đồng thuê phòng</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/chuyenphong/danhsachchuyenphong">
+                                <a href="/admin/chuyenphong/danhsachchuyenphong">
                                     <i class="fas fa-file-invoice blue2_color"></i> <span>Hợp đồng chuyển phòng</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/thanhtoan/danhsachthanhtoan">
+                                <a href="/admin/thanhtoan/danhsachthanhtoan">
                                     <i class="fas fa-file-signature blue2_color"></i> <span>Hợp đồng trả phòng</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/huydatphong/danhsachhuydatphong">
+                                <a href="/admin/huydatphong/danhsachhuydatphong">
                                     <i class="fas fa-ban red_color"></i> <span>Hợp đồng huỷ đặt phòng</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="/home/thongke" aria-expanded="false">
+                        <a class="waves-effect waves-dark" href="/admin/home/thongke" aria-expanded="false">
                             <i class="fa fa-bar-chart-o green_color"></i><span class="hide-menu">Thống kê</span>
                         </a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="/chat/chat">
+                        <a class="waves-effect waves-dark" href="/admin/chat/chat">
                             <i class="fas fa-envelope " style="color:blue;"></i><span class="hide-menu">Chat</span>
                         </a>
                     </li>
@@ -175,12 +175,12 @@
                 else
                 {
                     <li>
-                        <a class="waves-effect waves-dark" href="/phong/" aria-expanded="false">
+                        <a class="waves-effect waves-dark" href="/admin/phong/" aria-expanded="false">
                             <i class="fas fa-door-open " style="color:#00a1ff;"></i><span class="hide-menu">Phòng</span>
                         </a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="/chat/chat">
+                        <a class="waves-effect waves-dark" href="/admin/chat/chat">
                             <i class="fas fa-envelope " style="color:blue;"></i><span class="hide-menu">Chat</span>
                         </a>
                     </li>

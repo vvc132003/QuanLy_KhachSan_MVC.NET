@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model.Models;
-using Newtonsoft.Json;
 using PagedList;
 using Service;
-using Service.Service;
-using System.Net.Http.Headers;
-using System.Text;
 
 namespace QuanLyKhachSan_MVC.NET.Controllers
 {
@@ -14,7 +10,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly KhachHangService khachHangService;
         private readonly NhanVienService nhanVienService;
         private readonly HttpClient _httpClient;
-
 
         public KhachHangController(KhachHangService khachHangServices, NhanVienService nhanVienServices, HttpClient httpClient)
         {
