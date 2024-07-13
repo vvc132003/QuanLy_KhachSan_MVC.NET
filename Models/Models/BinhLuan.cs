@@ -16,10 +16,11 @@ namespace Model.Models
         public string trangthai { get; set; }
         public int idphong { get; set; }
         public int parent_comment_id { get; set; }
-        public int thich { get; set; }
-        public int khongthich { get; set; }
-
+       
         public string hovaten { get; set; }
+        public int Tonglikebinhluanthichbuyid { get; set; }
+        public int Tonglikebinhluankhongthichbuyid { get; set; }
+
 
     }
 }

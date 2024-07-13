@@ -18,26 +18,27 @@
             <div class="container-fluid">
                 <div class="text-center" style="padding: 0px 23px;">
                     <div class="square" style="background-color: #a8c4cf">
-                        <a>Sẵn sàng đón khách</a>
+                        <a>Sẵn sàng đón khách (@ViewData["slphongtrong"])</a>
                     </div>
                     <div class="square" style="background-color: #35c3d7">
-                        <a>Phòng được đặt</a>
+                        <a>Phòng được đặt (@ViewData["slphongdadat"])</a>
                     </div>
                     <div class="square" style="background-color: #0171a3">
-                        <a>Phòng đã có người ở</a>
+                        <a>Phòng đã có người ở (@ViewData["slphongcoskhach"])</a>
                     </div>
                     <div class="square" style="background-color: #285665">
-                        <a>Phòng đang sửa chữa</a>
+                        <a>Phòng đang sửa chữa (@ViewData["slphongsuachua"])</a>
                     </div>
                     <div class="square" style="background-color: #666666">
-                        <a>Phòng đang dọn dẹp</a>
+                        <a>Phòng đang dọn dẹp (@ViewData["slphongchuadon"])</a>
                     </div>
                 </div>
-                <form style="padding: 20px 34px; text-align: right;" Action="/Phong/Index" method="GET">
-                    <input type="text"
-                           placeholder="Nhập số phòng..." id="loaiphong" name="loaiphong">
-                    <input type="submit" value="Tìm kiếm">
-                </form>
+                @* <form style="padding: 20px 34px; text-align: right;" Action="/Phong/Index" method="GET">
+                <input type="text"
+                placeholder="Nhập số phòng..." id="loaiphong" name="loaiphong">
+                <input type="submit" value="Tìm kiếm">
+                </form> *@
+                <br />
                 @if (Model != null && Model.Count > 0)
                 {
                     <script>

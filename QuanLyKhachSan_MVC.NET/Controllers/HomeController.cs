@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using Service;
 using System.Security.Claims;
-using QuanLyKhachSan_MVC.NET.Areas.Login.Modelss;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using Service.Service;
 using Newtonsoft.Json;
@@ -72,7 +71,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 
         }
 
-        public IActionResult ThongKe()
+/*        public IActionResult ThongKe()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null &&
                HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
@@ -113,18 +112,19 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     {
                         sanPham = sanpham,
                         khachSan = khachSan,
-                        TotalRentedQuantity = totalRentedQuantity
+                        TotalRentedQuantity = totalRentedQuantity,
                     };
                     modeldatalist.Add(modeldata);
                 }
-                return View(modeldatalist);
+                List<KhachSan> khachSans = khachSanService.GetAllKhachSan();
+                return View((modeldatalist, khachSans));
             }
             else
             {
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
-
+*/
 
         public IActionResult AddNhanVien()
         {

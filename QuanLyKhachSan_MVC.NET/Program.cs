@@ -19,6 +19,8 @@ using NPOI.POIFS.Properties;
 using Org.BouncyCastle.Pqc.Crypto.Lms;
 using System.Net.NetworkInformation;
 using System.Net;
+using QuanLyKhachSan_MVC.NET.ControllersApi;
+using System.Speech.Synthesis;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<TangService>();
@@ -49,7 +51,9 @@ builder.Services.AddScoped<IconService>();
 builder.Services.AddScoped<GiamGiaNgayLeService>();
 builder.Services.AddScoped<LikesService>();
 builder.Services.AddScoped<BinhLuanService>();
+builder.Services.AddScoped<LikesBinhLuanService>();
 
+builder.Services.AddScoped<SpeechSynthesizer>(); // Đăng ký như Singleton nếu bạn muốn sử dụng cùng một instance cho toàn bộ ứng dụng
 
 
 // mã hoá mật khẩu

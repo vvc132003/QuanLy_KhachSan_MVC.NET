@@ -77,6 +77,41 @@ namespace Service
                 return datPhongs;
             }
         }
+
+        public List<DatPhong> GetAllDatPhongbyidphong(int idphong)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<DatPhong> datPhongs = new List<DatPhong>();
+                connection.Open();
+                string sql = "SELECT * FROM DatPhong where idphong = @idphong ";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@idphong", idphong);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            DatPhong datPhong = new DatPhong()
+                            {
+                                id = (int)reader["id"],
+                                idphong = (int)reader["idphong"],
+                                idkhachhang = (int)reader["idkhachhang"],
+                                trangthai = reader["trangthai"].ToString(),
+                                hinhthucthue = reader["hinhthucthue"].ToString(),
+                                ngaydat = (DateTime)reader["ngaydat"],
+                                ngaydukientra = (DateTime)reader["ngaydukientra"],
+                                tiendatcoc = Convert.ToSingle(reader["tiendatcoc"]),
+                                loaidatphong = reader["loaidatphong"].ToString(),
+                                idthoigian = (int)reader["idthoigian"],
+                            };
+                            datPhongs.Add(datPhong);
+                        }
+                    }
+                }
+                return datPhongs;
+            }
+        }
         public List<DatPhong> GetAllDatPhongDescNgayDat()
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())

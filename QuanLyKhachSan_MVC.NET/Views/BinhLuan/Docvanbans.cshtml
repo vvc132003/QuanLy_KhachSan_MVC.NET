@@ -1,0 +1,40 @@
+﻿@page
+@model string
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text to Speech</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#speakButton").click(function (e) {
+                e.preventDefault();
+                var noidung = $("#inputText").val();
+                $.ajax({
+                    type: "GET",
+                    url: "/binhluan/DocBinhLuan",
+                    data: ({ noidung: noidung }),
+                    contentType: "application/json",
+                    success: function () {
+                        
+                    },
+                    error: function () {
+                        alert("Error speaking text.");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Text to Speech</h2>
+
+    <div>
+        <label for="inputText">Enter text to speak:</label>
+        <textarea id="inputText" name="noidung" rows="4" cols="50"></textarea>
+    </div>
+    <br />
+    <button id="speakButton" type="button">Speak</button>
+</body>
+</html>

@@ -1,6 +1,6 @@
 ﻿create database QuanLyKhachSan;
-use QuanLyKhachSan
-select * from thuesanpham
+use QuanLyKhachSan;
+
 create table KhachSan
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -115,12 +115,20 @@ CREATE TABLE BinhLuan (
 	trangthai nvarchar(100),
 	idphong INT, 
 	parent_comment_id INT DEFAULT 0, 
-	thich INT DEFAULT 0, 
-	khongthich INT DEFAULT 0,  
-	FOREIGN KEY (idphong) REFERENCES Phong(id),
+	FOREIGN KEY (idphong) REFERENCES Phong(id)
 );
 
-
+CREATE TABLE LikesBinhLuan
+(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    idbinhluan INT,    
+    idkhachhang INT, 
+	thich INT DEFAULT 0, 
+	khongthich INT DEFAULT 0,
+    thoigianlike DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (idbinhluan) REFERENCES BinhLuan(id),
+    FOREIGN KEY (idkhachhang) REFERENCES KhachHang(id)
+);
 
 create table ChucVu
 (
@@ -190,6 +198,10 @@ CREATE TABLE TinNhan (
     FOREIGN KEY (cuochoithoaiid) REFERENCES CuocHoiThoai(id),
     FOREIGN KEY (nhanvienguiid) REFERENCES NhanVien(id)
 );
+
+
+
+
 
 CREATE TABLE Icon (
     id INT IDENTITY(1,1) PRIMARY KEY,

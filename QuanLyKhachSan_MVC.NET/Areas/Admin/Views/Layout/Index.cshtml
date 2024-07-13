@@ -1,0 +1,27 @@
+﻿@model Model.Models.Modeldata
+@Html.Partial("~/Views/layout/logo.cshtml")
+<!-- Header Section Start -->
+<header id="header">
+    <a href="/home" class="logo"><img src="~/content/static/img/logo.jpg" alt="logo"></a>
+    @if (Model != null && Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
+    {
+        <div class="phone"><i class="fa fa-phone"></i>@Model.khachhang.hovaten</div>
+    }
+    else if (Model != null && !string.IsNullOrEmpty(Model.userProfileViewModel?.Name))
+    {
+        <div class="phone"><i class="fa fa-phone"></i>@Model.userProfileViewModel.Name</div>
+    }
+    else
+    {
+        <div class="phone"><i class="fa fa-phone"></i>:))</div>
+    }
+    <div class="mobile-menu-btn"><i class="fa fa-bars"></i></div>
+    <nav class="main-menu top-menu">
+        <ul>
+            <li><a href="/home">Trang chủ</a></li>
+            <li><a href="/dangnhap/dangnhap">Đăng nhập</a></li>
+            <li><a href="contact.html">Liên hệ</a></li>
+        </ul>
+    </nav>
+</header>
+@Html.Partial("~/Views/layout/timkiem.cshtml")

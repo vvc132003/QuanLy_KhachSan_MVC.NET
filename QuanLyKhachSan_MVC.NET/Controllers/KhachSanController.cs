@@ -62,13 +62,12 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
                 ViewData["id"] = id;
                 ViewData["idkhachsan"] = idkhachsan;
-                thoiGian.idkhachsan = idkhachsan;
                 khachSan.sosao = 0;
-                khachSanService.ThemKhachSan(khachSan);
-                thoiGian.idkhachsan = idkhachsan;
+                int idks = khachSanService.ThemKhachSan(khachSan);
+                thoiGian.idkhachsan = idks;
                 thoiGianService.ThemThoiGian(thoiGian);
                 TempData["themthanhcong"] = "";
-                return RedirectToAction("Index", "KhachSan");
+                return RedirectToAction("", "khachsan");
             }
             else
             {

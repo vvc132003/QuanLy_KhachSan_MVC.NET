@@ -154,6 +154,10 @@
               "target": "Package",
               "version": "[13.0.3, )"
             },
+            "PayPal": {
+              "target": "Package",
+              "version": "[1.9.1, )"
+            },
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.8.5, )"
@@ -161,6 +165,10 @@
             "System.Net.Mail": {
               "target": "Package",
               "version": "[1.0.0-rtm-00002, )"
+            },
+            "System.Speech": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             }
           },
           "imports": [

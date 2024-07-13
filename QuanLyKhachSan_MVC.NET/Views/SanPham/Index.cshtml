@@ -108,7 +108,7 @@
             <div class="modal-header">
             </div>
             <div class="modal-body text-left">
-                <div class="text-bg-success p-2">Thông tin sản phẩm</div>
+                <div class="text-bg-success p-2">Thêm sản phẩm</div>
                 <div class="border border-secondary-subtle" style="padding:10px 20px">
                     <form method="post" Action="/SanPham/ThemSanPham">
                         <div class="mb-3">
@@ -181,23 +181,25 @@
     $(document).ready(function () {
         $('#example').DataTable({
             "paging": true,
-            "lengthChange": true,
+            "lengthChange": false,
             "searching": true,
-            "ordering": true,
+            "ordering": false,
             "info": false,
             "autoWidth": false,
             "responsive": true,
-            "pageLength": 15,
+            "pageLength": 8,
             "lengthMenu": [5, 10, 25, 50, 100],
             "language": {
                 "paginate": {
                     "next": '<i class="fas fa-chevron-right"></i>',
                     "previous": '<i class="fas fa-chevron-left"></i>'
-                }
+                },
+                "search": "Tìm kiếm:",
             }
         });
     });
 </script>
+
 @if (TempData["themthanhcong"] != null)
 {
     <script>

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using Service;
 using System.Security.Claims;
-using QuanLyKhachSan_MVC.NET.Areas.Login.Controllers;
 using Auth0.ManagementApi.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -49,7 +48,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         HttpContext.Session.SetString("hovaten", nhanVien.hovaten);
                         HttpContext.Session.SetString("tenchucvu", nhanVien.tenchucvu);
                         HttpContext.Session.SetInt32("idkhachsan", nhanVien.idkhachsan);
-                        return RedirectToAction("thongke", "home");
+                        return Redirect("~/admin/home/thongke");
                     }
                     else
                     {
@@ -200,16 +199,16 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         email = email
                     };
                     khachHangService.ThemKhachHangGoogle(khachHang);
-                    return RedirectToAction("index", "DangNhap");
+                    return RedirectToAction("index", "home");
                 }
                 else if (checkemail.email == email)
                 {
                     checkemail.idtaikhoangoogle = idtaikhoangoogle;
                     khachHangService.CapNhatKhachHang(checkemail);
-                    return RedirectToAction("index", "DangNhap");
+                    return RedirectToAction("index", "home");
                 }
                 // Redirect to the Logins action
-                return RedirectToAction("index", "DangNhap");
+                return RedirectToAction("index", "home");
             }
             else
             {

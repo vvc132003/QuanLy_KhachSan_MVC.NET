@@ -207,11 +207,25 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
 
 
         [HttpGet("TongPhanTram")]
-        public IActionResult TongPhanTram(DateTime? startDate, DateTime? endDate)
+        public IActionResult TongPhanTram(DateTime? startDate, DateTime? endDate, int idkhachsan)
         {
-            List<ThueSanPham> thueSanPhams;
+            List<ThueSanPham> thueSanPhams = new List<ThueSanPham>();
+            if (startDate.HasValue && endDate.HasValue && idkhachsan > 0)
+            {
+                List<Phong> phongs = phongService.GetAllPhongIDKhachSan(idkhachsan);
 
-            if (startDate.HasValue && endDate.HasValue)
+                foreach (var phong in phongs)
+                {
+                    List<DatPhong> datPhongs = datPhongService.GetAllDatPhongbyidphong(phong.id);
+
+                    foreach (var datPhong in datPhongs)
+                    {
+                        List<ThueSanPham> thueSanPhamsForPhong = thueSanPhamService.GetThueSanPhamByDatebyidddatphong(startDate.Value, endDate.Value, datPhong.id);
+                        thueSanPhams.AddRange(thueSanPhamsForPhong);
+                    }
+                }
+            }
+            else if (startDate.HasValue && endDate.HasValue)
             {
                 thueSanPhams = thueSanPhamService.GetThueSanPhamByDate(startDate.Value, endDate.Value);
             }
@@ -220,15 +234,25 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                 thueSanPhams = thueSanPhamService.GetAllThueSanPham();
             }
             List<Modeldata> modeldatas = new List<Modeldata>();
-            int tongsoluongsanphamduocthue = 0;
-            foreach (var thuesanpham in thueSanPhams)
+            // Lọc ra danh sách duy nhất các sản phẩm được thuê
+            var uniqueThueSanPhams = thueSanPhams.GroupBy(tsp => tsp.idsanpham)
+                                                 .Select(group => new
+                                                 {
+                                                     idSanPham = group.Key,
+                                                     soLuong = group.Sum(tsp => tsp.soluong)
+                                                 })
+                                                 .ToList();
+            // Tính tổng số lượng sản phẩm được thuê
+            int tongsoluongsanphamduocthue = thueSanPhams.Sum(thueSanPham => thueSanPham.soluong);
+            /*foreach (var sanphamthue in thueSanPhams)
             {
-                tongsoluongsanphamduocthue += thuesanpham.soluong;
-            }
-            foreach (var thuesanpham in thueSanPhams)
+                tongsoluongsanphamduocthue += sanphamthue.soluong;
+            }*/
+            foreach (var item in uniqueThueSanPhams)
             {
-                SanPham sanPham = sanPhamService.GetSanPhamByID(thuesanpham.idsanpham);
-                float phantramsanpham = (float)thuesanpham.soluong / tongsoluongsanphamduocthue * 100;
+                SanPham sanPham = sanPhamService.GetSanPhamByID(item.idSanPham);
+                float phantramsanpham = ((float)item.soLuong / tongsoluongsanphamduocthue) * 100;
+                Console.WriteLine($"Tên sản phẩm: {sanPham.tensanpham}, số lượng thuê: {item.soLuong}, phần trăm: {phantramsanpham} % ");
                 Modeldata modeldata = new Modeldata()
                 {
                     sanPham = sanPham,

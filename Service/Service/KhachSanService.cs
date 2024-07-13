@@ -115,13 +115,16 @@ namespace Service
             }
         }
 
-        public void ThemKhachSan(KhachSan khachSan)
+        public int ThemKhachSan(KhachSan khachSan)
         {
+            int insertedId = 0;
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
                 string query = "INSERT INTO KhachSan (tenkhachsan,sosao,diachi,thanhpho,quocgia,email,sodienthoai,loaihinh,giayphepkinhdoanh,ngaythanhlap) " +
-                    " VALUES (@tenkhachsan,@sosao,@diachi,@thanhpho,@quocgia,@email,@sodienthoai,@loaihinh,@giayphepkinhdoanh,@ngaythanhlap)";
+                    " VALUES (@tenkhachsan,@sosao,@diachi,@thanhpho,@quocgia,@email,@sodienthoai,@loaihinh,@giayphepkinhdoanh,@ngaythanhlap);" +
+                    " SELECT SCOPE_IDENTITY();"; // Thêm câu truy vấn để lấy id vừa thêm vào
+
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@tenkhachsan", khachSan.tenkhachsan);
@@ -134,9 +137,13 @@ namespace Service
                     command.Parameters.AddWithValue("@loaihinh", khachSan.loaihinh);
                     command.Parameters.AddWithValue("@giayphepkinhdoanh", khachSan.giayphepkinhdoanh);
                     command.Parameters.AddWithValue("@ngaythanhlap", khachSan.ngaythanhlap);
-                    command.ExecuteNonQuery();
+
+                    // Thực hiện câu truy vấn và lấy giá trị id vừa thêm vào
+                    insertedId = Convert.ToInt32(command.ExecuteScalar());
                 }
             }
+            return insertedId; // Trả về id vừa thêm vào
         }
+
     }
 }

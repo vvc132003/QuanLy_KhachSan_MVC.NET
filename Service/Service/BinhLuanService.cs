@@ -15,8 +15,8 @@ namespace Service.Service
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
-                string sql = @"INSERT INTO BinhLuan (idnguoithamgia, loainguoithamgia, noidung, trangthai, idphong, parent_comment_id, thich, khongthich)
-                       VALUES (@idnguoithamgia, @loainguoithamgia, @noidung, @trangthai, @idphong, @parent_comment_id, @thich, @khongthich);";
+                string sql = @"INSERT INTO BinhLuan (idnguoithamgia, loainguoithamgia, noidung, trangthai, idphong, parent_comment_id)
+                       VALUES (@idnguoithamgia, @loainguoithamgia, @noidung, @trangthai, @idphong, @parent_comment_id);";
 
                 SqlCommand command = new SqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@idnguoithamgia", binhLuan.idnguoithamgia);
@@ -25,8 +25,7 @@ namespace Service.Service
                 command.Parameters.AddWithValue("@trangthai", binhLuan.trangthai);
                 command.Parameters.AddWithValue("@idphong", binhLuan.idphong);
                 command.Parameters.AddWithValue("@parent_comment_id", binhLuan.parent_comment_id);
-                command.Parameters.AddWithValue("@thich", binhLuan.thich);
-                command.Parameters.AddWithValue("@khongthich", binhLuan.khongthich);
+
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -58,8 +57,7 @@ namespace Service.Service
                         trangthai = reader["trangthai"].ToString(),
                         idphong = (int)reader["idphong"],
                         parent_comment_id = reader["parent_comment_id"] != DBNull.Value ? (int)reader["parent_comment_id"] : 0,
-                        thich = Convert.ToInt32(reader["thich"]),
-                        khongthich = Convert.ToInt32(reader["khongthich"]),
+
 
                     };
                     binhLuans.Add(binhLuan);
@@ -76,7 +74,7 @@ namespace Service.Service
             {
                 string sql = @"
                     SELECT bl.id, bl.idnguoithamgia, bl.loainguoithamgia, bl.noidung, 
-                       bl.thoigianbinhluan, bl.trangthai, bl.idphong, bl.parent_comment_id, bl.thich, bl.khongthich, 
+                       bl.thoigianbinhluan, bl.trangthai, bl.idphong, bl.parent_comment_id, 
                        COALESCE(nv.hovaten, kh.hovaten) AS hovaten
                         FROM BinhLuan bl
                         LEFT JOIN NhanVien nv ON bl.loainguoithamgia = 'nhanVien' AND bl.idnguoithamgia = nv.id
@@ -100,8 +98,6 @@ namespace Service.Service
                         binhLuan.thoigianbinhluan = Convert.ToDateTime(reader["thoigianbinhluan"]);
                         binhLuan.trangthai = reader["trangthai"].ToString();
                         binhLuan.idphong = Convert.ToInt32(reader["idphong"]);
-                        binhLuan.thich = Convert.ToInt32(reader["thich"]);
-                        binhLuan.khongthich = Convert.ToInt32(reader["khongthich"]);
 
                         if (reader["parent_comment_id"] != DBNull.Value)
                         {
@@ -140,8 +136,6 @@ namespace Service.Service
                         thoigianbinhluan = (DateTime)reader["thoigianbinhluan"],
                         trangthai = reader["trangthai"].ToString(),
                         idphong = (int)reader["idphong"],
-                        thich = Convert.ToInt32(reader["thich"]),
-                        khongthich = Convert.ToInt32(reader["khongthich"]),
                         parent_comment_id = reader["parent_comment_id"] != DBNull.Value ? (int)reader["parent_comment_id"] : 0
                     };
                     binhLuans.Add(binhLuan);
@@ -173,8 +167,6 @@ namespace Service.Service
                         thoigianbinhluan = (DateTime)reader["thoigianbinhluan"],
                         trangthai = reader["trangthai"].ToString(),
                         idphong = (int)reader["idphong"],
-                        thich = Convert.ToInt32(reader["thich"]),
-                        khongthich = Convert.ToInt32(reader["khongthich"]),
                         parent_comment_id = reader["parent_comment_id"] != DBNull.Value ? (int)reader["parent_comment_id"] : 0
                     };
                     binhLuans.Add(binhLuan);
@@ -207,8 +199,7 @@ namespace Service.Service
                         thoigianbinhluan = (DateTime)reader["thoigianbinhluan"],
                         trangthai = reader["trangthai"].ToString(),
                         idphong = (int)reader["idphong"],
-                        thich = Convert.ToInt32(reader["thich"]),
-                        khongthich = Convert.ToInt32(reader["khongthich"]),
+                        
                         parent_comment_id = reader["parent_comment_id"] != DBNull.Value ? (int)reader["parent_comment_id"] : 0
                     };
                     return binhLuan;
@@ -242,8 +233,7 @@ namespace Service.Service
                         thoigianbinhluan = (DateTime)reader["thoigianbinhluan"],
                         trangthai = reader["trangthai"].ToString(),
                         idphong = (int)reader["idphong"],
-                        thich = Convert.ToInt32(reader["thich"]),
-                        khongthich = Convert.ToInt32(reader["khongthich"]),
+                       
                         parent_comment_id = reader["parent_comment_id"] != DBNull.Value ? (int)reader["parent_comment_id"] : 0
                     };
                     return binhLuan;
@@ -277,8 +267,7 @@ namespace Service.Service
                         thoigianbinhluan = (DateTime)reader["thoigianbinhluan"],
                         trangthai = reader["trangthai"].ToString(),
                         idphong = (int)reader["idphong"],
-                        thich = Convert.ToInt32(reader["thich"]),
-                        khongthich = Convert.ToInt32(reader["khongthich"]),
+                      
                         parent_comment_id = reader["parent_comment_id"] != DBNull.Value ? (int)reader["parent_comment_id"] : 0
                     };
                     return binhLuan;
@@ -300,8 +289,7 @@ namespace Service.Service
                            loainguoithamgia = @loainguoithamgia,
                            noidung = @noidung,
                            trangthai = @trangthai,
-                           thich=@thich,
-                           khongthich=@khongthich,
+                          
                            idphong = @idphong,
                            parent_comment_id = @parent_comment_id
                        WHERE id = @id;";
@@ -313,8 +301,7 @@ namespace Service.Service
                 command.Parameters.AddWithValue("@trangthai", binhLuan.trangthai);
                 command.Parameters.AddWithValue("@idphong", binhLuan.idphong);
                 command.Parameters.AddWithValue("@parent_comment_id", binhLuan.parent_comment_id);
-                command.Parameters.AddWithValue("@thich", binhLuan.thich);
-                command.Parameters.AddWithValue("@khongthich", binhLuan.khongthich);
+        
 
                 command.Parameters.AddWithValue("@id", binhLuan.id);
 

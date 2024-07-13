@@ -9,10 +9,13 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
     {
         private readonly TangService tangService;
         private readonly KhachSanService khachSanService;
-        public TangController(TangService tangServices, KhachSanService khachSanServices)
+        private readonly NhanVienService nhanVienService;
+        public TangController(TangService tangServices, KhachSanService khachSanServices,
+            NhanVienService nhanVienService)
         {
             tangService = tangServices;
             khachSanService = khachSanServices;
+            this.nhanVienService = nhanVienService;
         }
         public IActionResult Index()
         {
@@ -42,7 +45,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     modelDataList.Add(modeldata);
                 }
                 return View(modelDataList);
-
             }
             else
             {

@@ -1,0 +1,135 @@
+﻿@model Model.Models.Modeldata
+<link href="/static/img/favicon.ico" rel="icon">
+<link href="/static/img/apple-favicon.png" rel="apple-touch-icon">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+@Html.Partial("~/Views/layout/logo.cshtml")
+<link href="~/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/css/animate.min.css" rel="stylesheet" />
+<link href="~/css/slick.css" rel="stylesheet" />
+<link href="~/css/slick-theme.css" rel="stylesheet" />
+<link href="~/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+<link href="~/css/hover-style.css" rel="stylesheet" />
+<link href="~/css/style.css" rel="stylesheet" />
+@Html.Partial("~/Views/layout/index.cshtml")
+<div id="rooms">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.khachSan.tenkhachsan</h2>
+            @*  <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in mi libero. Quisque convallis, enim at venenatis tincidunt.
+            </p> *@
+        </div>
+        <div class="row">
+            @if (Model.listphong != null && Model.listphong.Count > 0)
+            {
+                foreach (var phong in Model.listphong)
+                {
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="room-img">
+                                    <div class="box12">
+                                        <img src="~/content/static/img/room/room-4.jpg" />
+                                        <div class="box-content">
+                                            <h3 class="title">Silver Double</h3>
+                                            <ul class="icon">
+                                                <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="room-des">
+                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">Silver Double</a></h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                    <ul class="room-size">
+                                        <li><i class="fa fa-arrow-right"></i>Size: 200 sq ft </li>
+                                        <li><i class="fa fa-arrow-right"></i>Beds: 2 Double(s) </li>
+                                    </ul>
+                                    <ul class="room-icon">
+                                        <li class="icon-1"></li>
+                                        <li class="icon-2"></li>
+                                        <li class="icon-3"></li>
+                                        <li class="icon-4"></li>
+                                        <li class="icon-5"></li>
+                                        <li class="icon-6"></li>
+                                        <li class="icon-7"></li>
+                                        <li class="icon-8"></li>
+                                        <li class="icon-9"></li>
+                                        <li class="icon-10"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="room-rate">
+                                    <h3>From</h3>
+                                    <h1>@string.Format("{0:N0} VNĐ", @phong.giatientheogio)<span>/Mỗi giờ</span></h1>
+                                    <a href="/phong/datphongonline/?idphong=@phong.id">Đặt phòng</a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<div id="modal-id" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="port-slider">
+                            <div><img src="~/content/static/img/room-slider/room-1.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-2.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-3.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-4.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-5.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-6.jpg" /></div>
+                        </div>
+                        <div class="port-slider-nav">
+                            <div><img src="~/content/static/img/room-slider/room-1.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-2.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-3.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-4.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-5.jpg" /></div>
+                            <div><img src="~/content/static/img/room-slider/room-6.jpg" /></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h2>Lorem ipsum dolor</h2>
+                        <p>
+                            Lorem ipsum dolor viverra purus imperdiet rhoncus imperdiet. Suspendisse vulputate condimentum ligula sollicitudin hendrerit. Phasellus luctus, elit et ultrices interdum, neque mi pellentesque massorci. Nam in cursus ex, nec mattis lectus. Curabitur quis elementum nunc. Mauris iaculis, justo eu aliquam sagittis, arcu eros cursus libero, sit amet eleifend dolor odio at lacus.
+                        </p>
+                        <div class="modal-link">
+                            <a href="#">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Views/layout/footer.cshtml")
+<script src="~/content/static/vendor/jquery/jquery.min.js"></script>
+<script src="~/content/static/vendor/jquery/jquery-migrate.min.js"></script>
+<script src="~/content/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/content/static/vendor/easing/easing.min.js"></script>
+<script src="~/content/static/vendor/stickyjs/sticky.js"></script>
+<script src="~/content/static/vendor/superfish/hoverIntent.js"></script>
+<script src="~/content/static/vendor/superfish/superfish.min.js"></script>
+<script src="~/content/static/vendor/wow/wow.min.js"></script>
+<script src="~/content/static/vendor/slick/slick.min.js"></script>
+<script src="~/content/static/vendor/tempusdominus/js/moment.min.js"></script>
+<script src="~/content/static/vendor/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/content/static/vendor/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="~/content/static/js/booking.js"></script>
+<script src="~/content/static/js/jqBootstrapValidation.min.js"></script>
+<script src="~/content/static/js/main.js"></script>

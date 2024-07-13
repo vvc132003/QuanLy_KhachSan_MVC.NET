@@ -76,9 +76,32 @@ namespace Model.Models
         public HuyDatPhong huyDatPhong { get; set; }
         public List<HuyDatPhong> listHuyDatPhong { get; set; }
         public IPagedList<HuyDatPhong> PagedTHuyDatPhong { get; set; }
+
+        public CuocHoiThoai cuocHoiThoai { get; set; }
+        public List<CuocHoiThoai> cuocHoiThoais { get; set; }
+        public IPagedList<CuocHoiThoai> cuocHoiThoaispage { get; set; }
+        public TinNhan tinNhan { get; set; }
+        public List<TinNhan> TinNhans { get; set; }
+        public IPagedList<TinNhan> TinNhanspage { get; set; }
+
+        public LikesBinhLuan likesBinhLuan { get; set; }
+        public List<LikesBinhLuan> likesBinhLuans { get; set; }
+        public IPagedList<LikesBinhLuan> likesBinhLuanspage { get; set; }
+
+
         public int TotalRentedQuantity { get; set; }
 
         public float Tongdoanhthutungthang { get; set; }
+        public int Tonglikebinhluanthichbuyid { get; set; }
+        public int Tonglikebinhluankhongthichbuyid { get; set; }
+
+        public int Tonglikebinhluankhongthichbuyidrely { get; set; }
+
+        public string Ten { get; set; }
+        public string NoiDungTinNhan { get; set; }
+        public DateTime ThoiGianNhan { get; set; }
+
+
 
     }
 }

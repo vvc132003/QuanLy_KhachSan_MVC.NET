@@ -5,7 +5,6 @@ using Service;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
-using QuanLyKhachSan_MVC.NET.Areas.Login.Controllers;
 using System.Security.Claims;
 using Service.Service;
 
@@ -23,11 +22,14 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         private readonly BinhLuanService binhLuanService;
         private readonly SanPhamService sanPhamService;
         private readonly ThueSanPhamService thueSanPhamService;
+        private readonly KhachSanService khachSanService;
         public PhongController(PhongService phongServices,
             TangService tangServices, ThoiGianService thoiGianServices,
             DatPhongService datPhongServices, KhachHangService khachHangService,
-            LichSuThanhToanService lichSuThanhToanService, LikesService likesService, BinhLuanService binhLuanService, SanPhamService sanPhamService,
-            ThueSanPhamService thueSanPhamService)
+            LichSuThanhToanService lichSuThanhToanService,
+            LikesService likesService, BinhLuanService binhLuanService, SanPhamService sanPhamService,
+            ThueSanPhamService thueSanPhamService,
+            KhachSanService khachSanService)
         {
             phongService = phongServices;
             tangService = tangServices;
@@ -39,6 +41,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             this.binhLuanService = binhLuanService;
             this.sanPhamService = sanPhamService;
             this.thueSanPhamService = thueSanPhamService;
+            this.khachSanService = khachSanService;
         }
         public IActionResult Index(string loaiphong)
         {
@@ -52,6 +55,37 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
+
+
+                List<Phong> soluongphongtrangthai = phongService.GetAllPhongByIdKhachSan(idkhachsan);
+                foreach (var phong in soluongphongtrangthai)
+                {
+                    if (phong.tinhtrangphong.Equals("còn trống"))
+                    {
+                        int slphongtrong = soluongphongtrangthai.Count;
+                        ViewData["slphongtrong"] = slphongtrong;
+                    }
+                    else if (phong.tinhtrangphong.Equals("đã đặt"))
+                    {
+                        int slphongdadat = soluongphongtrangthai.Count;
+                        ViewData["slphongdadat"] = slphongdadat;
+                    }
+                    else if (phong.tinhtrangphong.Equals("có khách"))
+                    {
+                        int slphongcoskhach = soluongphongtrangthai.Count;
+                        ViewData["slphongcoskhach"] = slphongcoskhach;
+                    }
+                    else if (phong.tinhtrangphong.Equals("đang sửa chữa"))
+                    {
+                        int slphongsuachua = soluongphongtrangthai.Count;
+                        ViewData["slphongsuachua"] = slphongsuachua;
+                    }
+                    else if (phong.tinhtrangphong.Equals("chưa dọn"))
+                    {
+                        int slphongchuadon = soluongphongtrangthai.Count;
+                        ViewData["slphongchuadon"] = slphongchuadon;
+                    }
+                }
                 if (loaiphong == null)
                 {
                     List<Tang> tanglist = tangService.GetAllTangkhachsanid(idkhachsan);
@@ -184,7 +218,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
-        
+
 
 
         public IActionResult CapNhatTrangThaiPhong(int idphong)
@@ -238,7 +272,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
         public async Task<IActionResult> DatPhongOnline(int idphong)
         {
             Phong phong = phongService.GetPhongID(idphong);
-            DatPhong datPhong = datPhongService.GetDatPhongByIDpHONG(idphong);
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
@@ -250,7 +283,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                 {
                     phong = phong,
                     khachhang = khachHang,
-                    datPhong = datPhong,
                 };
                 return View(modeldata);
             }
@@ -274,7 +306,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     {
                         phong = phong,
                         userProfileViewModel = userProfileViewModel,
-                        datPhong = datPhong,
                     };
                     return View(modeldata);
                 }
@@ -283,7 +314,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                     Modeldata modeldata = new Modeldata
                     {
                         phong = phong,
-                        datPhong = datPhong,
                     };
                     return View(modeldata);
                 }
