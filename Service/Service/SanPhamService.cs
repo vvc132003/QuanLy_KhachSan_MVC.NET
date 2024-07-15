@@ -91,6 +91,52 @@ namespace Service
                 return sanPhams;
             }
         }
+        public List<SanPham> GetAllSanPhamIDLoaidichvuandTenSanPham(int idloaidichvu, string tensanpham)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                List<SanPham> sanPhams = new List<SanPham>();
+                connection.Open();
+
+                // Base SQL query
+                string sql = "SELECT * FROM SanPham WHERE idloaidichvu = @idloaidichvu";
+
+                // Add condition for tensanpham if provided
+                if (!string.IsNullOrEmpty(tensanpham))
+                {
+                    sql += " AND tensanpham LIKE @tensanpham";
+                }
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@idloaidichvu", idloaidichvu);
+                    if (!string.IsNullOrEmpty(tensanpham))
+                    {
+                        command.Parameters.AddWithValue("@tensanpham", "%" + tensanpham + "%");
+                    }
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            SanPham sanPham = new SanPham()
+                            {
+                                id = (int)reader["id"],
+                                tensanpham = reader["tensanpham"].ToString(),
+                                mota = reader["mota"].ToString(),
+                                soluongcon = (int)reader["soluongcon"],
+                                image = reader["image"].ToString(),
+                                trangthai = reader["trangthai"].ToString(),
+                                giaban = Convert.ToSingle(reader["giaban"]),
+                            };
+                            sanPhams.Add(sanPham);
+                        }
+                    }
+                }
+
+                return sanPhams;
+            }
+        }
 
         public SanPham GetSanPhamByID(int id)
         {

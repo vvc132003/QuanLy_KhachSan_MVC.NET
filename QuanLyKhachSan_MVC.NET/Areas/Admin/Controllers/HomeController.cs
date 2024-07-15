@@ -54,48 +54,56 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null &&
                HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int id = HttpContext.Session.GetInt32("id").Value;
-                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["idkhachsan"] = idkhachsan;
-                ViewData["id"] = id;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                List<LichSuThanhToan> lichSuThanhToans = lichSuThanhToanService.GetLichSuThanhToan();
-                float tongDoanhThu = lichSuThanhToans.Sum(lichSu => lichSu.sotienthanhtoan);
-                List<KhachHang> khachHangs = khachHangService.GetAllKhachHang();
-                int tongsoluongkhachhang = khachHangs.Count();
-                List<Likes> likes = likesService.GetAllLikes();
-                int tonglikes = likes.Count();
-                List<BinhLuan> binhLuans = binhLuanService.GetAllBinhLuans();
-                int tongbinhluan = binhLuans.Count();
-                List<SanPham> sanPhams = sanPhamService.GetAllSanPham();
-                int tongsanpham = sanPhams.Count();
-                List<MaGiamGia> maGiamGias = maGiamGiaService.GetAllMaGiamGia();
-                int tongmagiamgia = maGiamGias.Count();
-                ViewData["tongDoanhThu"] = tongDoanhThu;
-                ViewData["tongSoLuongKhachHang"] = tongsoluongkhachhang;
-                ViewData["tonglikes"] = tonglikes;
-                ViewData["tongbinhluan"] = tongbinhluan;
-                ViewData["tongsanpham"] = tongsanpham;
-                ViewData["tongmagiamgia"] = tongmagiamgia;
-                List<Modeldata> modeldatalist = new List<Modeldata>();
-                foreach (var sanpham in sanPhams)
-                {
-                    List<ThueSanPham> thueSanPhams = thueSanPhamService.GetAllThueSanPhamIDSanPham(sanpham.id);
-                    int totalRentedQuantity = thueSanPhams.Sum(soluong => soluong.soluong);
-/*                    KhachSan khachSan = khachSanService.GetKhachSanById(sanpham.idkhachsan);
-*/                    Modeldata modeldata = new Modeldata()
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý")){
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["idkhachsan"] = idkhachsan;
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    List<LichSuThanhToan> lichSuThanhToans = lichSuThanhToanService.GetLichSuThanhToan();
+                    float tongDoanhThu = lichSuThanhToans.Sum(lichSu => lichSu.sotienthanhtoan);
+                    List<KhachHang> khachHangs = khachHangService.GetAllKhachHang();
+                    int tongsoluongkhachhang = khachHangs.Count();
+                    List<Likes> likes = likesService.GetAllLikes();
+                    int tonglikes = likes.Count();
+                    List<BinhLuan> binhLuans = binhLuanService.GetAllBinhLuans();
+                    int tongbinhluan = binhLuans.Count();
+                    List<SanPham> sanPhams = sanPhamService.GetAllSanPham();
+                    int tongsanpham = sanPhams.Count();
+                    List<MaGiamGia> maGiamGias = maGiamGiaService.GetAllMaGiamGia();
+                    int tongmagiamgia = maGiamGias.Count();
+                    ViewData["tongDoanhThu"] = tongDoanhThu;
+                    ViewData["tongSoLuongKhachHang"] = tongsoluongkhachhang;
+                    ViewData["tonglikes"] = tonglikes;
+                    ViewData["tongbinhluan"] = tongbinhluan;
+                    ViewData["tongsanpham"] = tongsanpham;
+                    ViewData["tongmagiamgia"] = tongmagiamgia;
+                    List<Modeldata> modeldatalist = new List<Modeldata>();
+                    foreach (var sanpham in sanPhams)
                     {
-                        sanPham = sanpham,
-/*                        khachSan = khachSan,
-*/                        TotalRentedQuantity = totalRentedQuantity,
-                    };
-                    modeldatalist.Add(modeldata);
+                        List<ThueSanPham> thueSanPhams = thueSanPhamService.GetAllThueSanPhamIDSanPham(sanpham.id);
+                        int totalRentedQuantity = thueSanPhams.Sum(soluong => soluong.soluong);
+                        /*                    KhachSan khachSan = khachSanService.GetKhachSanById(sanpham.idkhachsan);
+                        */
+                        Modeldata modeldata = new Modeldata()
+                        {
+                            sanPham = sanpham,
+                            /*                        khachSan = khachSan,
+                            */
+                            TotalRentedQuantity = totalRentedQuantity,
+                        };
+                        modeldatalist.Add(modeldata);
+                    }
+                    List<KhachSan> khachSans = khachSanService.GetAllKhachSan();
+                    return View((modeldatalist, khachSans));
                 }
-                List<KhachSan> khachSans = khachSanService.GetAllKhachSan();
-                return View((modeldatalist, khachSans));
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
             }
             else
             {

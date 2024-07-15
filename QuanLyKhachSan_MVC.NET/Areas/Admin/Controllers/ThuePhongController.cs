@@ -78,7 +78,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
-        public IActionResult Dasachsanpham(int? sotrang, int idloaidichvu)
+        public IActionResult Dasachsanpham(int? sotrang, int idloaidichvu, string tensanpham)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -89,30 +89,27 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-                if (idloaidichvu > 0)
+                List<SanPham> listsanpham;
+                if (idloaidichvu > 0 && !string.IsNullOrEmpty(tensanpham))
                 {
-                    List<SanPham> listsanpham = sanPhamService.GetAllSanPhamIDLoaidichvu(idloaidichvu);
-                    const int PageSize = 10; // Số lượng phòng trên mỗi trang
-                    int pageNumber = sotrang ?? 1; // Trang hiện tại, mặc định là trang 1
-                    PagedList.IPagedList<SanPham> PagedTSanPham = listsanpham.ToPagedList(pageNumber, PageSize);
-                    Modeldata yourModel = new Modeldata
-                    {
-                        PagedTSanPham = PagedTSanPham,
-                    };
-                    return Json(yourModel);
+                    listsanpham = sanPhamService.GetAllSanPhamIDLoaidichvuandTenSanPham(idloaidichvu, tensanpham);
+                }
+                else if (idloaidichvu > 0)
+                {
+                    listsanpham = sanPhamService.GetAllSanPhamIDLoaidichvu(idloaidichvu);
                 }
                 else
                 {
-                    List<SanPham> listsanpham = sanPhamService.GetAllSanPham();
-                    const int PageSize = 10; // Số lượng phòng trên mỗi trang
-                    int pageNumber = sotrang ?? 1; // Trang hiện tại, mặc định là trang 1
-                    PagedList.IPagedList<SanPham> PagedTSanPham = listsanpham.ToPagedList(pageNumber, PageSize);
-                    Modeldata yourModel = new Modeldata
-                    {
-                        PagedTSanPham = PagedTSanPham,
-                    };
-                    return Json(yourModel);
+                    listsanpham = sanPhamService.GetAllSanPham();
                 }
+                int PageSize = 10; // Số lượng phòng trên mỗi trang
+                int pageNumber = sotrang ?? 1; // Trang hiện tại, mặc định là trang 1
+                PagedList.IPagedList<SanPham> PagedTSanPham = listsanpham.ToPagedList(pageNumber, PageSize);
+                Modeldata yourModel = new Modeldata
+                {
+                    PagedTSanPham = PagedTSanPham,
+                };
+                return Json(yourModel);
             }
             else
             {
@@ -414,6 +411,34 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
+
+        public IActionResult Doiloaihinhthue(int iddatphong, DateTime? ngaydukientra)
+        {
+            DatPhong datPhong = datPhongService.GetDatPhongByIDDatPhong(iddatphong);
+            if (ngaydukientra.HasValue)
+            {
+                TimeSpan sogio = ngaydukientra.Value - datPhong.ngaydat;
+                if (sogio.TotalDays >= 1 && sogio.TotalHours >= 24)
+                {
+                    datPhong.hinhthucthue = "Theo ngày";
+                }
+                else
+                {
+                    datPhong.hinhthucthue = "Theo giờ";
+                }
+                datPhong.ngaydukientra = ngaydukientra.Value;
+                datPhongService.UpdateDatPhong(datPhong);
+                TempData["doiloaihinhthue"] = "success";
+                return Redirect($"/admin/thuephong/chitietthuephong?idphong={datPhong.idphong}");
+            }
+            else
+            {
+                TempData["doiloaihinhthue"] = "error";
+                return Redirect($"/admin/thuephong/chitietthuephong?idphong={datPhong.idphong}");
+            }
+        }
+
+
         /*public IActionResult Index1(int? sotrang)
         {
             if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
@@ -935,6 +960,50 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
+
+
+        public IActionResult DanhSachThuePhong(int? sotrang)
+        {
+            if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
+                {
+                    int idnv = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    ViewData["id"] = idnv;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    List<DatPhong> listDatphong = datPhongService.GetAllDatPhongDat();
+                    int soluong = listDatphong.Count;
+                    int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
+                    int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
+                    PagedList.IPagedList<DatPhong> ipagelistdatphong = listDatphong.ToPagedList(validPageNumber, pageSize);
+                    List<Modeldata> modeldatalist = new List<Modeldata>();
+                    foreach (var datphong in ipagelistdatphong)
+                    {
+                        KhachHang khachHang = khachHangService.GetKhachHangbyid(datphong.idkhachhang);
+                        Modeldata yourModel = new Modeldata
+                        {
+                            PagedTDatPhong = new List<DatPhong> { datphong }.ToPagedList(1, 1),
+                            khachhang = khachHang,
+                        };
+                        modeldatalist.Add(yourModel);
+                    }
+                    return View(modeldatalist);
+                }
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
+        }
+
         public IActionResult ChiTietThuePhongS(int iddatphong)
         {
             if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)

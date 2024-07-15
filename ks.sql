@@ -1,6 +1,5 @@
 ﻿create database QuanLyKhachSan;
 use QuanLyKhachSan;
-
 create table KhachSan
 (
     id INT IDENTITY(1,1) PRIMARY KEY,

@@ -263,7 +263,7 @@
         if (cccdInput.length === 9 || cccdInput.length === 12) {
             $.ajax({
                 type: "GET",
-                url: "/nhanvien/checkcccdnhanvien",
+                url: "/admin/nhanvien/checkcccdnhanvien",
                 data: { cccd: cccdInput },
                 success: function (data) {
                     if (data.cccdcheck == null) {
