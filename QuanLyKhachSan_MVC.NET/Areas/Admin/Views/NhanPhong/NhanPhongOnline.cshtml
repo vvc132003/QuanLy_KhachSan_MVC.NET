@@ -25,7 +25,7 @@
                                 <form method="post" Action="/admin/NhanPhong/CheckInNhanPhongOnline">
                                     <div class="row">
                                         <div class="col-6">
-                                            <div class="text-bg-success p-2">Dịch vụ</div>
+                                            <div class="text-bg-success p-2">Khách hàng</div>
                                             <br />
                                             <input type="hidden" name="idphong" id="idphong" value="@Model.datPhong.idphong" class="form-control" />
                                             <div class="mb-3">
@@ -67,7 +67,7 @@
                                                     </select>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <input type="text" class="form-control" placeholder="Nhập tên dịch vụ..." id="tensanpham" required="">
+                                                    <input type="text" class="form-control" placeholder="Nhập tên dịch vụ..." id="tensanpham" >
                                                 </li>
                                             </ul>
                                             <br />
@@ -169,6 +169,8 @@
             var idloaidichvu = $(this).val();
             if (idloaidichvu > 0) {
                 Dasachsanpham(idloaidichvu);
+            } else {
+                Dasachsanpham();
             }
         });
         $('#tensanpham').keyup(function () {

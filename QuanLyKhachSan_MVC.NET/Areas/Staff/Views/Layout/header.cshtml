@@ -1,0 +1,267 @@
+﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.4.0/css/ionicons.min.css" integrity="sha512-..." crossorigin="anonymous" />
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<aside class="left-sidebar">
+    <div class="d-flex no-block nav-text-box align-items-center">
+        <span><img src="~/content/static/logo-icon.png" alt="elegant admin template"></span>
+        <a class="waves-effect waves-dark ml-auto hidden-sm-down">
+            @ViewData["hovaten"]
+        </a>
+        <a class="waves-effect waves-dark ml-auto hidden-sm-down" href="javascript:void(0)">
+            <i class="ti-menu fa fa-bars"></i>
+        </a>
+        <a class="nav-toggler waves-effect waves-dark ml-auto hidden-sm-up" href="javascript:void(0)">
+            <i class="ti-menu ti-close fa fa-bars"></i>
+        </a>
+    </div>
+    <div class="scroll-sidebar">
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                @if (ViewData["tenchucvu"] != null && ViewData["tenchucvu"].ToString() == "Quản lý")
+                {
+                    <li>
+                        <a class="waves-effect waves-dark" href="/admin/khachsan/">
+                            <i class="fas fa-home orange_color"></i><span class="hide-menu">Khách sạn</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="/admin/tang/" aria-expanded="false">
+                            <i class="fas fa-briefcase" style="color:#06ff00;"></i><span class="hide-menu">Tầng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="/admin/phong/danhsachphong" aria-expanded="false">
+                            <i class="fas fa-door-open " style="color:#00a1ff;"></i><span class="hide-menu">Phòng</span>
+                        </a>
+                    </li>
+                    @* tài sản *@
+                    <li>
+                        <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-circle " style="color: yellow !important;"></i> <span>Quản lý tài sản</span>
+                        </a>
+                        <ul class="collapse list-unstyled" id="apps">
+                            <li>
+                                <a class="waves-effect waves-dark" href="/admin/loaidichvu/" aria-expanded="false">
+                                    <i class="fas fa-tools " style="color:green;"></i><span class="hide-menu">Loại dịch vụ</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="waves-effect waves-dark" href="/admin/sanpham/" aria-expanded="false">
+                                    <i class="fas fa-shopping-bag purple_color2"></i><span class="hide-menu">Dịch vụ</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="waves-effect waves-dark" href="/admin/thietbi/" aria-expanded="false">
+                                    <i class="fas fa-desktop purple_color"></i><span class="hide-menu">Thiết bị</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="waves-effect waves-dark" href="/admin/thietbiphong/" aria-expanded="false">
+                                    <i class="fas fa-desktop purple_color"></i><span class="hide-menu">Thiết bị phòng</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    @*   <li>
+                <a class="waves-effect waves-dark" href="/loaidatphong/" aria-expanded="false">
+                <i class="fas fa-trophy" style="color: #FF9900 !important;"></i><span class="hide-menu">Loại đặt phòng</span>
+                </a>
+                </li> *@
+                    <li>
+                        <a class="waves-effect waves-dark" href="/admin/khachhang/" aria-expanded="false">
+                            <i class="fas fa-user " style="color:yellow;"></i><span class="hide-menu">Khách hàng</span>
+                        </a>
+                    </li>
+                    @* quy định *@
+                    <li>
+                        <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-book" style="color: #33CC33 !important;"></i> <span>Quản lý khuyến mại</span>
+                        </a>
+                        <ul class="collapse list-unstyled" id="apps">
+                            @*  <li>
+                        <a class="waves-effect waves-dark" href="/quydinhgiamgia/" aria-expanded="false">
+                        <i class="fas fa-money-bill-wave red_color"></i><span class="hide-menu">Quy định giảm giá</span>
+                        </a>
+                        </li> *@
+                            <li>
+                                <a class="waves-effect waves-dark" href="/admin/magiamgia/" aria-expanded="false">
+                                    <i class="fas fa-percent red_color"></i><span class="hide-menu">Mã giảm giá</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="waves-effect waves-dark" href="/admin/GiamGiaNgayLe/" aria-expanded="false">
+                                    <i class="fas fa-money-bill-wave red_color"></i><span class="hide-menu">Giảm giá ngày lễ</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    @* nhân sự *@
+                    <li>
+                        <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-users " style="color: #9999FF	 !important;"></i> <span>Quản lý nhân sự</span>
+                        </a>
+                        <ul class="collapse list-unstyled" id="apps">
+                            <li>
+                                <a class="waves-effect waves-dark" href="/admin/chucvu/" aria-expanded="false">
+                                    <i class="fas fa-briefcase red_color"></i><span class="hide-menu">Chức vụ</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="waves-effect waves-dark" href="/admin/nhanvien/" aria-expanded="false">
+                                    <i class="fas fa-users" style="color: yellow !important;"></i><span class="hide-menu">Nhân viên</span>
+                                </a>
+                            </li>
+                            @*  <li>
+                        <a class="waves-effect waves-dark" href="/bophan/" aria-expanded="false">
+                        <i class="fas fa-suitcase purple_color2"></i><span class="hide-menu">Bộ phận</span>
+                        </a>
+                        </li>
+                        <li>
+                        <a class="waves-effect waves-dark" href="/vitribophan/" aria-expanded="false">
+                        <i class="fas fa-exclamation-triangle" style="color: red !important;"></i><span class="hide-menu">Vị trí bộ phận</span>
+                        </a>
+                        </li> *@
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="/admin/likes/" aria-expanded="false">
+                            <i class="fas fa-thumbs-up" style="color:blue;"></i><span class="hide-menu">Thích</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="/admin/binhluan/" aria-expanded="false">
+                            <i class="fas fa-comment" style="color:green;"></i><span class="hide-menu">Bình luận</span>
+                        </a>
+                    </li>
+                    @* loai jđon  *@
+                    <li>
+                        <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fa fa-object-group blue2_color"></i> <span>Hợp đồng</span>
+                        </a>
+                        <ul class="collapse list-unstyled" id="apps">
+                            <li>
+                                <a href="/admin/thuephong/danhsachthuephong">
+                                    <i class="fas fa-file-alt blue2_color"></i> <span>Hợp đồng thuê phòng</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/chuyenphong/danhsachchuyenphong">
+                                    <i class="fas fa-file-invoice blue2_color"></i> <span>Hợp đồng chuyển phòng</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/thanhtoan/danhsachthanhtoan">
+                                    <i class="fas fa-file-signature blue2_color"></i> <span>Hợp đồng trả phòng</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/huydatphong/danhsachhuydatphong">
+                                    <i class="fas fa-ban red_color"></i> <span>Hợp đồng huỷ đặt phòng</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="/admin/home/thongke" aria-expanded="false">
+                            <i class="fa fa-bar-chart-o green_color"></i><span class="hide-menu">Thống kê</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="/admin/chat/chat">
+                            <i class="fas fa-envelope " style="color:blue;"></i><span class="hide-menu">Chat</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="/dangnhap/dangxuat">
+                            <i class="fas fa-sign-out-alt yellow_color"></i><span class="hide-menu">Đăng xuất</span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a class="waves-effect waves-dark" href="/staff/phong/" aria-expanded="false">
+                            <i class="fas fa-door-open " style="color:#00a1ff;"></i><span class="hide-menu">Phòng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="/staff/chat/chat">
+                            <i class="fas fa-envelope " style="color:blue;"></i><span class="hide-menu">Chat</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-dark" href="/dangnhap/dangxuat">
+                            <i class="fas fa-sign-out-alt yellow_color"></i><span class="hide-menu">Đăng xuất</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</aside>
+<div class="modal fade" id="exampleModala" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     data-bs-backdrop="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-left">
+                <div class="text-bg-success p-2">Cấu hình thời gian checkIn_Out</div>
+                <div class="border border-secondary-subtle" style="padding:10px 20px">
+                    <form method="post" Action="/ThoiGian/ThemThoiGian">
+                        <div class="mb-3">
+                            <label for="thoigiannhanphong" class="form-label">Thời gian checkIn:</label>
+                            <input type="time" name="thoigiannhanphong" id="thoigiannhanphong" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="phuthunhanphong" class="form-label">% Phụ thu checkIn:</label>
+                            <input type="number" name="phuthunhanphong" id="phuthunhanphong" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="thoigianra" class="form-label">Thời gian checkOut:</label>
+                            <input type="time" name="thoigianra" id="thoigianra" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="phuthutraphong" class="form-label">% Phụ thu checkOut:</label>
+                            <input type="number" name="phuthutraphong" id="phuthutraphong" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="mota" class="form-label">Mô tả:</label>
+                            <input type="text" name="mota" id="mota" class="form-control" />
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" value="CheckIn_Out" class="btn btn-primary custom-button" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').on('click', function (e) {
+            e.preventDefault();
+            var $parent = $(this).parent();
+            var $submenu = $parent.find('.collapse');
+            if (!$submenu.hasClass('show')) {
+                $('.collapse').removeClass('show');
+            }
+            $submenu.toggleClass('show');
+        });
+
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.dropdown-toggle').length) {
+                setTimeout(function () {
+                    $('.collapse').removeClass('show');
+                }, 2000);
+            }
+        });
+    });
+</script>

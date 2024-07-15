@@ -41,8 +41,8 @@
                                                 <th>ID</th>
                                                 <th>Ngày huỷ</th>
                                                 <th>Lý do</th>
-                                                <th>Thao tác</th>
-                                            </tr>
+@*                                                 <th>Thao tác</th>
+ *@                                            </tr>
                                         </thead>
                                         <tbody>
                                             @if (Model.PagedTHuyDatPhong != null && Model.PagedTHuyDatPhong.Count > 0)
@@ -52,13 +52,13 @@
                                                 {
                                                     <tr id="row-@count">
                                                         <td>@count</td>
-                                                        <td>@huyDatPhongs.ngayhuy.ToString("dd/MM/yyyy")</td>
+                                                        <td>@huyDatPhongs.ngayhuy.ToString("dd/MM/yyyy HH:mm")</td>
                                                         <td>@huyDatPhongs.lydo</td>
-                                                        <td>
+                                                        @* <td>
                                                             <a href="@huyDatPhongs.id" class="btn btn-warning" title="Chi tiết ">
                                                                 <i class="fas fa-info-circle"></i>
                                                             </a>
-                                                        </td>
+                                                        </td> *@
                                                     </tr>
                                                     count++;
                                                 }

@@ -1,0 +1,276 @@
+﻿@model Model.Models.Modeldata
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<link rel='stylesheet'
+      href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+<link href="~/css/home.css" rel="stylesheet" />
+<link href="~/css/morris.css" rel="stylesheet" />
+<link href="~/css/c3.min.css" rel="stylesheet" />
+<link href="~/css/dashboard1.css" rel="stylesheet" />
+@await Html.PartialAsync("~/Areas/staff/Views/layout/logo.cshtml")
+<link href="~/css/site.css" rel="stylesheet" />
+<div class="skin-default-dark fixed-layout">
+    <div id="main-wrapper">
+        @await Html.PartialAsync("~/Areas/staff/Views/layout/navbar.cshtml")
+        @await Html.PartialAsync("~/Areas/staff/Views/layout/header.cshtml")
+        <br />
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="border border-secondary-subtle" style="padding:10px 20px">
+                                <form method="post" Action="/staff/NhanPhong/CheckInNhanPhongOnline">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="text-bg-success p-2">Khách hàng</div>
+                                            <br />
+                                            <input type="hidden" name="idphong" id="idphong" value="@Model.datPhong.idphong" class="form-control" />
+                                            <div class="mb-3">
+                                                <label for="hovaten" class="form-label">Tên khách hàng:</label>
+                                                <input type="text" name="hovaten" id="hovaten" value="@Model.datPhong.hovaten" class="form-control" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email:</label>
+                                                <input type="text" name="email" value="@Model.khachhang.email" id="email" class="form-control" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="sodienthoai" class="form-label">Số điện thoại:</label>
+                                                <input type="text" name="sodienthoai" value="@Model.khachhang.sodienthoai" id="sodienthoai" class="form-control" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="cccd" class="form-label">CCCD:</label>
+                                                <input type="text" name="cccd" value="@Model.khachhang.cccd" id="cccd" class="form-control" />
+                                            </div>
+
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-bg-success p-2">Dịch vụ</div>
+                                            <br />
+                                            <ul class="nav justify-content-end">
+                                                <li class="nav-item  mr-2">
+                                                    <select id="idloaidichvu" name="idloaidichvu" class="form-control">
+                                                        @if (Model.loaiDichVus != null && Model.loaiDichVus.Count > 0)
+                                                        {
+                                                            <option>Loại dịch vụ</option>
+                                                            foreach (var loaiDichVu in Model.loaiDichVus)
+                                                            {
+                                                                <option value="@loaiDichVu.id">@loaiDichVu.tenloaidichvu</option>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="" selected>Không có dữ liệu</option>
+                                                        }
+                                                    </select>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <input type="text" class="form-control" placeholder="Nhập tên dịch vụ..." id="tensanpham" >
+                                                </li>
+                                            </ul>
+                                            <br />
+                                            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tên dịch vụ</th>
+                                                        <th>Gía thuê</th>
+                                                        <th>Ảnh</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary custom-button">
+                                            <i class="fas fa-save"></i> Lưu
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+<script src="/static/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "info": false,
+            "autoWidth": false,
+            "responsive": true,
+            "pageLength": 10,
+            "lengthMenu": [5, 10, 25, 50, 100],
+            "language": {
+                "paginate": {
+                    "next": '<i class="fas fa-chevron-right"></i>',
+                    "previous": '<i class="fas fa-chevron-left"></i>'
+                },
+            }
+        });
+
+        function Dasachsanpham(idloaidichvu, tensanpham) {
+            $.ajax({
+                url: '/admin/ThuePhong/Dasachsanpham',
+                method: 'GET',
+                data: { idloaidichvu: idloaidichvu, tensanpham: tensanpham },
+                success: function (data) {
+                    console.log(data.pagedTSanPham);
+
+                    table.clear().draw();
+
+                    data.pagedTSanPham.forEach(function (item) {
+                        var productHtml = `
+                                                <tr>
+                                                    <td>${item.tensanpham}</td>
+                                                    <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
+                                                    <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
+                                                            <td>
+                                                                 <input type="checkbox" class="idsanpham" name="idsanpham" value="${item.id}">
+                                                        </td>
+                                                </tr>
+                                            `;
+                        table.row.add($(productHtml)).draw(false);
+                    });
+                },
+                error: function (err) {
+                    console.error('Error fetching products:', err);
+                }
+            });
+        }
+
+        Dasachsanpham();
+        $('#idloaidichvu').change(function () {
+            var idloaidichvu = $(this).val();
+            if (idloaidichvu > 0) {
+                Dasachsanpham(idloaidichvu);
+            } else {
+                Dasachsanpham();
+            }
+        });
+        $('#tensanpham').keyup(function () {
+            var idloaidichvu = $('#idloaidichvu').val();
+            var tensanpham = $(this).val();
+            if (idloaidichvu > 0 && tensanpham != null) {
+                Dasachsanpham(idloaidichvu, tensanpham);
+            }
+        });
+    });
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    var citis = document.getElementById("tinh");
+    var districts = document.getElementById("huyen");
+    var wards = document.getElementById("phuong");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            var opt = document.createElement('option');
+            opt.value = x.Name;
+            opt.text = x.Name;
+            opt.setAttribute('data-id', x.Id);
+            citis.options.add(opt);
+        }
+        citis.onchange = function () {
+            districts.length = 1;
+            wards.length = 1;
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
+
+                for (const k of result[0].Districts) {
+                    var opt = document.createElement('option');
+                    opt.value = k.Name;
+                    opt.text = k.Name;
+                    opt.setAttribute('data-id', k.Id);
+                    districts.options.add(opt);
+                }
+            }
+        };
+        districts.onchange = function () {
+            wards.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
+
+                for (const w of dataWards) {
+                    var opt = document.createElement('option');
+                    opt.value = w.Name;
+                    opt.text = w.Name;
+                    opt.setAttribute('data-id', w.Id);
+                    wards.options.add(opt);
+                }
+            }
+        };
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tiendatcocInput = document.getElementById('tiendatcoc');
+        const idphongsCheckboxes = document.querySelectorAll('.idphongs');
+        const btnLuu = document.getElementById('btnLuu');
+        idphongsCheckboxes.forEach(function (checkbox) {
+            checkbox.disabled = true;
+        });
+        tiendatcocInput.addEventListener('input', function () {
+            if (tiendatcocInput.value.trim() !== '') {
+                btnLuu.disabled = false;
+                idphongsCheckboxes.forEach(function (checkbox) {
+                    checkbox.disabled = false;
+                });
+            } else {
+                btnLuu.disabled = true;
+                idphongsCheckboxes.forEach(function (checkbox) {
+                    checkbox.disabled = true;
+                });
+            }
+        });
+    });
+</script>
+
+@if (TempData["xoathanhcong"] != null)
+{
+    <script>
+        Swal.fire({
+            position: "top-right",
+            title: 'Xoá tầng thành công!',
+            icon: "success",
+            showConfirmButton: false,
+        });
+    </script>
+}

@@ -105,7 +105,7 @@
                                                 </select>
                                             </li>
                                             <li class="nav-item ">
-                                                <input type="text" class="form-control" placeholder="Nhập tên dịch vụ..." id="tensanpham" required="">
+                                                <input type="text" class="form-control" placeholder="Nhập tên dịch vụ..." id="tensanpham" >
                                             </li>
                                         </ul>
                                         <br />
@@ -209,6 +209,8 @@
             var idloaidichvu = $(this).val();
             if (idloaidichvu > 0) {
                 Dasachsanpham(idloaidichvu);
+            } else {
+                Dasachsanpham();
             }
         });
         $('#tensanpham').keyup(function () {

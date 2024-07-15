@@ -57,7 +57,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
                         HttpContext.Session.SetString("hovaten", nhanVien.hovaten);
                         HttpContext.Session.SetString("tenchucvu", nhanVien.tenchucvu);
                         HttpContext.Session.SetInt32("idkhachsan", nhanVien.idkhachsan);
-                        return Redirect("~/admin/phong/");
+                        return Redirect("~/staff/phong/");
 
                     }
                 }
