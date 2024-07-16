@@ -23,11 +23,44 @@
                         <div class="col-12">
                             <div class="border border-secondary-subtle" style="padding:10px 20px">
                                 <form method="post" Action="/staff/NhanPhong/CheckInNhanPhongOnline">
+                                    <input type="hidden" name="idphong" id="idphong" value="@Model.datPhong.idphong" class="form-control" />
                                     <div class="row">
-                                        <div class="col-6">
-                                            <div class="text-bg-success p-2">Khách hàng</div>
+                                        <div class="col-4">
+                                            <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin đăng ký - <span style="color:red;">@Model.phong.loaiphong</span></div>
                                             <br />
-                                            <input type="hidden" name="idphong" id="idphong" value="@Model.datPhong.idphong" class="form-control" />
+                                            <div class="mb-3">
+                                                <label for="ngaydukientra" class="form-label">Số phòng:</label>
+                                                <input type="text" class="form-control" value="@Model.phong.sophong" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="ngaydukientra" class="form-label">Loại phòng:</label>
+                                                <input type="text" class="form-control" value="@Model.phong.loaiphong" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="ngaydukientra" class="form-label">Giá phòng:</label>
+                                                <input type="text" class="form-control" value="@string.Format("{0:N0} VNĐ",@Model.phong.giatientheogio) - @string.Format("{0:N0} VNĐ", @Model.phong.giatientheongay)" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="ngaydat" class="form-label">Ngày đặt phòng:</label>
+                                                <input type="text" class="form-control" value="@Model.datPhong.ngaydat.ToString("dd/MM/yyyy HH:mm")" id="ngaydat" name="ngaydat" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="ngaydukientra" class="form-label">Ngày dự kiến trả:</label>
+                                                <input type="text" class="form-control" value="@Model.datPhong.ngaydukientra.ToString("dd/MM/yyyy HH:mm")" id="ngaydukientra" name="ngaydukientra" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="tiendatcoc" class="form-label">Tiền đặt cọc:</label>
+                                                <input type="number" class="form-control" value="@Model.datPhong.tiendatcoc" id="tiendatcoc" name="tiendatcoc" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="magiamgia" class="form-label">Mã giảm giá <span style="color:red;">(Nếu có)</span>:</label>
+                                                <input type="text" class="form-control" id="magiamgia" name="magiamgia">
+                                            </div>
+                                            <p style="color:red; display: inline-block; font-weight:100;" class="thongbao"></p>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin khách hàng</div>
+                                            <br />
                                             <div class="mb-3">
                                                 <label for="hovaten" class="form-label">Tên khách hàng:</label>
                                                 <input type="text" name="hovaten" id="hovaten" value="@Model.datPhong.hovaten" class="form-control" />
@@ -41,13 +74,24 @@
                                                 <input type="text" name="sodienthoai" value="@Model.khachhang.sodienthoai" id="sodienthoai" class="form-control" />
                                             </div>
                                             <div class="mb-3">
+                                                <label for="tinh" class="form-label">Tỉnh:</label>
+                                                <input type="text" name="tinh" value="@Model.khachhang.tinh" id="tinh" class="form-control" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="huyen" class="form-label">Quận/huyện:</label>
+                                                <input type="text" name="huyen" value="@Model.khachhang.huyen" id="huyen" class="form-control" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="phuong" class="form-label">Phường/xã:</label>
+                                                <input type="text" name="phuong" value="@Model.khachhang.phuong" id="phuong" class="form-control" />
+                                            </div>
+                                            <div class="mb-3">
                                                 <label for="cccd" class="form-label">CCCD:</label>
                                                 <input type="text" name="cccd" value="@Model.khachhang.cccd" id="cccd" class="form-control" />
                                             </div>
-
                                         </div>
-                                        <div class="col-6">
-                                            <div class="text-bg-success p-2">Dịch vụ</div>
+                                        <div class="col-4">
+                                            <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thêm dịch vụ</div>
                                             <br />
                                             <ul class="nav justify-content-end">
                                                 <li class="nav-item  mr-2">
@@ -274,3 +318,31 @@
         });
     </script>
 }
+<script>
+    $(document).ready(function () {
+        function checkAndUpdateCart() {
+            var magiamgia = $('#magiamgia').val();
+            if (magiamgia === '') {
+                $('.thongbao').text("");
+            } else {
+                $.ajax({
+                    url: '/admin/MaGiamGia/Duocgiamgia',
+                    method: 'GET',
+                    data: { magiamgia: magiamgia },
+                    success: function (response) {
+                        if (response.duocgiamgia != null) {
+                            $('.thongbao').text("");
+                        } else {
+                            $('.thongbao').text("Mã giảm giá không tồn tại");
+                        }
+                        checkAndUpdateCart();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        }
+        $('#magiamgia').on('input', checkAndUpdateCart);
+    });
+</script>

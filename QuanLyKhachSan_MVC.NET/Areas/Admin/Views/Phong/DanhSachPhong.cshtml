@@ -1,4 +1,4 @@
-﻿@model List<Model.Models.Modeldata>
+﻿@model Tuple<List<Model.Models.Modeldata>, List<Model.Models.KhachSan>, List<Model.Models.Tang>>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel='stylesheet'
@@ -24,6 +24,22 @@
                         <div class="card">
                             <br />
                             <ul class="nav justify-content-end">
+                                <li class="nav-item mr-2">
+                                    <select id="idkhachsan" name="idkhachsan" class="form-control" onchange="loadPhongByIdKhachSan(this.value)">
+                                        @if (Model.Item2 != null && Model.Item2.Count > 0)
+                                        {
+                                            <option value="0">Khách sạn</option>
+                                            foreach (var khachsan in Model.Item2)
+                                            {
+                                                <option value="@khachsan.id">@khachsan.tenkhachsan</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <option value="" selected>Không có khách sạn nào</option>
+                                        }
+                                    </select>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link btn btn-success me-2" href="/NhanVien/XuatEclcel">
                                         <i class="fas fa-file-excel"></i>
@@ -55,10 +71,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (Model != null && Model.Count > 0)
+                                            @if (Model.Item1 != null && Model.Item1.Count > 0)
                                             {
                                                 int count = 1;
-                                                foreach (var modeldata in Model)
+                                                foreach (var modeldata in Model.Item1)
                                                 {
                                                     <tr id="row-@count">
                                                         <td>@count</td>
@@ -78,9 +94,9 @@
                                                                     Thông tin thuê phòng
                                                                 </a>
                                                                 @* <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal@(modeldata.phong.id)">
-                                                                    <i class="fas fa-exchange-alt" style="color: blue; font-size: 20px; margin-right: 5px;"></i>
-                                                                    Chuyển phòng
-                                                                </a> *@
+                                                    <i class="fas fa-exchange-alt" style="color: blue; font-size: 20px; margin-right: 5px;"></i>
+                                                    Chuyển phòng
+                                                    </a> *@
                                                             }
                                                             else if (modeldata.phong.tinhtrangphong == "còn trống")
                                                             {
@@ -148,86 +164,80 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-     data-bs-backdrop="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            </div>
-            <div class="modal-body text-left">
-                <div class="text-bg-success p-2">Thêm khách sạn</div>
-                <div class="border border-secondary-subtle" style="padding:10px 20px">
-                    <form method="post" Action="/admi/KhachSan/ThemKhachSan">
-                        <div class="mb-3">
-                            <label for="tenkhachsan" class="form-label">Tên khách sạn:</label>
-                            <input type="text" name="tenkhachsan" id="tenkhachsan" class="form-control" />
+@if (Model.Item3 != null && Model.Item3.Count > 0)
+{
+    @foreach (var tang in Model.Item3)
+    {
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+             data-bs-backdrop="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <div class="modal-body text-left">
+                        <div class="text-bg-success p-2">Thêm phòng</div>
+                        <div class="border border-secondary-subtle" style="padding:10px 20px">
+                            <form method="post" Action="/admin/Phong/ThemPhong">
+                                <div class="row">
+                                    <input type="hidden" class="form-control" value="@ViewData["idkhachsan"]" id="idkhachsan" name="idkhachsan" readonly>
+                                    <div class="mb-3">
+                                        <label for="songuoi" class="form-label">Số người :</label>
+                                        <input type="text" class="form-control" id="songuoi" name="songuoi">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="sophong" class="form-label">Số phòng :</label>
+                                        <input type="number" class="form-control" id="sophong" name="sophong">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="loaiphong" class="form-label">Loại phòng :</label>
+                                        <input type="text" class="form-control" id="loaiphong" name="loaiphong">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="giatientheogio" class="form-label">Gía tiền theo giờ :</label>
+                                        <input type="text" class="form-control" id="giatientheogio" name="giatientheogio">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="giatientheongay" class="form-label">Gía tiền theo ngày:</label>
+                                        <input type="text" class="form-control" id="giatientheongay" name="giatientheongay">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="soluongmuonthem" class="form-label">Số lượng phòng muốn thêm:</label>
+                                        <input type="text" class="form-control" id="soluongmuonthem" value="1" name="soluongmuonthem">
+                                    </div>
+                                    <div class="mb-3">
+                                        <select id="idtang" name="idtang" class="form-control">
+                                            @if (Model.Item3 != null && Model.Item3.Count > 0)
+                                            {
+                                                <option value="0">Chọn tầng</option>
+                                                foreach (var tang1 in Model.Item3)
+                                                {
+                                                    <option value="@tang1.id">@tang1.tentang</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="" selected>Không có khách sạn nào</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" value="Thêm phòng" class="btn btn-primary custom-button" />
+                                </div>
+                            </form>
                         </div>
-                        <div class="mb-3">
-                            <label for="thanhpho" class="form-label">Thành phố:</label>
-                            <input type="text" name="thanhpho" id="thanhpho" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="diachi" class="form-label">Địa chỉ:</label>
-                            <input type="text" name="diachi" id="diachi" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="quocgia" class="form-label">Quốc gia:</label>
-                            <input type="text" name="quocgia" id="quocgia" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email:</label>
-                            <input type="email" name="email" id="email" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="sodienthoai" class="form-label">Số điện thoại:</label>
-                            <input type="text" name="sodienthoai" id="sodienthoai" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="loaihinh" class="form-label">Loại hình:</label>
-                            <input type="text" name="loaihinh" id="loaihinh" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="giayphepkinhdoanh" class="form-label">Giay phép kinh doanh:</label>
-                            <input type="text" name="giayphepkinhdoanh" id="giayphepkinhdoanh" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="ngaythanhlap" class="form-label">Ngày thành lập:</label>
-                            <input type="datetime-local" name="ngaythanhlap" id="ngaythanhlap" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="thoigiannhanphong" class="form-label">Thời gian checkIn:</label>
-                            <input type="time" name="thoigiannhanphong" id="thoigiannhanphong" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="phuthunhanphong" class="form-label">% Phụ thu checkIn:</label>
-                            <input type="number" name="phuthunhanphong" id="phuthunhanphong" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="thoigianra" class="form-label">Thời gian checkOut:</label>
-                            <input type="time" name="thoigianra" id="thoigianra" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="phuthutraphong" class="form-label">% Phụ thu checkOut:</label>
-                            <input type="number" name="phuthutraphong" id="phuthutraphong" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="mota" class="form-label">Mô tả:</label>
-                            <input type="text" name="mota" id="mota" class="form-control" />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">
-                                Huỷ
-                            </button>
-                            <button type="submit" class="btn btn-primary custom-button">
-                                <i class="fas fa-save"></i> Lưu
-                            </button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    }
+}
+else
+{
+
+    <p>Null</p>
+
+}
 <style>
     .modal-backdrop {
         background-color: rgba(0, 0, 0, 0.5);
@@ -266,6 +276,15 @@
         });
     });
 </script>
+<script>
+    function loadPhongByIdKhachSan(idkhachsan) {
+        // Xây dựng URL chuyển hướng
+        var url = '/admin/phong/danhsachphong?idkhachsan=' + idkhachsan;
+        // Chuyển hướng đến trang mới
+        window.location.href = url;
+    }
+</script>
+
 @if (TempData["themthanhcong"] != null)
 {
     <script>

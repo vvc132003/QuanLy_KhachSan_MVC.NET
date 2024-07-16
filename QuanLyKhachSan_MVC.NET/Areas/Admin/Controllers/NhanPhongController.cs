@@ -55,12 +55,14 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 KhachHang khachHang = khachHangService.GetKhachHangbyid(datPhong.idkhachhang);
                 List<SanPham> sanPhams = sanPhamService.GetAllSanPham();
                 List<LoaiDichVu> loaiDichVus = loaiDichDichVuService.LayTatCaLoaiDichVu();
+                Phong phong = phongService.GetPhongID(idphong);
                 Modeldata modeldata = new Modeldata
                 {
                     datPhong = datPhong,
                     khachhang = khachHang,
                     listsanPham = sanPhams,
                     loaiDichVus = loaiDichVus,
+                    phong = phong,
                 };
                 return View(modeldata);
             }

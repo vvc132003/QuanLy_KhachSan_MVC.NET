@@ -471,6 +471,23 @@ namespace Service
             }
         }
 
+        public void XoaPhong(int phongId)
+        {
+            using (SqlConnection connection = DBUtils.GetDBConnection())
+            {
+                connection.Open();
+
+                string query = "DELETE FROM Phong WHERE id = @id";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", phongId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+
         public List<Phong> GetAllPhongIDKhachSan(int idkhachsan)
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())

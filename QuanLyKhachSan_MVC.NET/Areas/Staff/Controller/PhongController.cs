@@ -34,37 +34,44 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-
                 List<Phong> soluongphongtrangthai = phongService.GetAllPhongByIdKhachSan(idkhachsan);
+
+                int slphongtrong = 0;
+                int slphongdadat = 0;
+                int slphongcoskhach = 0;
+                int slphongsuachua = 0;
+                int slphongchuadon = 0;
+
                 foreach (var phong in soluongphongtrangthai)
                 {
-
                     if (phong.tinhtrangphong.Equals("còn trống"))
                     {
-                        int slphongtrong = soluongphongtrangthai.Count;
-                        ViewData["slphongtrong"] = slphongtrong;
+                        slphongtrong++;
                     }
                     else if (phong.tinhtrangphong.Equals("đã đặt"))
                     {
-                        int slphongdadat = soluongphongtrangthai.Count;
-                        ViewData["slphongdadat"] = slphongdadat;
+                        slphongdadat++;
                     }
                     else if (phong.tinhtrangphong.Equals("có khách"))
                     {
-                        int slphongcoskhach = soluongphongtrangthai.Count;
-                        ViewData["slphongcoskhach"] = slphongcoskhach;
+                        slphongcoskhach++;
                     }
                     else if (phong.tinhtrangphong.Equals("đang sửa chữa"))
                     {
-                        int slphongsuachua = soluongphongtrangthai.Count;
-                        ViewData["slphongsuachua"] = slphongsuachua;
+                        slphongsuachua++;
                     }
                     else if (phong.tinhtrangphong.Equals("chưa dọn"))
                     {
-                        int slphongchuadon = soluongphongtrangthai.Count;
-                        ViewData["slphongchuadon"] = slphongchuadon;
+                        slphongchuadon++;
                     }
                 }
+
+                ViewData["slphongtrong"] = slphongtrong;
+                ViewData["slphongdadat"] = slphongdadat;
+                ViewData["slphongcoskhach"] = slphongcoskhach;
+                ViewData["slphongsuachua"] = slphongsuachua;
+                ViewData["slphongchuadon"] = slphongchuadon;
+
                 if (loaiphong == null)
                 {
                     List<Tang> tanglist = tangService.GetAllTangkhachsanid(idkhachsan);
@@ -137,6 +144,34 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
-
+        public IActionResult ThemPhong(int soluongmuonthem, Phong phong)
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null && HttpContext.Session.GetString("tenchucvu") != null)
+            {
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
+                {
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    for (int i = 0; i < soluongmuonthem; i++)
+                    {
+                        phong.tinhtrangphong = "còn trống";
+                        phongService.ThemPhong(phong);
+                    }
+                    return Redirect("~/staff/phong/");
+                }
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
+        }
     }
 }

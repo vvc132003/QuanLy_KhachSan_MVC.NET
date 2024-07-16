@@ -70,6 +70,7 @@ C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Re
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\NuGet.Protocol.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\NuGet.Versioning.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\PagedList.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\PayPal.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\ICSharpCode.SharpZipLib.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\SixLabors.Fonts.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\SixLabors.ImageSharp.dll
@@ -86,6 +87,7 @@ C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Re
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\System.Reflection.MetadataLoadContext.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\System.Security.Cryptography.ProtectedData.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\System.Security.Permissions.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\System.Speech.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\System.Windows.Extensions.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\af\Humanizer.resources.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\ar\Humanizer.resources.dll
@@ -235,6 +237,7 @@ C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Re
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\runtimes\win\lib\netcoreapp2.1\System.Speech.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Model.dll
 C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\obj\Release\net7.0\PubTmp\Out\Repository.dll

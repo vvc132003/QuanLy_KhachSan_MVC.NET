@@ -44,7 +44,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             this.thueSanPhamService = thueSanPhamService;
             this.khachSanService = khachSanService;
         }
-        public IActionResult DanhSachPhong()
+        public IActionResult DanhSachPhong(int idkhachsan)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -56,8 +56,19 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     ViewData["id"] = id;
                     ViewData["hovaten"] = hovaten;
                     ViewData["tenchucvu"] = tenchucvu;
-                    List<Phong> phongList = phongService.GetAllPhong();
+                    ViewData["idkhachsan"] = idkhachsan;
+                    List<Phong> phongList;
                     List<Modeldata> modeldatas = new List<Modeldata>();
+                    List<KhachSan> khachsanlisst = khachSanService.GetAllKhachSan();
+                    List<Tang> tangs = tangService.GetAllTangkhachsanid(idkhachsan);
+                    if (idkhachsan > 0)
+                    {
+                        phongList = phongService.GetAllPhongByIdKhachSan(idkhachsan);
+                    }
+                    else
+                    {
+                        phongList = phongService.GetAllPhong();
+                    }
                     foreach (var phong in phongList)
                     {
                         KhachSan khachSan = khachSanService.GetKhachSanById(phong.idkhachsan);
@@ -70,7 +81,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                         };
                         modeldatas.Add(modeldata);
                     }
-                    return View(modeldatas);
+                    return View(new Tuple<List<Modeldata>, List<KhachSan>, List<Tang>>(modeldatas, khachsanlisst, tangs));
                 }
                 else
                 {
@@ -94,37 +105,40 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
-
                 List<Phong> soluongphongtrangthai = phongService.GetAllPhongByIdKhachSan(idkhachsan);
+                int slphongtrong = 0;
+                int slphongdadat = 0;
+                int slphongcoskhach = 0;
+                int slphongsuachua = 0;
+                int slphongchuadon = 0;
                 foreach (var phong in soluongphongtrangthai)
                 {
-
                     if (phong.tinhtrangphong.Equals("còn trống"))
                     {
-                        int slphongtrong = soluongphongtrangthai.Count;
-                        ViewData["slphongtrong"] = slphongtrong;
+                        slphongtrong++;
                     }
                     else if (phong.tinhtrangphong.Equals("đã đặt"))
                     {
-                        int slphongdadat = soluongphongtrangthai.Count;
-                        ViewData["slphongdadat"] = slphongdadat;
+                        slphongdadat++;
                     }
                     else if (phong.tinhtrangphong.Equals("có khách"))
                     {
-                        int slphongcoskhach = soluongphongtrangthai.Count;
-                        ViewData["slphongcoskhach"] = slphongcoskhach;
+                        slphongcoskhach++;
                     }
                     else if (phong.tinhtrangphong.Equals("đang sửa chữa"))
                     {
-                        int slphongsuachua = soluongphongtrangthai.Count;
-                        ViewData["slphongsuachua"] = slphongsuachua;
+                        slphongsuachua++;
                     }
                     else if (phong.tinhtrangphong.Equals("chưa dọn"))
                     {
-                        int slphongchuadon = soluongphongtrangthai.Count;
-                        ViewData["slphongchuadon"] = slphongchuadon;
+                        slphongchuadon++;
                     }
                 }
+                ViewData["slphongtrong"] = slphongtrong;
+                ViewData["slphongdadat"] = slphongdadat;
+                ViewData["slphongcoskhach"] = slphongcoskhach;
+                ViewData["slphongsuachua"] = slphongsuachua;
+                ViewData["slphongchuadon"] = slphongchuadon;
                 if (loaiphong == null)
                 {
                     List<Tang> tanglist = tangService.GetAllTangkhachsanid(idkhachsan);
@@ -301,12 +315,17 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     phong.tinhtrangphong = "còn trống";
                     phongService.ThemPhong(phong);
                 }
-                return Redirect("~/admin/phong/");
+                return Redirect($"~/admin/phong/danhsachphong?idkhachsan={phong.idkhachsan}");
             }
             else
             {
                 return RedirectToAction("dangnhap", "dangnhap");
             }
+        }
+        public IActionResult Delete(int idphong)
+        {
+            phongService.XoaPhong(idphong);
+            return Redirect("~/admin/phong/");
         }
         public async Task<IActionResult> DatPhongOnline(int idphong)
         {
