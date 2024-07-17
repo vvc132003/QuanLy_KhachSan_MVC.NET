@@ -25,15 +25,15 @@
                             <br />
                             <ul class="nav justify-content-end">
                                 <li class="nav-item">
-                                    <a class="nav-link btn btn-danger me-2" id="deletesanpham">
-                                        <i class="fas fa-trash"></i>
-                                        Xoá
+                                    <a class="nav-link btn btn-secondary me-2" id="khoiphucsanpham">
+                                        <i class="fas fa-undo"></i> 
+                                        Khôi phục
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/admin/sanpham/sanphamdaxoa" class="nav-link btn btn-secondary me-2">
-                                        <i class="fas fa-flag"></i>
-                                        Sản phẩm đã được xoá
+                                    <a class="nav-link btn btn-primary me-2" href="/admin/sanpham">
+                                        <i class="fas fa-arrow-left"></i>
+                                        Quay lại
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -42,26 +42,19 @@
                                         Xuất excel
                                     </a>
                                 </li>
-                                <br />
-                                <li class="nav-item">
-                                    <a class="nav-link btn btn-primary me-2" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        <i class="fas fa-plus"></i>
-                                        Thêm dịch vụ
-                                    </a>
-                                </li>
                             </ul>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <div class="alert alert-login " style="display:none;">
                                     </div>
                                     <div class="alert alert-success" style="display: none;">
-                                        Dịch vụ đã được xoá thành công.
+                                        Dịch vụ đã được khôi phục !
                                     </div>
                                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    <input type="checkbox" id="checkAll" class="iddeletesanpham" name="iddeletesanpham">
+                                                    <input type="checkbox" class="iddeletesanpham" id="checkAll" name="iddeletesanpham">
                                                 </th>
                                                 <th>ID</th>
                                                 <th>Khách sạn</th>
@@ -112,7 +105,7 @@
                                             else
                                             {
                                                 <tr>
-                                                    <td colspan="11">Không có dịch vụ nào cả !.</td>
+                                                    <td colspan="11">Không có dịch vụ nào được xoá cả !.</td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -278,7 +271,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#deletesanpham').on('click', function (e) {
+        $('#khoiphucsanpham').on('click', function (e) {
             e.preventDefault();
 
             var selectedIds = [];
@@ -287,7 +280,7 @@
             });
 
             $.ajax({
-                url: '/admin/sanpham/deletesanpham',
+                url: '/admin/sanpham/khoiphucsanpham',
                 type: 'POST',
                 data: JSON.stringify(selectedIds),
                 contentType: 'application/json',
@@ -308,7 +301,7 @@
             });
         });
 
-        if ('@TempData["xoasanpham"]' === "success") {
+        if ('@TempData["khoiphuc"]' === "success") {
             $('.alert-success').show();
             setTimeout(function () {
                 $('.alert-success').fadeOut('fast');
@@ -327,4 +320,6 @@
             });
         });
     });
+
 </script>
+

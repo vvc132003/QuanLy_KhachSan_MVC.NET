@@ -19,6 +19,47 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             this.khachSanService = khachSanService;
             this.loaiDichDichVuService = loaiDichDichVuService;
         }
+        public IActionResult DeleteSanPham([FromBody] List<int> idsanpham)
+        {
+            if (idsanpham != null && idsanpham.Any())
+            {
+                foreach (int id in idsanpham)
+                {
+                    SanPham sanPham = sanPhamService.GetSanPhamByID(id);
+                    sanPham.trangthai = "hết bán";
+                    sanPhamService.CapNhatSanPham(sanPham);
+                };
+                TempData["xoasanpham"] = "success";
+                return Json(new { error = false });
+            }
+            else
+            {
+                return Json(new { error = true, message = "Vui lòng chọn sản phẩm để xoá!" });
+            }
+        }
+        public IActionResult Khoiphucsanpham([FromBody] List<int> idsanpham)
+        {
+            if (idsanpham != null && idsanpham.Any())
+            {
+                foreach (int id in idsanpham)
+                {
+                    SanPham sanPham = sanPhamService.GetSanPhamByID(id);
+                    sanPham.trangthai = "còn bán";
+                    sanPhamService.CapNhatSanPham(sanPham);
+                };
+                TempData["khoiphuc"] = "success";
+                return Json(new { error = false });
+            }
+            else
+            {
+                return Json(new { error = true, message = "Vui lòng chọn dịch vụ để khôi phục!" });
+            }
+        }
+        public IActionResult DocVanBans()
+        {
+            return View();
+        }
+
         public IActionResult Index(int? sotrang)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
@@ -42,15 +83,67 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     List<Modeldata> modeldatalist = new List<Modeldata>();
                     foreach (var sanPham in ipagesanPhams)
                     {
-                        LoaiDichVu loaiDichVu = loaiDichDichVuService.GetLoaiDichVuById(sanPham.idloaidichvu);
-                        KhachSan khachSan = khachSanService.GetKhachSanById(loaiDichVu.idkhachsan);
-                        Modeldata modeldata = new Modeldata
+                        if (sanPham.trangthai.Equals("còn bán"))
                         {
-                            PagedTSanPham = new List<SanPham> { sanPham }.ToPagedList(1, 1),
-                            loaiDichVu = loaiDichVu,
-                            khachSan = khachSan,
-                        };
-                        modeldatalist.Add(modeldata);
+                            LoaiDichVu loaiDichVu = loaiDichDichVuService.GetLoaiDichVuById(sanPham.idloaidichvu);
+                            KhachSan khachSan = khachSanService.GetKhachSanById(loaiDichVu.idkhachsan);
+                            Modeldata modeldata = new Modeldata
+                            {
+                                PagedTSanPham = new List<SanPham> { sanPham }.ToPagedList(1, 1),
+                                loaiDichVu = loaiDichVu,
+                                khachSan = khachSan,
+                            };
+                            modeldatalist.Add(modeldata);
+                        }
+                    }
+                    return View(new Tuple<List<Modeldata>, List<LoaiDichVu>>(modeldatalist, loaiDichVus));
+                }
+                else
+                {
+                    return RedirectToAction("dangnhap", "dangnhap");
+                }
+            }
+            else
+            {
+                return RedirectToAction("dangnhap", "dangnhap");
+            }
+        }
+
+        public IActionResult SanPhamdaxoa(int? sotrang)
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
+                {
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    ViewData["idkhachsan"] = idkhachsan;
+                    List<SanPham> sanphams = sanPhamService.GetAllSanPham();
+                    int soluong = sanphams.Count;
+                    int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
+                    int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
+                    PagedList.IPagedList<SanPham> ipagesanPhams = sanphams.ToPagedList(validPageNumber, pageSize);
+                    List<LoaiDichVu> loaiDichVus = loaiDichDichVuService.LayTatCaLoaiDichVu();
+                    List<Modeldata> modeldatalist = new List<Modeldata>();
+                    foreach (var sanPham in ipagesanPhams)
+                    {
+                        if (sanPham.trangthai.Equals("hết bán"))
+                        {
+                            LoaiDichVu loaiDichVu = loaiDichDichVuService.GetLoaiDichVuById(sanPham.idloaidichvu);
+                            KhachSan khachSan = khachSanService.GetKhachSanById(loaiDichVu.idkhachsan);
+                            Modeldata modeldata = new Modeldata
+                            {
+                                PagedTSanPham = new List<SanPham> { sanPham }.ToPagedList(1, 1),
+                                loaiDichVu = loaiDichVu,
+                                khachSan = khachSan,
+                            };
+                            modeldatalist.Add(modeldata);
+                        }
                     }
                     return View(new Tuple<List<Modeldata>, List<LoaiDichVu>>(modeldatalist, loaiDichVus));
                 }

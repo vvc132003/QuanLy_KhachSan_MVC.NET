@@ -92,15 +92,15 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 List<SanPham> listsanpham;
                 if (idloaidichvu > 0 && !string.IsNullOrEmpty(tensanpham))
                 {
-                    listsanpham = sanPhamService.GetAllSanPhamIDLoaidichvuandTenSanPham(idloaidichvu, tensanpham);
+                    listsanpham = sanPhamService.GetAllSanPhamIDLoaidichvuandTenSanPham(idloaidichvu, tensanpham).Where(sp => sp.trangthai.Equals("còn bán")).ToList();
                 }
                 else if (idloaidichvu > 0)
                 {
-                    listsanpham = sanPhamService.GetAllSanPhamIDLoaidichvu(idloaidichvu);
+                    listsanpham = sanPhamService.GetAllSanPhamIDLoaidichvu(idloaidichvu).Where(sp => sp.trangthai.Equals("còn bán")).ToList();
                 }
                 else
                 {
-                    listsanpham = sanPhamService.GetAllSanPham();
+                    listsanpham = sanPhamService.GetAllSanPham().Where(sp => sp.trangthai.Equals("còn bán")).ToList();
                 }
                 int PageSize = 10; // Số lượng phòng trên mỗi trang
                 int pageNumber = sotrang ?? 1; // Trang hiện tại, mặc định là trang 1

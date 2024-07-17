@@ -28,17 +28,27 @@
                                     <div class="col-4">
                                         <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin đăng ký - <span style="color:red;">@Model.phong.loaiphong</span></div>
                                         <br />
-                                        <div class="mb-3">
-                                            <label for="ngaydukientra" class="form-label">Số phòng:</label>
-                                            <input type="text" class="form-control" value="@Model.phong.sophong" required>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="mb-3">
+                                                    <label for="sophong" class="form-label">Số phòng:</label>
+                                                    <input type="text" class="form-control" value="@Model.phong.sophong" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="mb-3">
+                                                    <label for="songuoi" class="form-label">Số người:</label>
+                                                    <input type="text" class="form-control" value="@Model.phong.songuoi" disabled>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="ngaydukientra" class="form-label">Loại phòng:</label>
-                                            <input type="text" class="form-control" value="@Model.phong.loaiphong" required>
+                                            <input type="text" class="form-control" value="@Model.phong.loaiphong" disabled>
                                         </div>
                                         <div class="mb-3">
                                             <label for="ngaydukientra" class="form-label">Giá phòng:</label>
-                                            <input type="text" class="form-control" value="@string.Format("{0:N0} VNĐ",@Model.phong.giatientheogio) - @string.Format("{0:N0} VNĐ", @Model.phong.giatientheongay)" required>
+                                            <input type="text" class="form-control" value="@string.Format("{0:N0} VNĐ",@Model.phong.giatientheogio) - @string.Format("{0:N0} VNĐ", @Model.phong.giatientheongay)" disabled>
                                         </div>
                                         <div class="mb-3">
                                             <label for="ngaydukientra" class="form-label">Ngày dự kiến trả:</label>
@@ -196,7 +206,7 @@
             "info": false,
             "autoWidth": false,
             "responsive": true,
-            "pageLength": 10,
+            "pageLength": 5,
             "lengthMenu": [5, 10, 25, 50, 100],
             "language": {
                 "paginate": {
@@ -340,7 +350,7 @@
             "info": false,
             "autoWidth": false,
             "responsive": true,
-            "pageLength": 5,
+            "pageLength": 4,
             "lengthMenu": [5, 10, 25, 50, 100],
             "language": {
                 "paginate": {
@@ -361,13 +371,13 @@
                         var productHtml = `
                                 <tr>
                                     <td>${khachHang.hovaten}</td>
-                                    <td>${khachHang.sodienthoai}</td>
+                                    <td>0</td>
                                     <td>${khachHang.email}</td>
-                                    <td>${khachHang.cccd}</td>
+                                    <td>0</td>
                                     <td>${khachHang.phuong} - ${khachHang.huyen} - ${khachHang.tinh}</td>
                                     <td>
                                         <a href="#" class="btn btn-warning select-customer" data-id="${khachHang.id}" title="Chọn">
-                                            <i class="fas fa-info-circle"></i>
+                                                                                           <i class="fas fa-plus"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -384,9 +394,7 @@
                         });
 
                         $('#hovaten').val(selectedCustomer.hovaten);
-                        $('#sodienthoai').val(selectedCustomer.sodienthoai);
                         $('#email').val(selectedCustomer.email);
-                        $('#cccd').val(selectedCustomer.cccd);
 
                         $('#tinh').val(selectedCustomer.tinh).trigger('change');
                         $('#huyen').val(selectedCustomer.huyen).trigger('change');

@@ -92,7 +92,7 @@
                                     <div class="context-menu">
                                         @if (phong.tinhtrangphong == "có khách")
                                         {
-                                            <a href="/staff/thuephong/chitietthuephong/?idphong=@phong.id">
+                                            <a href="/staff/thuephong/chitietthuephong?idphong=@phong.id">
                                                 <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
                                                 Thông tin thuê phòng
                                             </a>
@@ -103,7 +103,7 @@
                                         }
                                         else if (phong.tinhtrangphong == "còn trống")
                                         {
-                                            <a href="/staff/thuephong/datphongdon/?idphong=@phong.id">
+                                            <a href="/staff/thuephong/datphongdon?idphong=@phong.id">
                                                 <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-bed"></i>
                                                 Đặt phòng khách lẽ
                                             </a>
@@ -111,36 +111,36 @@
                                                 <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-users"></i>
                                                 Đặt phòng khách đoàn
                                             </a>
-                                            <a href="/staff/phong/capnhattrangthaiphong/?idphong=@phong.id">
+                                            <a href="/staff/phong/capnhattrangthaiphong?idphong=@phong.id">
                                                 <i style="font-size: 20px; margin-right: 14px;color: #8B4513;" class="fas fa-wrench"></i>
                                                 Sửa phòng
                                             </a>
                                         }
                                         else if (phong.tinhtrangphong == "đã đặt")
                                         {
-                                            <a href="/staff/nhanphong/nhanphongonline/?idphong=@phong.id">
+                                            <a href="/staff/nhanphong/nhanphongonline?idphong=@phong.id">
                                                 <i style="font-size: 20px; margin-right: 14px" class="fas fa-check-circle"></i>
                                                 Check nhận phòng
                                             </a>
-                                            <a href="/staff/huydatphong/huydatphong/?idphong=@phong.id">
+                                            <a href="/staff/huydatphong/huydatphong?idphong=@phong.id">
                                                 <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
                                                 Huỷ đặt phòng
                                             </a>
                                         }
                                         else if (phong.tinhtrangphong == "đang sửa chữa")
                                         {
-                                            <a href="/staff/phong/capnhattrangthaiphong/?idphong=@phong.id">
+                                            <a href="/staff/phong/capnhattrangthaiphong?idphong=@phong.id">
                                                 <i style="font-size: 20px; margin-right: 2px; color: blue;" class="fas fa-check"></i>
                                                 Hoàn tất sửa chữa
                                             </a>
                                         }
                                         else if (phong.tinhtrangphong == "chưa dọn")
                                         {
-                                            <a href="/staff/phong/capnhattrangthaiphong/?idphong=@phong.id">
+                                            <a href="/staff/phong/capnhattrangthaiphong?idphong=@phong.id">
                                                 <i style="font-size: 20px; margin-right: 10px; color: blue;" class="fas fa-check"></i>
                                                 Dọn xong
                                             </a>
-                                            <a href="/staff/phong/capnhattrangthaiphong/?idphong=@phong.id">
+                                            <a href="/staff/phong/capnhattrangthaiphong?idphong=@phong.id">
                                                 <i style="font-size: 20px; margin-right: 10px" class="fas fa-wrench"></i>
                                                 Sửa phòng
                                             </a>

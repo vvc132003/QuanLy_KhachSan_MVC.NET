@@ -41,6 +41,18 @@
                                     </select>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link btn btn-danger me-2" id="deletephong">
+                                        <i class="fas fa-trash"></i>
+                                        Xoá
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-primary me-2" href="/admin/phong/danhsachphong/">
+                                        <i class="fas fa-arrow-left"></i>
+                                        Quay lại
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link btn btn-success me-2" href="/NhanVien/XuatEclcel">
                                         <i class="fas fa-file-excel"></i>
                                         Xuất excel
@@ -58,6 +70,9 @@
                                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
+                                                <th>
+                                                    <input type="checkbox" class="iddeletephong" name="iddeletephong">
+                                                </th>
                                                 <th>ID</th>
                                                 <th>Tên khách sạn</th>
                                                 <th>Số tầng</th>
@@ -77,6 +92,9 @@
                                                 foreach (var modeldata in Model.Item1)
                                                 {
                                                     <tr id="row-@count">
+                                                        <td>
+                                                            <input type="checkbox" class="iddeletephong" name="iddeletephong" data-phong-id="@modeldata.phong.id">
+                                                        </td>
                                                         <td>@count</td>
                                                         <td>@modeldata.khachSan.tenkhachsan</td>
                                                         <td>@modeldata.tang.tentang</td>
@@ -89,7 +107,7 @@
                                                         <td>
                                                             @if (modeldata.phong.tinhtrangphong == "có khách")
                                                             {
-                                                                <a href="/admin/thuephong/chitietthuephong/?idphong=@modeldata.phong.id">
+                                                                <a href="/admin/thuephong/chitietthuephong?idphong=@modeldata.phong.id">
                                                                     <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
                                                                     Thông tin thuê phòng
                                                                 </a>
@@ -100,7 +118,7 @@
                                                             }
                                                             else if (modeldata.phong.tinhtrangphong == "còn trống")
                                                             {
-                                                                <a href="/admin/thuephong/datphongdon/?idphong=@modeldata.phong.id">
+                                                                <a href="/admin/thuephong/datphongdon?idphong=@modeldata.phong.id">
                                                                     <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-bed"></i>
                                                                     Đặt phòng khách lẽ
                                                                 </a>
@@ -108,36 +126,36 @@
                                                                     <i style="font-size: 20px; margin-right: 10px; color: #00FF00;" class="fas fa-users"></i>
                                                                     Đặt phòng khách đoàn
                                                                 </a>
-                                                                <a href="/admin/phong/capnhattrangthaiphong/?idphong=@modeldata.phong.id">
+                                                                <a href="/admin/phong/capnhattrangthaiphong?idphong=@modeldata.phong.id">
                                                                     <i style="font-size: 20px; margin-right: 14px;color: #8B4513;" class="fas fa-wrench"></i>
                                                                     Sửa phòng
                                                                 </a>
                                                             }
                                                             else if (modeldata.phong.tinhtrangphong == "đã đặt")
                                                             {
-                                                                <a href="/admin/nhanphong/nhanphongonline/?idphong=@modeldata.phong.id">
+                                                                <a href="/admin/nhanphong/nhanphongonline?idphong=@modeldata.phong.id">
                                                                     <i style="font-size: 20px; margin-right: 14px" class="fas fa-check-circle"></i>
                                                                     Check nhận phòng
                                                                 </a>
-                                                                <a href="/admin/huydatphong/huydatphong/?idphong=@modeldata.phong.id">
+                                                                <a href="/admin/huydatphong/huydatphong?idphong=@modeldata.phong.id">
                                                                     <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
                                                                     Huỷ đặt phòng
                                                                 </a>
                                                             }
                                                             else if (modeldata.phong.tinhtrangphong == "đang sửa chữa")
                                                             {
-                                                                <a href="/admin/phong/capnhattrangthaiphong/?idphong=@modeldata.phong.id">
+                                                                <a href="/admin/phong/capnhattrangthaiphong?idphong=@modeldata.phong.id">
                                                                     <i style="font-size: 20px; margin-right: 2px; color: blue;" class="fas fa-check"></i>
                                                                     Hoàn tất sửa chữa
                                                                 </a>
                                                             }
                                                             else if (modeldata.phong.tinhtrangphong == "chưa dọn")
                                                             {
-                                                                <a href="/admin/phong/capnhattrangthaiphong/?idphong=@modeldata.phong.id">
+                                                                <a href="/admin/phong/capnhattrangthaiphong?idphong=@modeldata.phong.id">
                                                                     <i style="font-size: 20px; margin-right: 10px; color: blue;" class="fas fa-check"></i>
                                                                     Dọn xong
                                                                 </a>
-                                                                <a href="/admin/phong/capnhattrangthaiphong/?idphong=@modeldata.phong.id">
+                                                                <a href="/admin/phong/capnhattrangthaiphong?idphong=@modeldata.phong.id">
                                                                     <i style="font-size: 20px; margin-right: 10px" class="fas fa-wrench"></i>
                                                                     Sửa phòng
                                                                 </a>
@@ -175,7 +193,7 @@
                     <div class="modal-header">
                     </div>
                     <div class="modal-body text-left">
-                        <div class="text-bg-success p-2">Thêm phòng</div>
+                        <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thêm phòng</div>
                         <div class="border border-secondary-subtle" style="padding:10px 20px">
                             <form method="post" Action="/admin/Phong/ThemPhong">
                                 <div class="row">
@@ -235,7 +253,7 @@
 else
 {
 
-    <p>Null</p>
+    <p></p>
 
 }
 <style>
@@ -264,7 +282,7 @@ else
             "info": false,
             "autoWidth": false,
             "responsive": true,
-            "pageLength": 8,
+            "pageLength": 12,
             "lengthMenu": [5, 10, 25, 50, 100],
             "language": {
                 "paginate": {

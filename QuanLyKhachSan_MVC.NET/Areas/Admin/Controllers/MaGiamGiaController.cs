@@ -79,6 +79,22 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             return Ok();
         }
+        public IActionResult DeleteMaGiamGia([FromBody] List<int> idmagiamgia)
+        {
+            if (idmagiamgia != null && idmagiamgia.Any())
+            {
+                foreach (int id in idmagiamgia)
+                {
+                    maGiamGiaService.XoaMaGiamGia(id);
+                }
+                TempData["xoamagiamgia"] = "success";
+                return Json(new { error = false });
+            }
+            else
+            {
+                return Json(new { error = true, message = "Vui lòng chọn bình luận để xoá!" });
+            }
+        }
         public IActionResult GetMaGiamGia(int id)
         {
             MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaById(id);
