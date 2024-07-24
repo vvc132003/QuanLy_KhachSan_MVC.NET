@@ -50,6 +50,13 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             this.chuyenPhongService = chuyenPhongService;
             this.maGiamGiaService = maGiamGiaService;
         }
+
+
+        public IActionResult Upimages()
+        {
+            return View();
+        }
+       
         public IActionResult DoanhThuTheoThang()
         {
             // Lấy danh sách các giao dịch từ cơ sở dữ liệu

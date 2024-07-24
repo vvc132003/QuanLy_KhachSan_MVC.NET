@@ -11,5 +11,9 @@
     <NameOfLastUsedPublishProfile>C:\Users\vvc13\source\repos\QuanLyKhachSan_MVC.NET\QuanLyKhachSan_MVC.NET\Properties\PublishProfiles\chinhvovan13-001-site1 - FTP.pubxml</NameOfLastUsedPublishProfile>
     <Area_SelectedScaffolderID>AreaScaffolder</Area_SelectedScaffolderID>
     <Area_SelectedScaffolderCategoryPath>root/Common</Area_SelectedScaffolderCategoryPath>
+    <ActiveDebugProfile>QuanLyKhachSan_MVC.NET</ActiveDebugProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

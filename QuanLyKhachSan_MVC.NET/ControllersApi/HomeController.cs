@@ -45,39 +45,44 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
             this.chuyenPhongService = chuyenPhongService;
         }
         [HttpGet("SoLuongHopDong")]
-        public IActionResult SoLuongHopDong(int? idnam)
+        public IActionResult SoLuongHopDong(int? idnam, int idkhachsan)
         {
-            List<DatPhong> datPhongs;
-            List<HuyDatPhong> huyDatPhongs;
-            List<ChuyenPhong> chuyenPhongs;
+            List<DatPhong> datPhongs = new List<DatPhong>();
+            List<HuyDatPhong> huyDatPhongs = new List<HuyDatPhong>();
+            List<ChuyenPhong> chuyenPhongs = new List<ChuyenPhong>();
+            List<Phong> phongs = phongService.GetAllPhongIDKhachSan(idkhachsan);
 
-            if (idnam.HasValue && idnam > 0)
+            if (idnam.HasValue && idnam.Value > 0)
             {
-                datPhongs = datPhongService.GetAllDatPhongDat()
-                    .Where(dp => dp.ngaydat.Year == idnam && dp.trangthai == "đã trả")
-                    .ToList();
-
-                huyDatPhongs = huyDatPhongService.GetAllHuyDatPhong()
-                    .Where(hdp => hdp.ngayhuy.Year == idnam)
-                    .ToList();
-
-                chuyenPhongs = chuyenPhongService.GetAllChuyenPhong()
-                    .Where(cp => cp.ngaychuyen.Year == idnam)
-                    .ToList();
+                if (idkhachsan > 0)
+                {
+                    foreach (var phong in phongs)
+                    {
+                        datPhongs.AddRange(datPhongService.GetAllDatPhongbyidphong(phong.id)
+                            .Where(dp => dp.ngaydat.Year == idnam.Value && dp.trangthai == "đã trả"));
+                    }
+                }
+                else
+                {
+                    datPhongs = datPhongService.GetAllDatPhongDat()
+                        .Where(dp => dp.ngaydat.Year == idnam.Value && dp.trangthai == "đã trả")
+                        .ToList();
+                    huyDatPhongs = huyDatPhongService.GetAllHuyDatPhong()
+                        .Where(hdp => hdp.ngayhuy.Year == idnam.Value)
+                        .ToList();
+                    chuyenPhongs = chuyenPhongService.GetAllChuyenPhong()
+                        .Where(cp => cp.ngaychuyen.Year == idnam.Value)
+                        .ToList();
+                }
             }
             else
             {
                 datPhongs = datPhongService.GetAllDatPhongDat()
                     .Where(dp => dp.trangthai == "đã trả")
                     .ToList();
-
-                huyDatPhongs = huyDatPhongService.GetAllHuyDatPhong()
-                    .ToList();
-
-                chuyenPhongs = chuyenPhongService.GetAllChuyenPhong()
-                    .ToList();
+                huyDatPhongs = huyDatPhongService.GetAllHuyDatPhong();
+                chuyenPhongs = chuyenPhongService.GetAllChuyenPhong();
             }
-
             var datphong = datPhongs
                 .GroupBy(dp => dp.ngaydat.Month)
                 .Select(g => new
@@ -87,7 +92,6 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                 })
                 .OrderBy(x => x.Month)
                 .ToList();
-
             var huydatphong = huyDatPhongs
                 .GroupBy(hdp => hdp.ngayhuy.Month)
                 .Select(h => new
@@ -97,7 +101,6 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                 })
                 .OrderBy(x => x.Month)
                 .ToList();
-
             var chuyenphong = chuyenPhongs
                 .GroupBy(cp => cp.ngaychuyen.Month)
                 .Select(c => new
@@ -107,15 +110,13 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                 })
                 .OrderBy(x => x.Month)
                 .ToList();
-
-            var item = new
+            var result = new
             {
                 datphong = datphong,
                 huydatphong = huydatphong,
                 chuyenphong = chuyenphong
             };
-
-            return Ok(item);
+            return Ok(result);
         }
 
         public class Item
@@ -233,13 +234,7 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
             }
             List<Modeldata> modeldatas = new List<Modeldata>();
             // Lọc ra danh sách duy nhất các sản phẩm được thuê
-            var uniqueThueSanPhams = thueSanPhams.GroupBy(tsp => tsp.idsanpham)
-                                                 .Select(group => new
-                                                 {
-                                                     idSanPham = group.Key,
-                                                     soLuong = group.Sum(tsp => tsp.soluong)
-                                                 })
-                                                 .ToList();
+            var uniqueThueSanPhams = thueSanPhams.GroupBy(tsp => tsp.idsanpham).Select(group => new { idSanPham = group.Key, soLuong = group.Sum(tsp => tsp.soluong) }).ToList();
             // Tính tổng số lượng sản phẩm được thuê
             int tongsoluongsanphamduocthue = thueSanPhams.Sum(thueSanPham => thueSanPham.soluong);
             /*foreach (var sanphamthue in thueSanPhams)

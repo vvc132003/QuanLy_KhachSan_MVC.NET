@@ -135,7 +135,7 @@
             <div class="modal-body text-left">
                 <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thêm dịch vụ</div>
                 <div class="border border-secondary-subtle" style="padding:10px 20px">
-                    <form method="post" Action="/admin/SanPham/ThemSanPham">
+                    <form method="post" enctype="multipart/form-data" Action="/admin/SanPham/ThemSanPham">
                         <div class="mb-3">
                             <label for="tensanpham" class="form-label">Tên dịch vụ:</label>
                             <input type="text" name="tensanpham" id="tensanpham" class="form-control" />
@@ -154,7 +154,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Ảnh:</label>
-                            <input type="text" name="image" id="image" class="form-control" />
+                            <input type="file" name="image" id="image" class="form-control" />
                         </div>
                         <div class="mb-3">
                             <label for="idloaidichvu" class="form-label">Loại dịch vụ:</label>

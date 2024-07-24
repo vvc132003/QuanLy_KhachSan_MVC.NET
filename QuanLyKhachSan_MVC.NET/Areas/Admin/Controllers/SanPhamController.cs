@@ -157,7 +157,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
-        public IActionResult ThemSanPham(SanPham sanPham)
+        public async Task<IActionResult> ThemSanPham(SanPham sanPham, IFormFile image)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -165,15 +165,137 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 string hovaten = HttpContext.Session.GetString("hovaten");
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
-                sanPham.trangthai = "còn bán";
-                sanPhamService.ThemSanPham(sanPham);
-                return Redirect("~/admin/sanpham/");
+
+                // Check file extension
+                var fileExtension = Path.GetExtension(image.FileName).ToLowerInvariant();
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    return RedirectToAction("Index");
+                }
+
+                try
+                {
+                    // Convert image to base64 string
+                    var base64String = await ConvertToBase64StringAsync(image);
+
+                    sanPham.image = base64String; // Update this property name as needed
+                    sanPham.trangthai = "còn bán";
+
+                    // Add product
+                    sanPhamService.ThemSanPham(sanPham);
+                    return Redirect("~/admin/sanpham/");
+                }
+                catch (Exception ex)
+                {
+                    // Handle file processing exceptions
+                    return RedirectToAction("Error", "Home");
+                }
             }
             else
             {
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
+
+        private async Task<string> ConvertToBase64StringAsync(IFormFile file)
+        {
+            using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+            var fileBytes = memoryStream.ToArray();
+            var base64String = Convert.ToBase64String(fileBytes);
+            return $"data:{file.ContentType};base64,{base64String}";
+        }
+        /*        public async Task<IActionResult> ThemSanPham(SanPham sanPham, IFormFile image)
+                {
+                    if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+                    {
+                        int id = HttpContext.Session.GetInt32("id").Value;
+                        string hovaten = HttpContext.Session.GetString("hovaten");
+                        ViewData["id"] = id;
+                        ViewData["hovaten"] = hovaten;
+                        // Check file extension
+                        var fileExtension = Path.GetExtension(image.FileName).ToLowerInvariant();
+                        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                        if (!allowedExtensions.Contains(fileExtension))
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        // Ensure unique file name
+                        var uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", uniqueFileName);
+                        // Create directory if it doesn't exist
+                        var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                        if (!Directory.Exists(directoryPath))
+                        {
+                            Directory.CreateDirectory(directoryPath);
+                        }
+                        try
+                        {
+                            // Save the file
+                            using (var stream = new FileStream(path, FileMode.Create))
+                            {
+                                await image.CopyToAsync(stream);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle file saving exceptions
+                            // Optionally log the error and return an appropriate view
+                            return RedirectToAction("Error", "Home");
+                        }
+                        var relativePath = Path.Combine("images", uniqueFileName).Replace("\\", "/");
+                        sanPham.image = relativePath;
+                        sanPham.trangthai = "còn bán";
+                        // Add product
+                        sanPhamService.ThemSanPham(sanPham);
+                        return Redirect("~/admin/sanpham/");
+                    }
+                    else
+                    {
+                        return RedirectToAction("dangnhap", "dangnhap");
+                    }
+                }
+        */       /* private bool DeleteImage(string imagePath)
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imagePath);
+                    if (System.IO.File.Exists(path))
+                    {
+                        try
+                        {
+                            System.IO.File.Delete(path);
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            return false;
+                        }
+                    }
+                    return false;
+                }
+
+                public async Task<IActionResult> XoaSanPham(int id)
+                {
+                    if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+                    {
+                        SanPham sanPham = sanPhamService.GetSanPhamByID(id);
+                        if (sanPham == null)
+                        {
+                            return NotFound();
+                        }
+                        if (!string.IsNullOrEmpty(sanPham.image))
+                        {
+                            DeleteImage(sanPham.image);
+                        }
+                        sanPhamService.XoaSanPham(id);
+
+                        return Redirect("~/admin/sanpham/");
+                    }
+                    else
+                    {
+                        return RedirectToAction("dangnhap", "dangnhap");
+                    }
+                }*/
 
 
         public IActionResult UpdateSanPham(int? idsanpham)

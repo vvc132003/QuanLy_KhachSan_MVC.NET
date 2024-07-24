@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using Service;
 using System.Collections.Generic;
-using Emgu.CV;
-using Emgu.CV.Structure;
+
 using System.Drawing;
 using PagedList;
 
@@ -143,7 +142,15 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 return RedirectToAction("dangnhap", "dangnhap");
             }
         }
-        public IActionResult AddNhanVienn(NhanVien nhanVien, HopDongLaoDong hopDongLaoDong)
+        private async Task<string> ConvertToBase64StringAsync(IFormFile file)
+        {
+            using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+            var fileBytes = memoryStream.ToArray();
+            var base64String = Convert.ToBase64String(fileBytes);
+            return $"data:{file.ContentType};base64,{base64String}";
+        }
+        public async Task<IActionResult> AddNhanVienn(NhanVien nhanVien, HopDongLaoDong hopDongLaoDong, IFormFile image)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -158,11 +165,29 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 nhanVien.matkhau = mahoamatkhau;
                 nhanVien.solanvipham = 0;
                 nhanVien.trangthai = "Đang hoạt động";
-                int idnhanvien = nhanVienService.ThemNhanVien(nhanVien);
-                hopDongLaoDong.idnhanvien = idnhanvien;
-                hopDongLaoDong.ngaybatdau = DateTime.Now;
-                hopDongLaoDongService.ThemHopDongLaoDong(hopDongLaoDong);
-                return Redirect("~/admin/nhanvien/");
+                var fileExtension = Path.GetExtension(image.FileName).ToLowerInvariant();
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    return RedirectToAction("Index");
+                }
+                try
+                {
+                    // Convert image to base64 string
+                    var base64String = await ConvertToBase64StringAsync(image);
+                    nhanVien.image = base64String;
+                    int idnhanvien = nhanVienService.ThemNhanVien(nhanVien);
+                    hopDongLaoDong.idnhanvien = idnhanvien;
+                    hopDongLaoDong.ngaybatdau = DateTime.Now;
+                    hopDongLaoDongService.ThemHopDongLaoDong(hopDongLaoDong);
+                    return Redirect("~/admin/nhanvien/");
+                }
+                catch (Exception ex)
+                {
+                    // Handle file processing exceptions
+                    return RedirectToAction("Error", "Home");
+                }
+               
             }
             else
             {
@@ -251,42 +276,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
         {
             return View();
         }
-        public ActionResult Upload(string imagePath)
-        {
-            try
-            {
-                string cascadePath = "haarcascade_frontalface_default.xml";
-                CascadeClassifier faceCascade = new CascadeClassifier(cascadePath);
-
-                // Đọc ảnh từ đường dẫn
-                Mat image = CvInvoke.Imread(imagePath);
-
-                // Chuyển đổi ảnh sang ảnh xám để tăng hiệu suất
-                Mat grayImage = new Mat();
-                CvInvoke.CvtColor(image, grayImage, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
-
-                // Nhận diện khuôn mặt trong ảnh xám
-                Rectangle[] faces = faceCascade.DetectMultiScale(grayImage, 1.1, 5);
-
-                // Vẽ hình chữ nhật xung quanh các khuôn mặt đã nhận diện được
-                foreach (Rectangle face in faces)
-                {
-                    CvInvoke.Rectangle(image, face, new Bgr(System.Drawing.Color.Red).MCvScalar, 2);
-                }
-
-                // Lưu ảnh đã nhận diện khuôn mặt
-                string outputImagePath = "detected_faces.jpg";
-                CvInvoke.Imwrite(outputImagePath, image);
-
-                // Trả về URL đến ảnh đã nhận diện khuôn mặt
-                return Content(outputImagePath);
-            }
-            catch (Exception e)
-            {
-                // Xử lý lỗi và trả về thông điệp lỗi
-                return Content($"Lỗi không nhận dạng được khuôn mặt: {e.Message}");
-            }
-        }
+        
         public IActionResult Checkcccdnhanvien(string cccd)
         {
             NhanVien nhanVien = nhanVienService.Checkcccdnhanvien(cccd);

@@ -39,7 +39,7 @@
                             @*                             <div class="text-bg-success p-2">Thêm nhân viên</div>
                             *@
                             <div class="border border-secondary-subtle" style="padding:10px 20px">
-                                <form Action="/admin/NhanVien/AddNhanVienn" method="POST">
+                                <form Action="/admin/NhanVien/AddNhanVienn" method="POST" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="mb-3">
@@ -119,10 +119,28 @@
                                                 <label for="ngaysinh" class="form-label">Ngày sinh:</label>
                                                 <input type="datetime-local" class="form-control" id="ngaysinh" name="ngaysinh" required>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="image" class="form-label">Ảnh:</label>
-                                                <input type="text" class="form-control" id="image" name="image" required>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <input type="file" name="image" id="image" class="form-control" required />
+                                                </div>
+                                                <div class="col-6">
+                                                    <img id="preview" src="" alt="Image Preview" style="display: none; width: 100px; height: 100px;" />
+                                                </div>
                                             </div>
+                                            <script>
+                                                document.getElementById('image').addEventListener('change', function (event) {
+                                                    const file = event.target.files[0];
+                                                    if (file) {
+                                                        const reader = new FileReader();
+                                                        reader.onload = function (e) {
+                                                            const preview = document.getElementById('preview');
+                                                            preview.src = e.target.result;
+                                                            preview.style.display = 'block';
+                                                        };
+                                                        reader.readAsDataURL(file);
+                                                    }
+                                                });
+                                            </script>
                                             <div class="mb-3">
                                                 <label for="idchucvu" class="form-label">Chức vụ:</label>
                                                 <select id="idchucvu" name="idchucvu" class="form-control">

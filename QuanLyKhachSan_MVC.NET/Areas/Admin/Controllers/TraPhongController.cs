@@ -160,8 +160,9 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                         giatienphong = phong.giatientheogio;
                     }
                 }
-                lichSuThanhToanService.GuiEmailThanhToan(khachHang, giatienphong, lichSuThanhToan.phantramgiamgia, phong.sophong, datphong.ngaydat, listthueSanPham, sotienthanhtoan);
+                lichSuThanhToanService.GuiEmailThanhToan(khachHang, giatienphong, maGiamGia.phantramgiamgia, phong.sophong, datphong.ngaydat, listthueSanPham, sotienthanhtoan);
                 /// thêm lịch sử thanh toán
+                lichSuThanhToan.phantramgiamgia = maGiamGia.phantramgiamgia;
                 lichSuThanhToan.ngaythanhtoan = DateTime.Now;
                 lichSuThanhToan.sotienthanhtoan = sotienthanhtoan;
                 lichSuThanhToan.trangthai = "đã thanh toán";
@@ -177,6 +178,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     lichSuThanhToanService.ThemLichSuThanhToan(lichSuThanhToan);
                 }
                 
+
                 /// cập nhật trạng thái của phòng 
                 phong.tinhtrangphong = "chưa dọn";
                 phongService.CapNhatPhong(phong);

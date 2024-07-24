@@ -156,6 +156,7 @@
                                         <select class="form-control" id="idkhachsan">
                                             @if (khachSans.Count > 0)
                                             {
+                                                <option>Chọn khách sạn</option>
                                                 foreach (var khachSan in khachSans)
                                                 {
                                                     <option value="@khachSan.id">@khachSan.tenkhachsan</option>
@@ -224,8 +225,9 @@
                                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
-@*                                                 <th>Khách sạn</th>
- *@                                                <th>Tên sản phẩm</th>
+                                                @*                                                 <th>Khách sạn</th>
+                                                *@
+                                                <th>Tên sản phẩm</th>
                                                 <th>Số lượng thuê</th>
                                             </tr>
                                         </thead>
@@ -235,8 +237,9 @@
                                                 foreach (var sanPham in modeldataList)
                                                 {
                                                     <tr>
-@*                                                         <td>@sanPham.khachSan.tenkhachsan</td>
- *@                                                        <td>@sanPham.sanPham.tensanpham</td>
+                                                        @*                                                         <td>@sanPham.khachSan.tenkhachsan</td>
+                                                *@
+                                                        <td>@sanPham.sanPham.tensanpham</td>
                                                         <td>@sanPham.TotalRentedQuantity</td>
                                                     </tr>
                                                 }
@@ -468,11 +471,11 @@
         }
 
         var myMultipleLineChart;
-        function loadLineChart(idnam) {
+        function loadLineChart(idnam, idkhachsan) {
             $.ajax({
                 url: '/api/home/SoLuongHopDong',
                 type: 'GET',
-                data: { idnam: idnam },
+                data: { idnam: idnam, idkhachsan: idkhachsan },
                 success: function (data) {
                     var datphongData = data.datphong;
                     var huydatphongData = data.huydatphong;
@@ -605,13 +608,24 @@
             else if (startDate && endDate) {
                 loadPieChart(startDate, endDate);
             }
+            else {
+                loadPieChart();
+            }
         });
 
-        $('#idnam').on('change', function () {
-            var idnam = $('#idnam').val();
-            if (idnam > 0) {
+        $('#idnam, #idkhachsan').on('change', function () {
+            var idnam = parseInt($('#idnam').val(), 10);
+            var idkhachsan = parseInt($('#idkhachsan').val(), 10);
+            if (idkhachsan > 0 && idnam > 0) {
+                loadLineChart(idnam, idkhachsan);
+                loadBarChart(idnam);
+            }
+            else if (idnam > 0) {
                 loadBarChart(idnam);
                 loadLineChart(idnam);
+            } else {
+                loadBarChart();
+                loadLineChart();
             }
         });
 

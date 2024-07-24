@@ -1,5 +1,4 @@
-﻿using Emgu.CV.CvEnum;
-using Emgu.CV;
+﻿
 using MathNet.Numerics.Distributions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -13,7 +12,6 @@ using Service;
 using Service.Service;
 using SignalRChat.Hubs;
 using System.Security.Claims;
-using Emgu.CV.ML;
 using MathNet.Numerics.LinearAlgebra.Factorization;
 using NPOI.POIFS.Properties;
 using Org.BouncyCastle.Pqc.Crypto.Lms;
@@ -89,6 +87,12 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AllowAnonymous", policy => policy.RequireAssertion(context => true));
 });
 builder.Services.AddHttpClient();
+
+
+
+// Đăng ký dịch vụ xử lý tệp tĩnh
+builder.Services.AddDirectoryBrowser();
+
 
 builder.Services.AddSession(options =>
 {

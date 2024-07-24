@@ -22,7 +22,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             khachSanService = khachSanServices;
             khachHangService = khachHangServices;
         }
-
+       
         public IActionResult DangNhap()
         {
             NhanVien nhanVien = new NhanVien();
