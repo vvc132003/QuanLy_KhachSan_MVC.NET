@@ -38,12 +38,12 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("dangnhap", "dangnhap");
+                    return Redirect("~/customer/dangnhap/dangnhap");
                 }
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult ThemMaGiamGia(MaGiamGia magiamgias)
@@ -58,7 +58,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult DuocGiamGia(string magiamgia)

@@ -513,22 +513,6 @@
       "PackagePath": "staticwebassets\\Images\\b89220b8-447f-497a-8b35-1c60c759f7ce.jpg"
     },
     {
-      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Images\\pchinh.png",
-      "PackagePath": "staticwebassets\\Images\\pchinh.png"
-    },
-    {
-      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Images\\pchinhs.png",
-      "PackagePath": "staticwebassets\\Images\\pchinhs.png"
-    },
-    {
-      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Images\\pt.jpg",
-      "PackagePath": "staticwebassets\\Images\\pt.jpg"
-    },
-    {
-      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Images\\pt1.png",
-      "PackagePath": "staticwebassets\\Images\\pt1.png"
-    },
-    {
       "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\cascades\\haarcascade_frontalface_default.xml",
       "PackagePath": "staticwebassets\\cascades\\haarcascade_frontalface_default.xml"
     },

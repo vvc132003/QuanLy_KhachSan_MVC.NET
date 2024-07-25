@@ -100,12 +100,12 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("dangnhap", "dangnhap");
+                    return Redirect("~/customer/dangnhap/dangnhap");
                 }
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
 
@@ -149,12 +149,12 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("dangnhap", "dangnhap");
+                    return Redirect("~/customer/dangnhap/dangnhap");
                 }
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public async Task<IActionResult> ThemSanPham(SanPham sanPham, IFormFile image)
@@ -194,7 +194,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
 
@@ -317,12 +317,12 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("dangnhap", "dangnhap");
+                    return Redirect("~/customer/dangnhap/dangnhap");
                 }
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
 
@@ -339,7 +339,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
     }

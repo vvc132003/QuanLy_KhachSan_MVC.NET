@@ -66,12 +66,12 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("dangnhap", "dangnhap");
+                    return Redirect("~/customer/dangnhap/dangnhap");
                 }
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         /*  public IActionResult Index(int? sotrang)
@@ -134,12 +134,12 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("dangnhap", "dangnhap");
+                    return Redirect("~/customer/dangnhap/dangnhap");
                 }
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         private async Task<string> ConvertToBase64StringAsync(IFormFile file)
@@ -191,7 +191,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
 
@@ -224,12 +224,12 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("dangnhap", "dangnhap");
+                    return Redirect("~/customer/dangnhap/dangnhap");
                 }
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
 
@@ -250,7 +250,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
 
@@ -269,7 +269,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public ActionResult Index1()

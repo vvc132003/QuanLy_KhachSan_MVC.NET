@@ -41,7 +41,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult Index()
@@ -60,7 +60,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult DanhSachCuocTroChuyen()
@@ -127,7 +127,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult HienThiNhanVienNhan(int cuochoithoaiid)
@@ -172,7 +172,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult HienThiThongTinHoiThoai(int cuochoithoaiid)
@@ -216,7 +216,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult TinNhanBuycuochoithoaiid(int cuochoithoaiid)
@@ -274,7 +274,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
     }

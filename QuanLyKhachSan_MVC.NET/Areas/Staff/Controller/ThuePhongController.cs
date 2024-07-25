@@ -75,7 +75,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult ThemThuePhong(KhachHang khachHang, DatPhong datPhong, List<int> idsanpham, string nhanphong, string magiamgia)
@@ -370,7 +370,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
 
@@ -428,7 +428,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult ThueNhieuPhong(KhachHang khachHang, DatPhong datPhong, NhanPhong nhanPhong, List<int> idphongs, string magiamgia)
@@ -574,7 +574,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult ChiTietThuePhong(int idphong, int? sotrang)
@@ -674,7 +674,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
 

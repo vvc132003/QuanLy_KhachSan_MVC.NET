@@ -38,7 +38,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
     }

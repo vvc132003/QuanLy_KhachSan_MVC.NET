@@ -85,12 +85,12 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("dangnhap", "dangnhap");
+                    return Redirect("~/customer/dangnhap/dangnhap");
                 }
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult Index(string loaiphong)
@@ -176,7 +176,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult KhachHangbyiddatPhong(int idphong)
@@ -226,12 +226,12 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("dangnhap", "dangnhap");
+                    return Redirect("~/customer/dangnhap/dangnhap");
                 }
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
 
@@ -268,7 +268,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
 
@@ -303,7 +303,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult ThemPhong(int soluongmuonthem, Phong phong)
@@ -319,7 +319,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult Delete(int idphong)

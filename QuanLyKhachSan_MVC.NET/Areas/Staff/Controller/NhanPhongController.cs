@@ -68,7 +68,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
         public IActionResult CheckInNhanPhongOnline(NhanPhong nhanPhong, int idphong, string cccd, List<int> idsanpham)
@@ -124,7 +124,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             }
             else
             {
-                return RedirectToAction("dangnhap", "dangnhap");
+                return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
     }

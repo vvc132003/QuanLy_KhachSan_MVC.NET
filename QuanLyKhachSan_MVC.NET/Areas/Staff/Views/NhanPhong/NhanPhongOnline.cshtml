@@ -30,15 +30,15 @@
                                             <br />
                                             <div class="mb-3">
                                                 <label for="ngaydukientra" class="form-label">Số phòng:</label>
-                                                <input type="text" class="form-control" value="@Model.phong.sophong" required>
+                                                <input type="text" class="form-control" value="@Model.phong.sophong" disabled>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="ngaydukientra" class="form-label">Loại phòng:</label>
-                                                <input type="text" class="form-control" value="@Model.phong.loaiphong" required>
+                                                <input type="text" class="form-control" value="@Model.phong.loaiphong" disabled>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="ngaydukientra" class="form-label">Giá phòng:</label>
-                                                <input type="text" class="form-control" value="@string.Format("{0:N0} VNĐ",@Model.phong.giatientheogio) - @string.Format("{0:N0} VNĐ", @Model.phong.giatientheongay)" required>
+                                                <input type="text" class="form-control" value="@string.Format("{0:N0} VNĐ",@Model.phong.giatientheogio) - @string.Format("{0:N0} VNĐ", @Model.phong.giatientheongay)" disabled>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="ngaydat" class="form-label">Ngày đặt phòng:</label>

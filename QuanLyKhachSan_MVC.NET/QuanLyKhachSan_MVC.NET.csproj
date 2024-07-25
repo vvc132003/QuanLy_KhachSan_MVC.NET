@@ -8,7 +8,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="ClosedXML.DP" Version="0.95.3.31" />
-		
+		<PackageReference Include="Emgu.CV" Version="4.9.0.5494" />
+		<PackageReference Include="Emgu.CV.Bitmap" Version="4.9.0.5494" />
+		<PackageReference Include="Emgu.CV.runtime.windows" Version="4.9.0.5494" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0-preview.5.24306.7" />

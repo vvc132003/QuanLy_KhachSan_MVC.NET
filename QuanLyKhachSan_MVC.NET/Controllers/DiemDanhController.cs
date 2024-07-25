@@ -1,10 +1,9 @@
-﻿/*using Emgu.CV;
+﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Features2D;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Packaging;
 using System;
 using System.Collections.Generic;
 using System.Drawing; // Sử dụng System.Drawing cho Rectangle
@@ -22,9 +21,7 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
             public string UserName { get; set; }
             public string ImagePath { get; set; }
         }
-        <PackageReference Include = "Emgu.CV" Version="4.9.0.5494" />
-		<PackageReference Include = "Emgu.CV.Bitmap" Version="4.9.0.5494" />
-		<PackageReference Include = "Emgu.CV.runtime.windows" Version="4.9.0.5494" />
+
         private static List<User> registeredUsers = new List<User>
         {
             new User { Id = 1, UserName = "", ImagePath = "wwwroot/images/pt.jpg" },
@@ -182,4 +179,3 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 
     }
 }
-*/
