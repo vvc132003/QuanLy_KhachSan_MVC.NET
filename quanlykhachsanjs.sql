@@ -196,10 +196,13 @@ CREATE TABLE CuocHoiThoai (
     daxoavao DATETIME DEFAULT GETDATE(),
 	FOREIGN KEY (nhanvientaoid) REFERENCES NhanVien(id)
 );
+select * from NhanVien
 INSERT INTO CuocHoiThoai (tieude, nhanvientaoid, loaihoithoai)
 VALUES
-    ('Cuộc trò chuyện 1', 1, N'1-1'),
-    ('Cuộc trò chuyện 3', 2, N'nhóm');
+    (N'Cuộc trò chuyện 1', 1, N'1-1'),
+    (N'Nhóm 1', 2, N'nhóm'),
+    (N'Nhóm 2', 3, N'nhóm');
+
 								
 	CREATE TABLE NguoiThamGia (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -216,7 +219,11 @@ VALUES
     (1, 2),
     (2, 1),
     (2, 2),
-    (2, 3);
+    (2, 3),
+    (3, 3),
+    (3, 1);
+
+	select * from CuocHoiThoai
 									SELECT ch.id, ch.tieude, ch.duoctaovao,ch.loaihoithoai
                                     FROM CuocHoiThoai ch
                                     JOIN NguoiThamGia nt ON ch.id = nt.cuochoithoaiid
@@ -233,6 +240,50 @@ CREATE TABLE TinNhan (
     FOREIGN KEY (cuochoithoaiid) REFERENCES CuocHoiThoai(id),
     FOREIGN KEY (nhanvienguiid) REFERENCES NhanVien(id)
 );
+
+
+-- Inserting data into the TinNhan table
+INSERT INTO TinNhan (cuochoithoaiid, nhanvienguiid, loaitinnhan, noidung)
+VALUES
+    -- Messages for conversation 1
+    (1, 1, N'text', N'Nội dung tin nhắn 1-1'),
+    (1, 2, N'text', N'Nội dung tin nhắn 1-2'),
+    (1, 1, N'image', N'Đường dẫn ảnh 1-1'),
+    (1, 2, N'image', N'Đường dẫn ảnh 1-2'),
+    (1, 1, N'text', N'Nội dung tin nhắn 1-3'),
+    (1, 2, N'file', N'Đường dẫn file 1-1'),
+    (1, 1, N'text', N'Nội dung tin nhắn 1-4'),
+    (1, 2, N'text', N'Nội dung tin nhắn 1-5'),
+    (1, 1, N'image', N'Đường dẫn ảnh 1-3'),
+    (1, 2, N'file', N'Đường dẫn file 1-2'),
+
+
+    -- Messages for conversation 2
+    (2, 1, N'text', N'Nội dung tin nhắn 2-1'),
+    (2, 2, N'text', N'Nội dung tin nhắn 2-2'),
+    (2, 3, N'image', N'Đường dẫn ảnh 2-1'),
+    (2, 1, N'image', N'Đường dẫn ảnh 2-2'),
+    (2, 2, N'text', N'Nội dung tin nhắn 2-3'),
+    (2, 3, N'file', N'Đường dẫn file 2-1'),
+    (2, 1, N'text', N'Nội dung tin nhắn 2-4'),
+    (2, 2, N'text', N'Nội dung tin nhắn 2-5'),
+    (2, 3, N'image', N'Đường dẫn ảnh 2-3'),
+    (2, 1, N'file', N'Đường dẫn file 2-2'),
+
+    -- Messages for conversation 3
+    (3, 3, N'text', N'Nội dung tin nhắn 3-1'),
+    (3, 1, N'text', N'Nội dung tin nhắn 3-2'),
+    (3, 3, N'image', N'Đường dẫn ảnh 3-1'),
+    (3, 1, N'image', N'Đường dẫn ảnh 3-2'),
+    (3, 3, N'text', N'Nội dung tin nhắn 3-3'),
+    (3, 1, N'file', N'Đường dẫn file 3-1'),
+    (3, 3, N'text', N'Nội dung tin nhắn 3-4'),
+    (3, 1, N'text', N'Nội dung tin nhắn 3-5'),
+    (3, 3, N'image', N'Đường dẫn ảnh 3-3'),
+    (3, 1, N'file', N'Đường dẫn file 3-2');
+
+
+
 select * from TinNhan
 DECLARE @ConversationID INT = 1;
 
