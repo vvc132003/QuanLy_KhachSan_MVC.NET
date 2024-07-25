@@ -23,7 +23,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
 
         public TraPhongController(DatPhongService datPhongServices,
                                   ThueSanPhamService thueSanPhamServices,
-                                 
+
                                   LichSuThanhToanService lichSuThanhToanServices,
                                   PhongService phongServices,
                                   SuDungMaGiamGiaService sugiamGiaServices,
@@ -32,7 +32,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
         {
             datPhongService = datPhongServices;
             thueSanPhamService = thueSanPhamServices;
-            
+
             lichSuThanhToanService = lichSuThanhToanServices;
             phongService = phongServices;
             sugiamGiaService = sugiamGiaServices;
@@ -160,9 +160,9 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                         giatienphong = phong.giatientheogio;
                     }
                 }
-                lichSuThanhToanService.GuiEmailThanhToan(khachHang, giatienphong, maGiamGia.phantramgiamgia, phong.sophong, datphong.ngaydat, listthueSanPham, sotienthanhtoan);
-                /// thêm lịch sử thanh toán
-                lichSuThanhToan.phantramgiamgia = maGiamGia.phantramgiamgia;
+                lichSuThanhToanService.GuiEmailThanhToan(khachHang, giatienphong, maGiamGia?.phantramgiamgia ?? 0, phong.sophong, datphong.ngaydat, listthueSanPham, sotienthanhtoan);
+
+                lichSuThanhToan.phantramgiamgia = maGiamGia?.phantramgiamgia ?? 0;  
                 lichSuThanhToan.ngaythanhtoan = DateTime.Now;
                 lichSuThanhToan.sotienthanhtoan = sotienthanhtoan;
                 lichSuThanhToan.trangthai = "đã thanh toán";
@@ -177,7 +177,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 {
                     lichSuThanhToanService.ThemLichSuThanhToan(lichSuThanhToan);
                 }
-                
+
 
                 /// cập nhật trạng thái của phòng 
                 phong.tinhtrangphong = "chưa dọn";

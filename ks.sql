@@ -94,6 +94,14 @@ create table KhachHang
 	idtaikhoangoogle nvarchar(255)
 );
 
+create table XacMinh
+(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+	email NVARCHAR(255) NOT NULL,
+    maso NVARCHAR(6) NOT NULL,
+    thoigianhethan DATETIME NOT NULL
+)
+
 CREATE TABLE Likes
 (
     id INT IDENTITY(1,1) PRIMARY KEY,

@@ -15,7 +15,6 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 {
     public class DiemDanhController : Controller
     {
-
          <PackageReference Include = "Emgu.CV" Version="4.9.0.5494" />
     <PackageReference Include = "Emgu.CV.Bitmap" Version="4.9.0.5494" />
     <PackageReference Include = "Emgu.CV.runtime.windows" Version="4.9.0.5494" />

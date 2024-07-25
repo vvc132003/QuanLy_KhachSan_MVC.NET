@@ -1,0 +1,57 @@
+﻿@model Model.Models.Modeldata
+<link href="~/content/static/login/css/style.css" rel="stylesheet" />
+<link href="~/content/static/login/css/font-awesome.css" rel="stylesheet" />
+@Html.Partial("~/Views/layout/logo.cshtml")
+<link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+<div class="login-form w3_form">
+    <div class="login-title w3_title">
+    </div>
+    <div class="login w3_login">
+        <h2 class="login-header w3_header">Đăng nhập</h2>
+        <div class="w3l_grid">
+            <form class="login-container" Action="/KhachHang/TaoDangKy" method="post">
+                <input type="text" placeholder="Nhập tài mã xác minh" name="maso" required="">
+                <br />
+                <input type="submit" value="Xác nhận đăng ký">
+            </form>
+            <div class="second-section w3_section">
+                <div class="bottom-header w3_bottom">
+                    <h3>Hoặc</h3>
+                </div>
+                <div class="social-links w3_social">
+                    <ul>
+                        <li>
+                            <a class="facebook" href="#" target="blank"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a class="twitter" href="#" target="blank"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li>
+                            <a class="googleplus" href="/DangNhap/Loginssss" target="blank">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bottom-text w3_bottom_text">
+                <p>Chưa có tài khoản?<a href="/KhachHang/DangKy">Đăng ký</a></p>
+                <h4> <a href="#">Quên mật khẩu?</a></h4>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function togglePasswordVisibility() {
+        var matkhauInputs = document.getElementsByClassName('matkhau');
+        var checkbox = document.getElementById('checkmatkhau');
+
+        for (var i = 0; i < matkhauInputs.length; i++) {
+            if (checkbox.checked) {
+                matkhauInputs[i].type = 'text';
+            } else {
+                matkhauInputs[i].type = 'password';
+            }
+        }
+    }
+</script>
