@@ -15,22 +15,22 @@ namespace QuanLyKhachSan_MVC.NET.Controllers
 {
     public class DiemDanhController : Controller
     {
-         <PackageReference Include = "Emgu.CV" Version="4.9.0.5494" />
-    <PackageReference Include = "Emgu.CV.Bitmap" Version="4.9.0.5494" />
-    <PackageReference Include = "Emgu.CV.runtime.windows" Version="4.9.0.5494" />
+
         public class User
         {
             public int Id { get; set; }
             public string UserName { get; set; }
             public string ImagePath { get; set; }
         }
-
+        <PackageReference Include = "Emgu.CV" Version="4.9.0.5494" />
+		<PackageReference Include = "Emgu.CV.Bitmap" Version="4.9.0.5494" />
+		<PackageReference Include = "Emgu.CV.runtime.windows" Version="4.9.0.5494" />
         private static List<User> registeredUsers = new List<User>
         {
-            new User { Id = 1, UserName = "Putin", ImagePath = "wwwroot/images/pt.jpg" },
-            new User { Id = 2, UserName = "Minh chính", ImagePath = "wwwroot/images/pchinhs.png" },
-            new User { Id = 3, UserName = "Minh chính", ImagePath = "wwwroot/images/pchinh.png" },
-            new User { Id = 4, UserName = "Putin", ImagePath = "wwwroot/images/pt1.png" },
+            new User { Id = 1, UserName = "", ImagePath = "wwwroot/images/pt.jpg" },
+            new User { Id = 2, UserName = " chính", ImagePath = "wwwroot/images/pchinhs.png" },
+            new User { Id = 3, UserName = " chính", ImagePath = "wwwroot/images/pchinh.png" },
+            new User { Id = 4, UserName = "", ImagePath = "wwwroot/images/pt1.png" },
             // Add more users if needed
         };
 
