@@ -602,7 +602,7 @@
             var startDate = $('#startDate').val();
             var endDate = $('#endDate').val();
             var idkhachsan = $('#idkhachsan').val();
-            if (startDate && endDate && idkhachsan) {
+            if (startDate && endDate && idkhachsan > 0) {
                 loadPieChart(startDate, endDate, idkhachsan);
             }
             else if (startDate && endDate) {

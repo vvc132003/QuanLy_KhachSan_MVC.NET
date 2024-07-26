@@ -24,20 +24,27 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
-                int id = HttpContext.Session.GetInt32("id").Value;
-                int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
-                string hovaten = HttpContext.Session.GetString("hovaten");
-                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
-                ViewData["idkhachsan"] = idkhachsan;
-                ViewData["id"] = id;
-                ViewData["hovaten"] = hovaten;
-                ViewData["tenchucvu"] = tenchucvu;
-                List<NhanVien> nhanViens = nhanVienService.GetAllNhanVien();
-                Modeldata modeldata = new()
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
                 {
-                    listnhanVien = nhanViens
-                };
-                return View(modeldata);
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["idkhachsan"] = idkhachsan;
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    List<NhanVien> nhanViens = nhanVienService.GetAllNhanVien();
+                    Modeldata modeldata = new()
+                    {
+                        listnhanVien = nhanViens
+                    };
+                    return View(modeldata);
+                }
+                else
+                {
+                    return Redirect("~/customer/dangnhap/dangnhap");
+                }
             }
             else
             {

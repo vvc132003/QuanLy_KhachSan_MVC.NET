@@ -203,6 +203,7 @@ VALUES
     (N'Nhóm 1', 2, N'nhóm'),
     (N'Nhóm 2', 3, N'nhóm');
 
+
 								
 	CREATE TABLE NguoiThamGia (
     id INT IDENTITY(1,1) PRIMARY KEY,

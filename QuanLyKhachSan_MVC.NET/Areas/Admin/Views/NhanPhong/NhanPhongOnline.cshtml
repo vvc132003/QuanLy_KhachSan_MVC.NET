@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="row">
                         <div class="col-12">
-                            <div class="border border-secondary-subtle" style="padding:10px 20px">
+                            <div class="border border-secondary-subtle" style="padding:20px 20px">
                                 <form method="post" Action="/admin/NhanPhong/CheckInNhanPhongOnline">
                                     <input type="hidden" name="idphong" id="idphong" value="@Model.datPhong.idphong" class="form-control" />
                                     <div class="row">
@@ -50,7 +50,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="tiendatcoc" class="form-label">Tiền đặt cọc:</label>
-                                                <input type="number" class="form-control" value="@Model.datPhong.tiendatcoc" id="tiendatcoc" name="tiendatcoc" required>
+                                                <input type="text" class="form-control" value=" @string.Format("{0:N0} VNĐ", @Model.datPhong.tiendatcoc)" id="tiendatcoc" name="tiendatcoc" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="magiamgia" class="form-label">Mã giảm giá <span style="color:red;">(Nếu có)</span>:</label>
@@ -137,7 +137,6 @@
                                     </div>
                                 </form>
                             </div>
-                            <br>
                         </div>
                     </div>
                 </div>

@@ -278,13 +278,13 @@
     }
 
     .time {
-        font-size: 1px;
+        font-size: 10px;
         color: #888;
         margin-left: auto;
     }
 
     .messenger-container p {
-        font-size: 10px;
+        font-size: 16px;
     }
 
     .messenger-container h3 {
@@ -332,16 +332,15 @@
                     </div>
                     <div class="chat">
                         <div class="user-profile">
-                            @*                             <img src="user-profile-image.jpg" alt="" class="profile-image">
-                            *@                            <h3 id="name"></h3>
+                            <img src="" alt="" id="images" class="profile-image">
+                            <h3 id="name"></h3>
 
                         </div>
                         <div class="message-chat">
-
                         </div>
                         <input type="hidden" id="cuochoithoaiidinput">
                         <div class="message-input">
-                            <input type="text" id="messageInput" placeholder="Type your message...">
+                            <input type="text" id="messageInput" placeholder="Nhập tin nhắn bạn muốn gửi...">
                             <i class="fa fa-smile-o icon-inside-input" aria-hidden="true"></i>
                             <button id="sendButton" style="display: none;">
                                 <i class="fa fa-paper-plane" aria-hidden="true"></i>
@@ -373,16 +372,14 @@
 @* <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script> *@
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
     var userId = @ViewData["id"];
     var connection = new signalR.HubConnectionBuilder()
-        .withUrl('/chathub') // URL của SignalR Hub
+        .withUrl('/chathub')
         .build();
 
-    // Function to fetch list of conversations
     function fetchConversations() {
         $.ajax({
             url: '/api/Chat/DanhSachCuocTroChuyen',
@@ -390,15 +387,16 @@
             success: function (data) {
                 $('.conversation-lists').empty();
                 data.forEach(function (item) {
+                    var imageUrl = item.image || 'default-image.png';
                     var conversationHtml = `
-                            <div class="conversation" onclick="loadMessages(${item.cuocHoiThoai.id})">
-                                <img src="https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/157765/Originals/15(1).jpg" alt="">
-                                <div class="details">
-                                    <h3>${item.ten}</h3>
-                                    <p>${item.noiDungTinNhan}</p>
-                                </div>
-                                <span class="time">${formatTime(item.thoiGianNhan)}</span>
-                            </div>`;
+                                                        <div class="conversation" onclick="loadMessages(${item.cuocHoiThoai.id})">
+                                                            <img src="${imageUrl}" alt="Conversation Image" class="conversation-image">
+                                                            <div class="details">
+                                                                <h3>${item.ten}</h3>
+                                                                <p>${item.noiDungTinNhan}</p>
+                                                            </div>
+                                                            <span class="time">${formatTime(item.thoiGianNhan)}</span>
+                                                        </div>`;
                     $('.conversation-lists').append(conversationHtml);
                 });
             },
@@ -408,8 +406,9 @@
         });
     }
 
-    // Function to load messages for a conversation
+
     function loadMessages(cuocHoiThoaiId) {
+        loadHienThiThongTinHoiThoai(cuocHoiThoaiId);
         $.ajax({
             url: '/api/Chat/TinNhanBuycuochoithoaiid',
             method: 'GET',
@@ -423,13 +422,12 @@
                     nameElement.innerText = data.length > 0 ? data[0].ten : '';
                     var classs = (item.tinNhan.nhanVienGuiId != userId) ? "received" : "sent";
                     var messageHtml = `
-                            <div class="message ${classs}">
-                                <p>${item.tinNhan.noiDung}</p>
-                                <span class="time">${formatTime(item.tinNhan.duocTaoVao)}</span>
-                            </div>`;
+                                                                    <div class="message ${classs}">
+                                                                        <p>${item.tinNhan.noiDung}</p>
+                                                                    </div>`;
                     $('.message-chat').append(messageHtml);
                 });
-                // Scroll to the bottom after appending messages
+                // Cuộn xuống dưới cùng sau khi thêm tin nhắn
                 var messageChatElement = document.querySelector('.message-chat');
                 messageChatElement.scrollTop = messageChatElement.scrollHeight;
             },
@@ -439,20 +437,43 @@
         });
     }
 
-    // Function to format the time
+
+    function loadHienThiThongTinHoiThoai(cuocHoiThoaiId) {
+        $.ajax({
+            url: '/api/Chat/HienThiThongTinHoiThoai',
+            method: 'GET',
+            data: { cuochoithoaiid: cuocHoiThoaiId },
+            success: function (data) {
+                const cuochoithoaiidinput = document.getElementById('cuochoithoaiidinput');
+                const nameElement = document.getElementById('name');
+                cuochoithoaiidinput.value = data.cuocHoiThoaiId || '';
+                nameElement.innerText = data.ten || '';
+
+                var imageUrl = data.image;
+                const imageElement = document.getElementById('images');
+                imageElement.src = imageUrl;
+            },
+            error: function (err) {
+                console.error('Error fetching conversation info:', err);
+            }
+        });
+    }
+
+
+
     function formatTime(dateTime) {
         var date = new Date(dateTime);
         var hours = date.getHours();
         var minutes = date.getMinutes();
         var ampm = hours >= 12 ? 'PM' : 'AM';
         hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
+        hours = hours ? hours : 12;
         minutes = minutes < 10 ? '0' + minutes : minutes;
         var strTime = hours + ':' + minutes + ' ' + ampm;
         return strTime;
     }
 
-    // Start SignalR connection
+    // Bắt đầu kết nối SignalR
     connection.start().then(function () {
         console.log('SignalR connection established.');
 
@@ -463,13 +484,12 @@
             if (parseInt($('#cuochoithoaiidinput').val()) === cuocHoiThoaiId) {
                 var classs = (nhanVienGuiId != userId) ? 'received' : 'sent';
                 var messageHtml = `
-                        <div class="message ${classs}">
-                            <p>${noiDung}</p>
-                            <span class="time">${formatTime(new Date())}</span>
-                        </div>`;
+                                                                <div class="message ${classs}">
+                                                                    <p>${noiDung}</p>
+                                                                </div>`;
                 $('.message-chat').append(messageHtml);
 
-                // Scroll to the bottom after appending messages
+                // Cuộn xuống dưới cùng sau khi thêm tin nhắn
                 var messageChatElement = document.querySelector('.message-chat');
                 messageChatElement.scrollTop = messageChatElement.scrollHeight;
                 fetchConversations();
@@ -479,25 +499,35 @@
         console.error('SignalR connection error:', err);
     });
 
-    // Event listener for send message button
-    $('#sendButton').on('click', function () {
+    function sendMessage() {
         var messageInput = $('#messageInput').val();
         var cuocHoiThoaiId = parseInt($('#cuochoithoaiidinput').val());
-        var nhanVienGuiId = parseInt(userId); // Assuming userId is available globally
+        var nhanVienGuiId = parseInt(userId);
+
         if (messageInput.trim() !== '' && cuocHoiThoaiId) {
-            // Call the SendMessage method on the SignalR Hub
             connection.invoke('SendMessage', cuocHoiThoaiId, nhanVienGuiId, messageInput)
                 .then(function () {
-                    $('#messageInput').val(''); // Clear input field
-                    // Refresh conversations and messages
+                    $('#messageInput').val('');
                 })
                 .catch(function (err) {
                     console.error('Error sending message:', err);
                 });
         }
+    }
+
+    $('#sendButton').on('click', function () {
+        sendMessage();
     });
 
-    // Initial load of conversations
+    $('#messageInput').on('keypress', function (event) {
+        if (event.which === 13) {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+
+
+
     $(document).ready(function () {
         fetchConversations();
     });

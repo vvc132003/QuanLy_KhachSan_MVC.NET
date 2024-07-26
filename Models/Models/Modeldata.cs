@@ -102,6 +102,8 @@ namespace Model.Models
         public int Tonglikebinhluankhongthichbuyidrely { get; set; }
 
         public string Ten { get; set; }
+        public string Image { get; set; }
+
         public string NoiDungTinNhan { get; set; }
         public DateTime ThoiGianNhan { get; set; }
 

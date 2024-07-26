@@ -28,12 +28,12 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
-
                 List<CuocHoiThoai> cuochoithoailisst = cuocHoiThoaiService.GetCuocHoiThoaiListById(HttpContext.Session.GetInt32("id").Value);
                 List<Modeldata> Modeldatas = new List<Modeldata>();
                 foreach (var cuochoithoai in cuochoithoailisst)
                 {
                     string ten = "";
+                    string image = "";
                     if (cuochoithoai.LoaiHoiThoai == "1-1")
                     {
                         List<NguoiThamGia> nguoiThamGialist = nguoiThamGiaService.GetNguoiThamGiaListById(cuochoithoai.Id);
@@ -45,6 +45,7 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                                 if (nguoithamgia.NhanVienThamGiaId != id)
                                 {
                                     ten = nhanVienthamgia.hovaten;
+                                    image = nhanVienthamgia.image;
                                     break;
                                 }
                             }
@@ -72,6 +73,7 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                     {
                         cuocHoiThoai = cuochoithoai,
                         Ten = ten,
+                        Image = image,
                         NoiDungTinNhan = noidungtinnhan,
                         ThoiGianNhan = thoigiannhan
                     };
@@ -135,7 +137,57 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
             }
         }
 
+        [HttpGet("HienThiThongTinHoiThoai")]
+        public IActionResult HienThiThongTinHoiThoai(int cuochoithoaiid)
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int id = HttpContext.Session.GetInt32("id").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                string tenchucvu = HttpContext.Session.GetString("tenchucvu");
 
+                CuocHoiThoai cuochoithoai = cuocHoiThoaiService.GetCuocHoiThoaiById(cuochoithoaiid);
+                if (cuochoithoai == null)
+                {
+                    return NotFound();
+                }
+
+                string ten = "";
+                string image = "";
+                if (cuochoithoai.LoaiHoiThoai == "1-1")
+                {
+                    List<NguoiThamGia> nguoiThamGialist = nguoiThamGiaService.GetNguoiThamGiaListById(cuochoithoai.Id);
+                    foreach (var nguoithamgia in nguoiThamGialist)
+                    {
+                        NhanVien nhanVienthamgia = nhanVienService.GetNhanVienID(nguoithamgia.NhanVienThamGiaId);
+                        if (nhanVienthamgia != null && nguoithamgia.NhanVienThamGiaId != id)
+                        {
+                            ten = nhanVienthamgia.hovaten;
+                            image = nhanVienthamgia.image;
+                            break;
+                        }
+                    }
+                }
+                else if (cuochoithoai.LoaiHoiThoai == "nhóm")
+                {
+                    ten = cuochoithoai.Tieude;
+                }
+
+                var response = new
+                {
+                    CuocHoiThoaiId = cuochoithoaiid,
+                    NhanVienGuiId = id,
+                    Ten = ten,
+                    image = image,
+                };
+
+                return Ok(response);
+            }
+            else
+            {
+                return Unauthorized();
+            }
+        }
 
     }
 }
