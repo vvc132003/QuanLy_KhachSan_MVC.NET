@@ -50,6 +50,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Customer.Controllers
                         HttpContext.Session.SetString("hovaten", nhanVien.hovaten);
                         HttpContext.Session.SetString("tenchucvu", nhanVien.tenchucvu);
                         HttpContext.Session.SetInt32("idkhachsan", nhanVien.idkhachsan);
+                        HttpContext.Session.SetString("image", nhanVien.image);
                         return Redirect("~/admin/home/thongke");
                     }
                     else
@@ -59,6 +60,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Customer.Controllers
                         HttpContext.Session.SetString("hovaten", nhanVien.hovaten);
                         HttpContext.Session.SetString("tenchucvu", nhanVien.tenchucvu);
                         HttpContext.Session.SetInt32("idkhachsan", nhanVien.idkhachsan);
+                        HttpContext.Session.SetString("image", nhanVien.image);
                         return Redirect("~/staff/phong/");
 
                     }

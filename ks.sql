@@ -415,8 +415,8 @@ create table ThueSanPham
     idnhanvien int null,
     iddatphong int null,
 	ngaythue DATETIME DEFAULT GETDATE(),
+	ghichu nvarchar(255) null,
     foreign key(idsanpham) references SanPham(id),
     foreign key(idnhanvien) references NhanVien(id),
     foreign key(iddatphong) references DatPhong(id)
 );
-

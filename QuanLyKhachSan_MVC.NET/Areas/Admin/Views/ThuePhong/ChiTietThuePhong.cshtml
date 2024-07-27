@@ -52,7 +52,7 @@
                                                         <td>@item.datPhong.hovaten</td>
                                                         <td>@item.datPhong.ngaydat.ToString("dd/MM/yyyy HH:mm")</td>
                                                         <td>
-                                                            <span class="editable-date"  style="cursor: pointer;">@item.datPhong.ngaydukientra.ToString("dd/MM/yyyy HH:mm")</span>
+                                                            <span class="editable-date" style="cursor: pointer;">@item.datPhong.ngaydukientra.ToString("dd/MM/yyyy HH:mm")</span>
                                                             <input type="datetime-local" class="form-control hidden-input" name="ngaydukientra" style="display:none;">
                                                         </td>
                                                         <td>@item.datPhong.hinhthucthue</td>
@@ -75,6 +75,8 @@
                                                     <th>Thành tiền</th>
                                                     <th>Tên dịch vụ</th>
                                                     <th>Ảnh</th>
+                                                    <th>Ghi chú</th>
+
                                                     <th>Thao tác</th>
                                                 </tr>
                                             </thead>
@@ -86,6 +88,7 @@
                                                         <td>@string.Format("{0:N0} VNĐ", @thueSanPham.thanhtien)</td>
                                                         <td>@thueSanPham.tensanpham</td>
                                                         <td><img src="@thueSanPham.image" width="36px" height="36px" alt=""></td>
+                                                        <td>@thueSanPham.ghichu</td>
                                                         <td>
                                                             <a href="/admin/ThueSanPham/XoasoluongThueSanPham?id=@thueSanPham.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-danger">
                                                                 <i class="fas fa-minus"></i>
@@ -230,7 +233,7 @@
                                                     <button type="submit" class="btn btn-primary btn-lg" id="thanhtoan" disabled>
                                                         <i class="fas fa-credit-card"></i> Thanh toán
                                                     </button>
-                                                   
+
                                                 </div>
                                             </form>
                                         </div>
@@ -380,14 +383,14 @@
 
         var doiloaihinhthue = '@TempData["doiloaihinhthue"]';
         if (doiloaihinhthue === "success") {
-            $('.alert-success').show(); 
+            $('.alert-success').show();
             setTimeout(function () {
                 $('.alert-success').fadeOut('fast');
             }, 5000);
         } else if (doiloaihinhthue === "error") {
-            $('.alert-login').show(); 
+            $('.alert-login').show();
             setTimeout(function () {
-                $('.alert-login').fadeOut('fast'); 
+                $('.alert-login').fadeOut('fast');
             }, 5000);
         }
     });
@@ -441,17 +444,17 @@
 
                     data.pagedTSanPham.forEach(function (item) {
                         var productHtml = `
-                                                <tr>
-                                                    <td>${item.tensanpham}</td>
-                                                    <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
-                                                    <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
-                                                         <td>
-                                                            <a href="/admin/ThueSanPham/ThueSanPham?idsp=${item.id}&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
-                                                                <i class="fas fa-plus"></i>
-                                                            </a>
-                                                        </td>
-                                                </tr>
-                                            `;
+                                                    <tr>
+                                                        <td>${item.tensanpham}</td>
+                                                        <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
+                                                        <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
+                                                             <td>
+                                                                <a href="/admin/ThueSanPham/ThueSanPham?idsp=${item.id}&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
+                                                                    <i class="fas fa-plus"></i>
+                                                                </a>
+                                                            </td>
+                                                    </tr>
+                                                `;
                         table.row.add($(productHtml)).draw(false);
                     });
                 },

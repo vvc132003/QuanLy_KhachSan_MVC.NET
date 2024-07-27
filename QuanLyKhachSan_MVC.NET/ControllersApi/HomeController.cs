@@ -183,13 +183,20 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
         public IActionResult DoanhThuTheoThang(int? idnam)
         {
             List<LichSuThanhToan> lichSuThanhToans;
+            float tongdoangthuhuydatphong = 0;
+
             if (idnam.HasValue && idnam > 0)
             {
                 lichSuThanhToans = lichSuThanhToanService.GetLichSuThanhToanYear(idnam.Value);
+                tongdoangthuhuydatphong = huyDatPhongService.GetAllHuyDatPhong()
+                    .Where(hdp => hdp.ngayhuy.Year == idnam.Value)
+                    .Sum(huydatphong => huydatphong.sotienhoanlai);
             }
             else
             {
                 lichSuThanhToans = lichSuThanhToanService.GetLichSuThanhToan();
+                tongdoangthuhuydatphong = huyDatPhongService.GetAllHuyDatPhong()
+                    .Sum(huydatphong => huydatphong.sotienhoanlai);
             }
             float tongdoanhthutungthang = 0;
             List<Modeldata> modeldatas = new List<Modeldata>();
@@ -199,10 +206,11 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                 Modeldata modeldata = new Modeldata()
                 {
                     lichSuThanhToan = lichsuthanhtoan,
-                    Tongdoanhthutungthang = tongdoanhthutungthang,
+                    Tongdoanhthutungthang = tongdoanhthutungthang + tongdoangthuhuydatphong,
                 };
                 modeldatas.Add(modeldata);
             }
+
             return Ok(modeldatas);
         }
 

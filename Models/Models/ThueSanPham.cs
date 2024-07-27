@@ -11,5 +11,6 @@
         public int idnhanvien { get; set; }
         public int iddatphong { get; set; }
         public DateTime ngaythue { get; set; }
+        public string ghichu { get; set; }
     }
 }

@@ -389,14 +389,14 @@
                 data.forEach(function (item) {
                     var imageUrl = item.image || 'default-image.png';
                     var conversationHtml = `
-                                                    <div class="conversation" onclick="loadMessages(${item.cuocHoiThoai.id})">
-                                                        <img src="${imageUrl}" alt="Conversation Image" class="conversation-image">
-                                                        <div class="details">
-                                                            <h3>${item.ten}</h3>
-                                                            <p>${item.noiDungTinNhan}</p>
-                                                        </div>
-                                                        <span class="time">${formatTime(item.thoiGianNhan)}</span>
-                                                    </div>`;
+                                                            <div class="conversation" onclick="loadMessages(${item.cuocHoiThoai.id})">
+                                                                <img src="${imageUrl}" alt="Conversation Image" class="conversation-image">
+                                                                <div class="details">
+                                                                    <h3>${item.ten}</h3>
+                                                                    <p>${item.noiDungTinNhan}</p>
+                                                                </div>
+                                                                <span class="time">${formatTime(item.thoiGianNhan)}</span>
+                                                            </div>`;
                     $('.conversation-lists').append(conversationHtml);
                 });
             },
@@ -422,9 +422,9 @@
                     nameElement.innerText = data.length > 0 ? data[0].ten : '';
                     var classs = (item.tinNhan.nhanVienGuiId != userId) ? "received" : "sent";
                     var messageHtml = `
-                                                                <div class="message ${classs}">
-                                                                    <p>${item.tinNhan.noiDung}</p>
-                                                                </div>`;
+                                                                        <div class="message ${classs}">
+                                                                            <p>${item.tinNhan.noiDung}</p>
+                                                                        </div>`;
                     $('.message-chat').append(messageHtml);
                 });
                 // Cuộn xuống dưới cùng sau khi thêm tin nhắn
@@ -450,7 +450,7 @@
                 nameElement.innerText = data.ten || '';
 
                 var imageUrl = data.image;
-                const imageElement = document.getElementById('images'); 
+                const imageElement = document.getElementById('images');
                 imageElement.src = imageUrl;
             },
             error: function (err) {
@@ -484,9 +484,9 @@
             if (parseInt($('#cuochoithoaiidinput').val()) === cuocHoiThoaiId) {
                 var classs = (nhanVienGuiId != userId) ? 'received' : 'sent';
                 var messageHtml = `
-                                                            <div class="message ${classs}">
-                                                                <p>${noiDung}</p>
-                                                            </div>`;
+                                                                    <div class="message ${classs}">
+                                                                        <p>${noiDung}</p>
+                                                                    </div>`;
                 $('.message-chat').append(messageHtml);
 
                 // Cuộn xuống dưới cùng sau khi thêm tin nhắn

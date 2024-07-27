@@ -30,8 +30,8 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 iddatphong = (int)reader["iddatphong"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
-                                ngaythue = (DateTime)reader["ngayThue"]
-
+                                ngaythue = (DateTime)reader["ngayThue"],
+                                ghichu = reader["ghichu"].ToString(),
                             };
                             thueSanPhams.Add(thueSanPham);
                         }
@@ -65,7 +65,9 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 iddatphong = (int)reader["iddatphong"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
-                                ngaythue = (DateTime)reader["ngayThue"]
+                                ngaythue = (DateTime)reader["ngayThue"],
+                                ghichu = reader["ghichu"].ToString(),
+
                             };
                             thueSanPhams.Add(thueSanPham);
                         }
@@ -101,7 +103,9 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 iddatphong = (int)reader["iddatphong"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
-                                ngaythue = (DateTime)reader["ngayThue"]
+                                ngaythue = (DateTime)reader["ngayThue"],
+                                ghichu = reader["ghichu"].ToString(),
+
                             };
                             thueSanPhams.Add(thueSanPham);
                         }
@@ -135,7 +139,9 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 iddatphong = (int)reader["iddatphong"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
-                                ngaythue = (DateTime)reader["ngayThue"]
+                                ngaythue = (DateTime)reader["ngayThue"],
+                                ghichu = reader["ghichu"].ToString(),
+
                             };
                             thueSanPhams.Add(thueSanPham);
                         }
@@ -167,7 +173,9 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
                                 iddatphong = (int)reader["iddatphong"],
-                                ngaythue = (DateTime)reader["ngayThue"]
+                                ngaythue = (DateTime)reader["ngayThue"],
+                                ghichu = reader["ghichu"].ToString(),
+
 
                             };
                             return thueSanPham;
@@ -186,7 +194,7 @@ namespace Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string sql = "UPDATE ThueSanPham SET soluong = @soluong, thanhtien = @thanhtien, idsanpham = @idsanpham, idnhanvien = @idnhanvien, iddatphong = @iddatphong " +
+                string sql = "UPDATE ThueSanPham SET soluong = @soluong, thanhtien = @thanhtien, idsanpham = @idsanpham, idnhanvien = @idnhanvien, iddatphong = @iddatphong, ghichu = @ghichu " +
                              "WHERE id = @id";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
@@ -196,6 +204,8 @@ namespace Service
                     command.Parameters.AddWithValue("@idsanpham", thueSanPham.idsanpham);
                     command.Parameters.AddWithValue("@idnhanvien", thueSanPham.idnhanvien);
                     command.Parameters.AddWithValue("@iddatphong", thueSanPham.iddatphong);
+                    command.Parameters.AddWithValue("@ghichu", thueSanPham.ghichu);
+
                     command.Parameters.AddWithValue("@id", thueSanPham.id);
                     command.ExecuteNonQuery();
                 }
@@ -228,7 +238,9 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 iddatphong = (int)reader["iddatphong"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
-                                ngaythue = (DateTime)reader["ngayThue"]
+                                ngaythue = (DateTime)reader["ngayThue"],
+                                ghichu = reader["ghichu"].ToString(),
+
                             };
                             thueSanPhams.Add(thueSanPham);
                         }
@@ -261,7 +273,9 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 iddatphong = (int)reader["iddatphong"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
-                                ngaythue = (DateTime)reader["ngayThue"]
+                                ngaythue = (DateTime)reader["ngayThue"],
+                                ghichu = reader["ghichu"].ToString(),
+
 
                             };
                             thueSanPhams.Add(thueSanPham);
@@ -294,7 +308,9 @@ namespace Service
                                 idnhanvien = (int)reader["idnhanvien"],
                                 thanhtien = Convert.ToSingle(reader["thanhtien"]),
                                 iddatphong = (int)reader["iddatphong"],
-                                ngaythue = (DateTime)reader["ngayThue"]
+                                ngaythue = (DateTime)reader["ngayThue"],
+                                ghichu = reader["ghichu"].ToString(),
+
 
                             };
                             return thueSanPham;
@@ -313,8 +329,8 @@ namespace Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                string sql = "INSERT INTO ThueSanPham (soluong, thanhtien, idsanpham, idnhanvien, iddatphong) " +
-                                     "VALUES (@soluong, @thanhtien, @idsanpham, @idnhanvien, @iddatphong)";
+                string sql = "INSERT INTO ThueSanPham (soluong, thanhtien, idsanpham, idnhanvien, iddatphong, ghichu) " +
+                                     "VALUES (@soluong, @thanhtien, @idsanpham, @idnhanvien, @iddatphong, @ghichu)";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@soluong", thueSanPham.soluong);
@@ -322,6 +338,15 @@ namespace Service
                     command.Parameters.AddWithValue("@idsanpham", thueSanPham.idsanpham);
                     command.Parameters.AddWithValue("@idnhanvien", thueSanPham.idnhanvien);
                     command.Parameters.AddWithValue("@iddatphong", thueSanPham.iddatphong);
+                    if (thueSanPham.ghichu != null)
+                    {
+                        command.Parameters.AddWithValue("@ghichu", thueSanPham.ghichu);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@ghichu", "...");
+                    }
+
                     command.ExecuteNonQuery();
                 }
             }

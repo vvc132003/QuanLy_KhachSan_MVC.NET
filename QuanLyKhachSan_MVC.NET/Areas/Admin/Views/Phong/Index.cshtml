@@ -100,6 +100,10 @@
                                                 <i class="fas fa-exchange-alt" style="color: blue; font-size: 20px; margin-right: 5px;"></i>
                                                 Chuyển phòng
                                             </a>
+                                            <a class="gopdondatphong-button" data-phongid="@phong.id">
+                                                <i class="fas fa-object-group" style="color: orange; font-size: 20px; margin-right: 5px;"></i>
+                                                Hợp nhất đơn đặt phòng
+                                            </a>
                                         }
                                         else if (phong.tinhtrangphong == "còn trống")
                                         {
@@ -322,6 +326,37 @@ else
     </div>
 </div>
 
+<div class="modal fade" id="updateModalgopdondatphong" tabindex="-1" aria-labelledby="updateModalLabelgopdondatphong" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Hợp nhất đơn đặt phòng (Gộp đơn đặt phòng)</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" Action="/staff/thuephong/GopDonDatPhong">
+                    <input type="hidden" name="idphong" id="idphongs" class="form-control" />
+                    <div class="row">
+                        <div class="col-6">
+                            <p style="color:#000">Gộp vào</p>
+                        </div>
+                        <div class="col-6">
+                            <select id="idphongmois" name="idphongmoi" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">
+                            Huỷ
+                        </button>
+                        <input type="submit" value="Gộp đơn" class="btn btn-primary custom-button" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <style>
@@ -360,7 +395,45 @@ else
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 
+<script>
+    $(document).ready(function () {
+        $('.gopdondatphong-button').click(function (e) {
+            e.preventDefault();
+            var phongID = $(this).data('phongid');
+            $.ajax({
+                url: '/admin/thuephong/GetDatPhongByIdPhong',
+                method: 'GET',
+                data: { idphong: phongID },
+                success: function (data) {
+                    $('#idphongs').val(data.idphong);
+                    $.ajax({
+                        url: '/admin/thuephong/ListPhongTrangThaiDaDat',
+                        method: 'GET',
+                        success: function (phongList) {
+                            console.log(phongList);
+                            $('#idphongmois').empty();
+                            $('#idphongmois').append('<option value="">Chọn phòng muốn gộp</option>');
+                            phongList.forEach(function (item) {
+                                var phongOption = `
+                                                     <option value="${item.id}">${item.sophong}</option>
+                                                                    `;
+                                $('#idphongmois').append(phongOption);
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error fetching list of rooms:', error);
+                        }
+                    });
+                    $('#updateModalgopdondatphong').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching room details:', error);
+                }
+            });
+        });
+    });
 
+</script>
 
 <script>
     $(document).ready(function () {
@@ -391,7 +464,17 @@ else
 </script>
 
 
-
+@if (TempData["gopdonthanhcong"] != null)
+{
+    <script>
+        Swal.fire({
+            position: "top-right",
+            title: 'Gộp đơn thành công!',
+            icon: 'success',
+            showConfirmButton: false,
+        });
+    </script>
+}
 
 @if (TempData["thuephongthanhcong"] != null)
 {

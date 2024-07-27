@@ -422,13 +422,13 @@
                         "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
                         "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"
                     ];
-                    var revenues = new Array(12).fill(0);
+                    var revenues = new Array(12).fill(0); // Khởi tạo mảng doanh thu theo tháng
 
                     data.forEach(function (item) {
                         var payment = item.lichSuThanhToan;
                         var date = new Date(payment.ngaythanhtoan);
                         var month = date.getMonth(); // Lấy tháng (giá trị từ 0 - 11)
-                        revenues[month] += payment.sotienthanhtoan; // Cộng dồn doanh thu theo tháng
+                        revenues[month] = item.tongdoanhthutungthang;
                     });
                     var backgroundColors = generateRandomColors(months.length);
 

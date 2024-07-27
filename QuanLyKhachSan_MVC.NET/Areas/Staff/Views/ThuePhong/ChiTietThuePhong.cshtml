@@ -75,6 +75,7 @@
                                                     <th>Thành tiền</th>
                                                     <th>Tên dịch vụ</th>
                                                     <th>Ảnh</th>
+                                                    <th>Ghi chú</th>
                                                     <th>Thao tác</th>
                                                 </tr>
                                             </thead>
@@ -86,6 +87,7 @@
                                                         <td>@string.Format("{0:N0} VNĐ", @thueSanPham.thanhtien)</td>
                                                         <td>@thueSanPham.tensanpham</td>
                                                         <td><img src="@thueSanPham.image" width="36px" height="36px" alt=""></td>
+                                                        <td>@thueSanPham.ghichu</td>
                                                         <td>
                                                             <a href="/staff/ThueSanPham/XoasoluongThueSanPham?id=@thueSanPham.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-danger">
                                                                 <i class="fas fa-minus"></i>
