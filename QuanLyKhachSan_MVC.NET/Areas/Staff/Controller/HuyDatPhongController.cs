@@ -17,7 +17,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             phongService = phongServices;
             datPhongService = datPhongServices;
         }
-        public IActionResult HuyDatPhong(int idphong)
+        public IActionResult HuyDatPhong(HuyDatPhong huyDatPhong, int idphong)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -28,7 +28,8 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                 Phong phong = phongService.GetPhongID(idphong);
                 phong.tinhtrangphong = "còn trống";
                 phongService.CapNhatPhong(phong);
-                HuyDatPhong huyDatPhong = new HuyDatPhong();
+                huyDatPhong.sotienphaitra = 50;
+                huyDatPhong.sotienhoanlai = datphong.tiendatcoc * huyDatPhong.sotienphaitra / 100;
                 huyDatPhong.lydo = "";
                 huyDatPhong.ngayhuy = DateTime.Now;
                 huyDatPhong.iddatphong = datphong.id;

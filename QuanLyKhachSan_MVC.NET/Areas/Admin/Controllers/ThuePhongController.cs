@@ -891,7 +891,8 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     ViewData["id"] = idnv;
                     ViewData["hovaten"] = hovaten;
                     ViewData["tenchucvu"] = tenchucvu;
-                    List<DatPhong> listDatphong = datPhongService.GetAllDatPhongDescNgayDat();
+                    List<DatPhong> listDatphong = datPhongService.GetAllDatPhongDescNgayDat().OrderByDescending(dp => dp.ngaydat)
+                        .ToList();
                     int soluong = listDatphong.Count;
                     int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
                     int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
@@ -932,7 +933,8 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     ViewData["id"] = idnv;
                     ViewData["hovaten"] = hovaten;
                     ViewData["tenchucvu"] = tenchucvu;
-                    List<DatPhong> listDatphong = datPhongService.GetAllDatPhongDatOnline();
+                    List<DatPhong> listDatphong = datPhongService.GetAllDatPhongDatOnline().OrderByDescending(dp => dp.ngaydat)
+                        .ToList();
                     int soluong = listDatphong.Count;
                     int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
                     int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
@@ -975,7 +977,9 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     ViewData["id"] = idnv;
                     ViewData["hovaten"] = hovaten;
                     ViewData["tenchucvu"] = tenchucvu;
-                    List<DatPhong> listDatphong = datPhongService.GetAllDatPhongDat();
+                    List<DatPhong> listDatphong = datPhongService.GetAllDatPhongDat()
+                        .OrderByDescending(dp => dp.ngaydat)
+                        .ToList();
                     int soluong = listDatphong.Count;
                     int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
                     int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang

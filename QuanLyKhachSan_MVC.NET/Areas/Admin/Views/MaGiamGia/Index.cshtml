@@ -189,7 +189,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" Action="/MaGiamGia/UpdateMaGiamGia">
+                <form method="post" Action="/admin/MaGiamGia/UpdateMaGiamGia">
                     <input type="hidden" name="id" id="id" class="form-control" />
                     <div class="mb-3">
                         <label for="magiamgia" class="form-label">Mã giảm giá:</label>
@@ -322,7 +322,7 @@
 
             // AJAX request to fetch data for the 'magiamgiaId'
             $.ajax({
-                url: '/MaGiamGia/GetMaGiamGia', // Replace with your server endpoint to fetch data
+                url: '/admin/MaGiamGia/GetMaGiamGia', // Replace with your server endpoint to fetch data
                 method: 'GET',
                 data: { id: magiamgiaId }, // Send 'id' parameter to server
                 success: function (data) {

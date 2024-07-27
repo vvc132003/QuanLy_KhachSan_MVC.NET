@@ -122,7 +122,7 @@
                                                 <i style="font-size: 20px; margin-right: 14px" class="fas fa-check-circle"></i>
                                                 Check nhận phòng
                                             </a>
-                                            <a href="/admin/huydatphong/huydatphong?idphong=@phong.id">
+                                            <a class="huyphong-button" data-phongid="@phong.id">
                                                 <i class="fas fa-info-circle" style="color: red; font-size: 20px; margin-right: 5px;"></i>
                                                 Huỷ đặt phòng
                                             </a>
@@ -280,6 +280,50 @@ else
     <p>Null</p>
 
 }
+
+
+
+
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Huỷ phòng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" Action="/admin/HuyDatPhong/HuyDatPhong">
+                    <input type="hidden" name="idphong" id="idphong" class="form-control" />
+                    <div class="mb-3">
+                        <label for="tiendatcoc" class="form-label">Tiền khách đặt cọc:</label>
+                        <input type="text" name="tiendatcoc" id="tiendatcoc" class="form-control" disabled />
+                    </div>
+                    <div class="mb-3">
+                        <label for="sotienphaitra" class="form-label">Tiền khách phải trả khi huỷ phòng:</label>
+                        <input type="text" name="sotienphaitra" id="sotienphaitra" value="50%" class="form-control" disabled />
+                    </div>
+                    <div class="mb-3">
+                        <label for="sotienhoanlai" class="form-label">Số tiền khách được hoàn lại:</label>
+                        <input type="text" name="sotienhoanlai" id="sotienhoanlai" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="lydo" class="form-label">Lý do:</label>
+                        <input type="text" class="form-control" id="lydo" name="lydo">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary custom-btn-secondary" data-dismiss="modal">
+                            Huỷ
+                        </button>
+                        <input type="submit" value="Huỷ phòng" class="btn btn-primary custom-button" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <style>
     .modal-backdrop {
         background-color: rgba(0, 0, 0, 0.5);
@@ -314,6 +358,40 @@ else
 <script src="/static/custom.min.js"></script>
 <script src="/static/jquery-3.2.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.huyphong-button').click(function (e) {
+            e.preventDefault(); 
+            var phongID = $(this).data('phongid');
+            $.ajax({
+                url: '/admin/huydatphong/HuyPhongbuyid', 
+                method: 'GET',
+                data: { idphong: phongID }, 
+                success: function (data) {
+                    var formattedAmount = data.tiendatcoc.toLocaleString() + ' VNĐ';
+                    $('#tiendatcoc').val(formattedAmount);
+                    $('#idphong').val(data.idphong);
+                    var sotienhoanlai = data.tiendatcoc * 50 / 100;
+                    $('#sotienhoanlai').val(formatCurrency(sotienhoanlai));
+                    $('#updateModal').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching maGiamGia details:', error);
+                }
+            });
+        });
+        function formatCurrency(value) {
+            return value.toLocaleString() + ' VNĐ';
+        }
+    });
+</script>
+
+
+
 
 @if (TempData["thuephongthanhcong"] != null)
 {

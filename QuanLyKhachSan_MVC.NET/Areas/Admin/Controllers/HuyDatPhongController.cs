@@ -17,7 +17,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             phongService = phongServices;
             datPhongService = datPhongServices;
         }
-        public IActionResult HuyDatPhong(int idphong)
+        public IActionResult HuyDatPhong(HuyDatPhong huyDatPhong, int idphong)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -28,7 +28,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 Phong phong = phongService.GetPhongID(idphong);
                 phong.tinhtrangphong = "còn trống";
                 phongService.CapNhatPhong(phong);
-                HuyDatPhong huyDatPhong = new HuyDatPhong();
+                huyDatPhong.sotienhoanlai = datphong.tiendatcoc * huyDatPhong.sotienphaitra / 100;
                 huyDatPhong.lydo = "";
                 huyDatPhong.ngayhuy = DateTime.Now;
                 huyDatPhong.iddatphong = datphong.id;
@@ -41,6 +41,13 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 return Redirect("~/customer/dangnhap/dangnhap");
             }
         }
+
+        public IActionResult HuyPhongbuyid(int idphong)
+        {
+            DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThaiOnline(idphong);
+            return Json(datPhong);
+        }
+
         public IActionResult DanhSachHuyDatPhong(int? sotrang)
         {
             if (HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
@@ -59,11 +66,18 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
                     int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
                     PagedList.IPagedList<HuyDatPhong> ipagelisHuyDatPhong = listHuyDatPhong.ToPagedList(validPageNumber, pageSize);
-                    Modeldata yourModel = new Modeldata
+                    List<Modeldata> modeldatalist = new List<Modeldata>();
+                    foreach (var huydatphong in ipagelisHuyDatPhong)
                     {
-                        PagedTHuyDatPhong = ipagelisHuyDatPhong,
-                    };
-                    return View(yourModel);
+                        DatPhong datPhong = datPhongService.GetDatPhongByIDDatPhong(huydatphong.iddatphong);
+                        Modeldata yourModel = new Modeldata
+                        {
+                            PagedTHuyDatPhong = new List<HuyDatPhong> { huydatphong }.ToPagedList(1, 1),
+                            datPhong = datPhong,
+                        };
+                        modeldatalist.Add(yourModel);
+                    }
+                    return View(modeldatalist);
                 }
                 else
                 {

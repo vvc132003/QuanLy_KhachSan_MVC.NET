@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using Service;
+using Service.Service;
 
 namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
 {

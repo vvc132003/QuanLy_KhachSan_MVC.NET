@@ -103,9 +103,9 @@
     $(document).ready(function () {
         $('#example').DataTable({
             "paging": true,
-            "lengthChange": true,
-            "searching": false,
-            "ordering": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
             "info": false,
             "autoWidth": false,
             "responsive": true,
@@ -115,7 +115,8 @@
                 "paginate": {
                     "next": '<i class="fas fa-chevron-right"></i>',
                     "previous": '<i class="fas fa-chevron-left"></i>'
-                }
+                },
+                "search": "Tìm kiếm:",
             }
         });
     });

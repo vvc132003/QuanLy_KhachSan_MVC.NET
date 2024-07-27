@@ -301,6 +301,8 @@ CREATE TABLE MaGiamGia (
     ngaybatdau DATETIME,
     ngayketthuc DATETIME
 );
+
+
 CREATE TABLE SuDungMaGiamGia (
     id INT IDENTITY(1,1) PRIMARY KEY,
     idmagiamgia INT,	
@@ -332,9 +334,13 @@ create table HuyDatPhong
     lydo nvarchar(255) null,
 	iddatphong int null,
     idnhanvien int null,
-	foreign key(idnhanvien) references NhanVien(id),
-    foreign key (iddatphong) references DatPhong(id)
+	sotienphaitra DECIMAL(10,2) NULL,
+    sotienhoanlai DECIMAL(10,2) NULL, 
+    FOREIGN KEY (idnhanvien) REFERENCES NhanVien(id),
+	foreign key (iddatphong) references DatPhong(id)
 );
+
+
 create table NhanPhong
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
