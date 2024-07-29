@@ -22,8 +22,8 @@
 
     .messenger-container {
         display: flex;
-        width: 1200px;
-        height: 600px;
+        width: 1700px;
+        height: 850px;
         position: fixed;
         right: 160px;
         bottom: 40px;
@@ -168,8 +168,8 @@
     .messenger-container .message-input .icon-inside-input {
         position: absolute;
         right: 110px;
-        top: 94%;
-        transform: translateY(-50%);
+        top: 96%;
+        transform: translateY(-62%);
         cursor: pointer;
         font-size: 25px;
         color: #0084ff;
@@ -178,14 +178,14 @@
     .hover-content {
         display: none;
         position: absolute;
-        top: 70%;
-        left: 930px;
+        top: 76%;
+        left: 1439px;
         background-color: #fff;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         padding: 10px;
         z-index: 1;
         border-radius: 5px;
-        width: 150px;
+        width: 122px;
     }
 
         .hover-content i {
@@ -206,7 +206,7 @@
 
     .messenger-container .message-chat {
         overflow-y: auto;
-        max-height: 500px;
+        max-height: 690px;
     }
 
     .message-chat::-webkit-scrollbar {
@@ -289,6 +289,54 @@
 
     .messenger-container h3 {
         font-size: 20px;
+    }
+</style>
+<style>
+    @@media screen and (max-width: 1000px) {
+        .messenger-container {
+            display: flex;
+            width: 885px;
+            height: 850px;
+            position: fixed;
+            right: 15px;
+            bottom: 40px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+            .messenger-container h3 {
+                font-size: 17px;
+            }
+
+            .messenger-container p {
+                font-size: 10px;
+            }
+
+            .messenger-container .conversation img {
+                width: 30px;
+                height: 30px;
+                background-color: #ccc;
+                border-radius: 50%;
+                margin-right: 15px;
+            }
+
+        .hover-content {
+            display: none;
+            position: absolute;
+            top: 75%;
+            left: 628px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 1;
+            border-radius: 5px;
+            width: 122px;
+        }
+        .time {
+            font-size: 6px;
+            color: #888;
+            margin-left: auto;
+        }
     }
 </style>
 <div class="skin-default-dark fixed-layout">
@@ -389,14 +437,14 @@
                 data.forEach(function (item) {
                     var imageUrl = item.image || 'default-image.png';
                     var conversationHtml = `
-                                                        <div class="conversation" onclick="loadMessages(${item.cuocHoiThoai.id})">
-                                                            <img src="${imageUrl}" alt="Conversation Image" class="conversation-image">
-                                                            <div class="details">
-                                                                <h3>${item.ten}</h3>
-                                                                <p>${item.noiDungTinNhan}</p>
-                                                            </div>
-                                                            <span class="time">${formatTime(item.thoiGianNhan)}</span>
-                                                        </div>`;
+                                                            <div class="conversation" onclick="loadMessages(${item.cuocHoiThoai.id})">
+                                                                <img src="${imageUrl}" alt="Conversation Image" class="conversation-image">
+                                                                <div class="details">
+                                                                    <h3>${item.ten}</h3>
+                                                                    <p>${item.noiDungTinNhan}</p>
+                                                                </div>
+                                                                <span class="time">${formatTime(item.thoiGianNhan)}</span>
+                                                            </div>`;
                     $('.conversation-lists').append(conversationHtml);
                 });
             },
@@ -422,9 +470,9 @@
                     nameElement.innerText = data.length > 0 ? data[0].ten : '';
                     var classs = (item.tinNhan.nhanVienGuiId != userId) ? "received" : "sent";
                     var messageHtml = `
-                                                                    <div class="message ${classs}">
-                                                                        <p>${item.tinNhan.noiDung}</p>
-                                                                    </div>`;
+                                                                        <div class="message ${classs}">
+                                                                            <p>${item.tinNhan.noiDung}</p>
+                                                                        </div>`;
                     $('.message-chat').append(messageHtml);
                 });
                 // Cuộn xuống dưới cùng sau khi thêm tin nhắn
@@ -484,16 +532,16 @@
             if (parseInt($('#cuochoithoaiidinput').val()) === cuocHoiThoaiId) {
                 var classs = (nhanVienGuiId != userId) ? 'received' : 'sent';
                 var messageHtml = `
-                                                                <div class="message ${classs}">
-                                                                    <p>${noiDung}</p>
-                                                                </div>`;
+                                                                    <div class="message ${classs}">
+                                                                        <p>${noiDung}</p>
+                                                                    </div>`;
                 $('.message-chat').append(messageHtml);
 
                 // Cuộn xuống dưới cùng sau khi thêm tin nhắn
                 var messageChatElement = document.querySelector('.message-chat');
                 messageChatElement.scrollTop = messageChatElement.scrollHeight;
-                fetchConversations();
             }
+            fetchConversations();
         });
     }).catch(function (err) {
         console.error('SignalR connection error:', err);

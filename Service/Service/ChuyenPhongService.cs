@@ -18,7 +18,14 @@ namespace Service
                 using (SqlCommand command = new SqlCommand(insertQuery, connection))
                 {
                     command.Parameters.AddWithValue("@ngaychuyen", chuyenPhong.ngaychuyen);
-                    command.Parameters.AddWithValue("@lydo", chuyenPhong.lydo);
+                    if (chuyenPhong.lydo != null)
+                    {
+                        command.Parameters.AddWithValue("@lydo", chuyenPhong.lydo);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@lydo", "...");
+                    }
                     command.Parameters.AddWithValue("@idkhachhang", chuyenPhong.idkhachhang);
                     command.Parameters.AddWithValue("@idnhanvien", chuyenPhong.idnhanvien);
                     command.Parameters.AddWithValue("@idphongcu", chuyenPhong.idphongcu);

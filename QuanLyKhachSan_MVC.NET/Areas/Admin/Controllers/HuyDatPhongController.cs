@@ -28,6 +28,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 Phong phong = phongService.GetPhongID(idphong);
                 phong.tinhtrangphong = "còn trống";
                 phongService.CapNhatPhong(phong);
+                huyDatPhong.sotienphaitra = 50;
                 huyDatPhong.sotienhoanlai = datphong.tiendatcoc * huyDatPhong.sotienphaitra / 100;
                 huyDatPhong.lydo = "";
                 huyDatPhong.ngayhuy = DateTime.Now;

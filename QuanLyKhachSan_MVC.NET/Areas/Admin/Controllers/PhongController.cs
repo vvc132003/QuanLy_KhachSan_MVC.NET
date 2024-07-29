@@ -44,6 +44,13 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             this.thueSanPhamService = thueSanPhamService;
             this.khachSanService = khachSanService;
         }
+
+
+        public IActionResult Phongmoi(int idphongmoi)
+        {
+            Phong phong = phongService.GetPhongID(idphongmoi);
+            return Json(phong);
+        }
         public IActionResult DanhSachPhong(int idkhachsan)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)

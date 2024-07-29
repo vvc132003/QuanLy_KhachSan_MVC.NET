@@ -172,6 +172,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGh1ZVBob25nXERhdFBob25nRG9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/vvc13/source/repos/QuanLyKhachSan_MVC.NET/QuanLyKhachSan_MVC.NET/Areas/Admin/Views/ThuePhong/TachDon.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGh1ZVBob25nXFRhY2hEb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/vvc13/source/repos/QuanLyKhachSan_MVC.NET/QuanLyKhachSan_MVC.NET/Areas/Customer/Views/DangNhap/DangNhap.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ3VzdG9tZXJcVmlld3NcRGFuZ05oYXBcRGFuZ05oYXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -270,6 +274,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/vvc13/source/repos/QuanLyKhachSan_MVC.NET/QuanLyKhachSan_MVC.NET/Areas/Staff/Views/ThuePhong/DatPhongDon.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcVGh1ZVBob25nXERhdFBob25nRG9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vvc13/source/repos/QuanLyKhachSan_MVC.NET/QuanLyKhachSan_MVC.NET/Areas/Staff/Views/ThuePhong/TachDon.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcVGh1ZVBob25nXFRhY2hEb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/vvc13/source/repos/QuanLyKhachSan_MVC.NET/QuanLyKhachSan_MVC.NET/Views/DiemDanh/Compare.cshtml]

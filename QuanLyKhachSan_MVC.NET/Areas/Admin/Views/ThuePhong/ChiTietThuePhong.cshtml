@@ -27,21 +27,24 @@
                         <div class="border border-secondary-subtle" style="padding:10px 20px">
                             <div class="col-12">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-7">
                                         <div class="alert alert-success" style="display:none;">
                                             Đổi thành công !
                                         </div>
                                         <div class="alert alert-login " style="display:none;">
                                             Vui lòng chọn dd/MM/yyyy HH:mm !
                                         </div>
-                                        <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin khách hàng</div>
+                                        <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin đăng ký</div>
                                         <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th>Tên khách hàng</th>
+                                                    <th>Số phòng</th>
+                                                    <th>Giá phòng</th>
+                                                    <th>Loại hình thuê</th>
                                                     <th>Ngày đặt</th>
                                                     <th>Ngày dự kiến trả</th>
-                                                    <th>Loại hình thuê</th>
+                                                    <th>Tổng thời gian</th>
                                                     <th>Đổi loại hình thuê</th>
                                                 </tr>
                                             </thead>
@@ -50,12 +53,48 @@
                                                 {
                                                     <tr>
                                                         <td>@item.datPhong.hovaten</td>
+                                                        <td>@item.phong.sophong</td>
+                                                        <td>
+                                                            @{
+                                                                var ngaydukientras = @item.datPhong.ngaydukientra;
+                                                                var ngaydats = @item.datPhong.ngaydat;
+                                                                var timeDifferences = ngaydukientras - ngaydats;
+
+                                                                if (timeDifferences.TotalHours > 24)
+                                                                {
+                                                                    @string.Format("{0:N0} VNĐ", @item.phong.giatientheongay)
+                                                                }
+                                                                else
+                                                                {
+                                                                    @string.Format("{0:N0} VNĐ", @item.phong.giatientheogio)
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td>@item.datPhong.hinhthucthue</td>
                                                         <td>@item.datPhong.ngaydat.ToString("dd/MM/yyyy HH:mm")</td>
                                                         <td>
                                                             <span class="editable-date" style="cursor: pointer;">@item.datPhong.ngaydukientra.ToString("dd/MM/yyyy HH:mm")</span>
                                                             <input type="datetime-local" class="form-control hidden-input" name="ngaydukientra" style="display:none;">
                                                         </td>
-                                                        <td>@item.datPhong.hinhthucthue</td>
+                                                        <td>
+                                                            @{
+                                                                var ngaydukientra = @item.datPhong.ngaydukientra;
+                                                                var ngaydat = @item.datPhong.ngaydat;
+                                                                var timeDifference = ngaydukientra - ngaydat;
+
+                                                                if (timeDifference.TotalHours > 24)
+                                                                {
+                                                                    var days = (int)timeDifference.TotalDays;
+                                                                    @($"{days} ngày")
+                                                                }
+                                                                else
+                                                                {
+                                                                    var hours = (int)timeDifference.TotalHours;
+                                                                    @($"{hours} giờ")
+                                                                }
+                                                            }
+                                                        </td>
+
                                                         <td>
                                                             <a id="change-rent-type" class="nav-link btn btn-primary me-2"
                                                                href="/admin/thuephong/doiloaihinhthue?iddatphong=@item.datPhong.id&amp;ngaydukientra=">
@@ -76,7 +115,6 @@
                                                     <th>Tên dịch vụ</th>
                                                     <th>Ảnh</th>
                                                     <th>Ghi chú</th>
-
                                                     <th>Thao tác</th>
                                                 </tr>
                                             </thead>
@@ -109,33 +147,37 @@
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <h4>Tổng tiền thuê sản phẩm: @string.Format("{0:N0} VNĐ", @Model[0].tongtienhueSanPham)</h4>
-                                                        @if (Model != null && Model.Count > 0 && Model[0].datPhong.hinhthucthue == "Theo giờ")
+                                                        <h4>Tiền khách hàng đặt cọc: @string.Format("{0:N0} VNĐ", @Model[0].datPhong.tiendatcoc)</h4>
+                                                        @if (Model[0].datPhong.ngaydat.Hour > Model[0].thoigian.thoigiannhanphong.Hours)
                                                         {
-
-                                                            if (Model[0].giamGiaNgayle != null)
-                                                            {
-                                                                <h4>Giá phòng theo giờ: @string.Format("{0:N0} VNĐ", (Model[0].phong.giatientheogio * (100 + Model[0].giamGiaNgayle.dieuchinhgiaphong)) / 100)</h4>
-                                                                @*                                                     <h4>Gía phòng theo giờ: @string.Format("{0:N0} VNĐ", (@Model[0].phong.giatientheogio * Model[0].chinhSachGia.dieuchinhgiaphong)/100)</h4>
-                                                        *@                                                }
-                                                            else
-                                                            {
-                                                                <h4>Gía phòng theo giờ: @string.Format("{0:N0} VNĐ", @Model[0].phong.giatientheogio)</h4>
-                                                            }
+                                                            <h4>Phụ thu check in: @Model[0].thoigian.phuthunhanphong %</h4>
                                                         }
                                                         else
                                                         {
-                                                            if (Model[0].giamGiaNgayle != null)
+                                                            <h4>Phụ thu check in: 0 %</h4>
+                                                        }
+
+                                                        @{
+                                                            var now = DateTime.Now;
+                                                            var ngaydukientrass = Model[0].datPhong.ngaydukientra;
+                                                            var thoigianras = Model[0].thoigian.thoigianra;
+                                                            var scheduledCheckoutDateTime = new DateTime(
+                                                            ngaydukientrass.Year,
+                                                            ngaydukientrass.Month,
+                                                            ngaydukientrass.Day,
+                                                            thoigianras.Hours,
+                                                            thoigianras.Minutes,
+                                                            thoigianras.Seconds
+                                                            );
+                                                            var phuthuCheckout = 0f;
+                                                            if (now > scheduledCheckoutDateTime)
                                                             {
-                                                                <h4>Giá phòng theo giờ: @string.Format("{0:N0} VNĐ", (Model[0].phong.giatientheongay * (100 + Model[0].giamGiaNgayle.dieuchinhgiaphong)) / 100)</h4>
-                                                                @*                                                     <h4>Gía phòng theo ngày: @string.Format("{0:N0} VNĐ", (@Model[0].phong.giatientheongay * Model[0].chinhSachGia.dieuchinhgiaphong)/100)</h4>
-                                                        *@                                                }
-                                                            else
-                                                            {
-                                                                <h4>Gía phòng theo ngày: @string.Format("{0:N0} VNĐ", @Model[0].phong.giatientheongay)</h4>
+                                                                phuthuCheckout = Model[0].thoigian.phuthutraphong; 
                                                             }
                                                         }
-                                                        <h4>Tiền khách hàng đặt cọc: @string.Format("{0:N0} VNĐ", @Model[0].datPhong.tiendatcoc)</h4>
-                                                        <h4>Ngày đặt @Model[0].datPhong.ngaydat.ToString("dd/MM/yyyy") - ngày trả @Model[0].datPhong.ngaydukientra.ToString("dd/MM/yyyy")</h4>
+
+                                                        <h4>Phụ thu check out: @(phuthuCheckout > 0 ? $"{phuthuCheckout} %" : "0 %")</h4>
+
                                                         @if (Model != null && Model.Count > 0 && Model[0].magiamGia != null)
                                                         {
                                                             <h4>Giảm giá: @Model[0].magiamGia.phantramgiamgia %</h4>
@@ -226,11 +268,15 @@
                                                 <div class="modal-footer">
                                                     @*                                                 <input type="submit" id="thanhtoan" value="Thanh toán" class="payment-button" />
                                                     *@
+                                                    <a href="/admin/thuephong/tachdon?idphong=@Model[0].phong.id" class="btn btn-info btn-lg">
+                                                        <i class="fas fa-edit"></i>
+                                                        Tách đơn đặt phòng
+                                                    </a>
                                                     <a href="/admin/phong/danhsachphong" class="btn btn-primary btn-lg" id="quaylai">
                                                         <i class="fas fa-arrow-left"></i>
                                                         Quay lại
                                                     </a>
-                                                    <button type="submit" class="btn btn-primary btn-lg" id="thanhtoan" disabled>
+                                                    <button type="submit" class="btn btn-success btn-lg" id="thanhtoan" disabled>
                                                         <i class="fas fa-credit-card"></i> Thanh toán
                                                     </button>
 
@@ -238,7 +284,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-5">
                                         <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thêm dịch vụ</div>
                                         <br />
                                         <ul class="nav justify-content-end">
@@ -444,17 +490,17 @@
 
                     data.pagedTSanPham.forEach(function (item) {
                         var productHtml = `
-                                                    <tr>
-                                                        <td>${item.tensanpham}</td>
-                                                        <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
-                                                        <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
-                                                             <td>
-                                                                <a href="/admin/ThueSanPham/ThueSanPham?idsp=${item.id}&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
-                                                                    <i class="fas fa-plus"></i>
-                                                                </a>
-                                                            </td>
-                                                    </tr>
-                                                `;
+                                                                    <tr>
+                                                                        <td>${item.tensanpham}</td>
+                                                                        <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
+                                                                        <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
+                                                                             <td>
+                                                                                <a href="/admin/ThueSanPham/ThueSanPham?idsp=${item.id}&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
+                                                                                    <i class="fas fa-plus"></i>
+                                                                                </a>
+                                                                            </td>
+                                                                    </tr>
+                                                                `;
                         table.row.add($(productHtml)).draw(false);
                     });
                 },
