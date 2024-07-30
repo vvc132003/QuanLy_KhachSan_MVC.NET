@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service.Service;
 using Service;
 using Model.Models;
+using System.Drawing;
 
 namespace QuanLyKhachSan_MVC.NET.ControllersApi
 {
@@ -28,6 +29,21 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
             this.khachHangService = khachHangService;
         }
 
+        public class CuocTroChuyenViewModel
+        {
+            public CuocHoiThoai CuocHoiThoai { get; set; }
+            public TinNhan tinNhan1 { get; set; }
+
+            public string Ten { get; set; }
+            public string Image { get; set; }
+            /* public string NoiDungTinNhan { get; set; }
+             public DateTime ThoiGianNhan { get; set; }
+             public string LoaiTinNhan { get; set; }
+             public string Daxem { get; set; }
+             public int idnguoigui { get; set; }*/
+        }
+
+
         [HttpGet("DanhSachCuocTroChuyen")]
         public IActionResult DanhSachCuocTroChuyen()
         {
@@ -35,7 +51,7 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
                 List<CuocHoiThoai> cuochoithoailisst = cuocHoiThoaiService.GetCuocHoiThoaiListById(HttpContext.Session.GetInt32("id").Value);
-                List<Modeldata> Modeldatas = new List<Modeldata>();
+                List<CuocTroChuyenViewModel> viewModelList = new List<CuocTroChuyenViewModel>();
                 foreach (var cuochoithoai in cuochoithoailisst)
                 {
                     string ten = "";
@@ -58,7 +74,7 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                                     }
                                 }
                             }
-                            else if(nguoithamgia.nguoinhan.Equals("khachhang"))
+                            else if (nguoithamgia.nguoinhan.Equals("khachhang"))
                             {
                                 KhachHang khachHang = khachHangService.GetKhachHangbyid(nguoithamgia.NhanVienThamGiaId);
                                 if (khachHang != null)
@@ -77,30 +93,17 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                         ten = cuochoithoai.Tieude;
                     }
                     TinNhan tinNhan = tinNhanService.GetTinNhanByIdHoithoaitinnhanmoinhat(cuochoithoai.Id);
-                    string noidungtinnhan = "";
-                    DateTime thoigiannhan;
-                    if (tinNhan != null)
+                    CuocTroChuyenViewModel viewModel = new CuocTroChuyenViewModel
                     {
-                        noidungtinnhan = tinNhan.NoiDung;
-                        thoigiannhan = tinNhan.DuocTaoVao;
-                    }
-                    else
-                    {
-                        noidungtinnhan = "";
-                        thoigiannhan = DateTime.Now;
-                    }
-
-                    Modeldata modeldata = new Modeldata
-                    {
-                        cuocHoiThoai = cuochoithoai,
+                        CuocHoiThoai = cuochoithoai,
                         Ten = ten,
                         Image = image,
-                        NoiDungTinNhan = noidungtinnhan,
-                        ThoiGianNhan = thoigiannhan
+                        tinNhan1 = tinNhan,
                     };
-                    Modeldatas.Add(modeldata);
+
+                    viewModelList.Add(viewModel);
                 }
-                return Ok(Modeldatas);
+                return Ok(viewModelList);
             }
             else
             {

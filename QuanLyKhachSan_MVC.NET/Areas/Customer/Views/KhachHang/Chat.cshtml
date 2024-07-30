@@ -316,6 +316,11 @@
     .messenger-container h3 {
         font-size: 20px;
     }
+
+    .message.no-background {
+        background-color: transparent;
+    }
+
 </style>
 <style>
     @@media screen and (max-width: 1000px) {
@@ -463,15 +468,16 @@
                 $('.conversation-lists').empty();
                 data.forEach(function (item) {
                     var imageUrl = item.image || 'default-image.png';
+                    var noiDungTinNhan = item.loaitinnhan === 'image' ? 'Đã gửi 1 ảnh' : item.noiDungTinNhan;
                     var conversationHtml = `
-                                                            <div class="conversation" onclick="loadMessages(${item.cuocHoiThoai.id})">
-                                                                <img src="${imageUrl}" alt="Conversation Image" class="conversation-image">
-                                                                <div class="details">
-                                                                    <h3>${item.ten}</h3>
-                                                                    <p>${item.noiDungTinNhan}</p>
-                                                                </div>
-                                                                <span class="time">${formatTime(item.thoiGianNhan)}</span>
-                                                            </div>`;
+                                <div class="conversation" onclick="loadMessages(${item.cuocHoiThoai.id})">
+                                    <img src="${imageUrl}" alt="Conversation Image" class="conversation-image">
+                                    <div class="details">
+                                        <h3>${item.ten}</h3>
+                                        <p>${noiDungTinNhan}</p>
+                                    </div>
+                                    <span class="time">${formatTime(item.thoiGianNhan)}</span>
+                                </div>`;
                     $('.conversation-lists').append(conversationHtml);
                 });
             },
@@ -480,6 +486,8 @@
             }
         });
     }
+
+
 
 
     function loadMessages(cuocHoiThoaiId) {
@@ -496,12 +504,26 @@
                     cuochoithoaiidinput.value = data.length > 0 ? data[0].tinNhan.cuocHoiThoaiId : '';
                     nameElement.innerText = data.length > 0 ? data[0].ten : '';
                     var classs = (item.tinNhan.nhanVienGuiId != userId) ? "received" : "sent";
+
+                    var messageContent = '';
+                    var messageClass = 'message ' + classs;
+
+                    if (item.tinNhan.loaiTinNhan === 'image') {
+                        messageContent = `<img style="width: 200px;" src="${item.tinNhan.noiDung}" alt="Image" />`;
+                        messageClass += ' no-background'; // Add a class to remove background
+                    } else if (item.tinNhan.loaiTinNhan === 'link') {
+                        messageContent = `<a style="color: white; text-decoration: none;" href="${item.tinNhan.noiDung}" target="_blank">${item.tinNhan.noiDung}</a>`;
+                    } else {
+                        messageContent = `<p>${item.tinNhan.noiDung}</p>`;
+                    }
+
                     var messageHtml = `
-                                                                        <div class="message ${classs}">
-                                                                            <p>${item.tinNhan.noiDung}</p>
-                                                                        </div>`;
+                                    <div class="${messageClass}">
+                                        ${messageContent}
+                                    </div>`;
                     $('.message-chat').append(messageHtml);
                 });
+
                 // Cuộn xuống dưới cùng sau khi thêm tin nhắn
                 var messageChatElement = document.querySelector('.message-chat');
                 messageChatElement.scrollTop = messageChatElement.scrollHeight;
@@ -511,6 +533,9 @@
             }
         });
     }
+
+
+
 
 
     function loadHienThiThongTinHoiThoai(cuocHoiThoaiId) {

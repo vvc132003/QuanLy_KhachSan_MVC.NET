@@ -1,5 +1,6 @@
 ﻿create database QuanLyKhachSan;
 use QuanLyKhachSan;
+
 create table KhachSan
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -200,14 +201,9 @@ CREATE TABLE TinNhan (
     noidung NVARCHAR(255),
     duoctaovao DATETIME DEFAULT GETDATE(),
     daxoavao DATETIME DEFAULT GETDATE(),
+	daXem nvarchar(100) null,
     FOREIGN KEY (cuochoithoaiid) REFERENCES CuocHoiThoai(id),
 );
-
-
-
-
-
-
 
 CREATE TABLE Icon (
     id INT IDENTITY(1,1) PRIMARY KEY,

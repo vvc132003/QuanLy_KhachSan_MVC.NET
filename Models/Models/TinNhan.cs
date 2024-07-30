@@ -15,6 +15,7 @@ namespace Model.Models
         public string NoiDung { get; set; }
         public DateTime DuocTaoVao { get; set; }
         public DateTime DaXoaVao { get; set; }
+        public string daXem { get; set; }
 
     }
 }

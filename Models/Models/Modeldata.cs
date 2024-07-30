@@ -105,6 +105,10 @@ namespace Model.Models
         public string Image { get; set; }
 
         public string NoiDungTinNhan { get; set; }
+        public string loaitinnhan { get; set; }
+        public string daxem { get; set; }
+
+
         public DateTime ThoiGianNhan { get; set; }
 
 

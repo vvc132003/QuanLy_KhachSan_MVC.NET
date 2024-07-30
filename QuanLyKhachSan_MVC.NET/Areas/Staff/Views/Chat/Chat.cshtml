@@ -222,6 +222,10 @@
         border-radius: 10px;
     }
 
+    .bold-text {
+        font-weight: bold;
+    }
+
     .messenger-container .user-profile {
         display: flex;
         align-items: center;
@@ -275,6 +279,10 @@
         color: #fff;
         float: right;
         clear: both;
+    }
+
+    .message.no-background {
+        background-color: transparent;
     }
 
     .time {
@@ -429,7 +437,6 @@
     var connection = new signalR.HubConnectionBuilder()
         .withUrl('/chathub')
         .build();
-
     function fetchConversations() {
         $.ajax({
             url: '/api/Chat/DanhSachCuocTroChuyen',
@@ -438,16 +445,21 @@
                 $('.conversation-lists').empty();
                 data.forEach(function (item) {
                     var imageUrl = item.image || 'default-image.png';
+                    var noiDungTinNhan = item.tinNhan1.loaiTinNhan === 'image' ? 'Đã gửi 1 ảnh' : item.tinNhan1.noiDung;
+
+                    var isBold = (item.tinNhan1.daXem === 'chuaxem' && userId !== item.tinNhan1.nhanVienGuiId);
+
                     var conversationHtml = `
-                                                            <div class="conversation" onclick="loadMessages(${item.cuocHoiThoai.id})">
-                                                                <img src="${imageUrl}" alt="Conversation Image" class="conversation-image">
-                                                                <div class="details">
-                                                                    <h3>${item.ten}</h3>
-                                                                    <p>${item.noiDungTinNhan}</p>
-                                                                </div>
-                                                                <span class="time">${formatTime(item.thoiGianNhan)}</span>
-                                                            </div>`;
+                                <div class="conversation" onclick="loadMessages(${item.cuocHoiThoai.id})">
+                                    <img src="${imageUrl}" alt="Conversation Image" class="conversation-image">
+                                    <div class="details">
+                                        <h3>${item.ten}</h3>
+                                        <p class="${isBold ? 'bold-text' : ''}">${noiDungTinNhan}</p>
+                                    </div>
+                                    <span class="time">${formatTime(item.tinNhan1.duocTaoVao)}</span>
+                                </div>`;
                     $('.conversation-lists').append(conversationHtml);
+
                 });
             },
             error: function (err) {
@@ -455,6 +467,9 @@
             }
         });
     }
+
+
+
 
 
     function loadMessages(cuocHoiThoaiId) {
@@ -471,12 +486,32 @@
                     cuochoithoaiidinput.value = data.length > 0 ? data[0].tinNhan.cuocHoiThoaiId : '';
                     nameElement.innerText = data.length > 0 ? data[0].ten : '';
                     var classs = (item.tinNhan.nhanVienGuiId != userId) ? "received" : "sent";
+
+                    var messageContent = '';
+                    var messageClass = 'message ' + classs;
+
+                    if (item.tinNhan.loaiTinNhan === 'image') {
+                        messageContent = `<img style="width: 200px;" src="${item.tinNhan.noiDung}" alt="Image" />`;
+                        messageClass += ' no-background'; // Add a class to remove background
+                    } else if (item.tinNhan.loaiTinNhan === 'link') {
+                        messageContent = `<a style="color: white; text-decoration: none;" href="${item.tinNhan.noiDung}" target="_blank">${item.tinNhan.noiDung}</a>`;
+                    } else {
+                        messageContent = `<p>${item.tinNhan.noiDung}</p>`;
+                    }
+
                     var messageHtml = `
-                                                                        <div class="message ${classs}">
-                                                                            <p>${item.tinNhan.noiDung}</p>
-                                                                        </div>`;
+                                            <div class="${messageClass}">
+                                                ${messageContent}
+                                            </div>`;
                     $('.message-chat').append(messageHtml);
+                    if (item.tinNhan.daXem === 'chuaxem' && userId !== item.tinNhan.nhanVienGuiId) {
+                        markMessageAsViewed(item.tinNhan.nhanVienGuiId, item.tinNhan.id);
+                    }
                 });
+
+
+
+
                 // Cuộn xuống dưới cùng sau khi thêm tin nhắn
                 var messageChatElement = document.querySelector('.message-chat');
                 messageChatElement.scrollTop = messageChatElement.scrollHeight;
@@ -486,6 +521,8 @@
             }
         });
     }
+
+
 
 
     function loadHienThiThongTinHoiThoai(cuocHoiThoaiId) {
@@ -534,9 +571,9 @@
             if (parseInt($('#cuochoithoaiidinput').val()) === cuocHoiThoaiId) {
                 var classs = (nhanVienGuiId != userId) ? 'received' : 'sent';
                 var messageHtml = `
-                                                                    <div class="message ${classs}">
-                                                                        <p>${noiDung}</p>
-                                                                    </div>`;
+                                     <div class="message ${classs}">
+                                          <p>${noiDung}</p>
+                                     </div>`;
                 $('.message-chat').append(messageHtml);
 
                 // Cuộn xuống dưới cùng sau khi thêm tin nhắn
@@ -545,6 +582,11 @@
             }
             fetchConversations();
         });
+        connection.on('MessageViewed', function (idtinnhan) {
+            console.log('Message marked as viewed:', idtinnhan);
+            fetchConversations();
+        });
+
     }).catch(function (err) {
         console.error('SignalR connection error:', err);
     });
@@ -564,6 +606,16 @@
                 });
         }
     }
+
+    function markMessageAsViewed(nhanVienGuiId, idtinnhan) {
+        if (nhanVienGuiId !== userId) {
+            connection.invoke('MarkMessageAsViewed', idtinnhan)
+                .catch(err => console.error('Error marking message as viewed:', err));
+        }
+    }
+
+
+
 
     $('#sendButton').on('click', function () {
         sendMessage();
