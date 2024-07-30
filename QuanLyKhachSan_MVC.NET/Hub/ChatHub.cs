@@ -22,9 +22,8 @@ namespace SignalRChat.Hubs
             CuocHoiThoai cuocHoiThoai = await _cuocHoiThoaiService.GetCuocHoiThoaiByIdHub(cuocHoiThoaiId);
             await _cuocHoiThoaiService.UpdateCuocHoiThoaiHub(cuocHoiThoai);
             await Groups.AddToGroupAsync(Context.ConnectionId, cuocHoiThoaiId.ToString());
-            // gửi tin nhắn đến mọi người trong cuộc hội thoại
-            await Clients.Group(cuocHoiThoaiId.ToString()).SendAsync("ReceiveMessage", cuocHoiThoaiId, nhanVienGuiId, noiDung);
-
+            // gửi tin nhắn đến mọi người 
+            await Clients.All.SendAsync("ReceiveMessage", cuocHoiThoaiId, nhanVienGuiId, noiDung);
         }
 
 

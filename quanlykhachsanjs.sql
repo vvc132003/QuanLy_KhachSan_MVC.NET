@@ -199,10 +199,10 @@ CREATE TABLE CuocHoiThoai (
 select * from NhanVien
 INSERT INTO CuocHoiThoai (tieude, nhanvientaoid, loaihoithoai)
 VALUES
-    (N'Cuộc trò chuyện 1', 1, N'1-1'),
+    (N'Cuộc trò chuyện 2', 1, N'1-1'),
     (N'Nhóm 1', 2, N'nhóm'),
     (N'Nhóm 2', 3, N'nhóm');
-
+select * from CuocHoiThoai
 
 								
 	CREATE TABLE NguoiThamGia (
@@ -216,7 +216,7 @@ VALUES
 );
 INSERT INTO NguoiThamGia (cuochoithoaiid, nhanvienthamgiaid)
 VALUES
-    (1, 1),
+    (11, 1),
     (1, 2),
     (2, 1),
     (2, 2),

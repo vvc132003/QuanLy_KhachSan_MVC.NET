@@ -183,17 +183,15 @@ CREATE TABLE CuocHoiThoai (
 	FOREIGN KEY (nhanvientaoid) REFERENCES NhanVien(id)
 );
 
-								
 CREATE TABLE NguoiThamGia (
     id INT IDENTITY(1,1) PRIMARY KEY,
     cuochoithoaiid INT,
     nhanvienthamgiaid INT,
     duoctaovao DATETIME DEFAULT GETDATE(),
     duoccapnhatvao DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (cuochoithoaiid) REFERENCES CuocHoiThoai(id),
-    FOREIGN KEY (nhanvienthamgiaid) REFERENCES NhanVien(id)
+	nguoinhan NVARCHAR(255),
+    FOREIGN KEY (cuochoithoaiid) REFERENCES CuocHoiThoai(id)
 );
-
 CREATE TABLE TinNhan (
     id INT IDENTITY(1,1) PRIMARY KEY,
     cuochoithoaiid INT,
@@ -203,8 +201,9 @@ CREATE TABLE TinNhan (
     duoctaovao DATETIME DEFAULT GETDATE(),
     daxoavao DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (cuochoithoaiid) REFERENCES CuocHoiThoai(id),
-    FOREIGN KEY (nhanvienguiid) REFERENCES NhanVien(id)
 );
+
+
 
 
 

@@ -14,18 +14,24 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
         private readonly NguoiThamGiaService nguoiThamGiaService;
         private readonly NhanVienService nhanVienService;
         private readonly TinNhanService tinNhanService;
-        public ChatController(CuocHoiThoaiService cuocHoiThoaiService, NguoiThamGiaService nguoiThamGiaService, NhanVienService nhanVienService, TinNhanService tinNhanService)
+        private readonly KhachHangService khachHangService;
+        public ChatController(CuocHoiThoaiService cuocHoiThoaiService,
+            NguoiThamGiaService nguoiThamGiaService,
+            NhanVienService nhanVienService,
+            TinNhanService tinNhanService,
+            KhachHangService khachHangService)
         {
             this.cuocHoiThoaiService = cuocHoiThoaiService;
             this.nguoiThamGiaService = nguoiThamGiaService;
             this.nhanVienService = nhanVienService;
             this.tinNhanService = tinNhanService;
+            this.khachHangService = khachHangService;
         }
 
         [HttpGet("DanhSachCuocTroChuyen")]
         public IActionResult DanhSachCuocTroChuyen()
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
                 List<CuocHoiThoai> cuochoithoailisst = cuocHoiThoaiService.GetCuocHoiThoaiListById(HttpContext.Session.GetInt32("id").Value);
@@ -39,14 +45,29 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                         List<NguoiThamGia> nguoiThamGialist = nguoiThamGiaService.GetNguoiThamGiaListById(cuochoithoai.Id);
                         foreach (var nguoithamgia in nguoiThamGialist)
                         {
-                            NhanVien nhanVienthamgia = nhanVienService.GetNhanVienID(nguoithamgia.NhanVienThamGiaId);
-                            if (nhanVienthamgia != null)
+                            if (nguoithamgia.nguoinhan.Equals("nhanvien"))
                             {
-                                if (nguoithamgia.NhanVienThamGiaId != id)
+                                NhanVien nhanVienthamgia = nhanVienService.GetNhanVienID(nguoithamgia.NhanVienThamGiaId);
+                                if (nhanVienthamgia != null)
                                 {
-                                    ten = nhanVienthamgia.hovaten;
-                                    image = nhanVienthamgia.image;
-                                    break;
+                                    if (nguoithamgia.NhanVienThamGiaId != id)
+                                    {
+                                        ten = nhanVienthamgia.hovaten;
+                                        image = nhanVienthamgia.image;
+                                        break;
+                                    }
+                                }
+                            }
+                            else if(nguoithamgia.nguoinhan.Equals("khachhang"))
+                            {
+                                KhachHang khachHang = khachHangService.GetKhachHangbyid(nguoithamgia.NhanVienThamGiaId);
+                                if (khachHang != null)
+                                {
+                                    if (nguoithamgia.NhanVienThamGiaId != id)
+                                    {
+                                        ten = khachHang.hovaten;
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -90,7 +111,7 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
         [HttpGet("TinNhanBuycuochoithoaiid")]
         public IActionResult TinNhanBuycuochoithoaiid(int cuochoithoaiid)
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
                 List<TinNhan> tinNhanList = tinNhanService.GetTinNhanListByIdCuocTroChuyen(cuochoithoaiid);
@@ -106,13 +127,28 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                             List<NguoiThamGia> nguoiThamGialist = nguoiThamGiaService.GetNguoiThamGiaListById(cuochoithoai.Id);
                             foreach (var nguoithamgia in nguoiThamGialist)
                             {
-                                NhanVien nhanVienthamgia = nhanVienService.GetNhanVienID(nguoithamgia.NhanVienThamGiaId);
-                                if (nhanVienthamgia != null)
+                                if (nguoithamgia.nguoinhan.Equals("nhanvien"))
                                 {
-                                    if (nguoithamgia.NhanVienThamGiaId != id)
+                                    NhanVien nhanVienthamgia = nhanVienService.GetNhanVienID(nguoithamgia.NhanVienThamGiaId);
+                                    if (nhanVienthamgia != null)
                                     {
-                                        ten = nhanVienthamgia.hovaten;
-                                        break;
+                                        if (nguoithamgia.NhanVienThamGiaId != id)
+                                        {
+                                            ten = nhanVienthamgia.hovaten;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if (nguoithamgia.nguoinhan.Equals("khachhang"))
+                                {
+                                    KhachHang khachHang = khachHangService.GetKhachHangbyid(nguoithamgia.NhanVienThamGiaId);
+                                    if (khachHang != null)
+                                    {
+                                        if (nguoithamgia.NhanVienThamGiaId != id)
+                                        {
+                                            ten = khachHang.hovaten;
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -140,7 +176,7 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
         [HttpGet("HienThiThongTinHoiThoai")]
         public IActionResult HienThiThongTinHoiThoai(int cuochoithoaiid)
         {
-            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int id = HttpContext.Session.GetInt32("id").Value;
                 string hovaten = HttpContext.Session.GetString("hovaten");
@@ -159,12 +195,30 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                     List<NguoiThamGia> nguoiThamGialist = nguoiThamGiaService.GetNguoiThamGiaListById(cuochoithoai.Id);
                     foreach (var nguoithamgia in nguoiThamGialist)
                     {
-                        NhanVien nhanVienthamgia = nhanVienService.GetNhanVienID(nguoithamgia.NhanVienThamGiaId);
-                        if (nhanVienthamgia != null && nguoithamgia.NhanVienThamGiaId != id)
+                        if (nguoithamgia.nguoinhan.Equals("nhanvien"))
                         {
-                            ten = nhanVienthamgia.hovaten;
-                            image = nhanVienthamgia.image;
-                            break;
+                            NhanVien nhanVienthamgia = nhanVienService.GetNhanVienID(nguoithamgia.NhanVienThamGiaId);
+                            if (nhanVienthamgia != null)
+                            {
+                                if (nguoithamgia.NhanVienThamGiaId != id)
+                                {
+                                    ten = nhanVienthamgia.hovaten;
+                                    image = nhanVienthamgia.image;
+                                    break;
+                                }
+                            }
+                        }
+                        else if (nguoithamgia.nguoinhan.Equals("khachhang"))
+                        {
+                            KhachHang khachHang = khachHangService.GetKhachHangbyid(nguoithamgia.NhanVienThamGiaId);
+                            if (khachHang != null)
+                            {
+                                if (nguoithamgia.NhanVienThamGiaId != id)
+                                {
+                                    ten = khachHang.hovaten;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }

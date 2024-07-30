@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using PagedList;
 using Service;
 using Service.Service;
+using System.Security.Claims;
 
 namespace QuanLyKhachSan_MVC.NET.Areas.Customer.Controllers
 {
@@ -20,6 +23,53 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Customer.Controllers
             _httpClient = httpClient;
             this.xacMinhService = xacMinhService;
         }
+
+
+        public async Task<IActionResult> Chat()
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                int id = HttpContext.Session.GetInt32("id").Value;
+                string hovaten = HttpContext.Session.GetString("hovaten");
+                ViewData["id"] = id;
+                ViewData["hovaten"] = hovaten;
+                KhachHang khachHang = khachHangService.GetKhachHangbyid(id);
+                Modeldata modeldata = new Modeldata
+                {
+                    khachhang = khachHang,
+                };
+                return View(modeldata);
+            }
+            else
+            {
+                var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                if (result != null && result.Succeeded)
+                {
+                    var name = result.Principal.FindFirstValue(ClaimTypes.Name);
+                    var email = result.Principal.FindFirstValue(ClaimTypes.Email);
+                    var profileLink = result.Principal.FindFirstValue("urn:google:profile");
+                    var userId = result.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+                    var userProfileViewModel = new UserProfileViewModel
+                    {
+                        Name = name,
+                        Email = email,
+                        ProfileLink = profileLink,
+                        UserId = userId
+                    };
+                    Modeldata modeldata = new Modeldata
+                    {
+                        userProfileViewModel = userProfileViewModel
+                    };
+                    return View(modeldata);
+                }
+                else
+                {
+                    return View();
+                }
+            }
+        }
+
+
         public IActionResult DangKy()
         {
             return View();

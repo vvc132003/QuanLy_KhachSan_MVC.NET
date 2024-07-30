@@ -34,7 +34,9 @@ namespace Service
                             CuocHoiThoaiId = Convert.ToInt32(reader["CuocHoiThoaiId"]),
                             NhanVienThamGiaId = Convert.ToInt32(reader["NhanVienThamGiaId"]),
                             DuocTaoVao = Convert.ToDateTime(reader["DuocTaoVao"]),
-                            DuocCapNhatVao = Convert.ToDateTime(reader["DuocCapNhatVao"])
+                            DuocCapNhatVao = Convert.ToDateTime(reader["DuocCapNhatVao"]),
+                            nguoinhan = Convert.ToString(reader["nguoinhan"]),
+
                         };
 
                         nguoiThamGiaList.Add(nguoiThamGia);
@@ -66,7 +68,9 @@ namespace Service
                             CuocHoiThoaiId = Convert.ToInt32(reader["CuocHoiThoaiId"]),
                             NhanVienThamGiaId = Convert.ToInt32(reader["NhanVienThamGiaId"]),
                             DuocTaoVao = Convert.ToDateTime(reader["DuocTaoVao"]),
-                            DuocCapNhatVao = Convert.ToDateTime(reader["DuocCapNhatVao"])
+                            DuocCapNhatVao = Convert.ToDateTime(reader["DuocCapNhatVao"]),
+                            nguoinhan = Convert.ToString(reader["nguoinhan"]),
+
                         };
 
                         nguoiThamGiaList.Add(nguoiThamGia);
@@ -96,7 +100,9 @@ namespace Service
                             CuocHoiThoaiId = Convert.ToInt32(reader["CuocHoiThoaiId"]),
                             NhanVienThamGiaId = Convert.ToInt32(reader["NhanVienThamGiaId"]),
                             DuocTaoVao = Convert.ToDateTime(reader["DuocTaoVao"]),
-                            DuocCapNhatVao = Convert.ToDateTime(reader["DuocCapNhatVao"])
+                            DuocCapNhatVao = Convert.ToDateTime(reader["DuocCapNhatVao"]),
+                            nguoinhan = Convert.ToString(reader["nguoinhan"]),
+
                         };
                     }
                 }
@@ -110,8 +116,8 @@ namespace Service
             {
                 connection.Open();
 
-                string query = "INSERT INTO NguoiThamGia (CuocHoiThoaiId, NhanVienThamGiaId, DuocTaoVao, DuocCapNhatVao) " +
-                               "VALUES (@CuocHoiThoaiId, @NhanVienThamGiaId, @DuocTaoVao, @DuocCapNhatVao)";
+                string query = "INSERT INTO NguoiThamGia (CuocHoiThoaiId, NhanVienThamGiaId, DuocTaoVao, DuocCapNhatVao, nguoinhan) " +
+                               "VALUES (@CuocHoiThoaiId, @NhanVienThamGiaId, @DuocTaoVao, @DuocCapNhatVao, @nguoinhan)";
 
                 SqlCommand command = new SqlCommand(query, connection);
 
@@ -119,6 +125,7 @@ namespace Service
                 command.Parameters.AddWithValue("@NhanVienThamGiaId", nguoiThamGia.NhanVienThamGiaId);
                 command.Parameters.AddWithValue("@DuocTaoVao", nguoiThamGia.DuocTaoVao);
                 command.Parameters.AddWithValue("@DuocCapNhatVao", nguoiThamGia.DuocCapNhatVao);
+                command.Parameters.AddWithValue("@nguoinhan", nguoiThamGia.nguoinhan);
 
                 command.ExecuteNonQuery();
             }
@@ -132,7 +139,7 @@ namespace Service
 
                 string query = "UPDATE NguoiThamGia SET CuocHoiThoaiId = @CuocHoiThoaiId, " +
                                "NhanVienThamGiaId = @NhanVienThamGiaId, DuocTaoVao = @DuocTaoVao, " +
-                               "DuocCapNhatVao = @DuocCapNhatVao WHERE Id = @Id";
+                               "DuocCapNhatVao = @DuocCapNhatVao, nguoinhan=@nguoinhan WHERE Id = @Id";
 
                 SqlCommand command = new SqlCommand(query, connection);
 
@@ -141,6 +148,8 @@ namespace Service
                 command.Parameters.AddWithValue("@NhanVienThamGiaId", nguoiThamGia.NhanVienThamGiaId);
                 command.Parameters.AddWithValue("@DuocTaoVao", nguoiThamGia.DuocTaoVao);
                 command.Parameters.AddWithValue("@DuocCapNhatVao", nguoiThamGia.DuocCapNhatVao);
+                command.Parameters.AddWithValue("@nguoinhan", nguoiThamGia.nguoinhan);
+
 
                 command.ExecuteNonQuery();
             }

@@ -13,5 +13,6 @@ namespace Model.Models
         public int NhanVienThamGiaId { get; set; }
         public DateTime DuocTaoVao { get; set; }
         public DateTime DuocCapNhatVao { get; set; }
+        public string nguoinhan { get; set; }
     }
 }

@@ -1,0 +1,657 @@
+﻿@model Model.Models.Modeldata
+<link href="/static/img/favicon.ico" rel="icon">
+<link href="/static/img/apple-favicon.png" rel="apple-touch-icon">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+@Html.Partial("~/Areas/Customer/Views/layout/logo.cshtml")
+<link href="~/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/css/animate.min.css" rel="stylesheet" />
+<link href="~/css/slick.css" rel="stylesheet" />
+<link href="~/css/slick-theme.css" rel="stylesheet" />
+<link href="~/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+<link href="~/css/hover-style.css" rel="stylesheet" />
+<link rel='stylesheet'
+      href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link href="~/css/style.css" rel="stylesheet" />
+@Html.Partial("~/Areas/Customer/Views/layout/index.cshtml")
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+    }
+
+    .messenger-container {
+        display: flex;
+        width: 1700px;
+        height: 850px;
+        position: fixed;
+        right: 160px;
+        bottom: 40px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .messenger-container #closeButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .messenger-container #toggleButton {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1;
+        }
+
+        .messenger-container .sidebars {
+            width: 30%;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+        }
+
+        .messenger-container .search-bar input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .messenger-container .conversation-lists {
+            overflow-y: auto;
+            max-height: 530px;
+        }
+
+            .messenger-container .conversation-lists::-webkit-scrollbar {
+                width: 0px;
+            }
+
+            .messenger-container .conversation-lists::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            .messenger-container .conversation-lists::-webkit-scrollbar-thumb {
+                background-color: rgba(0, 0, 0, 0.3);
+                border-radius: 10px;
+            }
+
+        .messenger-container .conversation {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            font-size: 8px;
+        }
+
+            .messenger-container .conversation.active {
+                background-color: #f1f1f1;
+            }
+
+            .messenger-container .conversation img {
+                width: 40px;
+                height: 40px;
+                background-color: #ccc;
+                border-radius: 50%;
+                margin-right: 15px;
+                margin-bottom: 17px;
+            }
+
+        .messenger-container .details {
+            flex: 1;
+        }
+
+    p {
+        color: #666;
+        font-size: 14px;
+        line-height: 24px;
+        padding: 0px;
+        margin: 0px 0px 0px 0;
+    }
+    #rooms h3 {
+        font-size: 21px;
+        margin-bottom: 4px;
+        border: none;
+        font-weight: 100;
+    }
+            .messenger-container .details h3 {
+                margin-bottom: 5px;
+            }
+
+        .messenger-container .chat {
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+            padding: 20px;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .messenger-container .message-input {
+            display: flex;
+            align-items: center;
+            margin-bottom: -10px;
+            margin-top: 10px;
+        }
+
+    #sendButton {
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 25px;
+        cursor: pointer;
+    }
+
+        #sendButton:hover {
+            background-color: #45a049;
+        }
+
+    #likeButton {
+        background-color: #0084ff;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 25px;
+        cursor: pointer;
+    }
+
+        #likeButton:hover {
+            background-color: #0084ff;
+        }
+
+    .messenger-container .message-input input[type="text"] {
+        position: relative;
+        flex: 1;
+        padding: 15px 30px 15px 15px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        margin-right: 10px;
+        font-size: 14px;
+    }
+
+    #rooms h3 {
+        font-size: 21px;
+        margin-bottom: 10px;
+        border: none;
+        font-weight: 100;
+    }
+    .messenger-container .message-input .icon-inside-input {
+        position: absolute;
+        right: 110px;
+        top: 96%;
+        transform: translateY(-62%);
+        cursor: pointer;
+        font-size: 25px;
+        color: #0084ff;
+    }
+
+    .hover-content {
+        display: none;
+        position: absolute;
+        top: 76%;
+        left: 1439px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        z-index: 1;
+        border-radius: 5px;
+        width: 122px;
+    }
+
+        .hover-content i {
+            margin: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+    .messenger-container .message-input button {
+        padding: 5px 15px;
+        border: none;
+        border-radius: 4px;
+        background-color: #0084ff;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .messenger-container .message-chat {
+        overflow-y: auto;
+        max-height: 690px;
+    }
+
+    .message-chat::-webkit-scrollbar {
+        width: 0px;
+    }
+
+    .message-chat::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .message-chat::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+    }
+
+    .messenger-container .user-profile {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .messenger-container .profile-image {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 15px;
+    }
+
+    .messenger-container .user-profile h3 {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .messenger-container .message {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        clear: both;
+        max-width: 60%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        max-height: 67%;
+    }
+
+    .messenger-container .received,
+    .messenger-container .sent {
+        padding: 10px 15px;
+        border-radius: 15px;
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        /* Add some margin between messages */
+        word-wrap: break-word;
+    }
+
+    .messenger-container .received {
+        background-color: #d3d3d3;
+        float: left;
+        clear: both;
+    }
+
+    .messenger-container .sent {
+        background-color: #0084ff;
+        color: #fff;
+        float: right;
+        clear: both;
+    }
+
+    .time {
+        font-size: 10px;
+        color: #888;
+        margin-left: auto;
+    }
+
+    .messenger-container p {
+        font-size: 16px;
+    }
+
+    .messenger-container h3 {
+        font-size: 20px;
+    }
+</style>
+<style>
+    @@media screen and (max-width: 1000px) {
+        .messenger-container {
+            display: flex;
+            width: 885px;
+            height: 850px;
+            position: fixed;
+            right: 15px;
+            bottom: 40px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .messenger-container h3 {
+                font-size: 17px;
+            }
+
+            .messenger-container p {
+                font-size: 10px;
+            }
+
+            .messenger-container .conversation img {
+                width: 30px;
+                height: 30px;
+                background-color: #ccc;
+                border-radius: 50%;
+                margin-right: 15px;
+            }
+
+        .hover-content {
+            display: none;
+            position: absolute;
+            top: 75%;
+            left: 628px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 1;
+            border-radius: 5px;
+            width: 122px;
+        }
+
+        .time {
+            font-size: 6px;
+            color: #888;
+            margin-left: auto;
+        }
+    }
+</style>
+<div id="rooms">
+    <div class="container">
+        <br />
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <br />
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                        Xem Nhân Viên
+                    </button>
+                </div>
+
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-body">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">
+                                    <img src="" />
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Võ Văn Chính</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Trò chuyện</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="messenger-container" id="messengerContainer">
+                    <div class="sidebars">
+                        <div class="search-bar">
+                            <input type="text" placeholder="Tìm kiếm...">
+                        </div>
+                        <div class="conversation-lists">
+                        </div>
+                    </div>
+                    <div class="chat">
+                        <div class="user-profile">
+                            <img src="" alt="" id="images" class="profile-image">
+                            <h3 id="name"></h3>
+
+                        </div>
+                        <div class="message-chat">
+                        </div>
+                        <input type="hidden" id="cuochoithoaiidinput">
+                        <div class="message-input">
+                            <input type="text" id="messageInput" placeholder="Nhập tin nhắn bạn muốn gửi...">
+                            <i class="fa fa-smile-o icon-inside-input" aria-hidden="true"></i>
+                            <button id="sendButton" style="display: none;">
+                                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                            </button>
+                            <button id="likeButton">
+                                <i class="fa fa-thumbs-up like-icon" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div id="haha" class="hover-content" style="display: none;">
+                            <i onclick="insertIcon('❤️')" class="fa fa-heart" aria-hidden="true"></i>
+                            <i onclick="insertIcon('⭐')" class="fa fa-star" aria-hidden="true"></i>
+                            <i onclick="insertIcon('😊')" class="fa fa-smile-o" aria-hidden="true"></i>
+                            <i onclick="insertIcon('❤️')" class="fa fa-heart" aria-hidden="true"></i>
+                            <i onclick="insertIcon('⭐')" class="fa fa-star" aria-hidden="true"></i>
+                            <i onclick="insertIcon('😊')" class="fa fa-smile-o" aria-hidden="true"></i> <i onclick="insertIcon('❤️')" class="fa fa-heart" aria-hidden="true"></i>
+                            <i onclick="insertIcon('⭐')" class="fa fa-star" aria-hidden="true"></i>
+                            <i onclick="insertIcon('😊')" class="fa fa-smile-o" aria-hidden="true"></i> <i onclick="insertIcon('❤️')" class="fa fa-heart" aria-hidden="true"></i>
+                            <i onclick="insertIcon('⭐')" class="fa fa-star" aria-hidden="true"></i>
+                            <i onclick="insertIcon('😊')" class="fa fa-smile-o" aria-hidden="true"></i> <i onclick="insertIcon('❤️')" class="fa fa-heart" aria-hidden="true"></i>
+                            <i onclick="insertIcon('⭐')" class="fa fa-star" aria-hidden="true"></i>
+                            <i onclick="insertIcon('😊')" class="fa fa-smile-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script> *@
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    var userId = @ViewData["id"];
+    var connection = new signalR.HubConnectionBuilder()
+        .withUrl('/chathub')
+        .build();
+
+    function fetchConversations() {
+        $.ajax({
+            url: '/api/Chat/DanhSachCuocTroChuyen',
+            method: 'GET',
+            success: function (data) {
+                $('.conversation-lists').empty();
+                data.forEach(function (item) {
+                    var imageUrl = item.image || 'default-image.png';
+                    var conversationHtml = `
+                                                            <div class="conversation" onclick="loadMessages(${item.cuocHoiThoai.id})">
+                                                                <img src="${imageUrl}" alt="Conversation Image" class="conversation-image">
+                                                                <div class="details">
+                                                                    <h3>${item.ten}</h3>
+                                                                    <p>${item.noiDungTinNhan}</p>
+                                                                </div>
+                                                                <span class="time">${formatTime(item.thoiGianNhan)}</span>
+                                                            </div>`;
+                    $('.conversation-lists').append(conversationHtml);
+                });
+            },
+            error: function (err) {
+                console.error('Error fetching conversations:', err);
+            }
+        });
+    }
+
+
+    function loadMessages(cuocHoiThoaiId) {
+        loadHienThiThongTinHoiThoai(cuocHoiThoaiId);
+        $.ajax({
+            url: '/api/Chat/TinNhanBuycuochoithoaiid',
+            method: 'GET',
+            data: { cuochoithoaiid: cuocHoiThoaiId },
+            success: function (data) {
+                $('.message-chat').empty();
+                data.forEach(function (item) {
+                    const cuochoithoaiidinput = document.getElementById('cuochoithoaiidinput');
+                    const nameElement = document.getElementById('name');
+                    cuochoithoaiidinput.value = data.length > 0 ? data[0].tinNhan.cuocHoiThoaiId : '';
+                    nameElement.innerText = data.length > 0 ? data[0].ten : '';
+                    var classs = (item.tinNhan.nhanVienGuiId != userId) ? "received" : "sent";
+                    var messageHtml = `
+                                                                        <div class="message ${classs}">
+                                                                            <p>${item.tinNhan.noiDung}</p>
+                                                                        </div>`;
+                    $('.message-chat').append(messageHtml);
+                });
+                // Cuộn xuống dưới cùng sau khi thêm tin nhắn
+                var messageChatElement = document.querySelector('.message-chat');
+                messageChatElement.scrollTop = messageChatElement.scrollHeight;
+            },
+            error: function (err) {
+                console.error('Error fetching messages:', err);
+            }
+        });
+    }
+
+
+    function loadHienThiThongTinHoiThoai(cuocHoiThoaiId) {
+        $.ajax({
+            url: '/api/Chat/HienThiThongTinHoiThoai',
+            method: 'GET',
+            data: { cuochoithoaiid: cuocHoiThoaiId },
+            success: function (data) {
+                const cuochoithoaiidinput = document.getElementById('cuochoithoaiidinput');
+                const nameElement = document.getElementById('name');
+                cuochoithoaiidinput.value = data.cuocHoiThoaiId || '';
+                nameElement.innerText = data.ten || '';
+
+                var imageUrl = data.image;
+                const imageElement = document.getElementById('images');
+                imageElement.src = imageUrl;
+            },
+            error: function (err) {
+                console.error('Error fetching conversation info:', err);
+            }
+        });
+    }
+
+
+
+    function formatTime(dateTime) {
+        var date = new Date(dateTime);
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
+    }
+
+    // Bắt đầu kết nối SignalR
+    connection.start().then(function () {
+        console.log('SignalR connection established.');
+
+        // Receive messages from the SignalR Hub
+        connection.on('ReceiveMessage', function (cuocHoiThoaiId, nhanVienGuiId, noiDung) {
+            console.log('Received message:', cuocHoiThoaiId, nhanVienGuiId, noiDung);
+
+            if (parseInt($('#cuochoithoaiidinput').val()) === cuocHoiThoaiId) {
+                var classs = (nhanVienGuiId != userId) ? 'received' : 'sent';
+                var messageHtml = `
+                                                                    <div class="message ${classs}">
+                                                                        <p>${noiDung}</p>
+                                                                    </div>`;
+                $('.message-chat').append(messageHtml);
+
+                // Cuộn xuống dưới cùng sau khi thêm tin nhắn
+                var messageChatElement = document.querySelector('.message-chat');
+                messageChatElement.scrollTop = messageChatElement.scrollHeight;
+            }
+            fetchConversations();
+        });
+    }).catch(function (err) {
+        console.error('SignalR connection error:', err);
+    });
+
+    function sendMessage() {
+        var messageInput = $('#messageInput').val();
+        var cuocHoiThoaiId = parseInt($('#cuochoithoaiidinput').val());
+        var nhanVienGuiId = parseInt(userId);
+
+        if (messageInput.trim() !== '' && cuocHoiThoaiId) {
+            connection.invoke('SendMessage', cuocHoiThoaiId, nhanVienGuiId, messageInput)
+                .then(function () {
+                    $('#messageInput').val('');
+                })
+                .catch(function (err) {
+                    console.error('Error sending message:', err);
+                });
+        }
+    }
+
+    $('#sendButton').on('click', function () {
+        sendMessage();
+    });
+
+    $('#messageInput').on('keypress', function (event) {
+        if (event.which === 13) {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+
+
+
+    $(document).ready(function () {
+        fetchConversations();
+    });
+</script>
+
+<script>
+    const messageInput = document.getElementById('messageInput');
+    const likeButton = document.getElementById('likeButton');
+    const sendButton = document.getElementById('sendButton');
+
+    if (messageInput && likeButton && sendButton) {
+        messageInput.addEventListener('input', function () {
+            if (messageInput.value.trim() !== '') {
+                likeButton.style.display = 'none';
+                sendButton.style.display = 'inline-block';
+            } else {
+                likeButton.style.display = 'inline-block';
+                sendButton.style.display = 'none';
+            }
+        });
+    }
+
+    const iconInsideInput = document.querySelector('.icon-inside-input');
+    const haha = document.getElementById('haha');
+    if (iconInsideInput && haha) {
+        iconInsideInput.addEventListener('click', function () {
+            haha.style.display = haha.style.display === 'none' ? 'block' : 'none';
+            if (messageInput.value.trim() !== '') {
+                likeButton.style.display = 'none';
+                sendButton.style.display = 'inline-block';
+            } else {
+                likeButton.style.display = 'inline-block';
+                sendButton.style.display = 'none';
+            }
+        });
+    }
+
+    function insertIcon(icon) {
+        const inputField = document.getElementById('messageInput');
+        if (inputField) {
+            inputField.value += icon;
+            haha.style.display = 'none';
+            if (messageInput.value.trim() !== '') {
+                likeButton.style.display = 'none';
+                sendButton.style.display = 'inline-block';
+            } else {
+                likeButton.style.display = 'inline-block';
+                sendButton.style.display = 'none';
+            }
+        }
+    }
+</script>
