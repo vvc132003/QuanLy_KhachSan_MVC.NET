@@ -21,13 +21,13 @@
                 <div class="card">
                     <div class="row">
                         <div class="border border-secondary-subtle" style="padding:20px 20px">
-                            <h4>Phòng hiện tại: @Model.phong.sophong - Đơn hiện tại @Model.datPhong.id</h4>
+                            <h3 style="font-weight:500;">Phòng hiện tại: @Model.phong.sophong - Đơn hiện tại @Model.datPhong.id</h3>
                             <br />
                             <form Action="/staff/ThuePhong/AddThuePhongTachDon" method="POST">
                                 <input type="hidden" id="idphong" name="idphong" value="@Model.phong.id" class="form-control" />
                                 <div class="row">
                                     <div class="col-3">
-                                        <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin đăng ký được tách phòng</div>
+                                        <h4 class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin đăng ký được tách phòng</h4>
                                         <br />
                                         <div class="row">
                                             <div class="col-6">
@@ -76,7 +76,7 @@
                                         </div>
                                     </div>
                                     <div class="col-3">
-                                        <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin khách hàng</div>
+                                        <h4 class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin khách hàng</h4>
                                         <br />
                                         <div class="mb-3">
                                             <label for="hovaten" class="form-label">
@@ -118,7 +118,7 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Dịch vụ được thuê tại đơn: @Model.datPhong.id</div>
+                                        <h4 class="p-2" style="background-color:#f8f9fa;font-weight:500;">Dịch vụ được thuê tại đơn: @Model.datPhong.id</h4>
                                         <table id="exampless" class="table table-striped table-bordered" style="width:100%">
                                             <thead>
                                                 <tr>
@@ -151,7 +151,7 @@
 
                                     </div>
                                 </div>
-                                <div class="p-2 text-center" style="background-color:#f8f9fa;font-weight:500;">Các khách hàng đã đăng ký</div>
+                                <h4 class="p-2 text-center" style="background-color:#f8f9fa;font-weight:500;">Các khách hàng đã đăng ký</h4>
                                 <br />
                                 <table id="examples" class="table table-striped table-bordered " style="width:100%">
                                     <thead>
@@ -168,7 +168,7 @@
                                     </tbody>
                                 </table>
                                 <div class="modal-footer">
-                                    <a class="nav-link btn btn-primary me-2" href="/phong/">
+                                    <a class="nav-link btn btn-primary me-2" href="/staff/phong/">
                                         <i class="fas fa-arrow-left"></i>
                                         Quay lại
                                     </a>

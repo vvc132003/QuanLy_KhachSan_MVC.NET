@@ -459,7 +459,6 @@
     var connection = new signalR.HubConnectionBuilder()
         .withUrl('/chathub')
         .build();
-
     function fetchConversations() {
         $.ajax({
             url: '/api/Chat/DanhSachCuocTroChuyen',
@@ -468,17 +467,21 @@
                 $('.conversation-lists').empty();
                 data.forEach(function (item) {
                     var imageUrl = item.image || 'default-image.png';
-                    var noiDungTinNhan = item.loaitinnhan === 'image' ? 'Đã gửi 1 ảnh' : item.noiDungTinNhan;
+                    var noiDungTinNhan = item.tinNhan1.loaiTinNhan === 'image' ? 'Đã gửi 1 ảnh' : item.tinNhan1.noiDung;
+
+                    var isBold = (item.tinNhan1.daXem === 'chuaxem' && userId !== item.tinNhan1.nhanVienGuiId);
+
                     var conversationHtml = `
                                 <div class="conversation" onclick="loadMessages(${item.cuocHoiThoai.id})">
                                     <img src="${imageUrl}" alt="Conversation Image" class="conversation-image">
                                     <div class="details">
                                         <h3>${item.ten}</h3>
-                                        <p>${noiDungTinNhan}</p>
+                                        <p class="${isBold ? 'bold-text' : ''}">${noiDungTinNhan}</p>
                                     </div>
-                                    <span class="time">${formatTime(item.thoiGianNhan)}</span>
+                                    <span class="time">${formatTime(item.tinNhan1.duocTaoVao)}</span>
                                 </div>`;
                     $('.conversation-lists').append(conversationHtml);
+
                 });
             },
             error: function (err) {
@@ -486,6 +489,7 @@
             }
         });
     }
+
 
 
 
@@ -518,11 +522,17 @@
                     }
 
                     var messageHtml = `
-                                    <div class="${messageClass}">
-                                        ${messageContent}
-                                    </div>`;
+                                            <div class="${messageClass}">
+                                                ${messageContent}
+                                            </div>`;
                     $('.message-chat').append(messageHtml);
+                    if (item.tinNhan.daXem === 'chuaxem' && userId !== item.tinNhan.nhanVienGuiId) {
+                        markMessageAsViewed(item.tinNhan.nhanVienGuiId, item.tinNhan.id);
+                    }
                 });
+
+
+
 
                 // Cuộn xuống dưới cùng sau khi thêm tin nhắn
                 var messageChatElement = document.querySelector('.message-chat');
@@ -533,7 +543,6 @@
             }
         });
     }
-
 
 
 
@@ -584,9 +593,9 @@
             if (parseInt($('#cuochoithoaiidinput').val()) === cuocHoiThoaiId) {
                 var classs = (nhanVienGuiId != userId) ? 'received' : 'sent';
                 var messageHtml = `
-                                                                    <div class="message ${classs}">
-                                                                        <p>${noiDung}</p>
-                                                                    </div>`;
+                                     <div class="message ${classs}">
+                                          <p>${noiDung}</p>
+                                     </div>`;
                 $('.message-chat').append(messageHtml);
 
                 // Cuộn xuống dưới cùng sau khi thêm tin nhắn
@@ -595,6 +604,11 @@
             }
             fetchConversations();
         });
+        connection.on('MessageViewed', function (idtinnhan) {
+            console.log('Message marked as viewed:', idtinnhan);
+            fetchConversations();
+        });
+
     }).catch(function (err) {
         console.error('SignalR connection error:', err);
     });
@@ -614,6 +628,16 @@
                 });
         }
     }
+
+    function markMessageAsViewed(nhanVienGuiId, idtinnhan) {
+        if (nhanVienGuiId !== userId) {
+            connection.invoke('MarkMessageAsViewed', idtinnhan)
+                .catch(err => console.error('Error marking message as viewed:', err));
+        }
+    }
+
+
+
 
     $('#sendButton').on('click', function () {
         sendMessage();

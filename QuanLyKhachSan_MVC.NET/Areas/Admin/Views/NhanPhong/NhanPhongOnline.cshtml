@@ -25,8 +25,8 @@
                                 <form method="post" Action="/admin/NhanPhong/CheckInNhanPhongOnline">
                                     <input type="hidden" name="idphong" id="idphong" value="@Model.datPhong.idphong" class="form-control" />
                                     <div class="row">
-                                        <div class="col-4">
-                                            <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin đăng ký - <span style="color:red;">@Model.phong.loaiphong</span></div>
+                                        <div class="col-3">
+                                            <h4 class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin đăng ký - <span style="color:red;">@Model.phong.loaiphong</span></h4>
                                             <br />
                                             <div class="mb-3">
                                                 <label for="ngaydukientra" class="form-label">Số phòng:</label>
@@ -58,8 +58,8 @@
                                             </div>
                                             <p style="color:red; display: inline-block; font-weight:100;" class="thongbao"></p>
                                         </div>
-                                        <div class="col-4">
-                                            <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin khách hàng</div>
+                                        <div class="col-3">
+                                            <h4 class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thông tin khách hàng</h4>
                                             <br />
                                             <div class="mb-3">
                                                 <label for="hovaten" class="form-label">Tên khách hàng:</label>
@@ -90,30 +90,34 @@
                                                 <input type="text" name="cccd" value="@Model.khachhang.cccd" id="cccd" class="form-control" />
                                             </div>
                                         </div>
-                                        <div class="col-4">
-                                            <div class="p-2" style="background-color:#f8f9fa;font-weight:500;">Thêm dịch vụ</div>
-                                            <br />
-                                            <ul class="nav justify-content-end">
-                                                <li class="nav-item  mr-2">
-                                                    <select id="idloaidichvu" name="idloaidichvu" class="form-control">
-                                                        @if (Model.loaiDichVus != null && Model.loaiDichVus.Count > 0)
-                                                        {
-                                                            <option>Loại dịch vụ</option>
-                                                            foreach (var loaiDichVu in Model.loaiDichVus)
-                                                            {
-                                                                <option value="@loaiDichVu.id">@loaiDichVu.tenloaidichvu</option>
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="" selected>Không có dữ liệu</option>
-                                                        }
-                                                    </select>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <input type="text" class="form-control" placeholder="Nhập tên dịch vụ..." id="tensanpham">
-                                                </li>
-                                            </ul>
+                                        <div class="col-6">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <h4 class="p-2" style="background-color:#f8f9fa;font-weight:500; width:530px;">Thêm dịch vụ</h4>
+                                                </div>
+                                                <div class="col-8">
+                                                    <ul class="nav justify-content-end">
+                                                        <li class="nav-item mr-2">
+                                                            <select id="idloaidichvu" name="idloaidichvu" class="form-control">
+                                                                @if (Model.loaiDichVus != null && Model.loaiDichVus.Count > 0)
+                                                                {
+                                                                    <option>Loại dịch vụ</option>
+                                                                    foreach (var loaiDichVu in Model.loaiDichVus)
+                                                                    {
+                                                                        <option value="@loaiDichVu.id">@loaiDichVu.tenloaidichvu</option>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="" selected>Không có dữ liệu</option>
+                                                                }
+                                                            </select>
+                                                        </li>
+                                                        <li class="nav-item ">
+                                                            <input type="text" class="form-control" placeholder="Nhập tên dịch vụ..." id="tensanpham">
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             <br />
                                             <table id="example" class="table table-striped table-bordered" style="width:100%">
                                                 <thead>
@@ -128,6 +132,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
+                                    </div>
                                     </div>
                                     <br>
                                     <div class="modal-footer">
