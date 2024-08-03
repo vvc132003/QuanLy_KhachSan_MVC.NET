@@ -154,19 +154,16 @@ namespace Service
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
                 connection.Open();
-                // Adjust the query to use proper parameter handling to avoid SQL injection
-                string query = "SELECT * FROM KhachHang WHERE LTRIM(RTRIM(LOWER(email))) = LTRIM(RTRIM(LOWER(@Email)))";
+                string query = "SELECT * FROM KhachHang WHERE email = @Email";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    // Ensure the parameter value is trimmed and lowercased
-                    command.Parameters.AddWithValue("@Email", email.Trim().ToLower());
+                    command.Parameters.AddWithValue("@Email", email);
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            // Create and populate the KhachHang object from the data reader
                             KhachHang khachHang = new KhachHang
                             {
                                 id = Convert.ToInt32(reader["id"]),

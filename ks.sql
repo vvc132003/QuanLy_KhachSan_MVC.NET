@@ -1,6 +1,5 @@
 ﻿create database QuanLyKhachSan;
 use QuanLyKhachSan;
-
 create table KhachSan
 (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -58,6 +57,7 @@ create table Phong
 	idkhachsan int null,
     FOREIGN KEY (idkhachsan) REFERENCES KhachSan(id) 
 );
+
 
 create table ThietBi
 (
@@ -282,11 +282,21 @@ create table DatPhong
     foreign key(idkhachhang) references KhachHang(id),
 	FOREIGN KEY(idthoigian) references ThoiGian(id),
 );
+CREATE TABLE GopDonDatPhong
+(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    iddatphongcu INT NOT NULL,
+    iddatphongmoi INT NOT NULL,
+    tienphong DECIMAL(10,2) NULL,
+    FOREIGN KEY (iddatphongcu) REFERENCES DatPhong(id),
+    FOREIGN KEY (iddatphongmoi) REFERENCES DatPhong(id)
+);
+
 
 CREATE TABLE MaGiamGia (
     id INT IDENTITY(1,1) PRIMARY KEY,
-    magiamgia VARCHAR(20) UNIQUE,
-    mota VARCHAR(255),
+    magiamgia NVARCHAR(20) UNIQUE,
+    mota NVARCHAR(255),
 	soluongdatphongtoithieu INT,
 	tongtientoithieu DECIMAL(10,2),
 	thoigiandatphong DECIMAL(10, 2),
@@ -294,9 +304,9 @@ CREATE TABLE MaGiamGia (
 	solansudungtoida int ,
 	solandasudung int,
     ngaybatdau DATETIME,
-    ngayketthuc DATETIME
+    ngayketthuc DATETIME,
+    trangthai NVARCHAR(255)
 );
-
 
 CREATE TABLE SuDungMaGiamGia (
     id INT IDENTITY(1,1) PRIMARY KEY,

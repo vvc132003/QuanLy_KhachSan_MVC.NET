@@ -425,20 +425,20 @@
                     var revenues = new Array(12).fill(0); // Khởi tạo mảng doanh thu theo tháng
 
                     data.forEach(function (item) {
-                        var payment = item.lichSuThanhToan;
-                        var date = new Date(payment.ngaythanhtoan);
-                        var month = date.getMonth(); // Lấy tháng (giá trị từ 0 - 11)
+                        var month = item.thang - 1; // Lấy tháng (giá trị từ 0 - 11)
                         revenues[month] = item.tongdoanhthutungthang;
                     });
+
                     var backgroundColors = generateRandomColors(months.length);
 
                     var barChartCanvas = document.getElementById("barChart");
                     var barChartContext = barChartCanvas.getContext("2d");
 
-                    // Tạo biểu đồ mới
-                    if (myBarChart) {
-                        myBarChart.destroy(); // Hủy biểu đồ cũ nếu tồn tại
+                    // Hủy biểu đồ cũ nếu tồn tại
+                    if (typeof myBarChart !== 'undefined') {
+                        myBarChart.destroy();
                     }
+
                     // Tạo biểu đồ mới
                     myBarChart = new Chart(barChartContext, {
                         type: "bar",
@@ -469,6 +469,7 @@
                 }
             });
         }
+
 
         var myMultipleLineChart;
         function loadLineChart(idnam, idkhachsan) {

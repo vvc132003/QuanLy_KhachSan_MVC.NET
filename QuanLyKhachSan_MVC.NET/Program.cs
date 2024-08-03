@@ -52,6 +52,8 @@ builder.Services.AddScoped<BinhLuanService>();
 builder.Services.AddScoped<LikesBinhLuanService>();
 builder.Services.AddScoped<LoaiDichDichVuService>();
 builder.Services.AddScoped<XacMinhService>();
+builder.Services.AddScoped<GopDonDatPhongService>();
+
 
 builder.Services.AddScoped<SpeechSynthesizer>(); // Đăng ký như Singleton nếu bạn muốn sử dụng cùng một instance cho toàn bộ ứng dụng
 

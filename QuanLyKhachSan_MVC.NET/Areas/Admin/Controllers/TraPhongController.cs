@@ -18,21 +18,23 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
         private readonly MaGiamGiaService maGiamGiaService;
         private readonly KhachHangService khachHangService;
         private readonly GiamGiaNgayLeService giamGiaNgayLeService;
+        private readonly GopDonDatPhongService gopDonDatPhongService;
 
 
 
         public TraPhongController(DatPhongService datPhongServices,
                                   ThueSanPhamService thueSanPhamServices,
-
+                                  GopDonDatPhongService gopDonDatPhongService,
                                   LichSuThanhToanService lichSuThanhToanServices,
                                   PhongService phongServices,
                                   SuDungMaGiamGiaService sugiamGiaServices,
                                   ThoiGianService thoiGianServices,
-                                  MaGiamGiaService maGiamGiaServices, KhachHangService khachHangServices, GiamGiaNgayLeService giamGiaNgayLeService)
+                                  MaGiamGiaService maGiamGiaServices,
+                                  KhachHangService khachHangServices, GiamGiaNgayLeService giamGiaNgayLeService)
         {
             datPhongService = datPhongServices;
             thueSanPhamService = thueSanPhamServices;
-
+            this.gopDonDatPhongService = gopDonDatPhongService;
             lichSuThanhToanService = lichSuThanhToanServices;
             phongService = phongServices;
             sugiamGiaService = sugiamGiaServices;
@@ -46,145 +48,75 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)
             {
                 int idnv = HttpContext.Session.GetInt32("id").Value;
-                // lấy id đặt phòng từ id phòng
                 DatPhong datphong = datPhongService.GetDatPhongByIDTrangThai(idphong);
                 Phong phong = phongService.GetPhongID(idphong);
-                /// thực hiện lấy ds thuê sản phẩm và tổng tiền theo id đặt phòng
                 List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datphong.id);
                 SuDungMaGiamGia sudunggiamGia = sugiamGiaService.GetSuDungMaGiamGiaByIddatphong(datphong.id);
-                MaGiamGia maGiamGia = null;
-                float tongtienthuesanpham = 0;
-                foreach (var thueSanPham in listthueSanPham)
-                {
-                    tongtienthuesanpham += thueSanPham.thanhtien;
-                }
-                /*                ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
-                */
+                MaGiamGia maGiamGia = sudunggiamGia != null ? maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia) : null;
+                float tongtienthuesanpham = listthueSanPham.Sum(thueSanPham => thueSanPham.thanhtien);
                 GiamGiaNgayLe giamGiaNgayLe = giamGiaNgayLeService.GetGiamGiaNgayLeByNgayLe(DateTime.Today);
-                float sotienthanhtoan = 0;
-                if (sudunggiamGia != null)
+                GopDonDatPhong gopDonDatPhong = gopDonDatPhongService.GetByIdDatPhongMoi(datphong.id);
+                var ngaydukientra = datphong.ngaydukientra;
+                var ngaydat = datphong.ngaydat;
+                var tongngay = ngaydukientra - ngaydat;
+                var soNgay = Math.Ceiling(tongngay.TotalDays);
+                var soGio = Math.Ceiling(tongngay.TotalHours);
+                double tongTienPhong = 0;
+                double sotienthanhtoan = 0;
+
+                if (datphong.hinhthucthue == "Theo giờ")
                 {
-                    maGiamGia = maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia);
+                    float giaTienPhong = phong.giatientheogio;
+                    if (giamGiaNgayLe != null)
+                    {
+                        giaTienPhong *= (100 + giamGiaNgayLe.dieuchinhgiaphong) / 100;
+                    }
+                    tongTienPhong = giaTienPhong * soGio;
                 }
+                else
+                {
+                    float giaTienPhong = phong.giatientheongay;
+                    if (giamGiaNgayLe != null)
+                    {
+                        giaTienPhong *= (100 + giamGiaNgayLe.dieuchinhgiaphong) / 100;
+                    }
+                    tongTienPhong = giaTienPhong * soNgay;
+                }
+                if (gopDonDatPhong != null)
+                {
+                    tongTienPhong += gopDonDatPhong.tienphong;
+                }
+                sotienthanhtoan = tongTienPhong + tongtienthuesanpham - datphong.tiendatcoc;
                 if (maGiamGia != null)
                 {
-                    if (datphong.hinhthucthue == "Theo giờ")
-                    {
-                        if (giamGiaNgayLe != null)
-                        {
-                            // Đang trong thời gian thuê theo giờ
-                            /*                            sotienthanhtoan = ((((phong.giatientheogio * chinhSachGia.dieuchinhgiaphong) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
-                            */
-                            sotienthanhtoan = ((((phong.giatientheogio * (100 + giamGiaNgayLe.dieuchinhgiaphong)) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * (100 - maGiamGia.phantramgiamgia) / 100;
-                        }
-                        else
-                        {
-                            // Đang trong thời gian thuê theo giờ
-                            sotienthanhtoan = ((phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
-                        }
-                    }
-                    else
-                    {
-                        if (giamGiaNgayLe != null)
-                        {
-                            // Đang thuê theo ngày
-                            sotienthanhtoan = ((((phong.giatientheongay * (100 + giamGiaNgayLe.dieuchinhgiaphong)) / 100) * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * (100 - maGiamGia.phantramgiamgia) / 100;
-                            /*                            sotienthanhtoan = ((((phong.giatientheongay * chinhSachGia.dieuchinhgiaphong) / 100) * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
-                            */
-                        }
-                        else
-                        {
-                            // Đang thuê theo ngày
-                            sotienthanhtoan = ((phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc) * maGiamGia.phantramgiamgia / 100;
-                        }
-                    }
+                    sotienthanhtoan *= (100 - maGiamGia.phantramgiamgia) / 100;
                 }
-                else
-                {
-                    if (datphong.hinhthucthue == "Theo giờ")
-                    {
-                        if (giamGiaNgayLe != null)
-                        {
-                            // Đang trong thời gian thuê theo giờ
-                            sotienthanhtoan = (((phong.giatientheogio * (100 + giamGiaNgayLe.dieuchinhgiaphong)) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
-                            /*                            sotienthanhtoan = (((phong.giatientheogio * chinhSachGia.dieuchinhgiaphong) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
-                            */
-                        }
-                        else
-                        {
-                            // Đang trong thời gian thuê theo giờ
-                            sotienthanhtoan = (phong.giatientheogio * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
-                        }
-                    }
-                    else
-                    {
-                        if (giamGiaNgayLe != null)
-                        {
-                            // Đang thuê theo ngày
-                            sotienthanhtoan = (((phong.giatientheongay * (100 + giamGiaNgayLe.dieuchinhgiaphong)) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
-                            /*                            sotienthanhtoan = (((phong.giatientheongay * chinhSachGia.dieuchinhgiaphong) / 100) * (datphong.ngaydukientra.Hour - datphong.ngaydat.Hour)) + tongtienthuesanpham - datphong.tiendatcoc;
-                            */
-                        }
-                        else
-                        {
-                            // Đang thuê theo ngày
-                            sotienthanhtoan = (phong.giatientheongay * (datphong.ngaydukientra.Day - datphong.ngaydat.Day)) + tongtienthuesanpham - datphong.tiendatcoc;
-                        }
-                    }
-                }
+                sotienthanhtoan = Math.Round(sotienthanhtoan, 0); // Làm tròn đến số nguyên
                 KhachHang khachHang = khachHangService.GetKhachHangbyid(datphong.idkhachhang);
-                float giatienphong = 0;
-                if (datphong.hinhthucthue == "Theo ngày")
+                float giatienphong = datphong.hinhthucthue == "Theo ngày" ? phong.giatientheongay : phong.giatientheogio;
+                if (giamGiaNgayLe != null)
                 {
-                    if (giamGiaNgayLe != null)
-                    {
-                        giatienphong = phong.giatientheongay + (phong.giatientheongay * giamGiaNgayLe.dieuchinhgiaphong) / 100;
-                        /*                        giatienphong = (phong.giatientheongay * chinhSachGia.dieuchinhgiaphong) / 100;
-                        */
-                    }
-                    else
-                    {
-                        giatienphong = phong.giatientheongay;
-                    }
+                    giatienphong *= (100 + giamGiaNgayLe.dieuchinhgiaphong) / 100;
                 }
-                else
-                {
-                    if (giamGiaNgayLe != null)
-                    {
-                        giatienphong = phong.giatientheogio + (phong.giatientheogio * giamGiaNgayLe.dieuchinhgiaphong) / 100;
-                        /*                        giatienphong = (phong.giatientheogio * chinhSachGia.dieuchinhgiaphong) / 100;
-                        */
-                    }
-                    else
-                    {
-                        giatienphong = phong.giatientheogio;
-                    }
-                }
-                lichSuThanhToanService.GuiEmailThanhToan(khachHang, giatienphong, maGiamGia?.phantramgiamgia ?? 0, phong.sophong, datphong.ngaydat, listthueSanPham, sotienthanhtoan);
 
-                lichSuThanhToan.phantramgiamgia = maGiamGia?.phantramgiamgia ?? 0;  
+                lichSuThanhToanService.GuiEmailThanhToan(khachHang, giatienphong, maGiamGia?.phantramgiamgia ?? 0, phong.sophong, datphong.ngaydat, listthueSanPham, (float)sotienthanhtoan);
+                // Lưu lịch sử thanh toán
+                lichSuThanhToan.phantramgiamgia = maGiamGia?.phantramgiamgia ?? 0;
                 lichSuThanhToan.ngaythanhtoan = DateTime.Now;
-                lichSuThanhToan.sotienthanhtoan = sotienthanhtoan;
+                lichSuThanhToan.sotienthanhtoan = (float)sotienthanhtoan;
                 lichSuThanhToan.trangthai = "đã thanh toán";
                 lichSuThanhToan.iddatphong = datphong.id;
                 lichSuThanhToan.idnhanvien = idnv;
-                if (lichSuThanhToan.hinhthucthanhtoan == null)
-                {
-                    lichSuThanhToan.hinhthucthanhtoan = "";
-                    lichSuThanhToanService.ThemLichSuThanhToan(lichSuThanhToan);
-                }
-                else
-                {
-                    lichSuThanhToanService.ThemLichSuThanhToan(lichSuThanhToan);
-                }
+                lichSuThanhToan.hinhthucthanhtoan ??= ""; // Nếu null, gán chuỗi rỗng
+                lichSuThanhToanService.ThemLichSuThanhToan(lichSuThanhToan);
 
-
-                /// cập nhật trạng thái của phòng 
+                // Cập nhật trạng thái của phòng và đặt phòng
                 phong.tinhtrangphong = "chưa dọn";
                 phongService.CapNhatPhong(phong);
-                /// cập nhật trạng thái id đặt phòng
+
                 datphong.trangthai = "đã trả";
                 datPhongService.UpdateDatPhong(datphong);
+
                 TempData["traphongthanhcong"] = "";
                 return Redirect("~/admin/phong/");
             }

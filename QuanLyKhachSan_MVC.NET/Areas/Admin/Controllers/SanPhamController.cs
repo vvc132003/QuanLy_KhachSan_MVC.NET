@@ -165,32 +165,24 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 string hovaten = HttpContext.Session.GetString("hovaten");
                 ViewData["id"] = id;
                 ViewData["hovaten"] = hovaten;
-
-                // Check file extension
-                var fileExtension = Path.GetExtension(image.FileName).ToLowerInvariant();
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-                if (!allowedExtensions.Contains(fileExtension))
+                if (image != null)
                 {
-                    return RedirectToAction("Index");
-                }
-
-                try
-                {
-                    // Convert image to base64 string
+                    var fileExtension = Path.GetExtension(image.FileName).ToLowerInvariant();
+                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                    if (!allowedExtensions.Contains(fileExtension))
+                    {
+                        return Redirect("~/admin/sanpham/");
+                    }
                     var base64String = await ConvertToBase64StringAsync(image);
-
-                    sanPham.image = base64String; // Update this property name as needed
-                    sanPham.trangthai = "còn bán";
-
-                    // Add product
-                    sanPhamService.ThemSanPham(sanPham);
-                    return Redirect("~/admin/sanpham/");
+                    sanPham.image = base64String;
                 }
-                catch (Exception ex)
+                else
                 {
-                    // Handle file processing exceptions
-                    return RedirectToAction("Error", "Home");
+                    sanPham.image = "";
                 }
+                sanPham.trangthai = "còn bán";
+                sanPhamService.ThemSanPham(sanPham);
+                return Redirect("~/admin/sanpham/");
             }
             else
             {

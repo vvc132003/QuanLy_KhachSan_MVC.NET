@@ -66,6 +66,7 @@
                                                 <th>Số lần đã sử dụng</th>
                                                 <th>Ngày bắt đầu</th>
                                                 <th>Ngày kết thúc</th>
+                                                <th>Trạng thái</th>
                                                 <th>Thao tác</th>
                                             </tr>
                                         </thead>
@@ -92,9 +93,13 @@
                                                         <td>@maGiamGia.solandasudung</td>
                                                         <td>@maGiamGia.ngaybatdau.ToString("dd/MM/yyyy")</td>
                                                         <td>@maGiamGia.ngayketthuc.ToString("dd/MM/yyyy")</td>
+                                                        <td>@maGiamGia.trangthai</td>
                                                         <td>
                                                             <a href="@maGiamGia.id" class="btn btn-danger" title="Xoá">
                                                                 <i class="fas fa-times-circle"></i>
+                                                            </a>
+                                                            <a href="/admin/magiamgia/UpdateMaGiamGia?idmagiamgia=@maGiamGia.id" class="btn btn-secondary" title="Cập nhật">
+                                                                <i class="fas fa-plus"></i>
                                                             </a>
                                                             <a href="#" class="btn btn-warning update-button" title="Cập nhật" data-magiamgiaid="@maGiamGia.id">
                                                                 <i class="fas fa-check-circle"></i>
@@ -107,7 +112,7 @@
                                             else
                                             {
                                                 <tr>
-                                                    <td colspan="13">Không có mã giảm giá !</td> 
+                                                    <td colspan="13">Không có mã giảm giá !</td>
                                                 </tr>
                                             }
                                         </tbody>

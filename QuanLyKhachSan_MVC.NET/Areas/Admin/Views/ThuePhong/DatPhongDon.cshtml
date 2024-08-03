@@ -64,6 +64,10 @@
                                         </div>
                                         <p style="color:red; display: inline-block; font-weight:100;" class="thongbao"></p>
                                         <div class="mb-3">
+                                            <label for="songuoi" class="form-label">Số người</label>
+                                            <input type="number" class="form-control" id="songuoi" name="songuoi">
+                                        </div>
+                                        <div class="mb-3">
                                             <label for="nhanphong" class="form-label">Giao phòng:</label>
                                             <input type="checkbox" id="nhanphong" name="nhanphong" value="nhanphong">
                                         </div>
@@ -142,9 +146,9 @@
                                         <table id="example" class="table table-striped table-bordered" style="width:100%">
                                             <thead>
                                                 <tr>
+                                                    <th>Ảnh</th>
                                                     <th>Tên dịch vụ</th>
                                                     <th>Gía thuê</th>
-                                                    <th>Ảnh</th>
                                                     <th>Thao tác</th>
                                                 </tr>
                                             </thead>
@@ -178,6 +182,7 @@
                                         <i class="fas fa-save"></i> Lưu
                                     </button>
                                 </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -209,7 +214,7 @@
             "info": false,
             "autoWidth": false,
             "responsive": true,
-            "pageLength": 5,
+            "pageLength": 8,
             "lengthMenu": [5, 10, 25, 50, 100],
             "language": {
                 "paginate": {
@@ -232,9 +237,9 @@
                     data.pagedTSanPham.forEach(function (item) {
                         var productHtml = `
                                                                 <tr>
+                                                                    <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
                                                                     <td>${item.tensanpham}</td>
                                                                     <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
-                                                                    <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
                                                                             <td>
                                                                                  <input type="checkbox" class="idsanpham" name="idsanpham" value="${item.id}">
                                                                         </td>

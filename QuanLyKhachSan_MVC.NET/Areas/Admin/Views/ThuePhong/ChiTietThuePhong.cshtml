@@ -40,7 +40,14 @@
                                                 <tr>
                                                     <th>Tên khách hàng</th>
                                                     <th>Số phòng</th>
-                                                    <th>Giá phòng</th>
+                                                    @if (Model[0].datPhong.ngaydukientra < DateTime.Now)
+                                                    {
+                                                        <th>Giá phòng (giờ)</th>
+                                                    }
+                                                    else
+                                                    {
+                                                        <th>Giá phòng (ngày)</th>
+                                                    }
                                                     <th>Loại hình thuê</th>
                                                     <th>Ngày đặt</th>
                                                     <th>Ngày dự kiến trả</th>
@@ -84,15 +91,16 @@
 
                                                                 if (timeDifference.TotalHours > 24)
                                                                 {
-                                                                    var days = (int)timeDifference.TotalDays;
+                                                                    var days = (int)Math.Ceiling(timeDifference.TotalDays);
                                                                     @($"{days} ngày")
                                                                 }
                                                                 else
                                                                 {
-                                                                    var hours = (int)timeDifference.TotalHours;
+                                                                    var hours = (int)Math.Ceiling(timeDifference.TotalHours);
                                                                     @($"{hours} giờ")
                                                                 }
                                                             }
+
                                                         </td>
 
                                                         <td>
@@ -110,10 +118,10 @@
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th>Số lượng thuê</th>
-                                                    <th>Thành tiền</th>
-                                                    <th>Tên dịch vụ</th>
                                                     <th>Ảnh</th>
+                                                    <th>Tên dịch vụ</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Thành tiền</th>
                                                     <th>Ghi chú</th>
                                                     <th>Thao tác</th>
                                                 </tr>
@@ -122,10 +130,10 @@
                                                 @foreach (var thueSanPham in Model[0].listthueSanPham)
                                                 {
                                                     <tr>
+                                                        <td><img src="@thueSanPham.image" width="36px" height="36px" alt=""></td>
+                                                        <td>@thueSanPham.tensanpham</td>
                                                         <td>@thueSanPham.soluong</td>
                                                         <td>@string.Format("{0:N0} VNĐ", @thueSanPham.thanhtien)</td>
-                                                        <td>@thueSanPham.tensanpham</td>
-                                                        <td><img src="@thueSanPham.image" width="36px" height="36px" alt=""></td>
                                                         <td>@thueSanPham.ghichu</td>
                                                         <td>
                                                             <a href="/admin/ThueSanPham/XoasoluongThueSanPham?id=@thueSanPham.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-danger">
@@ -148,6 +156,32 @@
                                                     <div class="col-6">
                                                         <h4>Tổng tiền thuê sản phẩm: @string.Format("{0:N0} VNĐ", @Model[0].tongtienhueSanPham)</h4>
                                                         <h4>Tiền khách hàng đặt cọc: @string.Format("{0:N0} VNĐ", @Model[0].datPhong.tiendatcoc)</h4>
+
+                                                        @{
+                                                            var ngaydukientraa = Model[0].datPhong.ngaydukientra;
+                                                            var ngaydatt = Model[0].datPhong.ngaydat;
+                                                            var tongthoigian = ngaydukientraa - ngaydatt;
+
+                                                            if (tongthoigian.TotalHours > 24)
+                                                            {
+                                                                var soNgay = tongthoigian.TotalDays;
+                                                                var roundedDays = Math.Ceiling(soNgay);
+                                                                <h4>Tổng tiền phòng: @string.Format("{0:N0} VNĐ", Model[0].phong.giatientheongay * roundedDays)</h4>
+                                                            }
+                                                            else
+                                                            {
+                                                                var soGio = tongthoigian.TotalHours;
+                                                                var hours = Math.Ceiling(soGio);
+                                                                <h4>Tổng tiền phòng: @string.Format("{0:N0} VNĐ", Model[0].phong.giatientheogio * hours)</h4>
+                                                            }
+                                                        }
+
+                                                        @if (Model[0].gopDonDatPhong != null)
+                                                        {
+                                                            <h4>Tổng tiền phòng cũ: @string.Format("{0:N0} VNĐ", Model[0].gopDonDatPhong.tienphong) <span style="color:red;">Tiền phòng cũ được gộp</span></h4>
+                                                        }
+
+
                                                         @if (Model[0].datPhong.ngaydat.Hour > Model[0].thoigian.thoigiannhanphong.Hours)
                                                         {
                                                             <h4>Phụ thu check in: @Model[0].thoigian.phuthunhanphong %</h4>
@@ -177,81 +211,56 @@
                                                         }
 
                                                         <h4>Phụ thu check out: @(phuthuCheckout > 0 ? $"{phuthuCheckout} %" : "0 %")</h4>
+                                                        @if (Model != null && Model.Count > 0)
+                                                        {
+                                                            // Hiển thị phần giảm giá
+                                                            var giamGia = Model[0].magiamGia != null ? Model[0].magiamGia.phantramgiamgia.ToString() + " %" : "0 %";
+                                                            <h4>Giảm giá: @giamGia</h4>
 
-                                                        @if (Model != null && Model.Count > 0 && Model[0].magiamGia != null)
-                                                        {
-                                                            <h4>Giảm giá: @Model[0].magiamGia.phantramgiamgia %</h4>
-                                                            float sotienthanhtoan = 0;
-                                                            @if (Model[0].datPhong.hinhthucthue == "Theo giờ")
+                                                            var ngaydukientra = Model[0].datPhong.ngaydukientra;
+                                                            var ngaydat = Model[0].datPhong.ngaydat;
+                                                            var tongngay = ngaydukientra - ngaydat;
+                                                            var soNgay = Math.Ceiling(tongngay.TotalDays);
+
+                                                            double tongTienPhong = 0;
+                                                            double sotienthanhtoan = 0;
+
+                                                            if (Model[0].datPhong.hinhthucthue == "Theo giờ")
                                                             {
-                                                                if (Model[0].giamGiaNgayle != null)
-                                                                {
-                                                                    // Đang thuê theo giờ
-                                                                    sotienthanhtoan = ((((Model[0].phong.giatientheogio * (100 + Model[0].giamGiaNgayle.dieuchinhgiaphong)) / 100) * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * (100 - Model[0].magiamGia.phantramgiamgia) / 100;
-                                                                    @*                                                         sotienthanhtoan = ((((Model[0].phong.giatientheogio * Model[0].chinhSachGia.dieuchinhgiaphong) / 100) * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
-                                                        *@                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
-                                                                }
-                                                                else
-                                                                {
-                                                                    sotienthanhtoan = ((Model[0].phong.giatientheogio * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
-                                                                    <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
-                                                                }
+                                                                // Tính tiền theo giờ
+                                                                var soGio = Math.Ceiling(tongngay.TotalHours);
+                                                                tongTienPhong = Model[0].phong.giatientheogio * soGio;
                                                             }
                                                             else
                                                             {
-                                                                if (Model[0].giamGiaNgayle != null)
-                                                                {
-                                                                    // Đang thuê theo ngày
-                                                                    sotienthanhtoan = ((((Model[0].phong.giatientheongay * (100 + Model[0].giamGiaNgayle.dieuchinhgiaphong)) / 100) * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * (100 - Model[0].magiamGia.phantramgiamgia) / 100;
-                                                                    @*                                                         sotienthanhtoan = ((((Model[0].phong.giatientheongay * Model[0].chinhSachGia.dieuchinhgiaphong) / 100) * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
-                                                        *@                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
-                                                                }
-                                                                else
-                                                                {
-                                                                    // Đang thuê theo ngày
-                                                                    sotienthanhtoan = ((Model[0].phong.giatientheongay * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc) * Model[0].magiamGia.phantramgiamgia / 100;
-                                                                    <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
-                                                                }
+                                                                // Tính tiền theo ngày
+                                                                tongTienPhong = Model[0].phong.giatientheongay * soNgay;
                                                             }
+
+                                                            if (Model[0].gopDonDatPhong != null)
+                                                            {
+                                                                tongTienPhong += Model[0].gopDonDatPhong.tienphong;
+                                                            }
+
+                                                            // Tính tổng tiền cần thanh toán trước khi giảm giá
+                                                            sotienthanhtoan = tongTienPhong + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
+
+                                                            // Áp dụng giảm giá nếu có
+                                                            if (Model[0].magiamGia != null)
+                                                            {
+                                                                sotienthanhtoan = sotienthanhtoan * (100 - Model[0].magiamGia.phantramgiamgia) / 100;
+                                                            }
+
+                                                            // Làm tròn số tiền thanh toán
+                                                            sotienthanhtoan = Math.Round(sotienthanhtoan, 0); // Làm tròn đến số nguyên
+
+                                                            // Hiển thị tổng tiền cần thanh toán
+                                                            <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
                                                             <input type="hidden" name="" value="@sotienthanhtoan" id="tongtien" oninput="formatCurrency(this); calculateChange()">
                                                         }
-                                                        else
-                                                        {
-                                                            <h4>Giảm giá: 0 %</h4>
-                                                            float sotienthanhtoan = 0;
-                                                            if (Model != null && Model.Count > 0 && Model[0].datPhong.hinhthucthue == "Theo giờ")
-                                                            {
-                                                                if (Model[0].giamGiaNgayle != null)
-                                                                {
-                                                                    // Đang thuê theo giờ
-                                                                    sotienthanhtoan = ((Model[0].phong.giatientheogio * (100 + Model[0].giamGiaNgayle.dieuchinhgiaphong)) / 100 * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
-                                                                    @*                                                         sotienthanhtoan = (((Model[0].phong.giatientheogio * Model[0].chinhSachGia.dieuchinhgiaphong)) / 100 * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
-                                                        *@                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
-                                                                }
-                                                                else
-                                                                {
-                                                                    sotienthanhtoan = (Model[0].phong.giatientheogio * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
-                                                                    <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                if (Model[0].giamGiaNgayle != null)
-                                                                {
-                                                                    // Đang thuê theo ngày
-                                                                    sotienthanhtoan = ((Model[0].phong.giatientheongay * (100 + Model[0].giamGiaNgayle.dieuchinhgiaphong)) / 100 * (Model[0].datPhong.ngaydukientra.Hour - Model[0].datPhong.ngaydat.Hour)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
-                                                                    @*                                                         sotienthanhtoan = (((Model[0].phong.giatientheongay * Model[0].chinhSachGia.dieuchinhgiaphong) / 100) * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
-                                                        *@                                                        <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
-                                                                }
-                                                                else
-                                                                {
-                                                                    // Đang thuê theo ngày
-                                                                    sotienthanhtoan = (Model[0].phong.giatientheongay * (Model[0].datPhong.ngaydukientra.Day - Model[0].datPhong.ngaydat.Day)) + Model[0].tongtienhueSanPham - Model[0].datPhong.tiendatcoc;
-                                                                    <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
-                                                                }
-                                                            }
-                                                            <input type="hidden" name="" value="@sotienthanhtoan" id="tongtien" oninput="formatCurrency(this); calculateChange()">
-                                                        }
+
+
+
                                                         <label class="form-label" for="chuyenKhoan"><h4>Chuyển Khoản</h4></label>
                                                         <input type="radio" id="chuyenKhoan" name="hinhthucthanhtoan" value="chuyển khoản">
                                                         <label class="form-label" for="tienMat"><h4>Tiền Mặt</h4></label>
@@ -316,9 +325,9 @@
                                         <table id="example" class="table table-striped table-bordered" style="width:100%">
                                             <thead>
                                                 <tr>
+                                                    <th>Ảnh</th>
                                                     <th>Tên dịch vụ</th>
                                                     <th>Gía thuê</th>
-                                                    <th>Ảnh</th>
                                                     <th>Thao tác</th>
                                                 </tr>
                                             </thead>
@@ -494,17 +503,17 @@
 
                     data.pagedTSanPham.forEach(function (item) {
                         var productHtml = `
-                                                                            <tr>
-                                                                                <td>${item.tensanpham}</td>
-                                                                                <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
-                                                                                <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
-                                                                                     <td>
-                                                                                        <a href="/admin/ThueSanPham/ThueSanPham?idsp=${item.id}&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
-                                                                                            <i class="fas fa-plus"></i>
-                                                                                        </a>
-                                                                                    </td>
-                                                                            </tr>
-                                                                        `;
+                                                                                                                                                            <tr>
+                                                                                                                                                                <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
+                                                                                                                                                                <td>${item.tensanpham}</td>
+                                                                                                                                                                <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
+                                                                                                                                                                     <td>
+                                                                                                                                                                        <a href="/admin/ThueSanPham/ThueSanPham?idsp=${item.id}&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
+                                                                                                                                                                            <i class="fas fa-plus"></i>
+                                                                                                                                                                        </a>
+                                                                                                                                                                    </td>
+                                                                                                                                                            </tr>
+                                                                                                                                                        `;
                         table.row.add($(productHtml)).draw(false);
                     });
                 },

@@ -198,23 +198,29 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
                 tongdoangthuhuydatphong = huyDatPhongService.GetAllHuyDatPhong()
                     .Sum(huydatphong => huydatphong.sotienhoanlai);
             }
-            float tongdoanhthutungthang = 0;
-            List<Modeldata> modeldatas = new List<Modeldata>();
-            foreach (var lichsuthanhtoan in lichSuThanhToans)
-            {
-                tongdoanhthutungthang += lichsuthanhtoan.sotienthanhtoan;
-                Modeldata modeldata = new Modeldata()
+
+            var doanhThuTheoThang = lichSuThanhToans
+                .GroupBy(l => l.ngaythanhtoan.Month)
+                .Select(g => new
                 {
-                    lichSuThanhToan = lichsuthanhtoan,
-                    Tongdoanhthutungthang = tongdoanhthutungthang + tongdoangthuhuydatphong,
-                };
-                modeldatas.Add(modeldata);
-            }
+                    Thang = g.Key,
+                    TongDoanhThu = g.Sum(l => l.sotienthanhtoan) + tongdoangthuhuydatphong
+                })
+                .ToList();
+
+            var modeldatas = doanhThuTheoThang.Select(d => new Modeldatas
+            {
+                Thang = d.Thang,
+                Tongdoanhthutungthang = d.TongDoanhThu
+            }).ToList();
 
             return Ok(modeldatas);
         }
-
-
+        public class Modeldatas
+        {
+            public int Thang { get; set; }
+            public float Tongdoanhthutungthang { get; set; }
+        }
         [HttpGet("TongPhanTram")]
         public IActionResult TongPhanTram(DateTime? startDate, DateTime? endDate, int idkhachsan)
         {

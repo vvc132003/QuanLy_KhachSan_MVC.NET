@@ -184,12 +184,16 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             Phong phong = phongService.GetPhongID(idphong);
             ThueSanPham thueSanPham = cartItems.FirstOrDefault(item => item.id == id && item.iddatphong == datPhong.id);
             SanPham sanPham = sanPhamService.GetSanPhamByID(idsanpham);
-
+            List<ThueSanPham> checkslthuesanpham = thueSanPhamService.GetThueSanPhamByIDdatphong(iddatphong);
+            /// chekc sản phẩm với số lượng cối cùng
+            if (checkslthuesanpham.Count == 1 && checkslthuesanpham.First().soluong == 1)
+            {
+                return Json(new { success = false, messages = "Sản phẩm cuối cùng không thể tách." });
+            }
             if (thueSanPham != null)
             {
                 int previousQuantity = thueSanPham.soluong;
                 thueSanPham.soluong += soluong;
-
                 if (previousQuantity != thueSanPham.soluong)
                 {
                     thueSanPham.thanhtien = thueSanPham.soluong * sanPham.giaban;
@@ -211,7 +215,6 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 });
             }
             SaveCartItems(cartItems);
-
             ThueSanPham truSoLuongThueSanPham = thueSanPhamService.GetThueSanPhamBYID(id);
             if (truSoLuongThueSanPham != null && sanPham != null)
             {

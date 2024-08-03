@@ -42,6 +42,7 @@ namespace Service.Service
                             magiamgia.solandasudung = Convert.ToInt32(reader["solandasudung"]);
                             magiamgia.ngaybatdau = Convert.ToDateTime(reader["ngaybatdau"]);
                             magiamgia.ngayketthuc = Convert.ToDateTime(reader["ngayketthuc"]);
+                            magiamgia.trangthai = reader["trangthai"].ToString();
 
                             magiamgiaList.Add(magiamgia);
                         }
@@ -55,7 +56,7 @@ namespace Service.Service
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
-                string query = "UPDATE MaGiamGia SET magiamgia = @magiamgia, mota = @mota, soluongdatphongtoithieu = @soluongdatphongtoithieu, tongtientoithieu = @tongtientoithieu, thoigiandatphong = @thoigiandatphong, phantramgiamgia = @phantramgiamgia, solansudungtoida = @solansudungtoida, solandasudung = @solandasudung, ngaybatdau = @ngaybatdau, ngayketthuc = @ngayketthuc WHERE id = @id";
+                string query = "UPDATE MaGiamGia SET magiamgia = @magiamgia, mota = @mota, soluongdatphongtoithieu = @soluongdatphongtoithieu, tongtientoithieu = @tongtientoithieu, thoigiandatphong = @thoigiandatphong, phantramgiamgia = @phantramgiamgia, solansudungtoida = @solansudungtoida, solandasudung = @solandasudung, ngaybatdau = @ngaybatdau, ngayketthuc = @ngayketthuc, trangthai = @trangthai WHERE id = @id";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@id", magiamgia.id);
@@ -69,6 +70,7 @@ namespace Service.Service
                 command.Parameters.AddWithValue("@solandasudung", magiamgia.solandasudung);
                 command.Parameters.AddWithValue("@ngaybatdau", magiamgia.ngaybatdau);
                 command.Parameters.AddWithValue("@ngayketthuc", magiamgia.ngayketthuc);
+                command.Parameters.AddWithValue("@trangthai", magiamgia.trangthai);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -79,7 +81,8 @@ namespace Service.Service
         {
             using (SqlConnection connection = DBUtils.GetDBConnection())
             {
-                string query = "INSERT INTO MaGiamGia (magiamgia, mota, soluongdatphongtoithieu, tongtientoithieu, thoigiandatphong, phantramgiamgia, solansudungtoida, solandasudung, ngaybatdau, ngayketthuc) VALUES (@magiamgia, @mota, @soluongdatphongtoithieu, @tongtientoithieu, @thoigiandatphong, @phantramgiamgia, @solansudungtoida, @solandasudung, @ngaybatdau, @ngayketthuc)";
+                string query = "INSERT INTO MaGiamGia (magiamgia, mota, soluongdatphongtoithieu, tongtientoithieu, thoigiandatphong, phantramgiamgia, solansudungtoida, solandasudung, ngaybatdau, ngayketthuc, trangthai)" +
+                    " VALUES (@magiamgia, @mota, @soluongdatphongtoithieu, @tongtientoithieu, @thoigiandatphong, @phantramgiamgia, @solansudungtoida, @solandasudung, @ngaybatdau, @ngayketthuc, @trangthai)";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@magiamgia", magiamgia.magiamgia);
                 command.Parameters.AddWithValue("@mota", magiamgia.mota);
@@ -91,6 +94,7 @@ namespace Service.Service
                 command.Parameters.AddWithValue("@solandasudung", magiamgia.solandasudung);
                 command.Parameters.AddWithValue("@ngaybatdau", magiamgia.ngaybatdau);
                 command.Parameters.AddWithValue("@ngayketthuc", magiamgia.ngayketthuc);
+                command.Parameters.AddWithValue("@trangthai", magiamgia.trangthai);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -136,6 +140,8 @@ namespace Service.Service
                                 solandasudung = reader.GetInt32(reader.GetOrdinal("solandasudung")),
                                 ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
                                 ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
+                                trangthai = reader.GetString(reader.GetOrdinal("trangthai")),
+
                             };
                             return maGiamGia;
                         }
@@ -175,7 +181,9 @@ namespace Service.Service
                                 solandasudung = reader.GetInt32(reader.GetOrdinal("solandasudung")),
                                 ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
                                 ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
-                            };
+                                trangthai = reader["trangthai"].ToString(),
+
+                        };
                         }
                     }
                 }
@@ -245,7 +253,9 @@ namespace Service.Service
                                 solandasudung = reader.GetInt32(reader.GetOrdinal("solandasudung")),
                                 ngaybatdau = reader.GetDateTime(reader.GetOrdinal("ngaybatdau")),
                                 ngayketthuc = reader.GetDateTime(reader.GetOrdinal("ngayketthuc")),
-                            };
+                                trangthai = reader["trangthai"].ToString(),
+
+                        };
                             return maGiamGia;
                         }
                         else

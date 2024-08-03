@@ -269,11 +269,11 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     ViewData["id"] = id;
                     ViewData["hovaten"] = hovaten;
                     ViewData["tenchucvu"] = tenchucvu;
-                    BinhLuan binhLuanDuyetorspam = binhLuanService.GetBinhLuanById(idbinhluanduyet > 0 ? idbinhluanduyet : idbinhluanspam);
-                    if (binhLuanDuyetorspam != null)
+                    BinhLuan binhLuanDuyeandSpam = binhLuanService.GetBinhLuanById(idbinhluanduyet > 0 ? idbinhluanduyet : idbinhluanspam);
+                    if (binhLuanDuyeandSpam != null)
                     {
-                        binhLuanDuyetorspam.trangthai = idbinhluanduyet > 0 ? "Đã duyệt" : "Spam";
-                        binhLuanService.UpdateBinhLuan(binhLuanDuyetorspam);
+                        binhLuanDuyeandSpam.trangthai = idbinhluanduyet > 0 ? "Đã duyệt" : "Spam";
+                        binhLuanService.UpdateBinhLuan(binhLuanDuyeandSpam);
                     }
                     return Redirect("~/admin/binhluan/");
                 }

@@ -19,5 +19,7 @@ namespace Model.Models
         public int solandasudung { get; set; }
         public DateTime ngaybatdau { get; set; }
         public DateTime ngayketthuc { get; set; }
+        public string trangthai { get; set; }
+
     }
 }

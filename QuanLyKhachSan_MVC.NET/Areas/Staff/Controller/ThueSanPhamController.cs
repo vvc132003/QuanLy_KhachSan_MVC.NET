@@ -181,7 +181,12 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             Phong phong = phongService.GetPhongID(idphong);
             ThueSanPham thueSanPham = cartItems.FirstOrDefault(item => item.id == id && item.iddatphong == datPhong.id);
             SanPham sanPham = sanPhamService.GetSanPhamByID(idsanpham);
-
+            List<ThueSanPham> checkslthuesanpham = thueSanPhamService.GetThueSanPhamByIDdatphong(iddatphong);
+            /// chekc sản phẩm với số lượng cối cùng
+            if (checkslthuesanpham.Count == 1 && checkslthuesanpham.First().soluong == 1)
+            {
+                return Json(new { success = false, messages = "Sản phẩm cuối cùng không thể tách." });
+            }
             if (thueSanPham != null)
             {
                 int previousQuantity = thueSanPham.soluong;

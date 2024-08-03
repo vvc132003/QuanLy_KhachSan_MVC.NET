@@ -92,6 +92,7 @@ namespace Model.Models
         public LoaiDichVu loaiDichVu { get; set; }
         public List<LoaiDichVu> loaiDichVus { get; set; }
         public IPagedList<LoaiDichVu> loaiDichVuspage { get; set; }
+        public GopDonDatPhong gopDonDatPhong { get; set; }
 
         public int TotalRentedQuantity { get; set; }
 

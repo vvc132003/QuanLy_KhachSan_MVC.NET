@@ -122,10 +122,10 @@
                                         <table id="exampless" class="table table-striped table-bordered" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>Số lượng thuê</th>
-                                                    <th>Thành tiền</th>
-                                                    <th>Tên dịch vụ</th>
                                                     <th>Ảnh</th>
+                                                    <th>Tên dịch vụ</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Thành tiền</th>
                                                     <th>Ghi chú</th>
                                                     <th>Thao tác</th>
                                                 </tr>
@@ -138,10 +138,10 @@
                                         <table id="examplesss" class="table table-striped table-bordered" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>Số lượng thuê</th>
-                                                    <th>Thành tiền</th>
-                                                    <th>Tên dịch vụ</th>
                                                     <th>Ảnh</th>
+                                                    <th>Tên dịch vụ</th>
+                                                    <th>SL</th>
+                                                    <th>Thành tiền</th>
                                                     <th>Ghi chú</th>
                                                 </tr>
                                             </thead>
@@ -168,7 +168,7 @@
                                     </tbody>
                                 </table>
                                 <div class="modal-footer">
-                                    <a class="nav-link btn btn-primary me-2" href="/admin/phong/">
+                                    <a class="nav-link btn btn-primary me-2" href="/admin/thuephong/chitietthuephong?idphong=@Model.phong.id">
                                         <i class="fas fa-arrow-left"></i>
                                         Quay lại
                                     </a>
@@ -235,19 +235,19 @@
                 table.clear().draw();
                 data.forEach(function (item) {
                     var productHtml = `
-                                <tr>
-                                    <td>${item.soluong}</td>
-                                    <td>${item.thanhtien.toLocaleString()} VNĐ</td>
-                                    <td>${item.tensanpham}</td>
-                                    <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
-                                    <td>${item.ghichu}</td>
-                                    <td>
-                                        <a href="javascript:void(0)" onclick="addToCart(${item.id}, ${idphong}, ${item.thanhtien}, '${item.tensanpham.replace(/'/g, "\\'")}', '${item.image.replace(/'/g, "\\'")}', '${item.iddatphong}', '${item.idsanpham}')" class="btn btn-info">
-                                            <i class="fas fa-edit"></i> Tách
-                                        </a>
-                                    </td>
-                                </tr>
-                            `;
+                                    <tr>
+                                        <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
+                                        <td>${item.tensanpham}</td>
+                                        <td>${item.soluong}</td>
+                                        <td>${item.thanhtien.toLocaleString()} VNĐ</td>
+                                        <td>${item.ghichu}</td>
+                                        <td>
+                                            <a href="javascript:void(0)" onclick="addToCart(${item.id}, ${idphong}, ${item.thanhtien}, '${item.tensanpham.replace(/'/g, "\\'")}', '${item.image.replace(/'/g, "\\'")}', '${item.iddatphong}', '${item.idsanpham}')" class="btn btn-info">
+                                                <i class="fas fa-edit"></i> Tách
+                                            </a>
+                                        </td>
+                                    </tr>
+                                `;
                     table.row.add($(productHtml)).draw(false);
                 });
             },
@@ -285,14 +285,14 @@
                 $('#examplesss tbody').empty();
                 data.forEach(function (item) {
                     var cartItemHtml = `
-                                <tr>
-                                    <td>${item.soluong}</td>
-                                    <td>${item.thanhtien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
-                                    <td>${item.tensanpham}</td>
-                                    <td><img src="${item.image}" width="36px" height="36px" alt="Product Image"></td>
-                                    <td>${item.ghichu}</td>
-                                </tr>
-                            `;
+                                    <tr>
+                                      <td><img src="${item.image}" width="36px" height="36px" alt="Product Image"></td>
+                                        <td>${item.tensanpham}</td>
+                                             <td>${item.soluong}</td>
+                                            <td>${item.thanhtien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
+                                        <td>${item.ghichu}</td>
+                                    </tr>
+                                `;
                     $('#examplesss tbody').append(cartItemHtml);
                 });
             },
@@ -324,7 +324,7 @@
                     fetchCartItems();
                     loadRentalProductList();
                 } else {
-                    alert('Failed to add item to cart');
+                    alert(response.messages); // Thông báo lỗi chi tiết
                 }
             },
             error: function (err) {
@@ -456,19 +456,19 @@
                     table.clear().draw();
                     data.pagedTKhachHang.forEach(function (khachHang) {
                         var productHtml = `
-                                                                                    <tr>
-                                                                                        <td>${khachHang.hovaten}</td>
-                                                                                        <td>0</td>
-                                                                                        <td>${khachHang.email}</td>
-                                                                                        <td>0</td>
-                                                                                        <td>${khachHang.phuong} - ${khachHang.huyen} - ${khachHang.tinh}</td>
-                                                                                        <td>
-                                                                                            <a href="#" class="btn btn-warning select-customer" data-id="${khachHang.id}" title="Chọn">
-                                                                                                    <i class="fas fa-plus"></i>
-                                                                                            </a>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    `;
+                                                                                        <tr>
+                                                                                            <td>${khachHang.hovaten}</td>
+                                                                                            <td>0</td>
+                                                                                            <td>${khachHang.email}</td>
+                                                                                            <td>0</td>
+                                                                                            <td>${khachHang.phuong} - ${khachHang.huyen} - ${khachHang.tinh}</td>
+                                                                                            <td>
+                                                                                                <a href="#" class="btn btn-warning select-customer" data-id="${khachHang.id}" title="Chọn">
+                                                                                                        <i class="fas fa-plus"></i>
+                                                                                                </a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        `;
                         table.row.add($(productHtml)).draw(false);
                     });
 

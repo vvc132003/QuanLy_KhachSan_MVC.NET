@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using Service;
 using Service.Service;
@@ -70,7 +71,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 {
                     if (DateTime.Now.Date <= maGiamGia.ngayketthuc.Date)
                     {
-                        if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                        if (maGiamGia.solandasudung < maGiamGia.solansudungtoida && maGiamGia.trangthai.Equals("còn sử dụng"))
                         {
                             return Json(new { duocgiamgia = maGiamGia });
                         }
@@ -100,10 +101,24 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaById(id);
             return Json(maGiamGia);
         }
-        public IActionResult UpdateMaGiamGia(MaGiamGia maGiamGias)
+        public IActionResult UpdateMaGiamGia(MaGiamGia maGiamGias, int idmagiamgia)
         {
-            maGiamGiaService.CapNhatMaGiamGia(maGiamGias);
+            if (idmagiamgia > 0)
+            {
+                MaGiamGia maGiamGia = maGiamGiaService.GetMaGiamGiaById(idmagiamgia);
+                if (maGiamGia != null)
+                {
+                    maGiamGia.trangthai = "không sử dụng";
+                    maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                }
+            }
+            else
+            {
+                maGiamGias.trangthai = "còn sử dụng";
+                maGiamGiaService.CapNhatMaGiamGia(maGiamGias);
+            }
             return Redirect("~/admin/magiamgia/");
         }
+
     }
 }

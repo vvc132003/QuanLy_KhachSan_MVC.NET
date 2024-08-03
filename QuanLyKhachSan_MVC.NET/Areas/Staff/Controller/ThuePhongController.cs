@@ -30,6 +30,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
         private readonly GiamGiaNgayLeService giamGiaNgayLeService;
         private readonly LoaiDichDichVuService loaiDichDichVuService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly GopDonDatPhongService gopDonDatPhongService;
 
         public ThuePhongController(DatPhongService datPhongServices,
             KhachHangService khachHangServices,
@@ -43,7 +44,8 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             SuDungMaGiamGiaService suDungMaGiamGiaServices,
             LoaiDichDichVuService loaiDichDichVuService,
             GiamGiaNgayLeService giamGiaNgayLeService,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            GopDonDatPhongService gopDonDatPhongService)
         {
             datPhongService = datPhongServices;
             khachHangService = khachHangServices;
@@ -58,6 +60,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             this.giamGiaNgayLeService = giamGiaNgayLeService;
             this.loaiDichDichVuService = loaiDichDichVuService;
             _httpContextAccessor = httpContextAccessor;
+            this.gopDonDatPhongService = gopDonDatPhongService;
         }
 
 
@@ -245,7 +248,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                     MaGiamGia guimamaGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
                     if (guimamaGiamgia != null)
                     {
-                        if (guimamaGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                        if (guimamaGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu && guimamaGiamgia.trangthai.Equals("còn sử dụng"))
                         {
                             maGiamGiaService.GuiEmail(khachHang, guimamaGiamgia.magiamgia);
                         }
@@ -296,6 +299,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                         addthuesanpham.idsanpham = sanpham.id;
                         addthuesanpham.iddatphong = idDatPhongThemVao;
                         addthuesanpham.thanhtien = cartItem.soluong * sanpham.giaban;
+                        addthuesanpham.ghichu = $"Được tách từ phòng: {phong.sophong}, số lượng: {cartItem.soluong}";
                         thueSanPhamService.ThueSanPham(addthuesanpham);
                     }
                     _httpContextAccessor.HttpContext.Session.Remove("examplesss");
@@ -311,7 +315,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                     /// gửi email
                     datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
                 }
-                TempData["thuephongthanhcong"] = "";
+                TempData["tachdonthanhcong"] = "";
                 return Redirect("~/staff/phong/");
             }
             else
@@ -390,7 +394,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                             MaGiamGia guimamaGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
                             if (guimamaGiamgia != null)
                             {
-                                if (guimamaGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                                if (guimamaGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu && guimamaGiamgia.trangthai.Equals("còn sử dụng"))
                                 {
                                     maGiamGiaService.GuiEmail(khachHang, guimamaGiamgia.magiamgia);
                                 }
@@ -413,20 +417,23 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                                        (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month == DateTime.Now.Month &&
                                        maGiamGia.ngayketthuc.Day > DateTime.Now.Day))
                                     {
-                                        if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                        if (maGiamGia.trangthai.Equals("còn sử dụng"))
                                         {
-                                            SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
-                                            suDungMaGiamGia.idmagiamgia = maGiamGia.id;
-                                            suDungMaGiamGia.iddatphong = idDatPhongThemVao;
-                                            suDungMaGiamGia.ngaysudung = DateTime.Now;
-                                            dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
-                                            /// cập nhật số lần sử dụng tăng lên 1
-                                            maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
-                                            maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
-                                        }
-                                        else
-                                        {
-                                            /// 
+                                            if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                            {
+                                                SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                                                suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                                                suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                                                suDungMaGiamGia.ngaysudung = DateTime.Now;
+                                                dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                                                /// cập nhật số lần sử dụng tăng lên 1
+                                                maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
+                                                maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                                            }
+                                            else
+                                            {
+                                                /// 
+                                            }
                                         }
                                     }
                                     else
@@ -468,7 +475,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                             MaGiamGia maGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
                             if (maGiamgia != null)
                             {
-                                if (maGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                                if (maGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu && maGiamgia.trangthai.Equals("còn sử dụng"))
                                 {
                                     maGiamGiaService.GuiEmail(khachHang, maGiamgia.magiamgia);
                                 }
@@ -491,20 +498,23 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                                    (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month == DateTime.Now.Month &&
                                    maGiamGia.ngayketthuc.Day > DateTime.Now.Day))
                                     {
-                                        if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                        if (maGiamGia.trangthai.Equals("còn sử dụng"))
                                         {
-                                            SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
-                                            suDungMaGiamGia.idmagiamgia = maGiamGia.id;
-                                            suDungMaGiamGia.iddatphong = idDatPhongThemVao;
-                                            suDungMaGiamGia.ngaysudung = DateTime.Now;
-                                            dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
-                                            /// cập nhật số lần sử dụng tăng lên 1
-                                            maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
-                                            maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
-                                        }
-                                        else
-                                        {
-                                            /// 
+                                            if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                            {
+                                                SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                                                suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                                                suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                                                suDungMaGiamGia.ngaysudung = DateTime.Now;
+                                                dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                                                /// cập nhật số lần sử dụng tăng lên 1
+                                                maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
+                                                maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                                            }
+                                            else
+                                            {
+                                                /// 
+                                            }
                                         }
                                     }
                                     else
@@ -724,7 +734,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                             MaGiamGia guimaGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
                             if (guimaGiamgia != null)
                             {
-                                if (guimaGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                                if (guimaGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu && guimaGiamgia.trangthai.Equals("còn sử dụng"))
                                 {
                                     maGiamGiaService.GuiEmail(khachHang, guimaGiamgia.magiamgia);
                                 }
@@ -747,20 +757,23 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                                    (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month == DateTime.Now.Month &&
                                    maGiamGia.ngayketthuc.Day > DateTime.Now.Day))
                                     {
-                                        if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                        if (maGiamGia.trangthai.Equals("còn sử dụng"))
                                         {
-                                            SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
-                                            suDungMaGiamGia.idmagiamgia = maGiamGia.id;
-                                            suDungMaGiamGia.iddatphong = idDatPhongThemVao;
-                                            suDungMaGiamGia.ngaysudung = DateTime.Now;
-                                            dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
-                                            /// cập nhật số lần sử dụng tăng lên 1
-                                            maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
-                                            maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
-                                        }
-                                        else
-                                        {
-                                            /// 
+                                            if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                            {
+                                                SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
+                                                suDungMaGiamGia.idmagiamgia = maGiamGia.id;
+                                                suDungMaGiamGia.iddatphong = idDatPhongThemVao;
+                                                suDungMaGiamGia.ngaysudung = DateTime.Now;
+                                                dungMaGiamGiaService.ThemSuDungMaGiamGia(suDungMaGiamGia);
+                                                /// cập nhật số lần sử dụng tăng lên 1
+                                                maGiamGia.solandasudung = maGiamGia.solandasudung + 1;
+                                                maGiamGiaService.CapNhatMaGiamGia(maGiamGia);
+                                            }
+                                            else
+                                            {
+                                                /// 
+                                            }
                                         }
                                     }
                                     else
@@ -845,68 +858,23 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                             tongtien += thueSanPham.thanhtien;
                         }
                         ThoiGian thoiGian = thoiGianService.GetThoiGianById(datphong.idthoigian);
-                        DateTime ngaytramuonsom = DateTime.Now;
-                        if (thoiGian != null)
-                        {
-                            if (datphong.hinhthucthue == "Theo giờ")
-                            {
-                                TimeSpan ngayTraMuonSomAsTimeSpan = ngaytramuonsom.TimeOfDay;
-                                if (ngayTraMuonSomAsTimeSpan > thoiGian.thoigianra)
-                                {
-                                    if (ngaytramuonsom > datphong.ngaydukientra && datphong.ngaydukientra.Hour > thoiGian.thoigianra.Hours)
-                                    {
-                                        datphong.hinhthucthue = "Theo ngày";
-                                    }
-                                    else
-                                    {
-                                        datphong.hinhthucthue = "Theo giờ";
-                                    }
-                                }
-                                else
-                                {
-                                    datphong.hinhthucthue = "Theo ngày";
-                                }
-                            }
-                            datPhongService.UpdateDatPhong(datphong);
-                        }
-                        /*                        GiamGia giamGia = giamGiaService.GetGiamGiaBYIDKhachHang(datphong.id);
-                        */
                         GiamGiaNgayLe giamGiaNgayLe = giamGiaNgayLeService.GetGiamGiaNgayLeByNgayLe(DateTime.Today);
                         SuDungMaGiamGia sudunggiamGia = suDungMaGiamGiaService.GetSuDungMaGiamGiaByIddatphong(datphong.id);
-                        MaGiamGia maGiamGia = null;
-                        if (sudunggiamGia != null)
+                        MaGiamGia maGiamGia = sudunggiamGia != null ? maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia) : null;
+                        GopDonDatPhong gopDonDatPhong = gopDonDatPhongService.GetByIdDatPhongMoi(datphong.id);
+                        Modeldata yourModel = new Modeldata
                         {
-                            maGiamGia = maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia);
-                        }
-                        if (maGiamGia != null || giamGiaNgayLe != null)
-                        {
-                            Modeldata yourModel = new Modeldata
-                            {
-                                datPhong = datphong,
-                                listthueSanPham = listthueSanPham,
-                                tongtienhueSanPham = tongtien,
-                                phong = phongs,
-                                magiamGia = maGiamGia,
-                                thoigian = thoiGian,
-                                giamGiaNgayle = giamGiaNgayLe,
-                                loaiDichVus = loaiDichVus,
-                            };
-                            listmodeldatas.Add(yourModel);
-                        }
-                        else
-                        {
-                            Modeldata yourModel = new Modeldata
-                            {
-                                datPhong = datphong,
-                                listthueSanPham = listthueSanPham,
-                                tongtienhueSanPham = tongtien,
-                                phong = phongs,
-                                thoigian = thoiGian,
-                                giamGiaNgayle = giamGiaNgayLe,
-                                loaiDichVus = loaiDichVus,
-                            };
-                            listmodeldatas.Add(yourModel);
-                        }
+                            datPhong = datphong,
+                            listthueSanPham = listthueSanPham,
+                            tongtienhueSanPham = tongtien,
+                            phong = phongs,
+                            magiamGia = maGiamGia,
+                            thoigian = thoiGian,
+                            giamGiaNgayle = giamGiaNgayLe,
+                            loaiDichVus = loaiDichVus,
+                            gopDonDatPhong = gopDonDatPhong != null ? gopDonDatPhong : null // Check if gopDonDatPhong is null
+                        };
+                        listmodeldatas.Add(yourModel);
                     }
                 }
                 else
@@ -961,7 +929,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                     MaGiamGia guimamaGiamgia = maGiamGiaService.GetMaGiamGiasolandatphong(soluongdatphongtoithieu);
                     if (guimamaGiamgia != null)
                     {
-                        if (guimamaGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu)
+                        if (guimamaGiamgia.soluongdatphongtoithieu == soluongdatphongtoithieu && guimamaGiamgia.trangthai.Equals("còn sử dụng"))
                         {
                             maGiamGiaService.GuiEmail(khachHang, guimamaGiamgia.magiamgia);
                         }
@@ -984,7 +952,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                            (maGiamGia.ngayketthuc.Year == DateTime.Now.Year && maGiamGia.ngayketthuc.Month == DateTime.Now.Month &&
                            maGiamGia.ngayketthuc.Day > DateTime.Now.Day))
                             {
-                                if (maGiamGia.solandasudung < maGiamGia.solansudungtoida)
+                                if (maGiamGia.solandasudung < maGiamGia.solansudungtoida && maGiamGia.trangthai.Equals("còn sử dụng"))
                                 {
                                     SuDungMaGiamGia suDungMaGiamGia = new SuDungMaGiamGia();
                                     suDungMaGiamGia.idmagiamgia = maGiamGia.id;

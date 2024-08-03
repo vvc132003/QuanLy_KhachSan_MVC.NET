@@ -501,6 +501,22 @@
       "PackagePath": "staticwebassets\\Content\\static\\vendor\\wow\\wow.min.js"
     },
     {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Images\\5cd8b87c-5f24-439b-ad90-9af65d5bd7da.png",
+      "PackagePath": "staticwebassets\\Images\\5cd8b87c-5f24-439b-ad90-9af65d5bd7da.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Images\\a4.png",
+      "PackagePath": "staticwebassets\\Images\\a4.png"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\Images\\b89220b8-447f-497a-8b35-1c60c759f7ce.jpg",
+      "PackagePath": "staticwebassets\\Images\\b89220b8-447f-497a-8b35-1c60c759f7ce.jpg"
+    },
+    {
+      "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\cascades\\haarcascade_frontalface_default.xml",
+      "PackagePath": "staticwebassets\\cascades\\haarcascade_frontalface_default.xml"
+    },
+    {
       "Id": "C:\\Users\\vvc13\\source\\repos\\QuanLyKhachSan_MVC.NET\\QuanLyKhachSan_MVC.NET\\wwwroot\\css\\animate.min.css",
       "PackagePath": "staticwebassets\\css\\animate.min.css"
     },

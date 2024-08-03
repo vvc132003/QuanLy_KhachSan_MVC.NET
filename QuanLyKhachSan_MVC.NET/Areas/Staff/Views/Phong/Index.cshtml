@@ -478,7 +478,17 @@ else
     </script>
 }
 
-
+@if (TempData["tachdonthanhcong"] != null)
+{
+    <script>
+        Swal.fire({
+            position: "top-right",
+            title: 'Tách đơn thành công!',
+            icon: 'success',
+            showConfirmButton: false,
+        });
+    </script>
+}
 @if (TempData["gopdonthanhcong"] != null)
 {
     <script>

@@ -334,7 +334,7 @@ else
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" Action="/staff/thuephong/GopDonDatPhong">
+                <form method="post" Action="/admin/thuephong/GopDonDatPhong">
                     <input type="hidden" name="idphong" id="idphongs" class="form-control" />
                     <div class="row">
                         <div class="col-6">
@@ -487,6 +487,18 @@ else
         });
     </script>
 }
+@if (TempData["tachdonthanhcong"] != null)
+{
+    <script>
+        Swal.fire({
+            position: "top-right",
+            title: 'Tách đơn thành công!',
+            icon: 'success',
+            showConfirmButton: false,
+        });
+    </script>
+}
+
 
 @if (TempData["traphongthanhcong"] != null)
 {
