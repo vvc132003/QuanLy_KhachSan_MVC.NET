@@ -89,6 +89,25 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             datPhongcu.trangthai = "đã gộp";
             datPhongService.UpdateDatPhong(datPhongcu);
             DatPhong datphongidmoi = datPhongService.GetDatPhongByIDTrangThai(idphongmoi);
+
+            datphongidmoi.tiendatcoc = datPhongcu.tiendatcoc + datphongidmoi.tiendatcoc;
+            datPhongService.UpdateDatPhong(datphongidmoi);
+
+            GopDonDatPhong gopDonDatPhong = new GopDonDatPhong();
+
+            if (datPhongcu.hinhthucthue == "Theo giờ")
+            {
+                gopDonDatPhong.tienphong = (datPhongcu.ngaydukientra.Hour - datPhongcu.ngaydat.Hour) * phong.giatientheogio;
+            }
+            else
+            {
+                gopDonDatPhong.tienphong = (datPhongcu.ngaydukientra.Day - datPhongcu.ngaydat.Day) * phong.giatientheongay;
+            }
+
+            gopDonDatPhong.iddatphongcu = datPhongcu.id;
+            gopDonDatPhong.iddatphongmoi = datphongidmoi.id;
+            gopDonDatPhongService.Create(gopDonDatPhong);
+
             List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datPhongcu.id);
             foreach (var thuesanpham in listthueSanPham)
             {

@@ -63,7 +63,7 @@ builder.Services.AddScoped<IPasswordHasher<KhachHang>, PasswordHasher<KhachHang>
 builder.Services.AddScoped(sp => new KhachHangService(new PasswordHasher<KhachHang>()));
 
 
-// Add services to the container.
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(options =>
 {

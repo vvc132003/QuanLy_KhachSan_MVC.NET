@@ -154,8 +154,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null && HttpContext.Session.GetString("tenchucvu") != null)
             {
-                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
-                {
+               
                     int id = HttpContext.Session.GetInt32("id").Value;
                     string hovaten = HttpContext.Session.GetString("hovaten");
                     string tenchucvu = HttpContext.Session.GetString("tenchucvu");
@@ -168,11 +167,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                         phongService.ThemPhong(phong);
                     }
                     return Redirect("~/staff/phong/");
-                }
-                else
-                {
-                    return Redirect("~/customer/dangnhap/dangnhap");
-                }
+               
             }
             else
             {

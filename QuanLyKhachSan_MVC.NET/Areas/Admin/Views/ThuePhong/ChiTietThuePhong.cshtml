@@ -154,9 +154,19 @@
                                                 <input type="hidden" name="idphong" id="idphong" value="@Model[0].phong.id" class="form-control" />
                                                 <div class="row">
                                                     <div class="col-6">
-                                                        <h4>Tổng tiền thuê sản phẩm: @string.Format("{0:N0} VNĐ", @Model[0].tongtienhueSanPham)</h4>
-                                                        <h4>Tiền khách hàng đặt cọc: @string.Format("{0:N0} VNĐ", @Model[0].datPhong.tiendatcoc)</h4>
+                                                        <h4 class="d-flex justify-content-between">
+                                                            <span>Tổng tiền thuê dịch vụ:</span>
+                                                            <span>@string.Format("{0:N0} VNĐ", @Model[0].tongtienhueSanPham)</span>
+                                                        </h4>
 
+                                                        <hr /> <!-- Ngăn cách giữa các dòng -->
+
+                                                        <h4 class="d-flex justify-content-between">
+                                                            <span>Tiền khách hàng đặt cọc:</span>
+                                                            <span>@string.Format("{0:N0} VNĐ", @Model[0].datPhong.tiendatcoc)</span>
+                                                        </h4>
+
+                                                        <hr /> <!-- Ngăn cách giữa các dòng -->
                                                         @{
                                                             var ngaydukientraa = Model[0].datPhong.ngaydukientra;
                                                             var ngaydatt = Model[0].datPhong.ngaydat;
@@ -166,35 +176,60 @@
                                                             {
                                                                 var soNgay = tongthoigian.TotalDays;
                                                                 var roundedDays = Math.Ceiling(soNgay);
-                                                                <h4>Tổng tiền phòng: @string.Format("{0:N0} VNĐ", Model[0].phong.giatientheongay * roundedDays)</h4>
+                                                                <h4 class="d-flex justify-content-between">
+                                                                    <span>Tổng tiền phòng:</span>
+                                                                    <span>@string.Format("{0:N0} VNĐ", Model[0].phong.giatientheongay * roundedDays)</span>
+                                                                </h4>
                                                             }
                                                             else
                                                             {
                                                                 var soGio = tongthoigian.TotalHours;
                                                                 var hours = Math.Ceiling(soGio);
-                                                                <h4>Tổng tiền phòng: @string.Format("{0:N0} VNĐ", Model[0].phong.giatientheogio * hours)</h4>
+                                                                <h4 class="d-flex justify-content-between">
+                                                                    <span>Tổng tiền phòng:</span>
+                                                                    <span>@string.Format("{0:N0} VNĐ", Model[0].phong.giatientheogio * hours)</span>
+                                                                </h4>
                                                             }
                                                         }
 
                                                         @if (Model[0].gopDonDatPhong != null)
                                                         {
-                                                            <h4>Tổng tiền phòng cũ: @string.Format("{0:N0} VNĐ", Model[0].gopDonDatPhong.tienphong) <span style="color:red;">Tiền phòng cũ được gộp</span></h4>
+                                                            <hr /> <!-- Ngăn cách giữa các dòng -->
+                                                            <h4 class="d-flex justify-content-between">
+                                                                <span style="color:red;">Tổng tiền phòng cũ:</span>
+                                                                <span>@string.Format("{0:N0} VNĐ", Model[0].gopDonDatPhong.tienphong)</span>
+                                                            </h4>
                                                         }
 
 
+                                                        <hr /> <!-- Ngăn cách giữa các dòng -->
+
+                                                        <label class="form-label" for="chuyenKhoan"><h4>Chuyển Khoản</h4></label>
+                                                        <input type="radio" id="chuyenKhoan" name="hinhthucthanhtoan" value="chuyển khoản">
+                                                        <label class="form-label" for="tienMat"><h4>Tiền Mặt</h4></label>
+                                                        <input type="radio" id="tienMat" name="hinhthucthanhtoan" value="tiền mặt">
+                                                    </div>
+                                                    <div class="col-6">
                                                         @if (Model[0].datPhong.ngaydat.Hour > Model[0].thoigian.thoigiannhanphong.Hours)
                                                         {
-                                                            <h4>Phụ thu check in: @Model[0].thoigian.phuthunhanphong %</h4>
+                                                            <h4 class="d-flex justify-content-between">
+                                                                <span>Phụ thu check in:</span>
+                                                                <span>@Model[0].thoigian.phuthunhanphong %</span>
+                                                            </h4>
                                                         }
                                                         else
                                                         {
-                                                            <h4>Phụ thu check in: 0 %</h4>
+                                                            <h4 class="d-flex justify-content-between">
+                                                                <span>Phụ thu check in:</span>
+                                                                <span>0 %</span>
+                                                            </h4>
                                                         }
 
+                                                        <hr /> <!-- Ngăn cách giữa các dòng -->
                                                         @{
                                                             var now = DateTime.Now;
                                                             var ngaydukientrass = Model[0].datPhong.ngaydukientra;
-                                                            var thoigianras = Model[0].thoigian.thoigianra;
+                                                            var thoigianras = Model[0].thoigian.thoigiannhanphong;
                                                             var scheduledCheckoutDateTime = new DateTime(
                                                             ngaydukientrass.Year,
                                                             ngaydukientrass.Month,
@@ -210,13 +245,24 @@
                                                             }
                                                         }
 
-                                                        <h4>Phụ thu check out: @(phuthuCheckout > 0 ? $"{phuthuCheckout} %" : "0 %")</h4>
+                                                        <h4 class="d-flex justify-content-between">
+                                                            <span>Phụ thu check out:</span>
+                                                            <span>@(phuthuCheckout > 0 ? $"{phuthuCheckout} %" : "0 %")</span>
+                                                        </h4>
+                                                        <hr /> <!-- Ngăn cách giữa các dòng -->
                                                         @if (Model != null && Model.Count > 0)
                                                         {
                                                             // Hiển thị phần giảm giá
                                                             var giamGia = Model[0].magiamGia != null ? Model[0].magiamGia.phantramgiamgia.ToString() + " %" : "0 %";
-                                                            <h4>Giảm giá: @giamGia</h4>
+                                                            <h4 class="d-flex justify-content-between">
+                                                                <span>Giảm giá:</span>
+                                                                <span>@giamGia</span>
+                                                            </h4>
+                                                        }
+                                                        @if (Model != null && Model.Count > 0)
+                                                        {
 
+                                                            <hr /> <!-- Ngăn cách giữa các dòng -->
                                                             var ngaydukientra = Model[0].datPhong.ngaydukientra;
                                                             var ngaydat = Model[0].datPhong.ngaydat;
                                                             var tongngay = ngaydukientra - ngaydat;
@@ -255,20 +301,22 @@
                                                             sotienthanhtoan = Math.Round(sotienthanhtoan, 0); // Làm tròn đến số nguyên
 
                                                             // Hiển thị tổng tiền cần thanh toán
-                                                            <h4>Tổng tiền cần thanh toán: @string.Format("{0:N0} VNĐ", sotienthanhtoan)</h4>
+                                                            <h4 class="d-flex justify-content-between" style="font-size: 20px; font-weight:500; color:#000">
+                                                                <span>Tổng tiền cần thanh toán:</span>
+                                                                <span>@string.Format("{0:N0} VNĐ", sotienthanhtoan)</span>
+                                                            </h4>
                                                             <input type="hidden" name="" value="@sotienthanhtoan" id="tongtien" oninput="formatCurrency(this); calculateChange()">
                                                         }
-
-
-
-                                                        <label class="form-label" for="chuyenKhoan"><h4>Chuyển Khoản</h4></label>
-                                                        <input type="radio" id="chuyenKhoan" name="hinhthucthanhtoan" value="chuyển khoản">
-                                                        <label class="form-label" for="tienMat"><h4>Tiền Mặt</h4></label>
-                                                        <input type="radio" id="tienMat" name="hinhthucthanhtoan" value="tiền mặt">
                                                     </div>
+                                                </div>
+                                                <hr /> <!-- Ngăn cách giữa các dòng -->
+
+                                                <div class="row">
                                                     <div class="col-6">
                                                         <h4 for="tienkhachdua">Tiền khách đưa</h4>
                                                         <input class="input" type="text" name="" id="tienkhachdua" oninput="formatCurrency(this); calculateChange()">
+                                                    </div>
+                                                    <div class="col-6">
                                                         <h4 for="tienthua">Tiền thừa</h4>
                                                         <input class="input" type="text" name="" id="tienthua" readonly>
                                                     </div>
@@ -503,17 +551,17 @@
 
                     data.pagedTSanPham.forEach(function (item) {
                         var productHtml = `
-                                                                                                                                                            <tr>
-                                                                                                                                                                <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
-                                                                                                                                                                <td>${item.tensanpham}</td>
-                                                                                                                                                                <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
-                                                                                                                                                                     <td>
-                                                                                                                                                                        <a href="/admin/ThueSanPham/ThueSanPham?idsp=${item.id}&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
-                                                                                                                                                                            <i class="fas fa-plus"></i>
-                                                                                                                                                                        </a>
-                                                                                                                                                                    </td>
-                                                                                                                                                            </tr>
-                                                                                                                                                        `;
+                                                                                                                                                                        <tr>
+                                                                                                                                                                            <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
+                                                                                                                                                                            <td>${item.tensanpham}</td>
+                                                                                                                                                                            <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
+                                                                                                                                                                                 <td>
+                                                                                                                                                                                    <a href="/admin/ThueSanPham/ThueSanPham?idsp=${item.id}&amp;iddatphong=@Model[0].datPhong.id&amp;idphong=@Model[0].datPhong.idphong" class="btn btn-success" title="Thuê sản phẩm">
+                                                                                                                                                                                        <i class="fas fa-plus"></i>
+                                                                                                                                                                                    </a>
+                                                                                                                                                                                </td>
+                                                                                                                                                                        </tr>
+                                                                                                                                                                    `;
                         table.row.add($(productHtml)).draw(false);
                     });
                 },

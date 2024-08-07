@@ -59,7 +59,6 @@
                                                 <th>ID</th>
                                                 <th>Khách sạn</th>
                                                 <th>Tên dịch vụ</th>
-                                                <th>Mô tả</th>
                                                 <th>Gía</th>
                                                 <th>Loại dịch vụ</th>
                                                 <th>Số lượng còn</th>
@@ -82,7 +81,6 @@
                                                         <td>@count</td>
                                                         <td>@modeldata.khachSan.tenkhachsan</td>
                                                         <td>@sanPham.tensanpham</td>
-                                                        <td class="large-cell">@sanPham.mota</td>
                                                         <td>@string.Format("{0:N0} VNĐ", @sanPham.giaban)</td>
                                                         <td>@modeldata.loaiDichVu.tenloaidichvu</td>
                                                         <td>@sanPham.soluongcon</td>
@@ -105,7 +103,7 @@
                                             else
                                             {
                                                 <tr>
-                                                    <td colspan="11">Không có dịch vụ nào được xoá cả !.</td>
+                                                    <td colspan="10">Không có dịch vụ nào được xoá cả !.</td>
                                                 </tr>
                                             }
                                         </tbody>

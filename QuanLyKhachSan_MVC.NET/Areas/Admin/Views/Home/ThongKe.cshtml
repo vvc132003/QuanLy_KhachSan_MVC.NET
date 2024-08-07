@@ -181,6 +181,7 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-title">Sản phẩm thuê %</div>
+                                        <button id="countsp" class="btn btn-primary">+</button>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart-container">
@@ -286,6 +287,7 @@
 <script src="/static/jquery-3.2.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script>
@@ -330,15 +332,27 @@
             yearSelect.appendChild(option);
         }
         var myPieChart;
+        var countsoluong = 5;
+        var defaultColors = [
+            '#FF6384', // Red
+            '#36A2EB', // Blue
+            '#FFCE56', // Yellow
+            '#4BC0C0', // Teal
+            '#9966FF'  // Purple
+        ];
         function loadPieChart(startDate, endDate, idkhachsan) {
             $.ajax({
                 url: '/api/home/TongPhanTram',
                 type: 'GET',
-                data: { startDate: startDate, endDate: endDate, idkhachsan: idkhachsan },
+                data: { startDate: startDate, endDate: endDate, idkhachsan: idkhachsan, countsoluong: countsoluong },
                 success: function (data) {
                     var chartData = data.map(item => item.tongdoanhthutungthang);
                     var labels = data.map(item => item.sanPham.tensanpham);
-                    var backgroundColors = generateRandomColors(data.length);
+                    var colors = defaultColors.slice(0, Math.min(countsoluong, defaultColors.length));
+                    if (countsoluong > defaultColors.length) {
+                        var additionalColors = generateRandomColors(countsoluong - defaultColors.length);
+                        colors = colors.concat(additionalColors);
+                    }
 
                     var pieChart = document.getElementById('pieChart').getContext('2d');
                     if (myPieChart) {
@@ -349,7 +363,7 @@
                         data: {
                             datasets: [{
                                 data: chartData,
-                                backgroundColor: backgroundColors,
+                                backgroundColor: colors,
                                 borderWidth: 0
                             }],
                             labels: labels
@@ -357,6 +371,21 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
+                            plugins: {
+                                datalabels: {
+                                    formatter: function (value, context) {
+                                        var total = context.dataset.data.reduce((sum, val) => sum + val, 0);
+                                        var percentage = Math.round((value / total) * 100);
+                                        return `${percentage}%`;
+                                    },
+                                    color: '#fff',
+                                    font: {
+                                        weight: 'bold'
+                                    },
+                                    anchor: 'end',
+                                    align: 'start'
+                                }
+                            },
                             legend: {
                                 position: 'bottom',
                                 labels: {
@@ -401,7 +430,8 @@
                                     bottom: 20
                                 }
                             }
-                        }
+                        },
+                        plugins: [ChartDataLabels] 
                     });
                 },
                 error: function (error) {
@@ -598,6 +628,10 @@
         loadBarChart();
         loadLineChart();
 
+        $('#countsp').click(function () {
+            countsoluong += 2;
+            loadPieChart();
+        });
 
         $('#startDate, #endDate, #idkhachsan').on('change', function () {
             var startDate = $('#startDate').val();

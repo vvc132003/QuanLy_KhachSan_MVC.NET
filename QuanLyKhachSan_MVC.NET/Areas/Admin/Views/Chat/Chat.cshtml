@@ -562,12 +562,14 @@
 
     // Bắt đầu kết nối SignalR
     connection.start().then(function () {
-        console.log('SignalR connection established.');
+        console.log('check.');
 
-        // Receive messages from the SignalR Hub
+        // gưi SignalR Hub
         connection.on('ReceiveMessage', function (cuocHoiThoaiId, nhanVienGuiId, noiDung) {
             console.log('Received message:', cuocHoiThoaiId, nhanVienGuiId, noiDung);
+            
 
+            // hiển thị tin nhắn của người gửi từ cuộc hội thoại
             if (parseInt($('#cuochoithoaiidinput').val()) === cuocHoiThoaiId) {
                 var classs = (nhanVienGuiId != userId) ? 'received' : 'sent';
                 var messageHtml = `
@@ -580,15 +582,17 @@
                 var messageChatElement = document.querySelector('.message-chat');
                 messageChatElement.scrollTop = messageChatElement.scrollHeight;
             }
+            /// load lại cuộc hội thoài từ người đăng nhập
             fetchConversations();
         });
+        // xem tin nhắn
         connection.on('MessageViewed', function (idtinnhan) {
             console.log('Message marked as viewed:', idtinnhan);
             fetchConversations();
         });
 
     }).catch(function (err) {
-        console.error('SignalR connection error:', err);
+        console.error('loi:', err);
     });
 
     function sendMessage() {

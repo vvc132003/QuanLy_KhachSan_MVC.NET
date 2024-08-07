@@ -222,9 +222,10 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
             public float Tongdoanhthutungthang { get; set; }
         }
         [HttpGet("TongPhanTram")]
-        public IActionResult TongPhanTram(DateTime? startDate, DateTime? endDate, int idkhachsan)
+        public IActionResult TongPhanTram(DateTime? startDate, DateTime? endDate, int idkhachsan, int? countsoluong)
         {
             List<ThueSanPham> thueSanPhams = new List<ThueSanPham>();
+
             if (startDate.HasValue && endDate.HasValue && idkhachsan > 0)
             {
                 List<Phong> phongs = phongService.GetAllPhongIDKhachSan(idkhachsan);
@@ -246,27 +247,49 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
             {
                 thueSanPhams = thueSanPhamService.GetAllThueSanPham();
             }
+
             List<Modeldata> modeldatas = new List<Modeldata>();
+
             // Lọc ra danh sách duy nhất các sản phẩm được thuê
-            var uniqueThueSanPhams = thueSanPhams.GroupBy(tsp => tsp.idsanpham).Select(group => new { idSanPham = group.Key, soLuong = group.Sum(tsp => tsp.soluong) }).ToList();
+            var uniqueThueSanPhams = thueSanPhams
+                .GroupBy(tsp => tsp.idsanpham)
+                .Select(group => new
+                {
+                    idSanPham = group.Key,
+                    soLuong = group.Sum(tsp => tsp.soluong)
+                })
+                .ToList();
+
             // Tính tổng số lượng sản phẩm được thuê
             int tongsoluongsanphamduocthue = thueSanPhams.Sum(thueSanPham => thueSanPham.soluong);
-            /*foreach (var sanphamthue in thueSanPhams)
+
+            // Sử dụng giá trị countsoluong nếu có, nếu không thì mặc định là 5
+            int topCount = countsoluong ?? 5;
+
+            // Tính phần trăm cho từng sản phẩm
+            var productsWithPercentage = uniqueThueSanPhams
+                .Select(item => new
+                {
+                    SanPham = sanPhamService.GetSanPhamByID(item.idSanPham),
+                    PhanTramSanPham = ((float)item.soLuong / tongsoluongsanphamduocthue) * 100
+                })
+                .OrderByDescending(p => p.PhanTramSanPham)
+                .Take(topCount)
+                .ToList();
+
+            float totalPercentage = productsWithPercentage.Sum(p => p.PhanTramSanPham);
+            Console.WriteLine($"Tổng phần trăm của các sản phẩm hàng đầu: {totalPercentage}%");
+
+            foreach (var item in productsWithPercentage)
             {
-                tongsoluongsanphamduocthue += sanphamthue.soluong;
-            }*/
-            foreach (var item in uniqueThueSanPhams)
-            {
-                SanPham sanPham = sanPhamService.GetSanPhamByID(item.idSanPham);
-                float phantramsanpham = ((float)item.soLuong / tongsoluongsanphamduocthue) * 100;
-                Console.WriteLine($"Tên sản phẩm: {sanPham.tensanpham}, số lượng thuê: {item.soLuong}, phần trăm: {phantramsanpham} % ");
                 Modeldata modeldata = new Modeldata()
                 {
-                    sanPham = sanPham,
-                    Tongdoanhthutungthang = phantramsanpham,
+                    sanPham = item.SanPham,
+                    Tongdoanhthutungthang = item.PhanTramSanPham,
                 };
                 modeldatas.Add(modeldata);
             }
+
             return Ok(modeldatas);
         }
     }

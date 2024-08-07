@@ -187,45 +187,51 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Customer.Controllers
 
         public async Task<IActionResult> GoogleResponse()
         {
-            // Define authentication properties with a redirect URI
-
-            // Authenticate the user using the Google authentication scheme
+            // Xác thực thông tin từ Google
             var authenticationResult = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
 
+            // Kiểm tra xem quá trình xác thực có thành công không
             if (authenticationResult.Succeeded)
             {
-                // Extract user information from the claims
+                // Lấy thông tin từ Google
                 string idtaikhoangoogle = authenticationResult.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
                 string name = authenticationResult.Principal.FindFirstValue(ClaimTypes.Name);
                 string email = authenticationResult.Principal.FindFirstValue(ClaimTypes.Email);
 
-                // Check if the user already exists in the database
+                // Kiểm tra xem khách hàng có trong hệ thống dựa trên id Google không
                 KhachHang khachHang = khachHangService.GetKhachHangbyidtaikhoangoogle(idtaikhoangoogle);
+                // Kiểm tra xem khách hàng có trong hệ thống dựa trên email không
                 KhachHang checkemail = khachHangService.GetKhachHangbyemail(email);
+
+                // Nếu khách hàng chưa có trong hệ thống, tạo mới khách hàng
                 if (khachHang == null)
                 {
-                    // If the user does not exist, create a new one
                     khachHang = new KhachHang
                     {
                         idtaikhoangoogle = idtaikhoangoogle,
                         hovaten = name,
                         email = email
                     };
+                    // Thêm khách hàng vào hệ thống
                     khachHangService.ThemKhachHangGoogle(khachHang);
+                    // Chuyển hướng về trang chủ
                     return RedirectToAction("index", "home");
                 }
+                // Nếu email của khách hàng trùng khớp, cập nhật id Google
                 else if (checkemail.email == email)
                 {
                     checkemail.idtaikhoangoogle = idtaikhoangoogle;
+                    // Cập nhật thông tin khách hàng trong hệ thống
                     khachHangService.CapNhatKhachHang(checkemail);
+                    // Chuyển hướng về trang chủ
                     return RedirectToAction("index", "home");
                 }
-                // Redirect to the Logins action
+                // Chuyển hướng về trang chủ nếu khách hàng đã tồn tại
                 return RedirectToAction("index", "home");
             }
             else
             {
-                // Handle the case where authentication failed
+                // Chuyển hướng về trang đăng nhập nếu xác thực thất bại
                 return RedirectToAction("DangNhap", "DangNhap");
             }
         }
