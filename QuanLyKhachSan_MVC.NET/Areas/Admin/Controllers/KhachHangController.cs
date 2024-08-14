@@ -73,7 +73,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 }
                 else
                 {
-                    listKhachHang = khachHangService.GetAllKhachHang();
+                    listKhachHang = khachHangService.GetAllKhachHang().OrderByDescending(kh => kh.id).Take(5).ToList();
                 }
                 int soluong = listKhachHang.Count;
                 int validPageNumber = sotrang ?? 1; // Current page, default is page 1

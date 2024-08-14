@@ -40,13 +40,19 @@
                                                 <tr>
                                                     <th>Tên khách hàng</th>
                                                     <th>Số phòng</th>
-                                                    @if (Model[0].datPhong.ngaydukientra < DateTime.Now)
-                                                    {
-                                                        <th>Giá phòng (giờ)</th>
-                                                    }
-                                                    else
-                                                    {
-                                                        <th>Giá phòng (ngày)</th>
+                                                    @{
+                                                        var nt = @Model[0].datPhong.ngaydukientra;
+                                                        var nd = @Model[0].datPhong.ngaydat;
+                                                        var t = nt - nd;
+
+                                                        if (t.TotalHours > 24)
+                                                        {
+                                                            <th>Giá phòng (ngày)</th>
+                                                        }
+                                                        else
+                                                        {
+                                                            <th>Giá phòng (giờ)</th>
+                                                        }
                                                     }
                                                     <th>Loại hình thuê</th>
                                                     <th>Ngày đặt</th>

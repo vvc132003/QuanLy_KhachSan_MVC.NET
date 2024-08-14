@@ -56,14 +56,11 @@
                                                 <th>
                                                     <input type="checkbox" class="iddeletesanpham" id="checkAll" name="iddeletesanpham">
                                                 </th>
-                                                <th>ID</th>
-                                                <th>Khách sạn</th>
-                                                <th>Tên dịch vụ</th>
-                                                <th>Gía</th>
-                                                <th>Loại dịch vụ</th>
-                                                <th>Số lượng còn</th>
+                                                <th>STT</th>
                                                 <th>Ảnh</th>
-                                                <th>Trạng thái</th>
+                                                <th>Tên dịch vụ</th>
+                                                <th>Giá bán</th>
+                                                <th>Loại dịch vụ</th>
                                                 <th>Thao tác</th>
                                             </tr>
                                         </thead>
@@ -79,15 +76,12 @@
                                                             <input type="checkbox" class="idsanpham" name="idsanpham" data-sanpham-id="@sanPham.id">
                                                         </td>
                                                         <td>@count</td>
-                                                        <td>@modeldata.khachSan.tenkhachsan</td>
-                                                        <td>@sanPham.tensanpham</td>
-                                                        <td>@string.Format("{0:N0} VNĐ", @sanPham.giaban)</td>
-                                                        <td>@modeldata.loaiDichVu.tenloaidichvu</td>
-                                                        <td>@sanPham.soluongcon</td>
                                                         <td>
                                                             <img src="@sanPham.image" width="36px" height="36px" alt="">
                                                         </td>
-                                                        <td>@sanPham.trangthai</td>
+                                                        <td>@sanPham.tensanpham</td>
+                                                        <td>@string.Format("{0:N0} VNĐ", @sanPham.giaban)</td>
+                                                        <td>@modeldata.loaiDichVu.tenloaidichvu</td>
                                                         <td>
                                                             <a href="/@sanPham.id" class="btn btn-danger" title="Xoá">
                                                                 <i class="fas fa-times-circle"></i>

@@ -50,82 +50,109 @@
                     <form method="post" action="/Customer/ThuePhong/CheckInDatPhongOnline">
                         <input type="hidden" id="idphong" name="idphong" value="@((Model.phong != null) ? Model.phong.id : "")" class="form-control" />
                         <input type="hidden" id="idkhachsan" name="idkhachsan" value="@((Model.phong != null) ? Model.phong.idkhachsan : "")" class="form-control" />
-                        <div class="form-row">
-                            <div class="control-group col-md-6">
-                                <label>Họ và tên</label>
-                                @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
-                                {
-                                    <input type="text" class="form-control" id="hovaten" name="hovaten" value="@Model.khachhang.hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
-                                }
-                                else if (!string.IsNullOrEmpty(Model.userProfileViewModel?.Name))
-                                {
-                                    <input type="text" class="form-control" id="hovaten" name="hovaten" value="@Model.userProfileViewModel.Name" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
-                                }
-                                else
-                                {
-                                    <input type="text" class="form-control" id="hovaten" name="hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
-                                }
-                                <p class="help-block text-danger"></p>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="control-group ">
+                                            <label>Số phòng</label>
+                                            <input type="text" value="@Model.phong.sophong" class="form-control " disabled />
+                                            <p class="help-block text-danger"></p>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="control-group ">
+                                            <label>Số người</label>
+                                            <input type="text" value="@Model.phong.songuoi" class="form-control " disabled />
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group 6">
+                                    <label>Loại phòng</label>
+                                    <input type="text" value="@Model.phong.loaiphong" class="form-control " disabled />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group 6">
+                                    <label>Giá phòng</label>
+                                    <input type="text" value="@string.Format("{0:N0} VNĐ",@Model.phong.giatientheogio) - @string.Format("{0:N0} VNĐ", @Model.phong.giatientheongay)" class="form-control " disabled />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group ">
+                                    <label>Ngày dự kiến trả phòng</label>
+                                    <input type="datetime" class="form-control datetimepicker-input" id="date-1" name="ngaydukientra" data-toggle="datetimepicker" data-target="#date-1" required="required" data-validation-required-message="Vui lòng nhập ngày dự kiến trả" />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group ">
+                                    <label>Mã giảm giá <span style="color:red;">(Nếu có)</span> </label>
+                                    <input type="text" class="form-control datetimepicker-input" id="magiamgia" name="magiamgia" data-toggle="datetimepicker" />
+                                    <p class="help-block text-danger"></p>
+                                </div>
                             </div>
-                            <div class="control-group col-md-6">
-                                <label>Email</label>
-                                @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
-                                {
-                                    <input type="email" name="email" class="form-control" id="email" value="@Model.khachhang.email" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
-                                }
-                                else if (!string.IsNullOrEmpty(Model.userProfileViewModel?.Name))
-                                {
-                                    <input type="email" name="email" class="form-control" id="email" value="@Model.userProfileViewModel.Email" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
-                                }
-                                else
-                                {
-                                    <input type="email" name="email" class="form-control" id="email" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
-                                }
-                                <p class="help-block text-danger"></p>
+                            <div class="col-6">
+                                <div class="control-group ">
+                                    <label>Họ và tên</label>
+                                    @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
+                                    {
+                                        <input type="text" class="form-control" id="hovaten" name="hovaten" value="@Model.khachhang.hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
+                                    }
+                                    else if (!string.IsNullOrEmpty(Model.userProfileViewModel?.Name))
+                                    {
+                                        <input type="text" class="form-control" id="hovaten" name="hovaten" value="@Model.userProfileViewModel.Name" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control" id="hovaten" name="hovaten" required="required" data-validation-required-message="Vui lòng nhập họ tên" />
+                                    }
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group ">
+                                    <label>Email</label>
+                                    @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
+                                    {
+                                        <input type="email" name="email" class="form-control" id="email" value="@Model.khachhang.email" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
+                                    }
+                                    else if (!string.IsNullOrEmpty(Model.userProfileViewModel?.Name))
+                                    {
+                                        <input type="email" name="email" class="form-control" id="email" value="@Model.userProfileViewModel.Email" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
+                                    }
+                                    else
+                                    {
+                                        <input type="email" name="email" class="form-control" id="email" required="required" data-validation-required-message="Vui lòng nhập email(*)" />
+                                    }
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group ">
+                                    <label>Số điện thoại</label>
+                                    @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
+                                    {
+                                        <input type="text" class="form-control" id="sodienthoai" value="@Model.khachhang.sodienthoai" name="sodienthoai" required="required" data-validation-required-message="Vui lòng nhập số điện thoại" />
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control" id="sodienthoai" name="sodienthoai" required="required" data-validation-required-message="Vui lòng nhập số điện thoại" />
+                                    }
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group">
+                                    <label>CCCD</label>
+                                    @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
+                                    {
+                                        <input type="text" class="form-control" id="cccd" value="@Model.khachhang.cccd" name="cccd" required="required" data-validation-required-message="Vui lòng nhập cccd (*)" />
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control" id="cccd" name="cccd" required="required" data-validation-required-message="Vui lòng nhập cccd (*)" />
+                                    }
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group">
+                                    <label>Yêu cầu</label>
+                                    <input type="text" class="form-control" id="request" required="required" data-validation-required-message="Vui lòng nhập yêu cầu" />
+                                    <p class="help-block text-danger"></p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="control-group col-md-6">
-                                <label>Số điện thoại</label>
-                                @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
-                                {
-                                    <input type="text" class="form-control" id="sodienthoai" value="@Model.khachhang.sodienthoai" name="sodienthoai" required="required" data-validation-required-message="Vui lòng nhập số điện thoại" />
-                                }
-                                else
-                                {
-                                    <input type="text" class="form-control" id="sodienthoai" name="sodienthoai" required="required" data-validation-required-message="Vui lòng nhập số điện thoại" />
-                                }
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group col-md-6">
-                                <label>CCCD</label>
-                                @if (Model.khachhang != null && !string.IsNullOrEmpty(Model.khachhang.hovaten))
-                                {
-                                    <input type="text" class="form-control" id="cccd" value="@Model.khachhang.cccd" name="cccd" required="required" data-validation-required-message="Vui lòng nhập cccd (*)" />
-                                }
-                                else
-                                {
-                                    <input type="text" class="form-control" id="cccd" name="cccd" required="required" data-validation-required-message="Vui lòng nhập cccd (*)" />
-                                }
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="control-group col-md-6">
-                                <label>Ngày dự kiến trả phòng</label>
-                                <input type="datetime" class="form-control datetimepicker-input" id="date-1" name="ngaydukientra" data-toggle="datetimepicker" data-target="#date-1" required="required" data-validation-required-message="Vui lòng nhập ngày dự kiến trả" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group col-md-6">
-                                <label>Mã giảm giá (Nếu có)</label>
-                                <input type="text" class="form-control datetimepicker-input" id="magiamgia" name="magiamgia" data-toggle="datetimepicker" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label>Yêu cầu</label>
-                            <input type="text" class="form-control" id="request" required="required" data-validation-required-message="Vui lòng nhập yêu cầu" />
-                            <p class="help-block text-danger"></p>
                         </div>
                         <div class="button"><button type="submit" id="bookingButton">Đặt phòng</button></div>
                     </form>
@@ -480,31 +507,31 @@
                         if (modeldata.binhLuan.parent_comment_id == 0) {
                             // Hiển thị bình luận gốc
                             commentsHtml += `
-                                                                                            <div class="container-comments" style="padding: 10px 20px;border: 1px solid #ccc;border-radius: 10px;">
-                                                                                                    <div class="comment">
-                                                                                                    <img src="" alt="" class="avatar">
-                                                                                                    <div class="comment-body">
-                                                                                                        <div class="comment-header">
-                                                                                                            ${modeldata.binhLuan.loainguoithamgia === 'khachhang' ?
-                                                                                                    `<span class="username">${modeldata.khachhang.hovaten}</span>` :
-                                                                                                    `<span class="username">${modeldata.nhanVien.hovaten}</span>`}
-                                                                                                    <span class="time">${formatTime(modeldata.binhLuan.thoigianbinhluan)}</span>
-                                                                                                                </div>
-                                                                                                            <p id="inputText" name="noidung" class="comment-text">${modeldata.binhLuan.noidung}</p>
-                                                                                                            <button class="speakButton">Đọc bình luận</button>
-                                                                                                            <div class="comment-actions">
-                                                                                                            <button class="reply">Trả lời</button>
-                                                                                                            <button id="thich" data-binhluan-id="${modeldata.binhLuan.id}" class="like">Thích <span>(${modeldata.tonglikebinhluanthichbuyid})</span></button>
-                                                                                                            <button id="khongthich" data-binhluan-id="${modeldata.binhLuan.id}" class="dislike">Không thích <span>(${modeldata.tonglikebinhluankhongthichbuyid})</span></button>
-                                                                                                        </div>
-                                                                                                        <div class="reply-input" style="display: none;">
-                                                                                                            <img src="" alt="" class="avatar">
-                                                                                                            <textarea class="inputnoidung-reply" placeholder="Viết bình luận trả lời..."></textarea>
-                                                                                                            <input type="hidden" class="parent_comment_id" value="${modeldata.binhLuan.id}" />
-                                                                                                            <button class="add-comment-reply-btn" type="submit">Gửi</button>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>`;
+                                                                                                            <div class="container-comments" style="padding: 10px 20px;border: 1px solid #ccc;border-radius: 10px;">
+                                                                                                                    <div class="comment">
+                                                                                                                    <img src="" alt="" class="avatar">
+                                                                                                                    <div class="comment-body">
+                                                                                                                        <div class="comment-header">
+                                                                                                                            ${modeldata.binhLuan.loainguoithamgia === 'khachhang' ?
+                                    `<span class="username">${modeldata.khachhang.hovaten}</span>` :
+                                    `<span class="username">${modeldata.nhanVien.hovaten}</span>`}
+                                                                                                                    <span class="time">${formatTime(modeldata.binhLuan.thoigianbinhluan)}</span>
+                                                                                                                                </div>
+                                                                                                                            <p id="inputText" name="noidung" class="comment-text">${modeldata.binhLuan.noidung}</p>
+                                                                                                                            <button class="speakButton">Đọc bình luận</button>
+                                                                                                                            <div class="comment-actions">
+                                                                                                                            <button class="reply">Trả lời</button>
+                                                                                                                            <button id="thich" data-binhluan-id="${modeldata.binhLuan.id}" class="like">Thích <span>(${modeldata.tonglikebinhluanthichbuyid})</span></button>
+                                                                                                                            <button id="khongthich" data-binhluan-id="${modeldata.binhLuan.id}" class="dislike">Không thích <span>(${modeldata.tonglikebinhluankhongthichbuyid})</span></button>
+                                                                                                                        </div>
+                                                                                                                        <div class="reply-input" style="display: none;">
+                                                                                                                            <img src="" alt="" class="avatar">
+                                                                                                                            <textarea class="inputnoidung-reply" placeholder="Viết bình luận trả lời..."></textarea>
+                                                                                                                            <input type="hidden" class="parent_comment_id" value="${modeldata.binhLuan.id}" />
+                                                                                                                            <button class="add-comment-reply-btn" type="submit">Gửi</button>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>`;
 
                             // Hiển thị danh sách bình luận trả lời
                             commentsHtml += '<div class="replies-list">';
@@ -514,41 +541,41 @@
                                     replyCount++;
                                     if (replyCount <= soluonghienthi) {
                                         commentsHtml += `
-                                                                                                <div class="comment reply">
-                                                                                                    <img src="" alt="${reply.hovaten}" class="avatar">
-                                                                                                    <div class="comment-body">
-                                                                                                        <div class="comment-header">
-                                                                                                            <span class="username">${reply.hovaten}</span>
-                                                                                                            <span class="time">${formatTime(reply.thoigianbinhluan)}</span>
-                                                                                                        </div>
-                                                                                                        <p class="comment-text">${reply.noidung}</p>
-                                                                                                        <div class="comment-actions">
-                                                                                                            <button class="reply">Trả lời</button>
-                                                                                                            <button id="thich" data-binhluan-id="${reply.id}" class="like">Thích <span>(${reply.tonglikebinhluanthichbuyid})</span></button>
-                                                                                                            <button id="khongthich" data-binhluan-id="${reply.id}" class="dislike">Không thích <span>(${reply.tonglikebinhluankhongthichbuyid})</span></button>
-                                                                                                        </div>
-                                                                                                        <div class="reply-input" style="display: none;">
-                                                                                                            <img src="" alt="" class="avatar">
-                                                                                                            <textarea class="inputnoidung-reply" placeholder="Viết bình luận trả lời..."></textarea>
-                                                                                                            <input type="hidden" class="parent_comment_id" value="${reply.id}" />
-                                                                                                            <button class="add-comment-reply-btn" type="submit">Gửi</button>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>`;
+                                                                                                                <div class="comment reply">
+                                                                                                                    <img src="" alt="${reply.hovaten}" class="avatar">
+                                                                                                                    <div class="comment-body">
+                                                                                                                        <div class="comment-header">
+                                                                                                                            <span class="username">${reply.hovaten}</span>
+                                                                                                                            <span class="time">${formatTime(reply.thoigianbinhluan)}</span>
+                                                                                                                        </div>
+                                                                                                                        <p class="comment-text">${reply.noidung}</p>
+                                                                                                                        <div class="comment-actions">
+                                                                                                                            <button class="reply">Trả lời</button>
+                                                                                                                            <button id="thich" data-binhluan-id="${reply.id}" class="like">Thích <span>(${reply.tonglikebinhluanthichbuyid})</span></button>
+                                                                                                                            <button id="khongthich" data-binhluan-id="${reply.id}" class="dislike">Không thích <span>(${reply.tonglikebinhluankhongthichbuyid})</span></button>
+                                                                                                                        </div>
+                                                                                                                        <div class="reply-input" style="display: none;">
+                                                                                                                            <img src="" alt="" class="avatar">
+                                                                                                                            <textarea class="inputnoidung-reply" placeholder="Viết bình luận trả lời..."></textarea>
+                                                                                                                            <input type="hidden" class="parent_comment_id" value="${reply.id}" />
+                                                                                                                            <button class="add-comment-reply-btn" type="submit">Gửi</button>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>`;
                                     }
                                 }
                             });
 
                             if (replyCount > soluonghienthi) {
                                 commentsHtml += `
-                                                                                        <div class="view-more-replies">
-                                                                                            <button class="btn-view-more-replies">Xem thêm</button>
-                                                                                        </div>`;
+                                                                                                        <div class="view-more-replies">
+                                                                                                            <button class="btn-view-more-replies">Xem thêm</button>
+                                                                                                        </div>`;
                             } else if (replyCount > 0) {
                                 commentsHtml += `
-                                                                                            <div class="view-more-replies">
-                                                                                               <button class="btn-view-more-repliess">Ẩn bớt</button>
-                                                                                            </div>`;
+                                                                                                            <div class="view-more-replies">
+                                                                                                               <button class="btn-view-more-repliess">Ẩn bớt</button>
+                                                                                                            </div>`;
                             }
                             commentsHtml += '</div>';
                             commentsHtml += '</div>';
@@ -783,6 +810,6 @@
                 }
             });
         });
-      
+
     });
 </script>

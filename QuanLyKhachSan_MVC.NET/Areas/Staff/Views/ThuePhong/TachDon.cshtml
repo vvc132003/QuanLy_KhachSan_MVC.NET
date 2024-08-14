@@ -324,7 +324,7 @@
                     fetchCartItems();
                     loadRentalProductList();
                 } else {
-                    alert('Failed to add item to cart');
+                    alert(response.messages); // Thông báo lỗi chi tiết
                 }
             },
             error: function (err) {

@@ -396,7 +396,6 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     ThoiGian thoiGian = thoiGianService.GetThoiGian(HttpContext.Session.GetInt32("idkhachsan").Value);
                     if (khachHangByEmail != null)
                     {
-
                         khachHangByEmail.cccd = khachHang.cccd;
                         khachHangByEmail.sodienthoai = khachHang.cccd;
                         khachHangByEmail.tinh = khachHang.tinh;

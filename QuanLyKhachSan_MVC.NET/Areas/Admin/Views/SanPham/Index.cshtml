@@ -1,4 +1,4 @@
-﻿@model Tuple<List<Model.Models.Modeldata>, List<Model.Models.LoaiDichVu>>
+﻿@model Model.Models.Modeldata
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel='stylesheet'
@@ -24,6 +24,31 @@
                         <div class="card">
                             <br />
                             <ul class="nav justify-content-end">
+                                <li class="nav-item mr-2">
+                                    <select id="idloaidichvus" name="idloaidichvu" class="form-control">
+                                        @if (Model.loaiDichVus != null && Model.loaiDichVus.Count > 0)
+                                        {
+                                            <option>Loại dịch vụ</option>
+                                            foreach (var loaiDichVu in Model.loaiDichVus)
+                                            {
+                                                <option value="@loaiDichVu.id">@loaiDichVu.tenloaidichvu</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <option value="" selected>Không có dữ liệu</option>
+                                        }
+                                    </select>
+                                </li>
+                                <li class="nav-item mr-2">
+                                    <input type="text" class="form-control" placeholder="Nhập tên dịch vụ..." id="tensanpham">
+                                </li>
+                                <li class="nav-item mr-2">
+                                    <input type="number" class="form-control" placeholder="Giá tối thiểu..." id="minPrice" min="0">
+                                </li>
+                                <li class="nav-item mr-2">
+                                    <input type="number" class="form-control" placeholder="Giá tối đa..." id="maxPrice" min="0">
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link btn btn-danger me-2" id="deletesanpham">
                                         <i class="fas fa-trash"></i>
@@ -33,7 +58,7 @@
                                 <li class="nav-item">
                                     <a href="/admin/sanpham/sanphamdaxoa" class="nav-link btn btn-secondary me-2">
                                         <i class="fas fa-flag"></i>
-                                        Sản phẩm đã được xoá
+                                        Dịch vụ đã được xoá
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -63,56 +88,50 @@
                                                 <th>
                                                     <input type="checkbox" id="checkAll" class="iddeletesanpham" name="iddeletesanpham">
                                                 </th>
-                                                <th>ID</th>
-                                                <th>Khách sạn</th>
-                                                <th>Tên dịch vụ</th>
-                                                <th>Gía</th>
-                                                <th>Loại dịch vụ</th>
-                                                <th>Số lượng còn</th>
+                                                <th>STT</th>
                                                 <th>Ảnh</th>
-                                                <th>Trạng thái</th>
+                                                <th>Tên dịch vụ</th>
+                                                <th>Giá bán</th>
+                                                <th>Loại dịch vụ</th>
                                                 <th>Thao tác</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (Model.Item1 != null && Model.Item1.Count > 0)
+                                            @*   @if (Model.Item1 != null && Model.Item1.Count > 0)
                                             {
-                                                int count = 1;
-                                                foreach (var modeldata in Model.Item1)
-                                                {
-                                                    var sanPham = modeldata.PagedTSanPham.First();
-                                                    <tr id="row-@count">
-                                                        <td>
-                                                            <input type="checkbox" class="idsanpham" name="idsanpham" data-sanpham-id="@sanPham.id">
-                                                        </td>
-                                                        <td>@count</td>
-                                                        <td>@modeldata.khachSan.tenkhachsan</td>
-                                                        <td>@sanPham.tensanpham</td>
-                                                        <td>@string.Format("{0:N0} VNĐ", @sanPham.giaban)</td>
-                                                        <td>@modeldata.loaiDichVu.tenloaidichvu</td>
-                                                        <td>@sanPham.soluongcon</td>
-                                                        <td>
-                                                            <img src="@sanPham.image" width="36px" height="36px" alt="">
-                                                        </td>
-                                                        <td>@sanPham.trangthai</td>
-                                                        <td>
-                                                            <a href="/@sanPham.id" class="btn btn-danger" title="Xoá">
-                                                                <i class="fas fa-times-circle"></i>
-                                                            </a>
-                                                            <a href="/@sanPham.id" class="btn btn-warning" title="Cập nhât">
-                                                                <i class="fas fa-check-circle"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    count++;
-                                                }
+                                            int count = 1;
+                                            foreach (var modeldata in Model.Item1)
+                                            {
+                                            var sanPham = modeldata.PagedTSanPham.First();
+                                            <tr id="row-@count">
+                                            <td>
+                                            <input type="checkbox" class="idsanpham" name="idsanpham" data-sanpham-id="@sanPham.id">
+                                            </td>
+                                            <td>@count</td>
+                                            <td>
+                                            <img src="@sanPham.image" width="36px" height="36px" alt="">
+                                            </td>
+                                            <td>@sanPham.tensanpham</td>
+                                            <td>@string.Format("{0:N0} VNĐ", @sanPham.giaban)</td>
+                                            <td>@modeldata.loaiDichVu.tenloaidichvu</td>
+                                            <td>
+                                            <a href="/@sanPham.id" class="btn btn-danger" title="Xoá">
+                                            <i class="fas fa-times-circle"></i>
+                                            </a>
+                                            <a href="/@sanPham.id" class="btn btn-warning" title="Cập nhât">
+                                            <i class="fas fa-check-circle"></i>
+                                            </a>
+                                            </td>
+                                            </tr>
+                                            count++;
+                                            }
                                             }
                                             else
                                             {
-                                                <tr>
-                                                    <td colspan="10">Không có dịch vụ nào cả !.</td>
-                                                </tr>
-                                            }
+                                            <tr>
+                                            <td colspan="10">Không có dịch vụ nào cả !.</td>
+                                            </tr>
+                                            } *@
                                         </tbody>
                                     </table>
                                 </div>
@@ -157,9 +176,9 @@
                         <div class="mb-3">
                             <label for="idloaidichvu" class="form-label">Loại dịch vụ:</label>
                             <select id="idloaidichvu" name="idloaidichvu" class="form-control">
-                                @if (Model.Item2 != null && Model.Item2.Count > 0)
+                                @if (Model.loaiDichVus != null && Model.loaiDichVus.Count > 0)
                                 {
-                                    foreach (var loaiDichVu in Model.Item2)
+                                    foreach (var loaiDichVu in Model.loaiDichVus)
                                     {
                                         <option value="@loaiDichVu.id">@loaiDichVu.tenloaidichvu</option>
                                     }
@@ -229,10 +248,10 @@
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#example').DataTable({
+        var table = $('#example').DataTable({
             "paging": true,
             "lengthChange": false,
-            "searching": true,
+            "searching": false,
             "ordering": false,
             "info": false,
             "autoWidth": false,
@@ -246,6 +265,75 @@
                 },
                 "search": "Tìm kiếm:",
             }
+        });
+
+        GetSanPhams();
+
+        function GetSanPhams(idloaidichvu, tensanpham, minPrice, maxPrice) {
+            $.ajax({
+                url: '/admin/SanPham/GetSanPhams',
+                method: 'GET',
+                data: { idloaidichvu: idloaidichvu, tensanpham: tensanpham, minPrice: minPrice, maxPrice: maxPrice },
+                success: function (response) {
+                    console.log(response);
+                    table.clear().draw(); 
+
+                    if (response && response.length > 0) {
+                        var count = 1;
+                        response.forEach(function (modeldata) {
+                            var sanPham = modeldata.pagedTSanPham[0];
+                            var row = `<tr id="row-${count}">
+                                        <td>
+                                            <input type="checkbox" class="idsanpham" name="idsanpham" data-sanpham-id="${sanPham.id}">
+                                        </td>
+                                        <td>${count}</td>
+                                        <td>
+                                            <img src="${sanPham.image}" width="36px" height="36px" alt="">
+                                        </td>
+                                        <td>${sanPham.tensanpham}</td>
+                                        <td>${sanPham.giaban.toLocaleString('vi-VN')} VNĐ</td>
+                                        <td>${modeldata.loaiDichVu.tenloaidichvu}</td>
+                                        <td>
+                                            <a href="/${sanPham.id}" class="btn btn-danger" title="Xoá">
+                                                <i class="fas fa-times-circle"></i>
+                                            </a>
+                                            <a href="/${sanPham.id}" class="btn btn-warning" title="Cập nhật">
+                                                <i class="fas fa-check-circle"></i>
+                                            </a>
+                                        </td>
+                                    </tr>`;
+                            table.row.add($(row)).draw(false); // Add the row to the DataTable
+                            count++;
+                        });
+                    } else {
+                        table.row.add($('<tr><td colspan="10">Không có dịch vụ nào cả !.</td></tr>')).draw(false);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Failed to fetch data:', error);
+                }
+            });
+        }
+
+        $('#idloaidichvus').change(function () {
+            var idloaidichvus = $(this).val();
+            if (idloaidichvus > 0) {
+                GetSanPhams(idloaidichvus);
+            } else {
+                GetSanPhams();
+            }
+        });
+        $('#tensanpham').keyup(function () {
+            var idloaidichvu = $('#idloaidichvus').val();
+            var tensanpham = $(this).val();
+            if (idloaidichvu > 0 && tensanpham != null) {
+                GetSanPhams(idloaidichvu, tensanpham);
+            }
+        });
+        $('#minPrice, #maxPrice').on('change input', function () {
+            var minPrice = parseFloat($('#minPrice').val()) || null;
+            var maxPrice = parseFloat($('#maxPrice').val()) || null;
+            GetSanPhams(minPrice, maxPrice);
         });
     });
 </script>

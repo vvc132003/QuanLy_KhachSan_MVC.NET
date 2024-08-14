@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using PagedList;
 using Service;
@@ -60,7 +61,57 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult Index(int? sotrang)
+        /* public IActionResult Index(int? sotrang)
+         {
+             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
+             {
+                 if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
+                 {
+                     int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                     int id = HttpContext.Session.GetInt32("id").Value;
+                     string hovaten = HttpContext.Session.GetString("hovaten");
+                     string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                     ViewData["id"] = id;
+                     ViewData["hovaten"] = hovaten;
+                     ViewData["tenchucvu"] = tenchucvu;
+                     ViewData["idkhachsan"] = idkhachsan;
+                     List<SanPham> sanphams = sanPhamService.GetAllSanPham().OrderByDescending(sp => sp.id).ToList();
+                     int soluong = sanphams.Count;
+                     int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
+                     int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
+                     PagedList.IPagedList<SanPham> ipagesanPhams = sanphams.ToPagedList(validPageNumber, pageSize);
+                     List<LoaiDichVu> loaiDichVus = loaiDichDichVuService.LayTatCaLoaiDichVu();
+                     List<Modeldata> modeldatalist = new List<Modeldata>();
+                     foreach (var sanPham in ipagesanPhams)
+                     {
+                         if (sanPham.trangthai.Equals("còn bán"))
+                         {
+                             LoaiDichVu loaiDichVu = loaiDichDichVuService.GetLoaiDichVuById(sanPham.idloaidichvu);
+                             KhachSan khachSan = khachSanService.GetKhachSanById(loaiDichVu.idkhachsan);
+                             Modeldata modeldata = new Modeldata
+                             {
+                                 PagedTSanPham = new List<SanPham> { sanPham }.ToPagedList(1, 1),
+                                 loaiDichVu = loaiDichVu,
+                                 khachSan = khachSan,
+                             };
+                             modeldatalist.Add(modeldata);
+                         }
+                     }
+                     return View(new Tuple<List<Modeldata>, List<LoaiDichVu>>(modeldatalist, loaiDichVus));
+                 }
+                 else
+                 {
+                     return Redirect("~/customer/dangnhap/dangnhap");
+                 }
+             }
+             else
+             {
+                 return Redirect("~/customer/dangnhap/dangnhap");
+             }
+         }*/
+
+
+        public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -74,12 +125,61 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     ViewData["hovaten"] = hovaten;
                     ViewData["tenchucvu"] = tenchucvu;
                     ViewData["idkhachsan"] = idkhachsan;
-                    List<SanPham> sanphams = sanPhamService.GetAllSanPham();
-                    int soluong = sanphams.Count;
-                    int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
-                    int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
-                    PagedList.IPagedList<SanPham> ipagesanPhams = sanphams.ToPagedList(validPageNumber, pageSize);
                     List<LoaiDichVu> loaiDichVus = loaiDichDichVuService.LayTatCaLoaiDichVu();
+                    Modeldata modeldata = new Modeldata
+                    {
+                        loaiDichVus = loaiDichVus,
+                    };
+                    return View(modeldata);
+                }
+                else
+                {
+                    return Redirect("~/customer/dangnhap/dangnhap");
+                }
+            }
+            else
+            {
+                return Redirect("~/customer/dangnhap/dangnhap");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetSanPhams(int? sotrang, int idloaidichvu, string tensanpham, float? minPrice, float? maxPrice)
+        {
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetInt32("idkhachsan") != null && HttpContext.Session.GetString("hovaten") != null)
+            {
+                if (HttpContext.Session.GetString("tenchucvu").Equals("Quản lý"))
+                {
+                    int idkhachsan = HttpContext.Session.GetInt32("idkhachsan").Value;
+                    int id = HttpContext.Session.GetInt32("id").Value;
+                    string hovaten = HttpContext.Session.GetString("hovaten");
+                    string tenchucvu = HttpContext.Session.GetString("tenchucvu");
+                    ViewData["id"] = id;
+                    ViewData["hovaten"] = hovaten;
+                    ViewData["tenchucvu"] = tenchucvu;
+                    ViewData["idkhachsan"] = idkhachsan;
+
+                    List<SanPham> sanphams;
+                    if (idloaidichvu > 0 && !string.IsNullOrEmpty(tensanpham))
+                    {
+                        sanphams = sanPhamService.GetAllSanPham().Where(sp => sp.idloaidichvu == idloaidichvu && sp.tensanpham.Contains(tensanpham)).OrderByDescending(sp => sp.id).ToList();
+                    }
+                    else if (idloaidichvu > 0)
+                    {
+                        sanphams = sanPhamService.GetAllSanPham().Where(sp => sp.idloaidichvu == idloaidichvu).OrderByDescending(sp => sp.id).ToList();
+                    }
+                    else if (minPrice.HasValue && maxPrice.HasValue)
+                    {
+                        sanphams = sanPhamService.GetAllSanPham().Where(sp => sp.giaban >= minPrice.Value && sp.giaban <= maxPrice.Value).ToList();
+                    }
+                    else
+                    {
+                        sanphams = sanPhamService.GetAllSanPham().OrderByDescending(sp => sp.id).ToList();
+                    }
+                    int soluong = sanphams.Count;
+                    int validPageNumber = sotrang ?? 1;
+                    int pageSize = Math.Max(soluong, 1);
+                    PagedList.IPagedList<SanPham> ipagesanPhams = sanphams.ToPagedList(validPageNumber, pageSize);
                     List<Modeldata> modeldatalist = new List<Modeldata>();
                     foreach (var sanPham in ipagesanPhams)
                     {
@@ -96,18 +196,20 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                             modeldatalist.Add(modeldata);
                         }
                     }
-                    return View(new Tuple<List<Modeldata>, List<LoaiDichVu>>(modeldatalist, loaiDichVus));
+                    return Ok(modeldatalist);
                 }
                 else
                 {
-                    return Redirect("~/customer/dangnhap/dangnhap");
+                    return Unauthorized(); // 401 Unauthorized
                 }
             }
             else
             {
-                return Redirect("~/customer/dangnhap/dangnhap");
+                return Unauthorized(); // 401 Unauthorized
             }
         }
+
+
 
         public IActionResult SanPhamdaxoa(int? sotrang)
         {
@@ -123,7 +225,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                     ViewData["hovaten"] = hovaten;
                     ViewData["tenchucvu"] = tenchucvu;
                     ViewData["idkhachsan"] = idkhachsan;
-                    List<SanPham> sanphams = sanPhamService.GetAllSanPham();
+                    List<SanPham> sanphams = sanPhamService.GetAllSanPham().OrderByDescending(sp => sp.id).ToList();
                     int soluong = sanphams.Count;
                     int validPageNumber = sotrang ?? 1;// Trang hiện tại, mặc định là trang 1
                     int pageSize = Math.Max(soluong, 1); // Số lượng phòng trên mỗi trang
