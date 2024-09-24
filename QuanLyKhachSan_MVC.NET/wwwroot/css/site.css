@@ -17508,6 +17508,7 @@ Form-control
     color: #212529;
     min-height: 38px;
     display: initial;
+    border-radius: 0;
 }
 
 .form-control-sm {

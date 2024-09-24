@@ -114,5 +114,8 @@ namespace Model.Models
 
 
 
+        public List<QRCodeRequest> QRCodeRequests { get; set; }
+
+
     }
 }

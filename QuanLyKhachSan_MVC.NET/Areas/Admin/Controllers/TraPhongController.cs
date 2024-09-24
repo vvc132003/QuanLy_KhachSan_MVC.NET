@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model.Models;
 using PagedList;
+using PayPal.Api;
 using Service;
 using Service.Service;
 
@@ -19,6 +20,9 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
         private readonly KhachHangService khachHangService;
         private readonly GiamGiaNgayLeService giamGiaNgayLeService;
         private readonly GopDonDatPhongService gopDonDatPhongService;
+        private readonly VietQRService _vietQRService;
+        private readonly IConfiguration _configuration;
+        private readonly QRCodeRequestService qRCodeRequestService;
 
 
 
@@ -30,7 +34,8 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                                   SuDungMaGiamGiaService sugiamGiaServices,
                                   ThoiGianService thoiGianServices,
                                   MaGiamGiaService maGiamGiaServices,
-                                  KhachHangService khachHangServices, GiamGiaNgayLeService giamGiaNgayLeService)
+                                  KhachHangService khachHangServices, GiamGiaNgayLeService giamGiaNgayLeService,
+                                  VietQRService vietQRService, IConfiguration configuration, QRCodeRequestService qRCodeRequestService)
         {
             datPhongService = datPhongServices;
             thueSanPhamService = thueSanPhamServices;
@@ -42,7 +47,80 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             maGiamGiaService = maGiamGiaServices;
             khachHangService = khachHangServices;
             this.giamGiaNgayLeService = giamGiaNgayLeService;
+            _vietQRService = vietQRService;
+            _configuration = configuration;
+            this.qRCodeRequestService = qRCodeRequestService;
         }
+
+
+
+        public IActionResult ListQr()
+        {
+            List<QRCodeRequest> qrCodeRequests = qRCodeRequestService.GetAllQRCodeRequests();
+            return Ok(qrCodeRequests);
+        }
+
+
+        public async Task<IActionResult> TaoMaQRAsync(int idphong, int IdQRCode)
+        {
+            QRCodeRequest qRCodeRequest = await qRCodeRequestService.GetQRCodeByIdAsync(IdQRCode);
+/*            Console.WriteLine($"Generating QR Code with amount: AccountNo: {qRCodeRequest.AccountNo}, accountName: {qRCodeRequest.AccountName}, acqId: {qRCodeRequest.AcqId}");
+*/
+            DatPhong datphong = datPhongService.GetDatPhongByIDTrangThai(idphong);
+            Phong phong = phongService.GetPhongID(idphong);
+            List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datphong.id);
+            SuDungMaGiamGia sudunggiamGia = sugiamGiaService.GetSuDungMaGiamGiaByIddatphong(datphong.id);
+            MaGiamGia maGiamGia = sudunggiamGia != null ? maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia) : null;
+            float tongtienthuesanpham = listthueSanPham.Sum(thueSanPham => thueSanPham.thanhtien);
+            GiamGiaNgayLe giamGiaNgayLe = giamGiaNgayLeService.GetGiamGiaNgayLeByNgayLe(DateTime.Today);
+            GopDonDatPhong gopDonDatPhong = gopDonDatPhongService.GetByIdDatPhongMoi(datphong.id);
+            var ngaydukientra = datphong.ngaydukientra;
+            var ngaydat = datphong.ngaydat;
+            var tongngay = ngaydukientra - ngaydat;
+            var soNgay = Math.Ceiling(tongngay.TotalDays);
+            var soGio = Math.Ceiling(tongngay.TotalHours);
+            double tongTienPhong = 0;
+            double sotienthanhtoan = 0;
+
+            if (datphong.hinhthucthue == "Theo giờ")
+            {
+                float giaTienPhong = phong.giatientheogio;
+                if (giamGiaNgayLe != null)
+                {
+                    giaTienPhong *= (100 + giamGiaNgayLe.dieuchinhgiaphong) / 100;
+                }
+                tongTienPhong = giaTienPhong * soGio;
+            }
+            else
+            {
+                float giaTienPhong = phong.giatientheongay;
+                if (giamGiaNgayLe != null)
+                {
+                    giaTienPhong *= (100 + giamGiaNgayLe.dieuchinhgiaphong) / 100;
+                }
+                tongTienPhong = giaTienPhong * soNgay;
+            }
+            if (gopDonDatPhong != null)
+            {
+                tongTienPhong += gopDonDatPhong.tienphong;
+            }
+            sotienthanhtoan = tongTienPhong + tongtienthuesanpham - datphong.tiendatcoc;
+            if (maGiamGia != null)
+            {
+                sotienthanhtoan *= (100 - maGiamGia.phantramgiamgia) / 100;
+            }
+            KhachHang khachHang = khachHangService.GetKhachHangbyid(datphong.idkhachhang);
+            string qrCodeUrl = await _vietQRService.GenerateQRCodeAsync(sotienthanhtoan, qRCodeRequest.taikhoan, qRCodeRequest.tentaikhoan, qRCodeRequest.machinhanh, khachHang.hovaten);
+
+            var payload = new
+            {
+                QRCodeUrl = qrCodeUrl
+            };
+            return Ok(payload);
+        }
+
+
+
         public IActionResult TraPhongandLSThanhToan(LichSuThanhToan lichSuThanhToan, int idphong)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("hovaten") != null)

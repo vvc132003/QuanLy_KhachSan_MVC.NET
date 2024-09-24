@@ -343,6 +343,28 @@
                                                     </button>
 
                                                 </div>
+                                                @*                                                 mã qr
+                                                *@
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog custom-size">
+                                                        <div class="modal-content">
+                                                            <div class="modal-body ">
+                                                                <div class="form-group">
+                                                                    <select id="qrCodeSelect" class="form-control">
+                                                                    </select>
+                                                                </div>
+                                                                <div class="qr-code-container mt-3">
+                                                                    <img id="qrCodeImage" src="/Images/haha.png" class="img-fluid">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-success btn-lg">
+                                                                    <i class="fas fa-credit-card"></i> Thanh toán
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -432,6 +454,24 @@
         display: none;
         margin-top: 10px;
     }
+
+    .modal-dialog.custom-size {
+        max-width: 32vw;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+    }
+
+    .qr-code-container {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+        .qr-code-container img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }
 </style>
 
 
@@ -524,6 +564,67 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        // Event listener for radio button change
+        $('#chuyenKhoan').on('change', function () {
+            fetchQrCodeData();
+        });
+
+        // Event listener for QR code select change
+        $('#qrCodeSelect').on('change', function () {
+            const selectedQrCodeId = $(this).val();
+            if (selectedQrCodeId) {
+                fetchQrCodeImage(selectedQrCodeId);
+            }
+        });
+
+        // Function to fetch QR Code data and update select options
+        function fetchQrCodeData() {
+            $.ajax({
+                url: '/admin/traphong/ListQr',
+                method: 'GET',
+                success: function (data) {
+                    const $qrCodeSelect = $('#qrCodeSelect');
+
+                    $.each(data, function (index, qrCode) {
+                        $qrCodeSelect.append(
+                            $('<option>').val(qrCode.id).text(`${qrCode.accountName} - ${qrCode.accountNo}`)
+                        );
+                    });
+
+                    // Show the modal
+                    const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                    modal.show();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching QR codes:', error);
+                }
+            });
+        }
+
+        // Function to fetch QR Code image
+        function fetchQrCodeImage(qrCodeId) {
+            const idphong = @Model[0].phong.id; // Get value from Razor
+
+            $.ajax({
+                url: `/admin/traphong/TaoMaQR?idphong=${idphong}&IdQRCode=${qrCodeId}`, // URL for the method
+                type: 'GET',
+                success: function (response) {
+                    // Update the QR code image source
+                    $('#qrCodeImage').attr('src', response.qrCodeUrl);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching QR code image:', error);
+                }
+            });
+        }
+    });
+
+
+</script>
+
 <script>
     $(document).ready(function () {
         var table = $('#example').DataTable({

@@ -250,7 +250,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                         addthuesanpham.idsanpham = sanpham.id;
                         addthuesanpham.iddatphong = idDatPhongThemVao;
                         addthuesanpham.thanhtien = cartItem.soluong * sanpham.giaban;
-                        addthuesanpham.ghichu = $"Được tách từ phòng: {phong.sophong}, số lượng: {cartItem.soluong}";
+                        addthuesanpham.ghichu = cartItem.ghichu;
                         thueSanPhamService.ThueSanPham(addthuesanpham);
                     }
                     _httpContextAccessor.HttpContext.Session.Remove("examplesss");
@@ -318,7 +318,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                         addthuesanpham.idsanpham = sanpham.id;
                         addthuesanpham.iddatphong = idDatPhongThemVao;
                         addthuesanpham.thanhtien = cartItem.soluong * sanpham.giaban;
-                        addthuesanpham.ghichu = $"Được tách từ phòng: {phong.sophong}, số lượng: {cartItem.soluong}";
+                        addthuesanpham.ghichu = cartItem.ghichu;
                         thueSanPhamService.ThueSanPham(addthuesanpham);
                     }
                     _httpContextAccessor.HttpContext.Session.Remove("examplesss");
