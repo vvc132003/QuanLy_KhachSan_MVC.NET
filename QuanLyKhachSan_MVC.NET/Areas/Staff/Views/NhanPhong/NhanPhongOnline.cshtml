@@ -53,8 +53,8 @@
                                                 <input type="text" class="form-control" value=" @string.Format("{0:N0} VNĐ", @Model.datPhong.tiendatcoc)" id="tiendatcoc" name="tiendatcoc" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="magiamgia" class="form-label">Mã giảm giá <span style="color:red;">(Nếu có)</span>:</label>
-                                                <input type="text" class="form-control" id="magiamgia" name="magiamgia">
+                                                <label for="magiamgia" class="form-label">Mã giảm giá:</label>
+                                                <input type="text" class="form-control" id="magiamgia" name="magiamgia" value="@Model?.magiamGia?.magiamgia ?? " "">
                                             </div>
                                             <p style="color:red; display: inline-block; font-weight:100;" class="thongbao"></p>
                                         </div>
@@ -194,15 +194,15 @@
 
                     data.pagedTSanPham.forEach(function (item) {
                         var productHtml = `
-                                                        <tr>
-                                                            <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
-                                                            <td>${item.tensanpham}</td>
-                                                            <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
-                                                                    <td>
-                                                                         <input type="checkbox" class="idsanpham" name="idsanpham" value="${item.id}">
-                                                                </td>
-                                                        </tr>
-                                                    `;
+                                                            <tr>
+                                                                <td><img src="${item.image}" width="36px" height="36px" alt=""></td>
+                                                                <td>${item.tensanpham}</td>
+                                                                <td>${item.giaban.toLocaleString('vi-VN')} VNĐ</td>
+                                                                        <td>
+                                                                             <input type="checkbox" class="idsanpham" name="idsanpham" value="${item.id}">
+                                                                    </td>
+                                                            </tr>
+                                                        `;
                         table.row.add($(productHtml)).draw(false);
                     });
                 },

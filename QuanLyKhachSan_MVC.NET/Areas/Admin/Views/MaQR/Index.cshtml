@@ -246,7 +246,7 @@
                         $.each(result.data, function (index, bank) {
                             const option = $("<option></option>")
                                 .val(bank.bin)
-                                .text(`${bank.name} (${bank.shortName})`).src;
+                                .text(`${bank.name} (${bank.shortName})`);
                             // Thêm option vào select
                             selectElement.append(option);
                         });

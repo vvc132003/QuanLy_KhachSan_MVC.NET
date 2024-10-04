@@ -425,3 +425,17 @@ create table ThueSanPham
     foreign key(idnhanvien) references NhanVien(id),
     foreign key(iddatphong) references DatPhong(id)
 );
+
+
+CREATE TABLE QRCode (
+    id INT IDENTITY(1,1) PRIMARY KEY,  
+    taikhoan NVARCHAR(50) NOT NULL,
+    tentaikhoan NVARCHAR(100) NOT NULL,
+    machinhanh NVARCHAR(50) NOT NULL,
+    ngaytao DATETIME DEFAULT GETDATE() 
+);
+
+drop table QRCode
+select * from QRCode
+INSERT INTO QRCode
+VALUES ('3910205213344', N'chÍNH', '970405', GETDATE());

@@ -29,7 +29,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
             this.phongService = phongService;
             _httpContextAccessor = httpContextAccessor;
         }
-        public IActionResult ThueSanPham(ThueSanPham thueSanPham, int idsp, int iddatphong, int idphong)
+        public IActionResult ThueSanPham(int idsp, int iddatphong, int idphong)
         {
             if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetString("tenchucvu") != null && HttpContext.Session.GetString("hovaten") != null)
             {
@@ -39,6 +39,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Admin.Controllers
                 ViewData["id"] = idnv;
                 ViewData["hovaten"] = hovaten;
                 ViewData["tenchucvu"] = tenchucvu;
+                ThueSanPham thueSanPham = new ThueSanPham();
                 SanPham sanpham = sanPhamService.GetSanPhamByID(idsp);
                 thueSanPham.idnhanvien = idnv;
                 thueSanPham.soluong = 1;

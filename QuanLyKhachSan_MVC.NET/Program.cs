@@ -122,6 +122,19 @@ builder.Services.AddSession(options =>
     //Cookie.IsEssential: Đảm bảo rằng cookie session được xem là bắt buộc, giúp đảm bảo rằng các cài đặt bảo mật và quyền riêng tư được tuân thủ đầy đủ.
     //Việc cấu hình này giúp cải thiện bảo mật và đảm bảo tính ổn định của ứng dụng ASP.NET Core trong việc quản lý phiên làm việc của người dùng.
 });
+builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
+                   .AllowAnyMethod()
+                   .AllowAnyHeader()
+                   .AllowCredentials();
+        });
+});
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSignalR();
 builder.Services.AddResponseCompression(opts =>
@@ -139,6 +152,8 @@ app.UseStaticFiles();
     RequestPath = "/static"
 });*/
 app.UseRouting();
+app.UseCors("AllowAllOrigins");
+
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "customer_default",
@@ -151,4 +166,6 @@ app.MapControllerRoute(
 
 app.UseResponseCompression();
 app.MapHub<ChatHub>("/chathub");
+app.MapHub<ThuePhongHub>("/thuephonghub");
+
 app.Run();

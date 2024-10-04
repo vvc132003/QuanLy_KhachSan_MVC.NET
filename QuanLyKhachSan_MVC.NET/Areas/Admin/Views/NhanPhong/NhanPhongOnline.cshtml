@@ -1,4 +1,4 @@
-﻿@model Model.Models.Modeldata
+﻿    @model Model.Models.Modeldata
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel='stylesheet'
@@ -17,7 +17,7 @@
         @await Html.PartialAsync("~/Areas/admin/Views/layout/header.cshtml")
         <br />
         <div class="page-wrapper">
-            <div class="container-fluid">
+            <div class="container-fluid">   
                 <div class="card">
                     <div class="row">
                         <div class="col-12">
@@ -53,8 +53,8 @@
                                                 <input type="text" class="form-control" value=" @string.Format("{0:N0} VNĐ", @Model.datPhong.tiendatcoc)" id="tiendatcoc" name="tiendatcoc" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="magiamgia" class="form-label">Mã giảm giá <span style="color:red;">(Nếu có)</span>:</label>
-                                                <input type="text" class="form-control" id="magiamgia" name="magiamgia">
+                                                <label for="magiamgia" class="form-label">Mã giảm giá:</label>
+                                                <input type="text" class="form-control" id="magiamgia" name="magiamgia" value="@Model?.magiamGia?.magiamgia ?? " "">
                                             </div>
                                             <p style="color:red; display: inline-block; font-weight:100;" class="thongbao"></p>
                                         </div>

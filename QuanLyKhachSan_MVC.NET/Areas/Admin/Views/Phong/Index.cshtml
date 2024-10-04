@@ -10,7 +10,7 @@
 <link href="~/content/static/dashboard1.css" rel="stylesheet" />
 @await Html.PartialAsync("~/Areas/admin/Views/layout/logo.cshtml")
 <link href="~/content/static/home.css" rel="stylesheet" />
-<div class="skin-default-dark fixed-layout">
+<div class="skin-default-dark fixed-layout">                    
     <div id="main-wrapper">
         @await Html.PartialAsync("~/Areas/admin/Views/layout/navbar.cshtml")
         @await Html.PartialAsync("~/Areas/admin/Views/layout/header.cshtml")
@@ -33,11 +33,6 @@
                         <a>Phòng đang dọn dẹp (@ViewData["slphongchuadon"])</a>
                     </div>
                 </div>
-                @* <form style="padding: 20px 34px; text-align: right;" Action="/Phong/Index" method="GET">
-                <input type="text"
-                placeholder="Nhập số phòng..." id="loaiphong" name="loaiphong">
-                <input type="submit" value="Tìm kiếm">
-                </form> *@
                 <br />
                 @if (Model != null && Model.Count > 0)
                 {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.Models;
+using PagedList;
 using Service;
 
 namespace QuanLyKhachSan_MVC.NET.ControllersApi
@@ -21,6 +22,26 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
         {
             List<KhachHang> khachHangs = khachHangService.GetAllKhachHang();
             return Ok(khachHangs);
+        }
+        [HttpGet]
+        [Route("DanhSachKhachHangDaDangKy")]
+        public IActionResult DanhSachKhachHangDaDangKy(string? cccd)
+        {
+            List<KhachHang> listKhachHang;
+            if (!string.IsNullOrEmpty(cccd))
+            {
+                listKhachHang = khachHangService.GetAllKhachHang().FindAll(kh => kh.cccd == cccd);
+            }
+            else
+            {
+                listKhachHang = khachHangService.GetAllKhachHang().OrderByDescending(kh => kh.id).Take(5).ToList();
+            }
+            Modeldata yourModel = new Modeldata
+            {
+                listkhachHangs = listKhachHang,
+            };
+            return Ok(yourModel);
+
         }
     }
 }

@@ -16,7 +16,8 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
         private readonly ThueSanPhamService thueSanPhamService;
         private readonly ThoiGianService thoiGianService;
         private readonly LoaiDichDichVuService loaiDichDichVuService;
-
+        private readonly MaGiamGiaService maGiamGiaService;
+        private readonly SuDungMaGiamGiaService dungMaGiamGiaService;
         public NhanPhongController(DatPhongService datPhongServices,
             KhachHangService khachHangServices,
             PhongService phongServices,
@@ -24,7 +25,9 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             SanPhamService sanPhamServices,
             ThueSanPhamService thueSanPhamServices,
             LoaiDichDichVuService loaiDichDichVuService,
-            ThoiGianService thoiGianServices)
+            ThoiGianService thoiGianServices,
+            MaGiamGiaService maGiamGiaService,
+            SuDungMaGiamGiaService dungMaGiamGiaService)
         {
             datPhongService = datPhongServices;
             khachHangService = khachHangServices;
@@ -34,6 +37,8 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
             thueSanPhamService = thueSanPhamServices;
             thoiGianService = thoiGianServices;
             this.loaiDichDichVuService = loaiDichDichVuService;
+            this.maGiamGiaService = maGiamGiaService;
+            this.dungMaGiamGiaService = dungMaGiamGiaService;
         }
         public IActionResult Index()
         {
@@ -56,6 +61,8 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                 List<SanPham> sanPhams = sanPhamService.GetAllSanPham();
                 List<LoaiDichVu> loaiDichVus = loaiDichDichVuService.LayTatCaLoaiDichVu();
                 Phong phong = phongService.GetPhongID(idphong);
+                SuDungMaGiamGia sudunggiamGia = dungMaGiamGiaService.GetSuDungMaGiamGiaByIddatphong(datPhong.id);
+                MaGiamGia maGiamGia = sudunggiamGia != null ? maGiamGiaService.GetMaGiamGiaById(sudunggiamGia.idmagiamgia) : null;
                 Modeldata modeldata = new Modeldata
                 {
                     datPhong = datPhong,
@@ -63,6 +70,7 @@ namespace QuanLyKhachSan_MVC.NET.Areas.Staff.Controllers
                     listsanPham = sanPhams,
                     loaiDichVus = loaiDichVus,
                     phong = phong,
+                    magiamGia = maGiamGia,
                 };
                 return View(modeldata);
             }
