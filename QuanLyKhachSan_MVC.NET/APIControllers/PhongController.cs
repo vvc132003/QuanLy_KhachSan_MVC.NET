@@ -44,14 +44,14 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
         }
         [HttpGet]
         [Route("ListPhong")]
-        public IActionResult ListPhong()
+        public IActionResult ListPhong(int idkhachsan)
         {
             List<Tang> tanglist = tangService.GetAllTangkhachsanid(1);
             List<Modeldata> modeldataList = new List<Modeldata>();
             foreach (var tang in tanglist)
             {
-                List<Phong> phongs = phongService.GetAllPhongIDTang(tang.id, 1);
-                List<Phong> phongtrangthai = phongService.GetAllPhongTrangThai(1);
+                List<Phong> phongs = phongService.GetAllPhongIDTang(tang.id, idkhachsan);
+                List<Phong> phongtrangthai = phongService.GetAllPhongTrangThai(idkhachsan);
                 Modeldata modeldata = new Modeldata
                 {
                     tang = tang,
