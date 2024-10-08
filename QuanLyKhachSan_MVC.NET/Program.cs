@@ -55,6 +55,8 @@ builder.Services.AddScoped<XacMinhService>();
 builder.Services.AddScoped<GopDonDatPhongService>();
 builder.Services.AddScoped<VietQRService>();
 builder.Services.AddScoped<QRCodeRequestService>();
+builder.Services.AddScoped<TachDonService>();
+
 
 
 
@@ -128,7 +130,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAllOrigins",
         builder =>
         {
-            builder.WithOrigins("http://localhost:3000")
+            builder.WithOrigins("http://192.168.0.125:3000")
                    .AllowAnyMethod()
                    .AllowAnyHeader()
                    .AllowCredentials();

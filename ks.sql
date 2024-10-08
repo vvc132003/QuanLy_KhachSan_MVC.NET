@@ -426,6 +426,18 @@ create table ThueSanPham
     foreign key(iddatphong) references DatPhong(id)
 );
 
+create table TachDon
+(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+	tensanpham nvarchar(100),
+	thanhtien decimal(10,2) null,
+	image text,
+	soluong int null,
+	iddatphong int null,
+    idsanpham int null,
+	ghichu nvarchar(255) null,
+);
+
 
 CREATE TABLE QRCode (
     id INT IDENTITY(1,1) PRIMARY KEY,  

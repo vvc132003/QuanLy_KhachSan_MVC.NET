@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Model.Models;
 using Service;
+using Service.Service;
+using System.Runtime.InteropServices;
+using System.Text.Json;
+
 
 namespace QuanLyKhachSan_MVC.NET.APIControllers
 {
@@ -16,11 +20,13 @@ namespace QuanLyKhachSan_MVC.NET.APIControllers
         private readonly PhongService phongService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IHubContext<ThuePhongHub> _hubContext;
+        private readonly TachDonService tachDonService;
 
 
         public ThueSanPhamController(ThueSanPhamService thueSanPhamServices, SanPhamService sanPhamServices,
             DatPhongService datPhongService, PhongService phongService,
-            IHttpContextAccessor httpContextAccessor, IHubContext<ThuePhongHub> hubContext)
+            IHttpContextAccessor httpContextAccessor, IHubContext<ThuePhongHub> hubContext,
+            TachDonService tachDonService)
         {
             thueSanPhamService = thueSanPhamServices;
             sanPhamService = sanPhamServices;
@@ -28,6 +34,7 @@ namespace QuanLyKhachSan_MVC.NET.APIControllers
             this.phongService = phongService;
             _httpContextAccessor = httpContextAccessor;
             _hubContext = hubContext;
+            this.tachDonService = tachDonService;
         }
         [HttpPost]
         [Route("ThueSanPham")]
@@ -124,6 +131,124 @@ namespace QuanLyKhachSan_MVC.NET.APIControllers
                 }
             }
             return Ok();
+
+        }
+        [HttpGet]
+        [Route("Danhsachsanphamthueiddatphong")]
+        public IActionResult Danhsachsanphamthueiddatphong(int idphong)
+        {
+            DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThai(idphong);
+            List<ThueSanPham> listthueSanPham = thueSanPhamService.GetAllThueSanPhamID(datPhong.id);
+            return Ok(listthueSanPham);
+        }
+
+        [HttpGet]
+        [Route("GetAllTachDonByDatPhongId")]
+        public IActionResult GetAllTachDonByDatPhongId(int idphong)
+        {
+            DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThai(idphong);
+            List<TachDon> listtachdon = tachDonService.GetAllTachDonByDatPhongId(datPhong.id);
+            return Ok(listtachdon);
+        }
+
+
+
+        [HttpPost]
+        [Route("TachDon")]
+        public IActionResult TachDon([FromForm] int id, [FromForm] int idphong, [FromForm] int soluong, [FromForm] string tensanpham, [FromForm] string image, [FromForm] int iddatphong, [FromForm] int idsanpham)
+        {
+            Phong phong = phongService.GetPhongID(idphong);
+            SanPham sanPham = sanPhamService.GetSanPhamByID(idsanpham);
+            List<ThueSanPham> checkslthuesanpham = thueSanPhamService.GetThueSanPhamByIDdatphong(iddatphong);
+            /// chekc sản phẩm với số lượng cối cùng
+            if (checkslthuesanpham.Count == 1 && checkslthuesanpham.First().soluong == 1)
+            {
+                return Ok(new { success = false, messages = "Sản phẩm cuối cùng không thể tách." });
+            }
+            TachDon tachDon = tachDonService.GetTachDonByIdAndDatPhong(idsanpham, iddatphong);
+
+            if (tachDon != null)
+            {
+                tachDon.soluong += 1;
+                tachDon.thanhtien = tachDon.soluong * sanPham.giaban;
+                tachDon.ghichu = $"Được tách từ phòng: {phong.sophong}, số lượng: {soluong + 1}";
+                tachDonService.UpdateTachDon(tachDon);
+            }
+            else
+            {
+                TachDon newTachDon = new TachDon
+                {
+                    id = id,
+                    tensanpham = tensanpham,
+                    thanhtien = soluong * sanPham.giaban,
+                    soluong = soluong,
+                    image = image,
+                    iddatphong = iddatphong,
+                    idsanpham = idsanpham,
+                    ghichu = $"Được tách từ phòng: {phong.sophong}, số lượng: {soluong}",
+                };
+                tachDonService.InsertTachDon(newTachDon);
+            }
+
+            ThueSanPham truSoLuongThueSanPham = thueSanPhamService.GetThueSanPhamBYID(id);
+            if (truSoLuongThueSanPham != null && sanPham != null)
+            {
+                if (truSoLuongThueSanPham.soluong == 1)
+                {
+                    thueSanPhamService.XoaThueSanPham(truSoLuongThueSanPham.id);
+                }
+                else
+                {
+                    truSoLuongThueSanPham.soluong -= 1;
+                    truSoLuongThueSanPham.thanhtien = truSoLuongThueSanPham.soluong * sanPham.giaban;
+                    thueSanPhamService.CapNhatThueSanPham(truSoLuongThueSanPham);
+                }
+            }
+            else
+            {
+                return Ok(new { success = false, message = "Sản phẩm hoặc thuê sản phẩm không tồn tại." });
+            }
+            return Ok(new { success = true, message = "Tách thành công!" });
+        }
+
+        [HttpGet]
+        [Route("HuyTach")]
+        public IActionResult HuyTach(int idphong, int idnhanvien)
+        {
+            DatPhong datPhong = datPhongService.GetDatPhongByIDTrangThai(idphong);
+            List<TachDon> cartItems = tachDonService.GetAllTachDonByDatPhongId(datPhong.id);
+            if (cartItems != null)
+            {
+                foreach (var cartItem in cartItems)
+                {
+                    ThueSanPham thueSanPham = thueSanPhamService.GetThueSanPhamByDatPhongAndSanPham(cartItem.iddatphong, cartItem.idsanpham);
+                    SanPham sanpham = sanPhamService.GetSanPhamByID(cartItem.idsanpham);
+                    if (thueSanPham != null)
+                    {
+                        thueSanPham.soluong = cartItem.soluong + thueSanPham.soluong;
+                        thueSanPham.thanhtien = cartItem.thanhtien + thueSanPham.thanhtien;
+                        thueSanPhamService.CapNhatThueSanPham(thueSanPham);
+                    }
+                    else
+                    {
+                        ThueSanPham addthuesanpham = new()
+                        {
+                            idnhanvien = idnhanvien,
+                            soluong = 1,
+                            idsanpham = sanpham.id,
+                            iddatphong = cartItem.iddatphong
+                        };
+                        addthuesanpham.thanhtien = addthuesanpham.soluong * sanpham.giaban;
+                        thueSanPhamService.ThueSanPham(addthuesanpham);
+                    }
+                }
+                tachDonService.DeleteAllTachDon();
+                return Ok(new { success = true, message = "Huỷ tách thành công!" });
+            }
+            else
+            {
+                return Ok(new { success = false, message = "Không có dịch vụ để huỷ!" });
+            }
 
         }
 

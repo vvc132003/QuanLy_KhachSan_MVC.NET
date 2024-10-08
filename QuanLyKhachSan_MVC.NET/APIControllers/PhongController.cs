@@ -78,5 +78,12 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
             }
             return Ok(new { khachHang });
         }
+        [HttpGet]
+        [Route("ListPhongidkhachsantrong")]
+        public IActionResult ListPhongidkhachsantrong(int idkhachsan)
+        {
+            List<Phong> phonglist = phongService.GetAllPhongTrangThai(idkhachsan);
+            return Ok(phonglist);
+        }
     }
 }
