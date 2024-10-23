@@ -130,7 +130,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAllOrigins",
         builder =>
         {
-            builder.WithOrigins("http://192.168.0.125:3000")
+            builder.WithOrigins("http://192.168.0.120:3000", "http://192.168.0.108:3000")
                    .AllowAnyMethod()
                    .AllowAnyHeader()
                    .AllowCredentials();

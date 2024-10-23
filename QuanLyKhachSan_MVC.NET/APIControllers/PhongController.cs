@@ -62,6 +62,7 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
             }
             return Ok(modeldataList);
         }
+
         [HttpGet]
         [Route("KhachHangbyiddatPhong")]
         public IActionResult KhachHangbyiddatPhong(int idphong)
@@ -83,6 +84,13 @@ namespace QuanLyKhachSan_MVC.NET.ControllersApi
         public IActionResult ListPhongidkhachsantrong(int idkhachsan)
         {
             List<Phong> phonglist = phongService.GetAllPhongTrangThai(idkhachsan);
+            return Ok(phonglist);
+        }
+        [HttpGet]
+        [Route("ListPhongidkhachsan")]
+        public IActionResult ListPhongidkhachsan(int idkhachsan)
+        {
+            List<Phong> phonglist = phongService.GetAllPhongByIdKhachSan(idkhachsan);
             return Ok(phonglist);
         }
     }

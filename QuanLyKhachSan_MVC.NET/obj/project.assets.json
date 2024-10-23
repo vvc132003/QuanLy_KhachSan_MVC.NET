@@ -2011,10 +2011,30 @@
           }
         }
       },
-      "Microsoft.Extensions.Configuration.Abstractions/9.0.0-preview.5.24306.7": {
+      "Microsoft.Extensions.Configuration/9.0.0-preview.7.24405.7": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "9.0.0-preview.5.24306.7"
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.0-preview.7.24405.7",
+          "Microsoft.Extensions.Primitives": "9.0.0-preview.7.24405.7"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Configuration.targets": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration.Abstractions/9.0.0-preview.7.24405.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "9.0.0-preview.7.24405.7"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {
@@ -2219,7 +2239,7 @@
           "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Options.targets": {}
         }
       },
-      "Microsoft.Extensions.Primitives/9.0.0-preview.5.24306.7": {
+      "Microsoft.Extensions.Primitives/9.0.0-preview.7.24405.7": {
         "type": "package",
         "dependencies": {
           "System.Memory": "4.5.5",
@@ -4771,6 +4791,7 @@
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "DocumentFormat.OpenXml": "3.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.0-preview.7.24405.7",
           "Microsoft.Extensions.Identity.Core": "8.0.6",
           "Model": "1.0.0",
           "NPOI": "2.6.2",
@@ -7027,16 +7048,42 @@
         "microsoft.dotnet.scaffolding.shared.nuspec"
       ]
     },
-    "Microsoft.Extensions.Configuration.Abstractions/9.0.0-preview.5.24306.7": {
-      "sha512": "gDVXDJfYP8B4zShuZJ4RyAGEUpixh453KNB1plL/7sYgqFJbs/xQQIoSVOW0d57GkAZLFAYqMCx1hV/4WTMJ0Q==",
+    "Microsoft.Extensions.Configuration/9.0.0-preview.7.24405.7": {
+      "sha512": "UZGC/QiEjoA2ew5BWe5KYWxMRICwuOvzfASzP2ExuOKQWgr2IAuvhnP3OGXOuodpBDuP3rbqIfs1JbGvBqTfXw==",
       "type": "package",
-      "path": "microsoft.extensions.configuration.abstractions/9.0.0-preview.5.24306.7",
+      "path": "microsoft.extensions.configuration/9.0.0-preview.7.24405.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
-        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Extensions.Configuration.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Configuration.targets",
+        "lib/net462/Microsoft.Extensions.Configuration.dll",
+        "lib/net462/Microsoft.Extensions.Configuration.xml",
+        "lib/net8.0/Microsoft.Extensions.Configuration.dll",
+        "lib/net8.0/Microsoft.Extensions.Configuration.xml",
+        "lib/net9.0/Microsoft.Extensions.Configuration.dll",
+        "lib/net9.0/Microsoft.Extensions.Configuration.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.xml",
+        "microsoft.extensions.configuration.9.0.0-preview.7.24405.7.nupkg.sha512",
+        "microsoft.extensions.configuration.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/9.0.0-preview.7.24405.7": {
+      "sha512": "js6hxltWDt6xiLuNifDZ8EShtPf9z0XW7ztUPQduSSpbctqbtCwifEDZdL+lUy72aQ1lKGl8hNHiI0Xygwc29Q==",
+      "type": "package",
+      "path": "microsoft.extensions.configuration.abstractions/9.0.0-preview.7.24405.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "buildTransitive/net461/Microsoft.Extensions.Configuration.Abstractions.targets",
         "buildTransitive/net462/_._",
@@ -7050,7 +7097,7 @@
         "lib/net9.0/Microsoft.Extensions.Configuration.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.xml",
-        "microsoft.extensions.configuration.abstractions.9.0.0-preview.5.24306.7.nupkg.sha512",
+        "microsoft.extensions.configuration.abstractions.9.0.0-preview.7.24405.7.nupkg.sha512",
         "microsoft.extensions.configuration.abstractions.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -7347,16 +7394,15 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Primitives/9.0.0-preview.5.24306.7": {
-      "sha512": "BqgMOQwpTZSzAlpVx2jLfjS7KmcfuaaPuJWPdXrcRMjyqP7dqZj2gCr7kJk17VnUJmUQo5qMR5ozXZE33ssUDw==",
+    "Microsoft.Extensions.Primitives/9.0.0-preview.7.24405.7": {
+      "sha512": "CsC3tAnJFsrXwhiUQzP3hlFGLEUC5DEE8WPxhe/j96h6/xD5U8Kpx/hQ0OwWbkNg1BX00Nf7qXbYV268G18cIQ==",
       "type": "package",
-      "path": "microsoft.extensions.primitives/9.0.0-preview.5.24306.7",
+      "path": "microsoft.extensions.primitives/9.0.0-preview.7.24405.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
-        "PACKAGE.md",
         "THIRD-PARTY-NOTICES.TXT",
         "buildTransitive/net461/Microsoft.Extensions.Primitives.targets",
         "buildTransitive/net462/_._",
@@ -7370,7 +7416,7 @@
         "lib/net9.0/Microsoft.Extensions.Primitives.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Primitives.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Primitives.xml",
-        "microsoft.extensions.primitives.9.0.0-preview.5.24306.7.nupkg.sha512",
+        "microsoft.extensions.primitives.9.0.0-preview.7.24405.7.nupkg.sha512",
         "microsoft.extensions.primitives.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -13182,6 +13228,7 @@
       "Microsoft.AspNetCore.Authentication.Google >= 7.0.0",
       "Microsoft.AspNetCore.Identity >= 2.2.0",
       "Microsoft.AspNetCore.SignalR >= 1.1.0",
+      "Microsoft.Extensions.Configuration >= 9.0.0-preview.7.24405.7",
       "Microsoft.Extensions.Http >= 9.0.0-preview.5.24306.7",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 7.0.12",
       "Model >= 1.0.0",
@@ -13273,6 +13320,10 @@
           "Microsoft.AspNetCore.SignalR": {
             "target": "Package",
             "version": "[1.1.0, )"
+          },
+          "Microsoft.Extensions.Configuration": {
+            "target": "Package",
+            "version": "[9.0.0-preview.7.24405.7, )"
           },
           "Microsoft.Extensions.Http": {
             "target": "Package",

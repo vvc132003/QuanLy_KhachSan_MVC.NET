@@ -489,7 +489,7 @@ namespace QuanLyKhachSan_MVC.NET.APIControllers
 
                     datPhongService.GuiEmail(khachHang, datPhong, phong, thoiGian);
                 }
-                _hubContext.Clients.All.SendAsync("ReceiveThuePhong", datPhong.idphong);
+                _hubContext.Clients.All.SendAsync("ReceiveThuePhong", phong.idkhachsan);
                 return Ok();
             }
             else

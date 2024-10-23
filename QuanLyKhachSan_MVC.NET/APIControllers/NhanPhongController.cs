@@ -106,7 +106,7 @@ namespace QuanLyKhachSan_MVC.NET.APIControllers
                         sanPhamService.CapNhatSanPham(sanpham);
                     }
                 }
-                _thuePhongHubContext.Clients.All.SendAsync("ReceiveThanhToan", phong.id);
+                _thuePhongHubContext.Clients.All.SendAsync("ReceiveThanhToan", phong.idkhachsan);
                 return Ok();
             }
             else

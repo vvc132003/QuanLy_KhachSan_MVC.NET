@@ -206,7 +206,7 @@ namespace QuanLyKhachSan_MVC.NET.APIControllers
 
             datphong.trangthai = "đã trả";
             datPhongService.UpdateDatPhong(datphong);
-            _hubContext.Clients.All.SendAsync("ReceiveThanhToan", phong.id);
+            _hubContext.Clients.All.SendAsync("ReceiveThanhToan", phong.idkhachsan);
             return Ok();
 
         }
